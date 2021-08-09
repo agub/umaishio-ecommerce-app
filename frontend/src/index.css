@@ -1,3 +1,8 @@
+
+
+
+
+
 main {
   min-height: 80vh;
 }
@@ -8,4 +13,7 @@ h3 {
 
 .rating span {
   margin: 0.1rem;
+}
+.custombtn {
+  margin-bottom: -20px;
 }
