@@ -1,0 +1,22 @@
+{
+  "name": "umashioec",
+  "version": "1.0.0",
+  "description": "Umashio",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agub/umashio.git"
+  },
+  "author": "agub",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agub/umashio/issues"
+  },
+  "homepage": "https://github.com/agub/umashio#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
