@@ -14,7 +14,7 @@ const ProductScreen = ({ match }) => {
 			setProduct(data)
 		}
 		fetchProduct()
-	}, [])
+	}, [match])
 	return (
 		<>
 			<Link className='btn btn-light my-3' to='/'>
@@ -28,10 +28,12 @@ const ProductScreen = ({ match }) => {
 					<ListGroup variant='flush'>
 						<ListGroup.Item as='h3'>{product.name}</ListGroup.Item>
 						<ListGroup.Item>
-							<Rating
-								value={product.rating}
-								text={`${product.numReviews} reviews`}
-							/>
+							{product.rating && (
+								<Rating
+									value={product.rating}
+									text={`${product.numReviews} reviews`}
+								/>
+							)}
 						</ListGroup.Item>
 						<ListGroup.Item>¥{product.price}</ListGroup.Item>
 						<ListGroup.Item>{product.description}</ListGroup.Item>

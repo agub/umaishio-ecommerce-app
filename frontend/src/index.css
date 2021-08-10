@@ -7,13 +7,22 @@ main {
   min-height: 80vh;
 }
 
-h3 {
-  padding: 1rem;
-}
+/* h3 {
+  padding: 0.5rem 0;
+} */
+
+
 
 .rating span {
   margin: 0.1rem;
+  width: 20px;
+
 }
 .custombtn {
   margin-bottom: -20px;
+}
+
+.customCard {
+  /* max-height: 420px; */
+  /* height: 420px; */
 }
