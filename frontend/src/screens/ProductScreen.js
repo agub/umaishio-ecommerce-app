@@ -15,9 +15,10 @@ import Rating from '../components/Rating'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { listProductDetails } from '../actions/productActions'
+import { addToCart } from '../actions/cartActions'
 
 const ProductScreen = ({ match, history }) => {
-	const [qty, setQty] = useState(0)
+	const [qty, setQty] = useState(1)
 
 	const dispatch = useDispatch()
 
@@ -29,7 +30,8 @@ const ProductScreen = ({ match, history }) => {
 	}, [dispatch, match])
 
 	const addToCartHandler = () => {
-		history.push(`/cart/${match.params.id}?qty=${qty}`)
+		dispatch(addToCart(product._id, qty))
+		// history.push(`/cart/${match.params.id}?qty=${qty}`)
 	}
 
 	return (
@@ -43,10 +45,10 @@ const ProductScreen = ({ match, history }) => {
 				<Message variant='danger'>{error}</Message>
 			) : (
 				<Row>
-					<Col md={5} className='product-page-section'>
+					<Col md={6} className='product-page-section'>
 						<Image src={product.image} alt={product.name} fluid />
 					</Col>
-					<Col md={4} className='product-page-section'>
+					<Col md={3} className='product-page-section'>
 						<ListGroup variant='flush'>
 							<ListGroup.Item as='h3'>
 								{product.name}
@@ -101,7 +103,7 @@ const ProductScreen = ({ match, history }) => {
 											</Col>
 											<Col className='product-page-section'>
 												<Form.Control
-													className='form-control-select'
+													className='form-select form-control-select'
 													style={{
 														padding:
 															'0.75rem 0.2rem 0.75rem 0.4rem',

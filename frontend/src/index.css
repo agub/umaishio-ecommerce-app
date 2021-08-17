@@ -2,7 +2,11 @@
 
 
 
-
+h1 {
+  font-size: 1.4rem;
+  padding: 0.1rem;
+}
+ 
 main {
   min-height: 80vh;
 }
@@ -36,6 +40,11 @@ main {
   .form-control-select {
     /* width: auto; */
     width: 290px;
+    padding: 0.75rem 0.2rem;
+  }
+  .form-control-select-checkout {
+    /* width: auto; */
+    width: 70px;
     padding: 0.75rem 0.2rem;
   }
 
