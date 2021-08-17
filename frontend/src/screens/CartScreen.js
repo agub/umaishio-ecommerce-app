@@ -25,10 +25,14 @@ const CartScreen = ({ match, location, history }) => {
 		console.log('remove')
 	}
 
+	const checkoutHandler = () => {
+		console.log('checkout')
+	}
+
 	return (
 		<Row>
 			<Col md={8}>
-				<h1>買い物カゴ</h1>
+				<h1>ショッピングカート</h1>
 				{cartItems.length === 0 ? (
 					<Message variant='info'>
 						カートが空です<Link to='/'>戻る</Link>
@@ -52,10 +56,11 @@ const CartScreen = ({ match, location, history }) => {
 										</Link>
 									</Col>
 									<Col md={2}>${item.price}</Col>
-									<Col md={2}>
+									<Col md={2} sm={10}>
 										<Form.Control
 											as='select'
 											value={item.qty}
+											fluid
 											className='form-select form-control-select-checkout'
 											style={{
 												padding:
@@ -84,7 +89,7 @@ const CartScreen = ({ match, location, history }) => {
 											))}
 										</Form.Control>
 									</Col>
-									<Col md={2}>
+									<Col md={2} sm={2}>
 										<Button
 											type='button'
 											variant='light'
@@ -104,9 +109,38 @@ const CartScreen = ({ match, location, history }) => {
 				)}
 			</Col>
 			<Col md={4}>
-				<ListGroup variant='flash'>
-					<ListGroup.Item></ListGroup.Item>
-				</ListGroup>
+				<Card>
+					<ListGroup variant='flash'>
+						<ListGroup.Item>
+							<p className='subtotal-text'>
+								カートの小計:　(
+								{cartItems.reduce(
+									(acc, item) => acc + item.qty,
+									0
+								)}
+								個の商品)
+							</p>
+							¥
+							{cartItems
+								.reduce(
+									(acc, item) => acc + item.qty * item.price,
+									0
+								)
+								.toFixed(2)}
+							{/* fix this to 0 for yen */}
+						</ListGroup.Item>
+						<ListGroup.Item>
+							<Button
+								type='button'
+								className='btn-block w-100'
+								disabled={cartItems.length === 0}
+								onClick={checkoutHandler}
+							>
+								レジに進む
+							</Button>
+						</ListGroup.Item>
+					</ListGroup>
+				</Card>
 			</Col>
 		</Row>
 	)
