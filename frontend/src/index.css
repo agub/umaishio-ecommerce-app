@@ -20,7 +20,21 @@ main {
 /* h3 { 
   padding: 0.5rem 0;
 } */
-
+.header-cartnumber {
+  position: absolute;
+  top: 2px;
+  left: 18px;
+  width: 20px;
+  height: 20px;
+  /* background-color: rgba(255,255,255,0.55); */
+  
+  border-radius: 50%;
+  /* color: #55595c; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.5rem;
+}
 
 
 .rating span {
@@ -53,7 +67,7 @@ main {
     width: 70px;
     padding: 0.75rem 0.2rem;
   }
-
+  
 
   .product-page-section:nth-child(3) {
     margin: 20px 0 0 50%;

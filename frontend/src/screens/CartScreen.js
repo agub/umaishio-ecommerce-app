@@ -30,6 +30,10 @@ const CartScreen = ({ match, location, history }) => {
 		history.push('/login?redirect=shipping')
 	}
 
+	const getCartCount = () => {
+		return cartItems.reduce((qty, item) => Number(item.qty) + qty, 0)
+	}
+
 	return (
 		<Row>
 			<Col md={8}>
@@ -51,7 +55,7 @@ const CartScreen = ({ match, location, history }) => {
 											rounded
 										/>
 									</Col>
-									<Col md={3}>
+									<Col md={4}>
 										<Link to={`/product/${item.product}`}>
 											{item.name}
 										</Link>
@@ -89,7 +93,7 @@ const CartScreen = ({ match, location, history }) => {
 											))}
 										</Form.Control>
 									</Col>
-									<Col md={2} sm={2}>
+									<Col md={1} sm={2}>
 										<Button
 											type='button'
 											variant='light'
@@ -114,10 +118,11 @@ const CartScreen = ({ match, location, history }) => {
 						<ListGroup.Item>
 							<p className='subtotal-text'>
 								カートの小計:　(
-								{cartItems.reduce(
+								{/* {cartItems.reduce(
 									(acc, item) => acc + item.qty,
 									0
-								)}
+								)} */}
+								{getCartCount()}
 								個の商品)
 							</p>
 							¥
