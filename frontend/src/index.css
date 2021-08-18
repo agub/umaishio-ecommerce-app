@@ -4,6 +4,12 @@
   background-color: #5c2d91 !important;
 } */
 
+
+.product-card {
+  min-height: 500px;
+  height: 100%;
+}
+
 h1 {
   font-size: 1.8rem;
   padding: 1rem 0;
@@ -48,14 +54,18 @@ main {
   margin-bottom: -20px;
 }
 
-.customCard {
-  /* max-height: 420px; */
-  /* height: 420px; */
+
+
+
+
+@media only screen and (min-width: 768px) {
+  .customCard {
+    height: 400px;
+  }
 }
 
-
 @media only screen and (min-width: 768px) and (max-width: 1200px) {
- 
+
   .product-page-section {
     min-width: 350px;
   }
