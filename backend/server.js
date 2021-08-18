@@ -6,6 +6,7 @@ import colors from 'colors'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
 import productRoutes from './routes/productRoutes.js'
+import userRoutes from './routes/userRoute.js'
 
 dotenv.config()
 
@@ -13,16 +14,14 @@ connectDB()
 
 const app = express()
 
-// app.use((req, res, next) => {
-// 	console.log(req.originalUrl)
-// 	next()
-// })
+app.use(express.json())
 
 app.get('/', (req, res) => {
 	res.send('Api is running on port 5000!!!!')
 })
 
 app.use('/api/products', productRoutes)
+app.use('/api/users', userRoutes)
 
 app.use(notFound)
 app.use(errorHandler)
