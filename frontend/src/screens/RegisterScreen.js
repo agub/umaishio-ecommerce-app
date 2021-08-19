@@ -86,16 +86,7 @@ const RegisterScreen = ({ location, history }) => {
 
 			<Row className='py-3'>
 				<Col>
-					アカウントをお持ちの方{' '}
-					<Link
-						to={
-							redirect
-								? `/register?redirect=${redirect}`
-								: '/register'
-						}
-					>
-						ログイン
-					</Link>
+					アカウントをお持ちの方 <Link to={'/login'}>ログイン</Link>
 				</Col>
 			</Row>
 		</FormContainer>
