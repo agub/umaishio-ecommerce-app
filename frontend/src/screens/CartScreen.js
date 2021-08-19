@@ -114,7 +114,7 @@ const CartScreen = ({ match, location, history }) => {
 			</Col>
 			<Col md={4}>
 				<Card>
-					<ListGroup variant='flash'>
+					<ListGroup variant='flush'>
 						<ListGroup.Item>
 							<p className='subtotal-text'>
 								カートの小計:　(
