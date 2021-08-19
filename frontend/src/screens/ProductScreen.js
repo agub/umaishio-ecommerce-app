@@ -19,6 +19,7 @@ import { addToCart } from '../actions/cartActions'
 
 const ProductScreen = ({ match, history }) => {
 	const [qty, setQty] = useState(1)
+	const [message, setMessage] = useState('')
 
 	const dispatch = useDispatch()
 
@@ -31,6 +32,7 @@ const ProductScreen = ({ match, history }) => {
 
 	const addToCartHandler = () => {
 		dispatch(addToCart(product._id, qty))
+		setMessage('買い物カゴへ追加しました。')
 		// history.push(`/cart/${match.params.id}?qty=${qty}`)
 	}
 
@@ -39,6 +41,12 @@ const ProductScreen = ({ match, history }) => {
 			<Link className='btn btn-light my-3' to='/'>
 				戻る
 			</Link>
+			{message && (
+				<Message variant='success'>
+					{message} <Link to='/cart'>購入手続きへ</Link>
+				</Message>
+			)}
+
 			{loading ? (
 				<Loader />
 			) : error ? (

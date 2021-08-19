@@ -38,7 +38,7 @@ const RegisterScreen = ({ location, history }) => {
 
 	return (
 		<FormContainer>
-			<h1>新規登録</h1>
+			<h1>新規会員登録</h1>
 			{message && <Message variant='danger'>{message}</Message>}
 			{error && <Message variant='danger'>{error}</Message>}
 			{loading && <Loader />}
