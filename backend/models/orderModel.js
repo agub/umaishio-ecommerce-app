@@ -35,6 +35,7 @@ const orderSchema = mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		//FROM PAYPAL RESPONSE
 		paymentResult: {
 			id: { type: String },
 			status: { type: String },

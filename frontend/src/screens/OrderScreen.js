@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getOrderDetails } from '../actions/orderActions'
+import { ORDER_PAY_RESET } from '../constants/orderConstants'
 
 const OrderScreen = ({ match }) => {
 	const orderId = match.params.id
@@ -21,6 +22,8 @@ const OrderScreen = ({ match }) => {
 
 	useEffect(() => {
 		if (!order || order._id !== orderId) {
+			dispatch({ type: ORDER_PAY_RESET })
+			dispatch({ type: ORDER_DELIVER_RESET })
 			dispatch(getOrderDetails(orderId))
 		}
 	}, [order, orderId, dispatch])
@@ -28,7 +31,7 @@ const OrderScreen = ({ match }) => {
 	return loading ? (
 		<>
 			<Loader />
-			<h3>少しお時間がかかることがあります。</h3>
+			{/* <h3>少しお時間がかかることがあります。</h3> */}
 		</>
 	) : error ? (
 		<Message variant='danger'>{error}</Message>
