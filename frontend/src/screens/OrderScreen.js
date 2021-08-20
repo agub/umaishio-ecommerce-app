@@ -7,23 +7,43 @@ import Loader from '../components/Loader'
 import {
 	getOrderDetail,
 	getOrderDetails,
+	payOnStirpe,
 	payOrder,
 } from '../actions/orderActions'
 import { ORDER_PAY_RESET } from '../constants/orderConstants'
-import axios from 'axios'
+
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
+
+const CARD_OPTIONS = {
+	iconStyle: 'solid',
+	style: {
+		base: {
+			iconColor: '#c4f0ff',
+			color: '#fff',
+			fontWeight: 500,
+			fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+			fontSize: '16px',
+			fontSmoothing: 'antialiased',
+			':-webkit-autofill': { color: '#fce883' },
+			'::placeholder': { color: '#87bbfd' },
+		},
+		invalid: {
+			iconColor: '#ffc7ee',
+			color: '#ffc7ee',
+		},
+	},
+}
 
 const OrderScreen = ({ match }) => {
 	const orderId = match.params.id
+	const stripe = useStripe()
+	const elements = useElements()
 
 	const dispatch = useDispatch()
 	const cart = useSelector((state) => state.cart)
 
 	const orderDetails = useSelector((state) => state.orderDetails)
 	const { order, loading, error } = orderDetails
-
-	// useEffect(() => {
-	// 	dispatch(getOrderDetails(orderId))
-	// }, [dispatch, orderId])
 
 	useEffect(() => {
 		if (!order || order._id !== orderId) {
@@ -33,17 +53,39 @@ const OrderScreen = ({ match }) => {
 	}, [order, orderId, dispatch])
 
 	const submitHandler = async () => {
+		const { error, paymentMethod } = await stripe.createPaymentMethod({
+			type: 'card',
+			card: elements.getElement(CardElement),
+		})
+		const { id } = paymentMethod
+		console.log(id)
 		try {
+			console.log(orderId)
 			//api connect to stripe
 			// const { paymentResult } = axios.put()
-			const paymentResult = {
-				id: 'idsample',
-				status: 'completed',
-				update_time: 'updatetime',
-				payer: { email_address: 'fasdfas' },
-			}
-			console.log(paymentResult)
-			dispatch(payOrder(orderId, paymentResult))
+			// const paymentResult = {
+			// 	id: 'idsample',
+			// 	status: 'completed',
+			// 	update_time: 'updatetime',
+			// 	payer: { email_address: 'fasdfas' },
+			// }
+			// const paymentDetails = {
+			// 	id: id,
+			// 	amount: 10000,
+			// 	name: 'sample　400円',
+			// 	metadata: { sampleId: '6735', address: 'afas' },
+			// }
+			dispatch(
+				payOnStirpe(orderId, {
+					id,
+					amount: 10000,
+					name: 'sample　400円',
+					metadata: { sampleId: '6735', address: 'afas' },
+				})
+			)
+			// console.log(paymentResult)
+			// dispatch(payOrder(orderId, paymentResult))
+			//then updateirder() fires
 		} catch (error) {
 			console.log(error)
 		}
@@ -185,6 +227,9 @@ const OrderScreen = ({ match }) => {
 								>
 									注文を確定する
 								</Button>
+								{/* stripeeeeeeeeeeeeeeeee */}
+								<CardElement option={CARD_OPTIONS} />
+								{/* stripeeeeeeeeeeeeeeeee */}
 							</ListGroup.Item>
 							{/* <ListGroup.Item>
 							 {error && (

@@ -1,7 +1,9 @@
-import { json } from 'express'
 import asyncHandler from 'express-async-handler'
 import Order from '../models/orderModel.js'
-
+import Stripe from 'stripe'
+import dotenv from 'dotenv'
+dotenv.config()
+const stripe = Stripe(process.env.STRIPE_SECRET)
 // @description   Create new order
 // @route         POST /api/orders
 // @access        Private
@@ -80,4 +82,37 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 	}
 })
 
-export { addOrderItems, getOrderById, updateOrderToPaid }
+// @description   Stripe call
+// @route         POST /api/orders/:id/stripe
+// @access        Private
+
+const stripeApi = asyncHandler(async (req, res) => {
+	const { id, amount, metadata, name } = req.body
+
+	try {
+		if (amount && id) {
+			const payment = await stripe.paymentIntents.create({
+				amount: amount,
+				currency: 'JPY',
+				description: name,
+				payment_method: id,
+				confirm: true,
+				metadata,
+			})
+
+			console.log('Payment', payment)
+			res.json({
+				message: 'Payment successfull',
+				success: true,
+			})
+		}
+	} catch (error) {
+		console.log(error)
+		res.json({
+			message: 'Payment failed',
+			success: false,
+		})
+	}
+})
+
+export { addOrderItems, getOrderById, updateOrderToPaid, stripeApi }

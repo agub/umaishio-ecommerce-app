@@ -5,6 +5,7 @@ import connectDB from './config/db.js'
 import colors from 'colors'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
+import cors from 'cors'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoute.js'
 import orderRoutes from './routes/orderRoutes.js'
@@ -16,6 +17,7 @@ connectDB()
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 app.get('/', (req, res) => {
 	res.send('Api is running on port 5000!!!!')

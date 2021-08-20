@@ -14,27 +14,39 @@ import PaymentScreen from './screens/PaymentScreen'
 import PlaceOrderScreen from './screens/PlaceOrderScreen'
 import OrderScreen from './screens/OrderScreen'
 
-function App() {
-	return (
-		<Router>
-			<Header />
-			<main className='py-3'>
-				<Container>
-					<Route path='/order/:id' component={OrderScreen} />
-					<Route path='/shipping' component={ShippingScreen} />
-					<Route path='/payment' component={PaymentScreen} />
-					<Route path='/placeorder' component={PlaceOrderScreen} />
-					<Route path='/login' component={LoginScreen} />
-					<Route path='/register' component={RegisterScreen} />
-					<Route path='/profile' component={ProfileScreen} />
-					<Route path='/product/:id' component={ProductScreen} />
-					<Route path='/cart/:id?' component={CartScreen} />
-					<Route path='/' component={HomeScreen} exact />
-				</Container>
-			</main>
+import { Elements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
 
-			<Footer />
-		</Router>
+function App() {
+	const PUBLIC_KEY =
+		'pk_test_51IJyo2KVaW87j9kXOP9qNXMzZh4kXnF7aGEjohGwCfJlsS6XqHkTOii3ByC1CM1ypH8LYnk9iSk147lQklOJM7u900sGjrw6jH'
+
+	const stripePromise = loadStripe(PUBLIC_KEY)
+
+	return (
+		<Elements stripe={stripePromise}>
+			<Router>
+				<Header />
+				<main className='py-3'>
+					<Container>
+						<Route path='/order/:id' component={OrderScreen} />
+						<Route path='/shipping' component={ShippingScreen} />
+						<Route path='/payment' component={PaymentScreen} />
+						<Route
+							path='/placeorder'
+							component={PlaceOrderScreen}
+						/>
+						<Route path='/login' component={LoginScreen} />
+						<Route path='/register' component={RegisterScreen} />
+						<Route path='/profile' component={ProfileScreen} />
+						<Route path='/product/:id' component={ProductScreen} />
+						<Route path='/cart/:id?' component={CartScreen} />
+						<Route path='/' component={HomeScreen} exact />
+					</Container>
+				</main>
+				<Footer />
+			</Router>
+		</Elements>
 	)
 }
 
