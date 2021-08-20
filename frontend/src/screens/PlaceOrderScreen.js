@@ -141,17 +141,17 @@ const PlaceOrderScreen = ({ history }) => {
 									<Col>¥{cart.totalPrice}</Col>
 								</Row>
 							</ListGroup.Item>
-							<ListGroup.Item>
-								{/* {error && (
+							{/* <ListGroup.Item> */}
+							{/* {error && (
 									<Message variant='danger'>{error}</Message>
 								)} */}
-							</ListGroup.Item>
+							{/* </ListGroup.Item> */}
 
-							<ListGroup.Item>
-								{error && (
+							{error && (
+								<ListGroup.Item>
 									<Message varient='danger'>{error}</Message>
-								)}
-							</ListGroup.Item>
+								</ListGroup.Item>
+							)}
 							<ListGroup.Item>
 								<Button
 									type='button'
