@@ -35,7 +35,8 @@ const ShippingScreen = ({ history }) => {
 				address,
 			})
 		)
-		history.push('/payment')
+		// history.push('/payment')
+		history.push('/placeorder')
 	}
 
 	return (

@@ -70,11 +70,11 @@ const PlaceOrderScreen = ({ history }) => {
 								{cart.shippingAddress.phoneNumber}
 							</p>
 						</ListGroup.Item>
-						<ListGroup.Item>
+						{/* <ListGroup.Item>
 							<h4>お支払い方法</h4>
 							<strong>Method: </strong>
 							{cart.paymentMethod}
-						</ListGroup.Item>
+						</ListGroup.Item> */}
 						<ListGroup.Item>
 							<h4>注文内容を確認</h4>
 							{cart.cartItems.length === 0 ? (
@@ -159,7 +159,7 @@ const PlaceOrderScreen = ({ history }) => {
 									disabled={cart.cartItems === 0}
 									onClick={placeOrderHandler}
 								>
-									注文を確定する
+									支払いへ進む
 								</Button>
 							</ListGroup.Item>
 						</ListGroup>

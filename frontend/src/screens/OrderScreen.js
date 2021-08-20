@@ -15,6 +15,23 @@ import { ORDER_PAY_RESET } from '../constants/orderConstants'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
 const CARD_OPTIONS = {
+	// iconStyle: 'solid',
+	// style: {
+	// 	base: {
+	// 		iconColor: '#c4f0ff',
+	// 		color: '#fff',
+	// 		fontWeight: 500,
+	// 		fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+	// 		fontSize: '16px',
+	// 		fontSmoothing: 'antialiased',
+	// 		':-webkit-autofill': { color: '#fce883' },
+	// 		'::placeholder': { color: '#87bbfd' },
+	// 	},
+	// 	invalid: {
+	// 		iconColor: '#ffc7ee',
+	// 		color: '#ffc7ee',
+	// 	},
+	// },
 	iconStyle: 'solid',
 	style: {
 		base: {
@@ -24,8 +41,12 @@ const CARD_OPTIONS = {
 			fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
 			fontSize: '16px',
 			fontSmoothing: 'antialiased',
-			':-webkit-autofill': { color: '#fce883' },
-			'::placeholder': { color: '#87bbfd' },
+			':-webkit-autofill': {
+				color: '#fce883',
+			},
+			'::placeholder': {
+				color: '#87bbfd',
+			},
 		},
 		invalid: {
 			iconColor: '#ffc7ee',
@@ -69,20 +90,13 @@ const OrderScreen = ({ match }) => {
 			// 	update_time: 'updatetime',
 			// 	payer: { email_address: 'fasdfas' },
 			// }
-			// const paymentDetails = {
-			// 	id: id,
-			// 	amount: 10000,
-			// 	name: 'sample　400円',
-			// 	metadata: { sampleId: '6735', address: 'afas' },
-			// }
-			dispatch(
-				payOnStirpe(orderId, {
-					id,
-					amount: 10000,
-					name: 'sample　400円',
-					metadata: { sampleId: '6735', address: 'afas' },
-				})
-			)
+			const paymentDetails = {
+				id: id,
+				amount: 10000,
+				name: 'sample　400円',
+				metadata: { sampleId: '6735', address: 'afas' },
+			}
+			dispatch(payOnStirpe(orderId, paymentDetails))
 			// console.log(paymentResult)
 			// dispatch(payOrder(orderId, paymentResult))
 			//then updateirder() fires
@@ -139,10 +153,28 @@ const OrderScreen = ({ match }) => {
 						</ListGroup.Item>
 						<ListGroup.Item>
 							<h4>お支払い方法</h4>
-							<p>
+							{/* <p>
 								<strong>Method: </strong>
 								{order.paymentMethod}
-							</p>
+							</p> */}
+							<CardElement
+								className='mt-3 mb-3'
+								// option={CARD_OPTIONS}
+								options={{
+									style: {
+										base: {
+											fontSize: '16px',
+											color: '#424770',
+											'::placeholder': {
+												color: '#aab7c4',
+											},
+										},
+										invalid: {
+											color: '#9e2146',
+										},
+									},
+								}}
+							/>
 							{order.isPaid ? (
 								<Message variant='success'>
 									paid on {order.paidAt}
@@ -227,9 +259,6 @@ const OrderScreen = ({ match }) => {
 								>
 									注文を確定する
 								</Button>
-								{/* stripeeeeeeeeeeeeeeeee */}
-								<CardElement option={CARD_OPTIONS} />
-								{/* stripeeeeeeeeeeeeeeeee */}
 							</ListGroup.Item>
 							{/* <ListGroup.Item>
 							 {error && (
