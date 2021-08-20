@@ -31,10 +31,10 @@ const orderSchema = mongoose.Schema(
 			prefecture: { type: String, required: true },
 			address: { type: String, required: true },
 		},
-		paymentMethod: {
-			type: String,
-			required: true,
-		},
+		// paymentMethod: {
+		// 	type: String,
+		// 	required: true,
+		// },
 		//FROM PAYPAL RESPONSE
 		paymentResult: {
 			id: { type: String },

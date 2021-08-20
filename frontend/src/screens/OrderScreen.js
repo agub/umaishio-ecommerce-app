@@ -13,6 +13,8 @@ import {
 import { ORDER_PAY_RESET } from '../constants/orderConstants'
 
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import CheckoutSteps from '../components/CheckoutSteps'
+import FormContainer from '../components/FormContainer'
 
 const CARD_OPTIONS = {
 	// iconStyle: 'solid',
@@ -120,7 +122,7 @@ const OrderScreen = ({ match }) => {
 	) : (
 		<>
 			<Row>
-				{/* <CheckoutSteps step1 step2 step3 step4 /> */}
+				<CheckoutSteps step1 step2 step3 step4 />
 				<Col md={8}>
 					<ListGroup variant='flush'>
 						<ListGroup.Item>
@@ -143,28 +145,47 @@ const OrderScreen = ({ match }) => {
 								{order.shippingAddress.prefecture}
 								{order.shippingAddress.address}
 							</p>
-							{order.isDelievered ? (
+							{/* {order.isDelievered ? (
 								<Message variant='success'>
 									配送中です {order.delieveredAt}
 								</Message>
 							) : (
 								<Message variant='danger'>配送中です</Message>
-							)}
+							)} */}
+							<Button variant='primary'>修正</Button>
 						</ListGroup.Item>
-						<ListGroup.Item>
+						<ListGroup.Item className='mt-3'>
 							<h4>お支払い方法</h4>
 							{/* <p>
 								<strong>Method: </strong>
 								{order.paymentMethod}
 							</p> */}
+							<Col>
+								<Form.Check
+									className='mt-3'
+									type='radio'
+									label='クレジットカード'
+									id='PayPal'
+									name='paymentMethod'
+									defaultChecked
+								></Form.Check>
+							</Col>
+							<Form.Group controlId='address' className='mt-2'>
+								{/* <Form.Label>クレジットカード名義人</Form.Label> */}
+								<Form.Control
+									type='text'
+									required
+									placeholder='カード名義人'
+								></Form.Control>
+							</Form.Group>
 							<CardElement
 								className='mt-3 mb-3'
-								// option={CARD_OPTIONS}
+								disabled={true}
 								options={{
 									style: {
 										base: {
 											fontSize: '16px',
-											color: '#424770',
+											// color: '#424770',
 											'::placeholder': {
 												color: '#aab7c4',
 											},
@@ -175,15 +196,16 @@ const OrderScreen = ({ match }) => {
 									},
 								}}
 							/>
-							{order.isPaid ? (
+
+							{/* {order.isPaid ? (
 								<Message variant='success'>
 									paid on {order.paidAt}
 								</Message>
 							) : (
 								<Message variant='danger'>not paid</Message>
-							)}
+							)} */}
 						</ListGroup.Item>
-						<ListGroup.Item>
+						<ListGroup.Item className='mt-3'>
 							<h4>注文内容を確認</h4>
 							{order.orderItems.length === 0 ? (
 								<Message>注文がありません</Message>
@@ -222,7 +244,7 @@ const OrderScreen = ({ match }) => {
 				<Col md={4}>
 					<Card>
 						<ListGroup variant='flush'>
-							<ListGroup.Item>
+							<ListGroup.Item className='mt-3'>
 								<h2>注文内容</h2>
 								<p>ID:{order._id}</p>
 							</ListGroup.Item>
@@ -238,12 +260,7 @@ const OrderScreen = ({ match }) => {
 									<Col>¥{order.shippingPrice}</Col>
 								</Row>
 							</ListGroup.Item>
-							{/* <ListGroup.Item>
-								<Row>
-									<Col>税金</Col>
-									<Col>¥{order.taxPrice}</Col>
-								</Row>
-							</ListGroup.Item> */}
+
 							<ListGroup.Item>
 								<Row>
 									<Col>合計</Col>

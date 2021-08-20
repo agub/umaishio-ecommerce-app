@@ -28,6 +28,11 @@ main {
   min-height: 80vh;
 }
 
+.StripeElement {
+  background-color: #f7f7f9;
+  padding: .75rem 1.5rem;
+}
+
 /* h3 { 
   padding: 0.5rem 0;
 } */

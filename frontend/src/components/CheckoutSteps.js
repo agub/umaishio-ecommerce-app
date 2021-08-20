@@ -41,24 +41,23 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
 
 			<Nav.Item className='checkoutStep'>
 				{step3 ? (
-					<LinkContainer to='/payment' className='p-0'>
-						<Nav.Link>お支払い方法</Nav.Link>
-					</LinkContainer>
-				) : (
-					<Nav.Link disabled className='p-0'>
-						お支払い方法
-					</Nav.Link>
-				)}
-			</Nav.Item>
-
-			<Nav.Item className='checkoutStep'>
-				{step4 ? (
 					<LinkContainer to='/placeorder' className='p-0'>
 						<Nav.Link>ご注文の確認</Nav.Link>
 					</LinkContainer>
 				) : (
 					<Nav.Link disabled className='p-0'>
 						ご注文の確認
+					</Nav.Link>
+				)}
+			</Nav.Item>
+			<Nav.Item className='checkoutStep'>
+				{step4 ? (
+					<LinkContainer to='/payment' className='p-0'>
+						<Nav.Link>注文</Nav.Link>
+					</LinkContainer>
+				) : (
+					<Nav.Link disabled className='p-0'>
+						支払い・注文
 					</Nav.Link>
 				)}
 			</Nav.Item>
