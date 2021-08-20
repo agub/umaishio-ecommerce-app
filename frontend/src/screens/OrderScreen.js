@@ -4,8 +4,13 @@ import { Form, Button, Col, ListGroup, Image, Card, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getOrderDetails } from '../actions/orderActions'
+import {
+	getOrderDetail,
+	getOrderDetails,
+	payOrder,
+} from '../actions/orderActions'
 import { ORDER_PAY_RESET } from '../constants/orderConstants'
+import axios from 'axios'
 
 const OrderScreen = ({ match }) => {
 	const orderId = match.params.id
@@ -23,11 +28,32 @@ const OrderScreen = ({ match }) => {
 	useEffect(() => {
 		if (!order || order._id !== orderId) {
 			dispatch({ type: ORDER_PAY_RESET })
-			dispatch({ type: ORDER_DELIVER_RESET })
 			dispatch(getOrderDetails(orderId))
 		}
 	}, [order, orderId, dispatch])
 
+	const submitHandler = async () => {
+		try {
+			//api connect to stripe
+			// const { paymentResult } = axios.put()
+			const paymentResult = {
+				id: 'idsample',
+				status: 'completed',
+				update_time: 'updatetime',
+				payer: { email_address: 'fasdfas' },
+			}
+			console.log(paymentResult)
+			dispatch(payOrder(orderId, paymentResult))
+		} catch (error) {
+			console.log(error)
+		}
+		// const paymentResult = {
+		// 	id: req.body.id,
+		// 	status: req.body.status,
+		// 	update_time: req.body.update_time,
+		// 	email_address: req.body.payer.email_address,
+		// }
+	}
 	return loading ? (
 		<>
 			<Loader />
@@ -149,6 +175,16 @@ const OrderScreen = ({ match }) => {
 									<Col>合計</Col>
 									<Col>¥{order.totalPrice}　*税込</Col>
 								</Row>
+							</ListGroup.Item>
+							<ListGroup.Item>
+								<Button
+									type='button'
+									className='btn-block w-100'
+									disabled={cart.cartItems === 0}
+									onClick={submitHandler}
+								>
+									注文を確定する
+								</Button>
 							</ListGroup.Item>
 							{/* <ListGroup.Item>
 							 {error && (
