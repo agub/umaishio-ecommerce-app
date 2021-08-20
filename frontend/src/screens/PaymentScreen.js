@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { savePaymentMethod } from '../actions/cartActions'
-import { PREF_OPTIONS } from '../data/Prefecture'
+// import { PREF_OPTIONS } from '../data/Prefecture'
 
 const PaymentScreen = ({ history }) => {
 	const cart = useSelector((state) => state.cart)
@@ -14,7 +14,7 @@ const PaymentScreen = ({ history }) => {
 		history.push('/shipping')
 	}
 
-	const [paymentMethod, setPaymentMethod] = useState('paypal')
+	const [paymentMethod, setPaymentMethod] = useState('Paypal')
 
 	const dispatch = useDispatch()
 
@@ -35,11 +35,11 @@ const PaymentScreen = ({ history }) => {
 						<Col>
 							<Form.Check
 								type='radio'
-								label='paypal or credit card'
-								checked
-								id='paypal'
+								label='PayPal or Credit Card'
+								id='PayPal'
 								name='paymentMethod'
-								value='Paypal'
+								value='PayPal'
+								checked
 								onChange={(e) =>
 									setPaymentMethod(e.target.value)
 								}

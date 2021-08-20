@@ -37,4 +37,10 @@ const addOrderItems = asyncHandler(async (req, res) => {
 	}
 })
 
+// @description   Get order by ID
+// @route         POST /api/orders/:id
+// @access        Private
+
+// const getOrderById = asyncHandler(async (req, res) => {})
+
 export { addOrderItems }
