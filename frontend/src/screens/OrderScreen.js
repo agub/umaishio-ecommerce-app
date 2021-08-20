@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button, Col, ListGroup, Image, Card, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -58,6 +58,8 @@ const CARD_OPTIONS = {
 }
 
 const OrderScreen = ({ match }) => {
+	const [name, setName] = useState('')
+	const [errorText, setErrorText] = useState(null)
 	const orderId = match.params.id
 	const stripe = useStripe()
 	const elements = useElements()
@@ -67,43 +69,57 @@ const OrderScreen = ({ match }) => {
 
 	const orderDetails = useSelector((state) => state.orderDetails)
 	const { order, loading, error } = orderDetails
+	const stripePayReducer = useSelector((state) => state.stripePay)
 
 	useEffect(() => {
 		if (!order || order._id !== orderId) {
 			dispatch({ type: ORDER_PAY_RESET })
 			dispatch(getOrderDetails(orderId))
+			console.log(order)
 		}
 	}, [order, orderId, dispatch])
 
-	const submitHandler = async () => {
-		const { error, paymentMethod } = await stripe.createPaymentMethod({
-			type: 'card',
-			card: elements.getElement(CardElement),
-		})
-		const { id } = paymentMethod
-		console.log(id)
+	const submitHandler = async (e) => {
+		e.preventDefault()
+
 		try {
-			console.log(orderId)
-			//api connect to stripe
-			// const { paymentResult } = axios.put()
-			// const paymentResult = {
-			// 	id: 'idsample',
-			// 	status: 'completed',
-			// 	update_time: 'updatetime',
-			// 	payer: { email_address: 'fasdfas' },
-			// }
-			const paymentDetails = {
-				id: id,
-				amount: 10000,
-				name: 'sample　400円',
-				metadata: { sampleId: '6735', address: 'afas' },
+			if (name !== '') {
+				const {
+					error,
+					paymentMethod,
+				} = await stripe.createPaymentMethod({
+					type: 'card',
+					card: elements.getElement(CardElement),
+				})
+				const { id } = paymentMethod
+				console.log(orderId)
+				//api connect to stripe
+				// const { paymentResult } = axios.put()
+				// const paymentResult = {
+				// 	id: 'idsample',
+				// 	status: 'completed',
+				// 	update_time: 'updatetime',
+				// 	payer: { email_address: 'fasdfas' },
+				// }
+				const paymentDetails = {
+					id: id,
+					amount: 10000,
+					name: 'sample　400円',
+					metadata: {
+						email_address: 'fasdfas',
+						sampleId: '6735',
+						address: 'afas',
+						status: 'COMPLETED',
+					},
+				}
+				dispatch(payOnStirpe(orderId, paymentDetails))
+				// console.log(paymentResult)
+				// dispatch(payOrder(orderId, paymentDetails))
+				//then updateirder() fires
 			}
-			dispatch(payOnStirpe(orderId, paymentDetails))
-			// console.log(paymentResult)
-			// dispatch(payOrder(orderId, paymentResult))
-			//then updateirder() fires
 		} catch (error) {
 			console.log(error)
+			setErrorText('正しく記入してください')
 		}
 		// const paymentResult = {
 		// 	id: req.body.id,
@@ -152,7 +168,6 @@ const OrderScreen = ({ match }) => {
 							) : (
 								<Message variant='danger'>配送中です</Message>
 							)} */}
-							<Button variant='primary'>修正</Button>
 						</ListGroup.Item>
 						<ListGroup.Item className='mt-3'>
 							<h4>お支払い方法</h4>
@@ -176,16 +191,19 @@ const OrderScreen = ({ match }) => {
 									type='text'
 									required
 									placeholder='カード名義人'
+									onChange={(e) => setName(e.target.value)}
 								></Form.Control>
 							</Form.Group>
 							<CardElement
 								className='mt-3 mb-3'
-								disabled={true}
+								// disabled={true}
+								// onBlur
+								required
+								hidePostalCode={true}
 								options={{
 									style: {
 										base: {
 											fontSize: '16px',
-											// color: '#424770',
 											'::placeholder': {
 												color: '#aab7c4',
 											},
@@ -204,6 +222,9 @@ const OrderScreen = ({ match }) => {
 							) : (
 								<Message variant='danger'>not paid</Message>
 							)} */}
+							{errorText && (
+								<Message variant='danger'>{errorText}</Message>
+							)}
 						</ListGroup.Item>
 						<ListGroup.Item className='mt-3'>
 							<h4>注文内容を確認</h4>
@@ -271,7 +292,11 @@ const OrderScreen = ({ match }) => {
 								<Button
 									type='button'
 									className='btn-block w-100'
-									disabled={cart.cartItems === 0}
+									disabled={
+										cart.cartItems === 0 ||
+										stripePayReducer.loading ||
+										stripePayReducer.success
+									}
 									onClick={submitHandler}
 								>
 									注文を確定する

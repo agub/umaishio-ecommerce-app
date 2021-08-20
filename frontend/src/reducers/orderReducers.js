@@ -101,7 +101,7 @@ export const orderPayReducer = (state = {}, action) => {
 			return state
 	}
 }
-export const StripePayReducer = (state = {}, action) => {
+export const stripePayReducer = (state = {}, action) => {
 	switch (action.type) {
 		case STRIPE_PAY_REQUEST:
 			return {
