@@ -186,7 +186,7 @@ const OrderScreen = ({ match }) => {
 							)}
 							{order.isPaid && (
 								<Message variant='success'>
-									お支払い済み {order.paidAt}
+									お支払い済み {order.paidAt.substring(0, 10)}
 								</Message>
 							)}
 							{errorText && (

@@ -63,8 +63,8 @@ const CartScreen = ({ match, location, history }) => {
 									<Col md={2}>${item.price}</Col>
 									<Col md={2} sm={10} xs={9}>
 										<Form.Control
-											as='選択してください'
-											value={item.qty}
+											as='select'
+											value={qty}
 											className='form-select form-control-select-checkout'
 											style={{
 												padding:
@@ -131,7 +131,7 @@ const CartScreen = ({ match, location, history }) => {
 									(acc, item) => acc + item.qty * item.price,
 									0
 								)
-								.toFixed(2)}
+								.toFixed(0)}
 							{/* fix this to 0 for yen */}
 						</ListGroup.Item>
 						<ListGroup.Item>

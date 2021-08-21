@@ -13,19 +13,20 @@ const PlaceOrderScreen = ({ history }) => {
 	cart.itemsPrice = cart.cartItems.reduce
 
 	const addDecimals = (num) => {
-		return (Math.round(num * 100) / 100).toFixed(2)
+		return (Math.round(num * 100) / 100).toFixed(0)
 	}
 
 	cart.itemsPrice = addDecimals(
 		cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
 	)
 	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
-	cart.taxPrice = addDecimals(Number((0.1 * cart.itemsPrice).toFixed(2)))
+	cart.taxPrice = addDecimals(Number((0.1 * cart.itemsPrice).toFixed(0)))
 	cart.totalPrice = (
 		Number(cart.itemsPrice) +
 		Number(cart.shippingPrice) +
 		Number(cart.taxPrice)
-	).toFixed(2)
+	).toFixed(0)
+	// cart.itemsPrice = cart.itemsPrice.toFixed(0)
 
 	const orderCreate = useSelector((state) => state.orderCreate)
 	const { order, success, error } = orderCreate
@@ -120,7 +121,7 @@ const PlaceOrderScreen = ({ history }) => {
 							<ListGroup.Item>
 								<Row>
 									<Col>商品の小計</Col>
-									<Col>￥{cart.itemsPrice}</Col>
+									<Col>¥{cart.itemsPrice}</Col>
 								</Row>
 							</ListGroup.Item>
 							<ListGroup.Item>

@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { listProducts } from '../actions/productActions'
+import Meta from '../components/Meta'
 
 const HomeScreen = () => {
 	const dispatch = useDispatch()
@@ -16,6 +18,7 @@ const HomeScreen = () => {
 
 	return (
 		<>
+			<Meta />
 			<h3 className='my-3'>商品一覧</h3>
 			{loading ? (
 				<Loader />

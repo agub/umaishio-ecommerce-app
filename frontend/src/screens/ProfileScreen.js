@@ -151,7 +151,13 @@ const ProfileScreen = ({ location, history }) => {
 							type='submit'
 							variant='primary'
 							className='mt-3  w-100'
-							disabled={loading}
+							disabled={
+								loading || password !== ''
+									? null
+									: email === userInfo.email
+									? name === userInfo.name
+									: null
+							}
 						>
 							変更
 						</Button>
