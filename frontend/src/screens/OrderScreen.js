@@ -10,80 +10,39 @@ import {
 	payOnStirpe,
 	payOrder,
 } from '../actions/orderActions'
-import { ORDER_PAY_RESET } from '../constants/orderConstants'
+import { STRIPE_PAY_RESET } from '../constants/orderConstants'
 
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import CheckoutSteps from '../components/CheckoutSteps'
-import FormContainer from '../components/FormContainer'
-
-const CARD_OPTIONS = {
-	// iconStyle: 'solid',
-	// style: {
-	// 	base: {
-	// 		iconColor: '#c4f0ff',
-	// 		color: '#fff',
-	// 		fontWeight: 500,
-	// 		fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-	// 		fontSize: '16px',
-	// 		fontSmoothing: 'antialiased',
-	// 		':-webkit-autofill': { color: '#fce883' },
-	// 		'::placeholder': { color: '#87bbfd' },
-	// 	},
-	// 	invalid: {
-	// 		iconColor: '#ffc7ee',
-	// 		color: '#ffc7ee',
-	// 	},
-	// },
-	iconStyle: 'solid',
-	style: {
-		base: {
-			iconColor: '#c4f0ff',
-			color: '#fff',
-			fontWeight: 500,
-			fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-			fontSize: '16px',
-			fontSmoothing: 'antialiased',
-			':-webkit-autofill': {
-				color: '#fce883',
-			},
-			'::placeholder': {
-				color: '#87bbfd',
-			},
-		},
-		invalid: {
-			iconColor: '#ffc7ee',
-			color: '#ffc7ee',
-		},
-	},
-}
 
 const OrderScreen = ({ match }) => {
-	const [name, setName] = useState('')
-	const [errorText, setErrorText] = useState(null)
-	const orderId = match.params.id
 	const stripe = useStripe()
 	const elements = useElements()
+
+	const [name, setName] = useState('')
+	const [errorText, setErrorText] = useState(null)
 
 	const dispatch = useDispatch()
 	const cart = useSelector((state) => state.cart)
 
+	const orderId = match.params.id
 	const orderDetails = useSelector((state) => state.orderDetails)
 	const { order, loading, error } = orderDetails
 	const stripePayReducer = useSelector((state) => state.stripePay)
+	const { loading: loadingPay, success: successPay } = stripePayReducer
 
 	useEffect(() => {
-		if (!order || order._id !== orderId) {
-			dispatch({ type: ORDER_PAY_RESET })
+		if (successPay || !order || order._id !== orderId) {
+			dispatch({ type: STRIPE_PAY_RESET })
 			dispatch(getOrderDetails(orderId))
-			console.log(order)
 		}
-	}, [order, orderId, dispatch])
+	}, [dispatch, order, orderId, successPay])
 
 	const submitHandler = async (e) => {
 		e.preventDefault()
-
+		setErrorText('')
 		try {
-			if (name !== '') {
+			if (name !== '' && order) {
 				const {
 					error,
 					paymentMethod,
@@ -103,19 +62,19 @@ const OrderScreen = ({ match }) => {
 				// }
 				const paymentDetails = {
 					id: id,
-					amount: 10000,
+					amount: order.totalPrice,
 					name: 'sample　400円',
 					metadata: {
 						email_address: 'fasdfas',
 						sampleId: '6735',
 						address: 'afas',
 						status: 'COMPLETED',
+						update_time: Date.now(),
 					},
 				}
 				dispatch(payOnStirpe(orderId, paymentDetails))
 				// console.log(paymentResult)
 				// dispatch(payOrder(orderId, paymentDetails))
-				//then updateirder() fires
 			}
 		} catch (error) {
 			console.log(error)
@@ -171,10 +130,6 @@ const OrderScreen = ({ match }) => {
 						</ListGroup.Item>
 						<ListGroup.Item className='mt-3'>
 							<h4>お支払い方法</h4>
-							{/* <p>
-								<strong>Method: </strong>
-								{order.paymentMethod}
-							</p> */}
 							<Col>
 								<Form.Check
 									className='mt-3'
@@ -185,43 +140,49 @@ const OrderScreen = ({ match }) => {
 									defaultChecked
 								></Form.Check>
 							</Col>
-							<Form.Group controlId='address' className='mt-2'>
-								{/* <Form.Label>クレジットカード名義人</Form.Label> */}
-								<Form.Control
-									type='text'
-									required
-									placeholder='カード名義人'
-									onChange={(e) => setName(e.target.value)}
-								></Form.Control>
-							</Form.Group>
-							<CardElement
-								className='mt-3 mb-3'
-								// disabled={true}
-								// onBlur
-								required
-								hidePostalCode={true}
-								options={{
-									style: {
-										base: {
-											fontSize: '16px',
-											'::placeholder': {
-												color: '#aab7c4',
+							{!order.isPaid && (
+								<>
+									<Form.Group
+										controlId='address'
+										className='mt-2'
+									>
+										{/* <Form.Label>クレジットカード名義人</Form.Label> */}
+										<Form.Control
+											type='text'
+											required
+											placeholder='カード名義人'
+											onChange={(e) =>
+												setName(e.target.value)
+											}
+										></Form.Control>
+									</Form.Group>
+									<CardElement
+										className='mt-3 mb-3'
+										// disabled={true}
+										// onBlur
+										required
+										hidePostalCode={true}
+										options={{
+											style: {
+												base: {
+													fontSize: '16px',
+													'::placeholder': {
+														color: '#aab7c4',
+													},
+												},
+												invalid: {
+													color: '#9e2146',
+												},
 											},
-										},
-										invalid: {
-											color: '#9e2146',
-										},
-									},
-								}}
-							/>
-
-							{/* {order.isPaid ? (
+										}}
+									/>
+								</>
+							)}
+							{order.isPaid && (
 								<Message variant='success'>
-									paid on {order.paidAt}
+									お支払い済み {order.paidAt}
 								</Message>
-							) : (
-								<Message variant='danger'>not paid</Message>
-							)} */}
+							)}
 							{errorText && (
 								<Message variant='danger'>{errorText}</Message>
 							)}
@@ -288,20 +249,27 @@ const OrderScreen = ({ match }) => {
 									<Col>¥{order.totalPrice}　*税込</Col>
 								</Row>
 							</ListGroup.Item>
-							<ListGroup.Item>
-								<Button
-									type='button'
-									className='btn-block w-100'
-									disabled={
-										cart.cartItems === 0 ||
-										stripePayReducer.loading ||
-										stripePayReducer.success
-									}
-									onClick={submitHandler}
-								>
-									注文を確定する
-								</Button>
-							</ListGroup.Item>
+							{!order.isPaid && (
+								<ListGroup.Item>
+									{loadingPay ? (
+										<Loader />
+									) : (
+										<Button
+											type='button'
+											className='btn-block w-100'
+											disabled={
+												cart.cartItems === 0 ||
+												stripePayReducer.loading ||
+												stripePayReducer.success
+											}
+											onClick={submitHandler}
+										>
+											注文を確定する
+										</Button>
+									)}
+								</ListGroup.Item>
+							)}
+
 							{/* <ListGroup.Item>
 							 {error && (
 									<Message variant='danger'>{error}</Message>

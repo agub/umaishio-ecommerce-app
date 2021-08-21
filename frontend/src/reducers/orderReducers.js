@@ -28,6 +28,7 @@ import {
 	STRIPE_PAY_REQUEST,
 	STRIPE_PAY_SUCCESS,
 	STRIPE_PAY_FAIL,
+	STRIPE_PAY_RESET,
 } from '../constants/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -117,6 +118,8 @@ export const stripePayReducer = (state = {}, action) => {
 				loading: false,
 				error: action.payload,
 			}
+		case STRIPE_PAY_RESET:
+			return {}
 		default:
 			return state
 	}

@@ -66,11 +66,17 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 		order.isPaid = true
 		order.paidAt = Date.now()
 		//coming from paypalresponse
+		// order.paymentResult = {
+		// 	id: req.body.id,
+		// 	status: req.body.status,
+		// 	update_time: req.body.update_time,
+		// 	email_address: req.body.payer.email_address,
+		// }
 		order.paymentResult = {
 			id: req.body.id,
-			status: req.body.status,
-			update_time: req.body.update_time,
-			email_address: req.body.payer.email_address,
+			status: req.body.metadata.status,
+			update_time: req.body.metadata.update_time,
+			email_address: req.body.metadata.email_address,
 		}
 
 		const updatedOrder = await order.save()
@@ -101,10 +107,28 @@ const stripeApi = asyncHandler(async (req, res) => {
 			})
 
 			console.log('Payment', payment)
-			res.json({
-				message: 'Payment successfull',
-				success: true,
-			})
+			// res.json({
+			// 	message: 'Payment successfull',
+			// 	success: true,
+			// })
+			const order = await Order.findById(req.params.id)
+			if (order) {
+				order.isPaid = true
+				order.paidAt = Date.now()
+				order.paymentResult = {
+					id,
+					status: metadata.status,
+					update_time: metadata.update_time,
+					email_address: metadata.email_address,
+				}
+
+				const updatedOrder = await order.save()
+
+				res.json(updatedOrder)
+			} else {
+				res.status(404)
+				throw new Error('Order not found')
+			}
 		}
 	} catch (error) {
 		console.log(error)
