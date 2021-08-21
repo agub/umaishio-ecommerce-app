@@ -72,7 +72,7 @@ const ProfileScreen = ({ location, history }) => {
 				{message && <Message variant='danger'>{message}</Message>}
 				{error && <Message variant='danger'>{error}</Message>}
 				{success && <Message variant='success'>変更しました</Message>}
-				{loading && <Loader />}
+				{/* {loading && <Loader />} */}
 				{modify ? (
 					<>
 						<Card className='mt-4 mb-4'>
@@ -187,7 +187,7 @@ const ProfileScreen = ({ location, history }) => {
 					>
 						<thead>
 							<tr>
-								{/* <th>ID</th> */}
+								<th>ID</th>
 								<th>注文日</th>
 								{/* <th>合計</th> */}
 								<th>支払い</th>
@@ -198,7 +198,8 @@ const ProfileScreen = ({ location, history }) => {
 						<tbody>
 							{orders.map((order) => (
 								<tr key={order._id}>
-									{/* <td>{order._id}</td> */}
+									{/* responsive */}
+									<td>{order._id.substring(0, 10)}...</td>
 									<td>{order.createdAt.substring(0, 10)}</td>
 									{/* <td>¥{order.totalPrice}</td> */}
 									<td>
@@ -229,7 +230,7 @@ const ProfileScreen = ({ location, history }) => {
 											to={`/order/${order._id}`}
 										>
 											<Button
-												className='btn-sm'
+												className='w-100 btn-sm'
 												variant='light'
 											>
 												詳細

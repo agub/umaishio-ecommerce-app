@@ -16,7 +16,7 @@ const HomeScreen = () => {
 
 	return (
 		<>
-			<h1>商品一覧</h1>
+			<h3 className='my-3'>商品一覧</h3>
 			{loading ? (
 				<Loader />
 			) : error ? (

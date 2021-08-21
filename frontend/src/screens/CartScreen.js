@@ -61,9 +61,9 @@ const CartScreen = ({ match, location, history }) => {
 										</Link>
 									</Col>
 									<Col md={2}>${item.price}</Col>
-									<Col md={2} sm={10}>
+									<Col md={2} sm={10} xs={9}>
 										<Form.Control
-											as='select'
+											as='選択してください'
 											value={item.qty}
 											className='form-select form-control-select-checkout'
 											style={{
@@ -93,7 +93,7 @@ const CartScreen = ({ match, location, history }) => {
 											))}
 										</Form.Control>
 									</Col>
-									<Col md={1} sm={2}>
+									<Col md={1} sm={2} xs={3}>
 										<Button
 											type='button'
 											variant='light'

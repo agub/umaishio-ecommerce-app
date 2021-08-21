@@ -1,7 +1,20 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const Rating = ({ value, text, color }) => {
+const Rating = ({
+	value,
+	text,
+	color,
+	showArrow,
+	showComment,
+	setShowComment,
+}) => {
+	const showCommentHandler = () => {
+		if (showComment) {
+			setShowComment(false)
+		} else {
+			setShowComment(true)
+		}
+	}
 	return (
 		<div className='rating'>
 			<span>
@@ -64,17 +77,27 @@ const Rating = ({ value, text, color }) => {
 					}
 				></i>
 			</span>
-			<span style={{ 'fontSize': '0.7rem' }}>{text && text}</span>
+			<span style={{ 'fontSize': '0.7rem' }}>
+				{text && text}{' '}
+				{showArrow && (
+					<span
+						onClick={() => showCommentHandler()}
+						style={{ 'cursor': 'pointer' }}
+					>
+						<i className='fas fa-angle-down'></i>
+					</span>
+				)}
+			</span>
 		</div>
 	)
 }
 Rating.defaultProps = {
 	color: '#f8e825',
 }
-Rating.propTypes = {
-	value: PropTypes.number.isRequired,
-	text: PropTypes.string.isRequired,
-	color: PropTypes.string,
-}
+// Rating.propTypes = {
+// 	value: PropTypes.number.isRequired,
+// 	text: PropTypes.string.isRequired,
+// 	color: PropTypes.string,
+// }
 
 export default Rating

@@ -280,6 +280,7 @@ const OrderScreen = ({ match }) => {
 											type='button'
 											className='btn-block w-100'
 											disabled={
+												!stripe ||
 												cart.cartItems === 0 ||
 												stripePayReducer.loading ||
 												stripePayReducer.success
