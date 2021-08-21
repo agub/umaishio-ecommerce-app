@@ -14,6 +14,7 @@ import { STRIPE_PAY_RESET } from '../constants/orderConstants'
 
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import CheckoutSteps from '../components/CheckoutSteps'
+import { CART_ITEMS_RESET } from '../constants/cartConstants'
 
 const OrderScreen = ({ match }) => {
 	const stripe = useStripe()
@@ -26,8 +27,10 @@ const OrderScreen = ({ match }) => {
 	const cart = useSelector((state) => state.cart)
 
 	const orderId = match.params.id
+
 	const orderDetails = useSelector((state) => state.orderDetails)
 	const { order, loading, error } = orderDetails
+
 	const stripePayReducer = useSelector((state) => state.stripePay)
 	const { loading: loadingPay, success: successPay } = stripePayReducer
 
@@ -35,6 +38,10 @@ const OrderScreen = ({ match }) => {
 		if (successPay || !order || order._id !== orderId) {
 			dispatch({ type: STRIPE_PAY_RESET })
 			dispatch(getOrderDetails(orderId))
+		}
+		if (successPay) {
+			localStorage.setItem('cartItems', [])
+			dispatch({ type: CART_ITEMS_RESET })
 		}
 	}, [dispatch, order, orderId, successPay])
 
@@ -97,7 +104,7 @@ const OrderScreen = ({ match }) => {
 	) : (
 		<>
 			<Row>
-				<CheckoutSteps step1 step2 step3 step4 />
+				{!order.isPaid && <CheckoutSteps step1 step2 step3 step4 />}
 				<Col md={8}>
 					<ListGroup variant='flush'>
 						<ListGroup.Item>

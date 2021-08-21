@@ -33,7 +33,7 @@ const ProductScreen = ({ match, history }) => {
 	const addToCartHandler = () => {
 		dispatch(addToCart(product._id, qty))
 		setMessage('買い物カゴへ追加しました。')
-		// history.push(`/cart/${match.params.id}?qty=${qty}`)
+		history.push(`/cart/${match.params.id}?qty=${qty}`)
 	}
 
 	return (
