@@ -18,6 +18,7 @@ const Header = () => {
 
 	const logoutHandler = () => {
 		dispatch(logout())
+		window.location = '/'
 	}
 
 	return (
@@ -67,6 +68,25 @@ const Header = () => {
 										&nbsp;サインイン
 									</Nav.Link>
 								</LinkContainer>
+							)}
+							{userInfo && userInfo.isAdmin && (
+								<NavDropdown title='管理者' id='adminmenu'>
+									<LinkContainer to='/admin/userlist'>
+										<NavDropdown.Item>
+											ユーザー
+										</NavDropdown.Item>
+									</LinkContainer>
+									<LinkContainer to='/admin/productlist'>
+										<NavDropdown.Item>
+											在庫
+										</NavDropdown.Item>
+									</LinkContainer>
+									<LinkContainer to='/admin/orderlist'>
+										<NavDropdown.Item>
+											注文一覧
+										</NavDropdown.Item>
+									</LinkContainer>
+								</NavDropdown>
 							)}
 						</Nav>
 					</Navbar.Collapse>

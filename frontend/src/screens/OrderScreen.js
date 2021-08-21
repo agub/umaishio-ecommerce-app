@@ -70,7 +70,7 @@ const OrderScreen = ({ match }) => {
 				const paymentDetails = {
 					id: id,
 					amount: order.totalPrice,
-					name: 'sample　400円',
+					name: order.user.name,
 					metadata: {
 						email_address: 'fasdfas',
 						sampleId: '6735',
@@ -109,7 +109,6 @@ const OrderScreen = ({ match }) => {
 					<ListGroup variant='flush'>
 						<ListGroup.Item>
 							<h4>配送</h4>
-
 							<p>
 								<strong>お名前: </strong>
 								{order.user.name}
@@ -193,6 +192,22 @@ const OrderScreen = ({ match }) => {
 							{errorText && (
 								<Message variant='danger'>{errorText}</Message>
 							)}
+						</ListGroup.Item>
+						<ListGroup.Item className='mt-3'>
+							<Form.Group controlId='prefecture' className='mt-2'>
+								<h4>配送オプション</h4>
+								<p>お届け予定日: </p>
+								{/* <Form.Label></Form.Label> */}
+								<Form.Control
+									className='form-select'
+									as='select'
+									placeholder='選択してください'
+									required
+									defaultValue={'aa'}
+								>
+									<option>ヤマトとか？ + ¥200</option>
+								</Form.Control>
+							</Form.Group>
 						</ListGroup.Item>
 						<ListGroup.Item className='mt-3'>
 							<h4>注文内容を確認</h4>
