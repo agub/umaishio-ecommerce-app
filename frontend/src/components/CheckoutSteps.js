@@ -52,9 +52,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
 			</Nav.Item>
 			<Nav.Item className='checkoutStep'>
 				{step4 ? (
-					<LinkContainer to='/payment' className='p-0'>
-						<Nav.Link>お支払い・注文</Nav.Link>
-					</LinkContainer>
+					<Nav.Link>お支払い・注文</Nav.Link>
 				) : (
 					<Nav.Link disabled className='p-0'>
 						お支払い・注文

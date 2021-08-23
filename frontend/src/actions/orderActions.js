@@ -207,7 +207,7 @@ export const payOnStirpe = (orderId, paymentDetails) => async (
 		}
 		dispatch({
 			type: STRIPE_PAY_FAIL,
-			payload: 'エラー',
+			payload: message,
 		})
 	}
 }

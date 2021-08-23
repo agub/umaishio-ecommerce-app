@@ -97,7 +97,7 @@ const stripeApi = asyncHandler(async (req, res) => {
 	const payment = await stripe.paymentIntents.create({
 		amount: amount,
 		currency: 'JPY',
-		description: `旨い塩オンラインショップ　${name}様`,
+		description: name,
 		payment_method: id,
 		confirm: true,
 		receipt_email: metadata.email_address,

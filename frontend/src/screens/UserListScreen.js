@@ -20,7 +20,7 @@ const UserListScreen = ({ history }) => {
 		} else {
 			history.push('/login')
 		}
-	}, [dispatch, history])
+	}, [dispatch, history, userInfo])
 
 	const deleteHandler = () => {
 		console.log('delete')

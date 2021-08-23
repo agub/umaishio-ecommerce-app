@@ -1,8 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
+import { Navbar, Nav, Container, NavDropdown, Image } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { logout } from '../actions/userActions'
+import logo from '../data/images/logo.png'
 
 const Header = () => {
 	const dispatch = useDispatch()
@@ -26,7 +27,13 @@ const Header = () => {
 			<Navbar collapseOnSelect bg='dark' variant='dark' expand='lg'>
 				<Container>
 					<LinkContainer to='/'>
-						<Navbar.Brand>旨い塩</Navbar.Brand>
+						<Navbar.Brand>
+							<Image
+								src={logo}
+								alt='logo'
+								style={{ width: '200px' }}
+							/>
+						</Navbar.Brand>
 					</LinkContainer>
 
 					<Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -54,11 +61,11 @@ const Header = () => {
 								>
 									<LinkContainer to='/profile'>
 										<NavDropdown.Item>
-											Profile
+											アカウント
 										</NavDropdown.Item>
 									</LinkContainer>
 									<NavDropdown.Item onClick={logoutHandler}>
-										Logout
+										ログアウト
 									</NavDropdown.Item>
 								</NavDropdown>
 							) : (

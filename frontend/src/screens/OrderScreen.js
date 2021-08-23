@@ -63,6 +63,8 @@ const OrderScreen = ({ match }) => {
 				})
 				const { id } = paymentMethod
 				console.log(orderId)
+				console.log(error)
+
 				//api connect to stripe
 				// const { paymentResult } = axios.put()
 				// const paymentResult = {
@@ -74,11 +76,15 @@ const OrderScreen = ({ match }) => {
 				const paymentDetails = {
 					id: id,
 					amount: order.totalPrice,
-					name: order.user.name,
+					name: name,
 					metadata: {
-						email_address: 'fasdfas',
-						sampleId: '6735',
-						address: 'afas',
+						email_address: order.user.email,
+						userId: order.user._id,
+						orderId: orderId,
+						fullName: order.shippingAddress.fullName,
+						postalCode: order.shippingAddress.postalCode,
+						prefecture: order.shippingAddress.prefecture,
+						address: order.shippingAddress.address,
 						status: 'COMPLETED',
 						update_time: Date.now(),
 					},
@@ -114,8 +120,8 @@ const OrderScreen = ({ match }) => {
 						<ListGroup.Item>
 							<h4>配送</h4>
 							<p>
-								<strong>お名前: </strong>
-								{order.user.name}
+								<strong>氏名: </strong>
+								{order.shippingAddress.fullName}
 							</p>
 							<p>
 								<strong>電話番号: </strong>
@@ -123,7 +129,18 @@ const OrderScreen = ({ match }) => {
 							</p>
 							<p>
 								<strong>郵便番号: </strong>
-								{order.shippingAddress.postalCode}
+								{/* {order.shippingAddress.postalCode} */}
+								{order.shippingAddress.postalCode &&
+									order.shippingAddress.postalCode.substring(
+										0,
+										3
+									)}
+								-
+								{order.shippingAddress.postalCode &&
+									order.shippingAddress.postalCode.substring(
+										3,
+										7
+									)}
 							</p>
 							<p>
 								<strong>住所: </strong>

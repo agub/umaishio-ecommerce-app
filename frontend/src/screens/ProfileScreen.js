@@ -178,7 +178,7 @@ const ProfileScreen = ({ location, history }) => {
 			</Col>
 
 			<Col md={9}>
-				<h2>my orders</h2>
+				<h2>注文一覧</h2>
 				{loadingOrders ? (
 					<Loader />
 				) : errorOrders ? (

@@ -43,7 +43,7 @@ const RegisterScreen = ({ location, history }) => {
 			{error && <Message variant='danger'>{error}</Message>}
 			{loading && <Loader />}
 			<Form onSubmit={submitHandler}>
-				<Form.Group controlId='name'>
+				<Form.Group controlId='name' className='mt-2'>
 					<Form.Label>名前</Form.Label>
 					<Form.Control
 						type='name'
@@ -52,7 +52,7 @@ const RegisterScreen = ({ location, history }) => {
 						onChange={(e) => setName(e.target.value)}
 					></Form.Control>
 				</Form.Group>
-				<Form.Group controlId='email'>
+				<Form.Group className='mt-2' controlId='email'>
 					<Form.Label>Email</Form.Label>
 					<Form.Control
 						type='email'
