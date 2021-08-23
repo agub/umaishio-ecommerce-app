@@ -40,7 +40,10 @@ const CartScreen = ({ match, location, history }) => {
 				<h1>ショッピングカート</h1>
 				{cartItems.length === 0 ? (
 					<Message variant='info'>
-						カートが空です<Link to='/'>戻る</Link>
+						カートが空です
+						<Link to='/' className='ms-3'>
+							戻る
+						</Link>
 					</Message>
 				) : (
 					<ListGroup variant='flush'>
@@ -60,7 +63,7 @@ const CartScreen = ({ match, location, history }) => {
 											{item.name}
 										</Link>
 									</Col>
-									<Col md={2}>${item.price}</Col>
+									<Col md={2}>¥ {item.price}</Col>
 									<Col md={2} sm={10} xs={9}>
 										<Form.Control
 											as='select'
@@ -125,7 +128,7 @@ const CartScreen = ({ match, location, history }) => {
 								{getCartCount()}
 								個の商品)
 							</p>
-							¥
+							¥&nbsp;
 							{cartItems
 								.reduce(
 									(acc, item) => acc + item.qty * item.price,

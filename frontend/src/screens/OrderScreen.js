@@ -32,7 +32,11 @@ const OrderScreen = ({ match }) => {
 	const { order, loading, error } = orderDetails
 
 	const stripePayReducer = useSelector((state) => state.stripePay)
-	const { loading: loadingPay, success: successPay } = stripePayReducer
+	const {
+		loading: loadingPay,
+		success: successPay,
+		error: errorPay,
+	} = stripePayReducer
 
 	useEffect(() => {
 		if (successPay || !order || order._id !== orderId) {
@@ -192,6 +196,9 @@ const OrderScreen = ({ match }) => {
 							{errorText && (
 								<Message variant='danger'>{errorText}</Message>
 							)}
+							{errorPay && (
+								<Message variant='danger'>{errorPay}</Message>
+							)}
 						</ListGroup.Item>
 						<ListGroup.Item className='mt-3'>
 							<Form.Group controlId='prefecture' className='mt-2'>
@@ -199,6 +206,7 @@ const OrderScreen = ({ match }) => {
 								<p>お届け予定日: </p>
 								{/* <Form.Label></Form.Label> */}
 								<Form.Control
+									disabled={order.isPaid}
 									className='form-select'
 									as='select'
 									placeholder='選択してください'
@@ -255,20 +263,20 @@ const OrderScreen = ({ match }) => {
 							<ListGroup.Item>
 								<Row>
 									<Col>商品の小計</Col>
-									<Col>￥{order.itemsPrice}</Col>
+									<Col>¥&nbsp;{order.itemsPrice}</Col>
 								</Row>
 							</ListGroup.Item>
 							<ListGroup.Item>
 								<Row>
 									<Col>配送料</Col>
-									<Col>¥{order.shippingPrice}</Col>
+									<Col>¥&nbsp;{order.shippingPrice}</Col>
 								</Row>
 							</ListGroup.Item>
 
 							<ListGroup.Item>
 								<Row>
-									<Col>合計</Col>
-									<Col>¥{order.totalPrice}　*税込</Col>
+									<Col>税込合計</Col>
+									<Col>¥&nbsp;{order.totalPrice}　</Col>
 								</Row>
 							</ListGroup.Item>
 							{!order.isPaid && (

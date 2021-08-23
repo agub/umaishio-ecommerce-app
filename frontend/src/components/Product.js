@@ -22,7 +22,9 @@ const Product = ({ product }) => {
 					/>
 				</Card.Text>
 				<Card.Text as='div'>
-					<h3 style={{ marginTop: '1rem' }}>¥{product.price}</h3>
+					<h3 style={{ marginTop: '1rem' }}>
+						¥&nbsp;{product.price}
+					</h3>
 				</Card.Text>
 			</Card.Body>
 		</Card>

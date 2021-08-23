@@ -94,49 +94,91 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 
 const stripeApi = asyncHandler(async (req, res) => {
 	const { id, amount, metadata, name } = req.body
-
-	try {
-		if (amount && id) {
-			const payment = await stripe.paymentIntents.create({
-				amount: amount,
-				currency: 'JPY',
-				description: name,
-				payment_method: id,
-				confirm: true,
-				metadata,
-			})
-
-			console.log('Payment', payment)
-			// res.json({
-			// 	message: 'Payment successfull',
-			// 	success: true,
-			// })
-			const order = await Order.findById(req.params.id)
-			if (order) {
-				order.isPaid = true
-				order.paidAt = Date.now()
-				order.paymentResult = {
-					id,
-					status: metadata.status,
-					update_time: metadata.update_time,
-					email_address: metadata.email_address,
-				}
-
-				const updatedOrder = await order.save()
-
-				res.json(updatedOrder)
-			} else {
-				res.status(404)
-				throw new Error('Order not found')
-			}
+	const payment = await stripe.paymentIntents.create({
+		amount: amount,
+		currency: 'JPY',
+		description: `旨い塩オンラインショップ　${name}様`,
+		payment_method: id,
+		confirm: true,
+		receipt_email: metadata.email_address,
+		metadata,
+	})
+	console.log(payment)
+	// if (payment) {
+	// 	console.log('Payment', payment)
+	// 	// res.json({
+	// 	// 	message: 'Payment successfull',
+	// 	// 	success: true,
+	// 	// })
+	const order = await Order.findById(req.params.id)
+	if (order) {
+		order.isPaid = true
+		order.paidAt = Date.now()
+		order.paymentResult = {
+			id,
+			status: metadata.status,
+			update_time: metadata.update_time,
+			email_address: metadata.email_address,
 		}
-	} catch (error) {
+
+		const updatedOrder = await order.save()
+		console.log(order)
+		res.json(updatedOrder)
+		// } else {
+		// 	res.status(404)
+		// 	throw new Error('Order not found')
+		// }
+	} else {
 		console.log(error)
-		res.json({
+		res.status(500).json({
 			message: 'Payment failed',
 			success: false,
 		})
 	}
+	// const { id, amount, metadata, name } = req.body
+
+	// try {
+	// 	if (amount && id) {
+	// 		const payment = await stripe.paymentIntents.create({
+	// 			amount: amount,
+	// 			currency: 'JPY',
+	// 			description: name,
+	// 			payment_method: id,
+	// 			confirm: true,
+	// 			metadata,
+	// 		})
+
+	// 		console.log('Payment', payment)
+	// 		// res.json({
+	// 		// 	message: 'Payment successfull',
+	// 		// 	success: true,
+	// 		// })
+	// 		const order = await Order.findById(req.params.id)
+	// 		if (order) {
+	// 			order.isPaid = true
+	// 			order.paidAt = Date.now()
+	// 			order.paymentResult = {
+	// 				id,
+	// 				status: metadata.status,
+	// 				update_time: metadata.update_time,
+	// 				email_address: metadata.email_address,
+	// 			}
+
+	// 			const updatedOrder = await order.save()
+	// 			console.log(order)
+	// 			res.json(updatedOrder)
+	// 		} else {
+	// 			res.status(404)
+	// 			throw new Error('Order not found')
+	// 		}
+	// 	}
+	// } catch (error) {
+	// 	console.log(error)
+	// 	res.json({
+	// 		message: 'Payment failed',
+	// 		success: false,
+	// 	})
+	// }
 })
 
 // @description   Update order to paid

@@ -116,7 +116,7 @@ const ProductScreen = ({ match, history }) => {
 										<>
 											<Rating
 												value={product.rating}
-												text={`${product.numReviews} reviews`}
+												text={`${product.numReviews} 個の評価`}
 												showArrow
 												showComment={showComment}
 												setShowComment={setShowComment}
@@ -241,7 +241,7 @@ const ProductScreen = ({ match, history }) => {
 																					}
 																				>
 																					<option value=''>
-																						Select...
+																						選択してください
 																					</option>
 																					<option value='1'>
 																						★
@@ -284,7 +284,9 @@ const ProductScreen = ({ match, history }) => {
 
 																			<Button
 																				disabled={
-																					loadingProductReview
+																					loadingProductReview ||
+																					comment ===
+																						''
 																				}
 																				className='w-100 mt-2'
 																				type='submit'
@@ -327,7 +329,7 @@ const ProductScreen = ({ match, history }) => {
 									<ListGroup.Item>
 										<Row>
 											<Col className='product-page-section'>
-												Status:{' '}
+												在庫状況:{' '}
 											</Col>
 											<Col className='product-page-section'>
 												{product.countInStock > 0
