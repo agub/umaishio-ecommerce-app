@@ -6,11 +6,12 @@ import {
 	stripeApi,
 	updateOrderToPaid,
 	getMyOrders,
+	getOrders,
 } from '../controllers/orderController.js'
 
 import { protect } from '../middleware/authMiddleware.js'
 
-router.route('/').post(protect, addOrderItems)
+router.route('/').post(protect, addOrderItems).get(admin, getOrders)
 router.route('/myorders').get(protect, getMyOrders)
 router.route('/:id').get(protect, getOrderById)
 router.route('/:id/stripe').post(protect, stripeApi)
