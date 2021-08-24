@@ -9,14 +9,16 @@ import {
 	getOrderDetails,
 	payOnStirpe,
 	payOrder,
+	deliverOrder,
 } from '../actions/orderActions'
 import { STRIPE_PAY_RESET } from '../constants/orderConstants'
 
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { CART_ITEMS_RESET } from '../constants/cartConstants'
+import { ORDER_DELIVER_RESET } from '../constants/orderConstants'
 
-const OrderScreen = ({ match }) => {
+const OrderScreen = ({ match, history }) => {
 	const stripe = useStripe()
 	const elements = useElements()
 
@@ -28,26 +30,35 @@ const OrderScreen = ({ match }) => {
 
 	const orderId = match.params.id
 
+	const userLogin = useSelector((state) => state.userLogin)
+	const { userInfo } = userLogin
+
 	const orderDetails = useSelector((state) => state.orderDetails)
 	const { order, loading, error } = orderDetails
 
-	const stripePayReducer = useSelector((state) => state.stripePay)
+	const stripePay = useSelector((state) => state.stripePay)
 	const {
 		loading: loadingPay,
 		success: successPay,
 		error: errorPay,
-	} = stripePayReducer
+	} = stripePay
+	const orderDeliver = useSelector((state) => state.orderDeliver)
+	const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
 	useEffect(() => {
-		if (successPay || !order || order._id !== orderId) {
+		if (!userInfo) {
+			history.push('/login')
+		}
+		if (successPay || !order || order._id !== orderId || successDeliver) {
 			dispatch({ type: STRIPE_PAY_RESET })
+			dispatch({ type: ORDER_DELIVER_RESET })
 			dispatch(getOrderDetails(orderId))
 		}
 		if (successPay) {
 			localStorage.setItem('cartItems', [])
 			dispatch({ type: CART_ITEMS_RESET })
 		}
-	}, [dispatch, order, orderId, successPay])
+	}, [dispatch, order, orderId, successPay, successDeliver])
 
 	const submitHandler = async (e) => {
 		e.preventDefault()
@@ -104,6 +115,11 @@ const OrderScreen = ({ match }) => {
 		// 	email_address: req.body.payer.email_address,
 		// }
 	}
+
+	const deliverHandler = () => {
+		dispatch(deliverOrder(order))
+	}
+
 	return loading ? (
 		<>
 			<Loader />
@@ -119,7 +135,7 @@ const OrderScreen = ({ match }) => {
 					<ListGroup variant='flush'>
 						<ListGroup.Item>
 							<h4>配送</h4>
-							<p>
+							<p className='mt-3'>
 								<strong>氏名: </strong>
 								{order.shippingAddress.fullName}
 							</p>
@@ -147,13 +163,12 @@ const OrderScreen = ({ match }) => {
 								{order.shippingAddress.prefecture}
 								{order.shippingAddress.address}
 							</p>
-							{/* {order.isDelievered ? (
+							{order.isDelivered ? (
 								<Message variant='success'>
-									配送中です {order.delieveredAt}
+									配送完了
+									{order.deliveredAt.substring(0, 10)}
 								</Message>
-							) : (
-								<Message variant='danger'>配送中です</Message>
-							)} */}
+							) : null}
 						</ListGroup.Item>
 						<ListGroup.Item className='mt-3'>
 							<h4>お支払い方法</h4>
@@ -220,7 +235,7 @@ const OrderScreen = ({ match }) => {
 						<ListGroup.Item className='mt-3'>
 							<Form.Group controlId='prefecture' className='mt-2'>
 								<h4>配送オプション</h4>
-								<p>お届け予定日: </p>
+								<p className='mt-3'>お届け予定日: </p>
 								{/* <Form.Label></Form.Label> */}
 								<Form.Control
 									disabled={order.isPaid}
@@ -307,8 +322,8 @@ const OrderScreen = ({ match }) => {
 											disabled={
 												!stripe ||
 												cart.cartItems === 0 ||
-												stripePayReducer.loading ||
-												stripePayReducer.success
+												loadingPay ||
+												successPay
 											}
 											onClick={submitHandler}
 										>
@@ -318,6 +333,20 @@ const OrderScreen = ({ match }) => {
 								</ListGroup.Item>
 							)}
 
+							{userInfo &&
+								userInfo.isAdmin &&
+								order.isPaid &&
+								!order.isDelivered && (
+									<ListGroup.Item>
+										<Button
+											type='button'
+											className='btn btn-block w-100'
+											onClick={deliverHandler}
+										>
+											配送済み
+										</Button>
+									</ListGroup.Item>
+								)}
 							{/* <ListGroup.Item>
 							 {error && (
 									<Message variant='danger'>{error}</Message>

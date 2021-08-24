@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import Order from '../models/orderModel.js'
+import Product from '../models/productModel.js'
 import Stripe from 'stripe'
 import dotenv from 'dotenv'
 dotenv.config()
@@ -88,6 +89,25 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 	}
 })
 
+// @desc    Update order to delivered
+// @route   GET /api/orders/:id/deliver
+// @access  Private/Admin
+const updateOrderToDelivered = asyncHandler(async (req, res) => {
+	const order = await Order.findById(req.params.id)
+
+	if (order) {
+		order.isDelivered = true
+		order.deliveredAt = Date.now()
+
+		const updatedOrder = await order.save()
+
+		res.json(updatedOrder)
+	} else {
+		res.status(404)
+		throw new Error('Order not found')
+	}
+})
+
 // @description   Stripe call
 // @route         POST /api/orders/:id/stripe
 // @access        Private
@@ -122,6 +142,13 @@ const stripeApi = asyncHandler(async (req, res) => {
 		}
 
 		const updatedOrder = await order.save()
+
+		for (let item of updatedOrder.orderItems) {
+			const product = await Product.findById(item.product)
+			product.countInStock -= item.qty
+			await product.save()
+		}
+
 		console.log(order)
 		res.json(updatedOrder)
 		// } else {
@@ -205,4 +232,5 @@ export {
 	stripeApi,
 	getMyOrders,
 	getOrders,
+	updateOrderToDelivered,
 }
