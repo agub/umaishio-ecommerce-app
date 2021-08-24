@@ -4,7 +4,7 @@ import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { listProducts } from '../actions/productActions'
+import { listProducts, deleteProduct } from '../actions/productActions'
 
 const ProductListScreen = ({ history, match }) => {
 	const dispatch = useDispatch()
@@ -12,26 +12,46 @@ const ProductListScreen = ({ history, match }) => {
 	const productList = useSelector((state) => state.productList)
 	const { loading, error, products } = productList
 
+	const productDelete = useSelector((state) => state.productDelete)
+	const {
+		loading: loadingDelete,
+		error: errorDelete,
+		success: successDelete,
+	} = productDelete
+
 	const userLogin = useSelector((state) => state.userLogin)
 	const { userInfo } = userLogin
 
 	useEffect(() => {
 		if (userInfo && userInfo.isAdmin) {
-			dispatch(listUsers())
+			dispatch(listProducts())
 		} else {
 			history.push('/login')
 		}
 	}, [dispatch, history, userInfo, successDelete])
 
 	const deleteHandler = (id) => {
-		if (window.confirm('ユーザーを削除しますか？')) {
-			dispatch(deleteUser(id))
+		if (window.confirm('このリストを削除しますか？')) {
+			dispatch(deleteProduct(id))
 		}
 	}
 
+	const createProductHandler = (product) => {}
+
 	return (
 		<>
-			<h1>ユーザー一覧</h1>
+			<Row className='align-items-center'>
+				<Col>
+					<h1>商品</h1>
+				</Col>
+				<Col className='text-end'>
+					<Button className='my-3' onClick={createProductHandler}>
+						<i className='fas fa-plus'></i>　商品を追加する
+					</Button>
+				</Col>
+			</Row>
+			{loadingDelete && <Loader />}
+			{errorDelete && <Message variant='danger'>{errorDelete}</Message>}
 			{loading ? (
 				<Loader />
 			) : error ? (
@@ -42,59 +62,43 @@ const ProductListScreen = ({ history, match }) => {
 						<tr>
 							<th>ID</th>
 							<th>氏名</th>
-							<th>EMAIL</th>
-							<th>管理者</th>
+							<th>値段</th>
+							<th>カテゴリー</th>
+							<th>ブランド</th>
 							<th></th>
 						</tr>
 					</thead>
 					<tbody>
-						{!loading &&
-							users &&
-							users.map((user) => (
-								<tr key={user._id}>
-									<td>{user._id}</td>
-									<td>{user.name}</td>
-									<td>
-										<a href={`mailto:${user.email}`}>
-											{user.email}
-										</a>
-									</td>
-									<td>
-										{user.isAdmin ? (
-											<i
-												className='fas fa-check'
-												style={{ color: 'green' }}
-											></i>
-										) : (
-											<i
-												className='fas fa-times'
-												style={{ color: 'red' }}
-											></i>
-										)}
-									</td>
-									<td>
-										<LinkContainer
-											to={`/admin/user/${user._id}/edit`}
-										>
-											<Button
-												variant='light'
-												className='btn-sm'
-											>
-												<i className='fas fa-edit'></i>
-											</Button>
-										</LinkContainer>
+						{products.map((product) => (
+							<tr key={product._id}>
+								<td>{product._id}</td>
+								<td>{product.name}</td>
+								<td>¥{product.price}</td>
+								<td>{product.category}</td>
+								<td>{product.brand}</td>
+								<td>
+									<LinkContainer
+										to={`/admin/product/${product._id}/edit`}
+									>
 										<Button
-											variant='danger'
+											variant='light'
 											className='btn-sm'
-											onClick={() =>
-												deleteHandler(user._id)
-											}
 										>
-											<i className='fas fa-trash'></i>
+											<i className='fas fa-edit'></i>
 										</Button>
-									</td>
-								</tr>
-							))}
+									</LinkContainer>
+									<Button
+										variant='danger'
+										className='btn-sm'
+										onClick={() =>
+											deleteHandler(product._id)
+										}
+									>
+										<i className='fas fa-trash'></i>
+									</Button>
+								</td>
+							</tr>
+						))}
 					</tbody>
 				</Table>
 			)}

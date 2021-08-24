@@ -22,6 +22,20 @@ const getProductById = asyncHandler(async (req, res) => {
 		throw new Error('Product not found')
 	}
 })
+
+// @description   Delete a product
+// @route         GET /api/products/:id
+// @access        Public
+const deleteProduct = asyncHandler(async (req, res) => {
+	const product = await Product.findById(req.params.id)
+	if (product) {
+		await product.remove()
+		res.json({ message: '商品を削除しました' })
+	} else {
+		res.status(404)
+		throw new Error('Product not found')
+	}
+})
 // @description   create new review
 // @route         POST /api/products/:id/reviews
 // @access        Public
@@ -98,4 +112,4 @@ const createProductReview = asyncHandler(async (req, res) => {
 	// }
 })
 
-export { getProducts, getProductById, createProductReview }
+export { getProducts, getProductById, createProductReview, deleteProduct }

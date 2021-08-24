@@ -1,13 +1,13 @@
 const products = [
 	{
-		name: 'Airpods Wireless Bluetooth Headphones',
-		image: '/images/airpods.jpg',
+		name: '旨い塩　味噌',
+		image: '/images/umashio.jpg',
 		description:
-			'Bluetooth technology lets you connect it with compatible devices wirelessly High-quality AAC audio offers immersive listening experience Built-in microphone allows you to take calls while working',
+			'日本の誇る旨味に、歴史に裏付けされた栄養を加味した自慢の調味塩です。普通の塩としてだけでなく肉や魚の下ごしらえはもちろん、サラダのドレッシングの代わり、またご飯に混ぜて味噌風味のおにぎりにしたり…と様々な料理にお使いいただけます。 また「旨い塩×味噌」の特徴として、無添加はもちろん、旨味に鰹やイワシなどの動物性食品を使わない事で、ベジタリアン、ヴィーガンの方々にも安心してお使いいただけます。',
 		brand: 'Apple',
 		category: 'Electronics',
-		price: 89.99,
-		countInStock: 10,
+		price: 800,
+		countInStock: 1000,
 		rating: 4.5,
 		numReviews: 12,
 	},
