@@ -32,15 +32,15 @@ app.get('/', (req, res) => {
 })
 
 //googleauth
-app.use(
-	session({
-		secret: process.env.SESSION_SECRET,
-		resave: false,
-		saveUninitialized: false,
-	})
-)
-app.use(passport.initialize())
-app.use(passport.session())
+// app.use(
+// 	session({
+// 		secret: process.env.SESSION_SECRET,
+// 		resave: false,
+// 		saveUninitialized: false,
+// 	})
+// )
+// app.use(passport.initialize())
+// app.use(passport.session())
 //googleauth
 
 app.use('/api/products', productRoutes)
@@ -48,7 +48,7 @@ app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
 
 //googleauth
-app.use('/api/auth', authRoutes)
+// app.use('/api/auth', authRoutes)
 //googleauth
 app.use(notFound)
 app.use(errorHandler)
