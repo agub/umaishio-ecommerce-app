@@ -16,6 +16,7 @@ import OrderScreen from './screens/OrderScreen'
 import UserListScreen from './screens/UserListScreen'
 import UserEditScreen from './screens/UserEditScreen'
 import ProductListScreen from './screens/ProductListScreen'
+import ProductEditScreen from './screens/ProductEditScreen'
 
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
@@ -51,6 +52,10 @@ function App() {
 						path='/admin/productlist'
 						component={ProductListScreen}
 						exact
+					/>
+					<Route
+						path='/admin/product/:id/edit'
+						component={ProductEditScreen}
 					/>
 					<Route path='/' component={HomeScreen} exact />
 				</Container>

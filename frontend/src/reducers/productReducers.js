@@ -5,6 +5,7 @@ import {
 	PRODUCT_DETAILS_REQUEST,
 	PRODUCT_DETAILS_SUCCESS,
 	PRODUCT_DETAILS_FAIL,
+	PRODUCT_DETAILS_RESET,
 	PRODUCT_CREATE_REVIEW_REQUEST,
 	PRODUCT_CREATE_REVIEW_SUCCESS,
 	PRODUCT_CREATE_REVIEW_FAIL,
@@ -40,11 +41,14 @@ export const productDetailsReducer = (
 ) => {
 	switch (action.type) {
 		case PRODUCT_DETAILS_REQUEST:
-			return { loading: true, product: { reviews: [] } }
+			// return { loading: true, product: { reviews: [] } }
+			return { loading: true, ...state }
 		case PRODUCT_DETAILS_SUCCESS:
 			return { loading: false, product: action.payload }
 		case PRODUCT_DETAILS_FAIL:
 			return { loading: false, error: action.payload }
+		case PRODUCT_DETAILS_RESET:
+			return { product: { reviews: [] } }
 		default:
 			return state
 	}
