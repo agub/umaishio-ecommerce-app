@@ -6,10 +6,13 @@ import colors from 'colors'
 import morgan from 'morgan'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
+import session from 'express-session'
+import passport from 'passport'
 import cors from 'cors'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoute.js'
 import orderRoutes from './routes/orderRoutes.js'
+import authRoutes from './routes/authRoutes.js'
 
 dotenv.config()
 
@@ -28,10 +31,25 @@ app.get('/', (req, res) => {
 	res.send('Api is running on port 5000!!!!')
 })
 
+//googleauth
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET,
+		resave: false,
+		saveUninitialized: false,
+	})
+)
+app.use(passport.initialize())
+app.use(passport.session())
+//googleauth
+
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
 
+//googleauth
+app.use('/api/auth', authRoutes)
+//googleauth
 app.use(notFound)
 app.use(errorHandler)
 

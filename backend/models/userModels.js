@@ -12,14 +12,23 @@ const userSchema = mongoose.Schema(
 			required: true,
 			unique: true,
 		},
+		//googleauth
+		// password: {
+		// 	type: String,
+		// 	required: true,
+		// },
 		password: {
 			type: String,
-			required: true,
+			required: false,
 		},
 		isAdmin: {
 			type: Boolean,
 			required: true,
 			default: false,
+		},
+		//googleauth
+		googleId: {
+			type: String,
 		},
 	},
 	{

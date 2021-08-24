@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { login } from '../actions/userActions'
+import { login, getGoogleUserInfo } from '../actions/userActions'
+import axios from 'axios'
 
 const LoginScreen = ({ location, history }) => {
 	const [email, setEmail] = useState('')
@@ -15,6 +17,8 @@ const LoginScreen = ({ location, history }) => {
 	const userLogin = useSelector((state) => state.userLogin)
 	const { loading, error, userInfo } = userLogin
 
+	// const redirect = location.search ? location.search.split('=')[1] : '/'
+
 	const redirect = location.search ? location.search.split('=')[1] : '/'
 
 	useEffect(() => {
@@ -23,9 +27,27 @@ const LoginScreen = ({ location, history }) => {
 		}
 	}, [history, redirect, userInfo])
 
+	// useEffect(() => {
+	// 	if (!userInfo) {
+	// 		dispatch(getGoogleUserInfo())
+	// 	}
+	// 	// eslint-disable-next-line
+	// }, [])
+
 	const submitHandler = (e) => {
 		e.preventDefault()
 		dispatch(login(email, password))
+	}
+
+	const signInWithGoogleHandler = async (e) => {
+		e.preventDefault()
+		// await axios.get('/api/auth/google')
+
+		// window.location.href = `/api/auth/google?redirect=${redirect}`
+
+		window.location.href = `http://127.0.0.1:5000/api/auth/google`
+
+		// dispatch(getGoogleUserInfo())
 	}
 
 	return (
@@ -56,6 +78,13 @@ const LoginScreen = ({ location, history }) => {
 					サインイン
 				</Button>
 			</Form>
+			<Button
+				type='button'
+				variant='danger'
+				onClick={signInWithGoogleHandler}
+			>
+				<i className='fab fa-google left'> Sign In With Google</i>
+			</Button>
 
 			<Row className='py-3'>
 				<Col>
