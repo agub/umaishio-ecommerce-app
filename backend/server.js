@@ -7,14 +7,14 @@ import colors from 'colors'
 import morgan from 'morgan'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
-import session from 'express-session'
-import passport from 'passport'
+// import session from 'express-session'
+// import passport from 'passport'
 import cors from 'cors'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoute.js'
 import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoute.js'
-import authRoutes from './routes/authRoutes.js'
+// import authRoutes from './routes/authRoutes.js'
 
 dotenv.config()
 

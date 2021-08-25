@@ -55,6 +55,7 @@ const RegisterScreen = ({ location, history }) => {
 				<Form.Group className='mt-2' controlId='email'>
 					<Form.Label>Email</Form.Label>
 					<Form.Control
+						required
 						type='email'
 						placeholder='Email'
 						value={email}

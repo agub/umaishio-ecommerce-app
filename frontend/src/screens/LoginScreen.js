@@ -39,16 +39,16 @@ const LoginScreen = ({ location, history }) => {
 		dispatch(login(email, password))
 	}
 
-	const signInWithGoogleHandler = async (e) => {
-		e.preventDefault()
-		// await axios.get('/api/auth/google')
+	// const signInWithGoogleHandler = async (e) => {
+	// 	e.preventDefault()
+	// 	// await axios.get('/api/auth/google')
 
-		// window.location.href = `/api/auth/google?redirect=${redirect}`
+	// 	// window.location.href = `/api/auth/google?redirect=${redirect}`
 
-		window.location.href = `http://127.0.0.1:5000/api/auth/google`
+	// 	window.location.href = `http://127.0.0.1:5000/api/auth/google`
 
-		// dispatch(getGoogleUserInfo())
-	}
+	// 	// dispatch(getGoogleUserInfo())
+	// }
 
 	return (
 		<FormContainer>
@@ -78,13 +78,13 @@ const LoginScreen = ({ location, history }) => {
 					サインイン
 				</Button>
 			</Form>
-			<Button
+			{/* <Button
 				type='button'
 				variant='danger'
 				onClick={signInWithGoogleHandler}
 			>
 				<i className='fab fa-google left'> Sign In With Google</i>
-			</Button>
+			</Button> */}
 
 			<Row className='py-3'>
 				<Col>

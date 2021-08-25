@@ -79,14 +79,23 @@ const Rating = ({
 			</span>
 			<span style={{ 'fontSize': '0.7rem' }}>
 				{text && text}{' '}
-				{showArrow && (
-					<span
-						onClick={() => showCommentHandler()}
-						style={{ 'cursor': 'pointer' }}
-					>
-						<i className='fas fa-angle-down'></i>
-					</span>
-				)}
+				{showArrow ? (
+					showComment ? (
+						<span
+							onClick={() => showCommentHandler()}
+							style={{ 'cursor': 'pointer' }}
+						>
+							<i className='fas fa-angle-up'></i>
+						</span>
+					) : (
+						<span
+							onClick={() => showCommentHandler()}
+							style={{ 'cursor': 'pointer' }}
+						>
+							<i className='fas fa-angle-down'></i>
+						</span>
+					)
+				) : null}
 			</span>
 		</div>
 	)

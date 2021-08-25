@@ -69,7 +69,7 @@ const CartScreen = ({ match, location, history }) => {
 									<Col md={2} sm={10} xs={9}>
 										<Form.Control
 											as='select'
-											value={qty}
+											value={item.qty}
 											className='form-select form-control-select-checkout'
 											style={{
 												padding:

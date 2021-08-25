@@ -229,7 +229,13 @@ const OrderScreen = ({ match, history }) => {
 								<Message variant='danger'>{errorText}</Message>
 							)}
 							{errorPay && (
-								<Message variant='danger'>{errorPay}</Message>
+								<Message variant='danger'>
+									{errorPay}
+									<br />
+									<a href='mailto: abc@example.com'>
+										カスタマーサービスへお問い合わせはこちらへ
+									</a>
+								</Message>
 							)}
 						</ListGroup.Item>
 						<ListGroup.Item className='mt-3'>
