@@ -184,28 +184,22 @@ const ProfileScreen = ({ location, history }) => {
 				) : errorOrders ? (
 					<Message variant='danger'>{errorOrders}</Message>
 				) : (
-					<Table
-						striped
-						bordered
-						hover
-						responsive
-						className='table-sm'
-					>
+					<Table striped bordered hover className='table-sm'>
 						<thead>
 							<tr>
-								<th>ID</th>
+								{/* <th>ID</th> */}
 								<th>注文日</th>
 								{/* <th>合計</th> */}
 								<th>支払い</th>
 								<th>配送</th>
-								<th></th>
+								<th style={{ width: '80px' }}></th>
 							</tr>
 						</thead>
 						<tbody>
 							{orders.map((order) => (
 								<tr key={order._id}>
 									{/* responsive */}
-									<td>{order._id.substring(0, 7)}...</td>
+									{/* <td>{order._id.substring(0, 7)}...</td> */}
 									<td>{order.createdAt.substring(0, 10)}</td>
 									{/* <td>¥{order.totalPrice}</td> */}
 									<td>

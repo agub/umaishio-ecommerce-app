@@ -325,6 +325,8 @@ const OrderScreen = ({ match, history }) => {
 									口座番号: XXXXXXXXXXX
 									<br />
 									名前: XXXXXXXXXXX
+									<br />
+									振込額: ¥{order.totalPrice}
 								</p>
 							) : null}
 							{order.isPaid && (
