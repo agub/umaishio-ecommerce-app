@@ -22,6 +22,9 @@ import {
 	ORDER_LIST_REQUEST,
 	ORDER_LIST_SUCCESS,
 	ORDER_LIST_FAIL,
+	BANKTRANSFER_FAIL,
+	BANKTRANSFER_SUCCESS,
+	BANKTRANSFER_REQUEST,
 	// ORDER_LIST_MY_REQUEST,
 	// ORDER_LIST_MY_SUCCESS,
 	// ORDER_LIST_MY_FAIL,
@@ -210,6 +213,48 @@ export const payOnStirpe = (orderId, paymentDetails) => async (
 		}
 		dispatch({
 			type: STRIPE_PAY_FAIL,
+			payload: message,
+		})
+	}
+}
+
+export const bankTransferOrder = (orderId) => async (dispatch, getState) => {
+	try {
+		dispatch({
+			type: BANKTRANSFER_REQUEST,
+		})
+
+		const {
+			userLogin: { userInfo },
+		} = getState()
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${userInfo.token}`,
+			},
+		}
+
+		const { data } = await axios.post(
+			`/api/orders/${orderId}/banktransfer`,
+			orderId,
+			config
+		)
+
+		console.log(data)
+		dispatch({
+			type: BANKTRANSFER_SUCCESS,
+			payload: data,
+		})
+	} catch (error) {
+		const message =
+			error.response && error.response.data.message
+				? error.response.data.message
+				: error.message
+		if (message === 'Not authorized, token failed') {
+			dispatch(logout())
+		}
+		dispatch({
+			type: BANKTRANSFER_FAIL,
 			payload: message,
 		})
 	}

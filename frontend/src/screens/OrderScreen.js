@@ -19,6 +19,7 @@ import {
 	payOnStirpe,
 	payOrder,
 	deliverOrder,
+	bankTransferOrder,
 } from '../actions/orderActions'
 import { STRIPE_PAY_RESET } from '../constants/orderConstants'
 
@@ -32,8 +33,11 @@ import {
 } from '@stripe/react-stripe-js'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { CART_ITEMS_RESET } from '../constants/cartConstants'
-import { ORDER_DELIVER_RESET } from '../constants/orderConstants'
-import cvc from '../data/images/cvc.png'
+import {
+	ORDER_DELIVER_RESET,
+	BANKTRANSFER_RESET,
+} from '../constants/orderConstants'
+import CvcModal from '../components/CvcModal'
 
 const OrderScreen = ({ match, history }) => {
 	const stripe = useStripe()
@@ -41,6 +45,16 @@ const OrderScreen = ({ match, history }) => {
 
 	const [name, setName] = useState('')
 	const [errorText, setErrorText] = useState(null)
+
+	//modal
+	const [show, setShow] = useState(false)
+	const handleClose = () => setShow(false)
+	const handleShow = () => setShow(true)
+	//modal
+
+	//paymentMethod
+	const [bankTransferState, setBankTransferState] = useState(false)
+	//paymentMethod
 
 	const dispatch = useDispatch()
 	const cart = useSelector((state) => state.cart)
@@ -59,6 +73,12 @@ const OrderScreen = ({ match, history }) => {
 		success: successPay,
 		error: errorPay,
 	} = stripePay
+	const bankTransfer = useSelector((state) => state.bankTransfer)
+	const {
+		loading: loadingBankTransfer,
+		success: successBankTransfer,
+	} = bankTransfer
+
 	const orderDeliver = useSelector((state) => state.orderDeliver)
 	const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
@@ -66,22 +86,42 @@ const OrderScreen = ({ match, history }) => {
 		if (!userInfo) {
 			history.push('/login')
 		}
-		if (successPay || !order || order._id !== orderId || successDeliver) {
+		if (
+			successPay ||
+			!order ||
+			order._id !== orderId ||
+			successDeliver ||
+			successBankTransfer
+		) {
 			dispatch({ type: STRIPE_PAY_RESET })
 			dispatch({ type: ORDER_DELIVER_RESET })
+			dispatch({ type: BANKTRANSFER_RESET })
 			dispatch(getOrderDetails(orderId))
 		}
-		if (successPay) {
+		if (successPay || successBankTransfer) {
 			localStorage.setItem('cartItems', [])
 			dispatch({ type: CART_ITEMS_RESET })
 		}
-	}, [dispatch, order, orderId, successPay, successDeliver])
+	}, [
+		dispatch,
+		order,
+		orderId,
+		successPay,
+		successDeliver,
+		successBankTransfer,
+	])
 
 	const submitHandler = async (e) => {
 		e.preventDefault()
+
 		setErrorText('')
 		try {
-			if (name !== '' && order) {
+			if (name !== '' && order && !bankTransferState) {
+				if (!stripe || !elements) {
+					// Stripe.js has not loaded yet. Make sure to disable
+					// form submission until Stripe.js has loaded.
+					return
+				}
 				const {
 					error,
 					paymentMethod,
@@ -120,30 +160,23 @@ const OrderScreen = ({ match, history }) => {
 				dispatch(payOnStirpe(orderId, paymentDetails))
 				// console.log(paymentResult)
 				// dispatch(payOrder(orderId, paymentDetails))
+			} else {
+				console.log('bankTransfer')
+				dispatch(bankTransferOrder(orderId))
 			}
 		} catch (error) {
 			console.log(error)
 			setErrorText('正しく記入してください')
 		}
-		// const paymentResult = {
-		// 	id: req.body.id,
-		// 	status: req.body.status,
-		// 	update_time: req.body.update_time,
-		// 	email_address: req.body.payer.email_address,
-		// }
 	}
 
 	const deliverHandler = () => {
 		dispatch(deliverOrder(order))
 	}
 
-	//modal
-	const [show, setShow] = useState(false)
-
-	const handleClose = () => setShow(false)
-	const handleShow = () => setShow(true)
-
-	//modal
+	const toBankTransfer = (boolean) => {
+		setBankTransferState(boolean)
+	}
 
 	return loading ? (
 		<>
@@ -194,20 +227,42 @@ const OrderScreen = ({ match, history }) => {
 									{order.deliveredAt.substring(0, 10)}
 								</Message>
 							) : null}
+							{!order.isPaid && order.isBankTransfer && (
+								<Message variant='danger'>
+									注文ありがとうございした。
+									<br />
+									振り込み確認後の配送になります。
+								</Message>
+							)}
 						</ListGroup.Item>
 						<ListGroup.Item className='mt-3'>
 							<h4>お支払い方法</h4>
-							<Col>
-								<Form.Check
-									className='mt-3'
-									type='radio'
-									label='クレジットカード'
-									id='PayPal'
-									name='paymentMethod'
-									defaultChecked
-								></Form.Check>
-							</Col>
-							{!order.isPaid && (
+							{order && !order.isPaid && !order.isBankTransfer ? (
+								<Col>
+									<Form.Check
+										className='mt-3'
+										type='radio'
+										label='クレジットカード'
+										id='Stripe'
+										name='paymentMethod'
+										onClick={() => toBankTransfer(false)}
+										defaultChecked
+									></Form.Check>
+									<Form.Check
+										className='mt-3'
+										type='radio'
+										label='銀行振り込み'
+										id='bank'
+										name='paymentMethod'
+										onClick={() => toBankTransfer(true)}
+									></Form.Check>
+								</Col>
+							) : null}
+
+							{order &&
+							!order.isPaid &&
+							!order.isBankTransfer &&
+							!bankTransferState ? (
 								<>
 									<Form.Group
 										controlId='address'
@@ -217,6 +272,7 @@ const OrderScreen = ({ match, history }) => {
 										<Form.Control
 											type='text'
 											required
+											disabled={bankTransferState}
 											placeholder='カード名義人'
 											onChange={(e) =>
 												setName(e.target.value)
@@ -225,8 +281,7 @@ const OrderScreen = ({ match, history }) => {
 									</Form.Group>
 									<CardElement
 										className='mt-3 mb-3'
-										// disabled={true}
-										// onBlur
+										disabled={true}
 										required
 										hidePostalCode={true}
 										options={{
@@ -257,38 +312,21 @@ const OrderScreen = ({ match, history }) => {
 											<i className='far fa-question-circle'></i>
 										</span>
 									</div>
-									<Modal
+									<CvcModal
 										show={show}
-										onHide={handleClose}
-										centered
-									>
-										<Modal.Header closeButton>
-											<Modal.Title>CVCとは？</Modal.Title>
-										</Modal.Header>
-										<Modal.Body>
-											<Image
-												src={cvc}
-												alt='cvc'
-												style={{
-													width: '100%',
-													marginBottom: '20px',
-												}}
-											/>
-											CVC
-											(セキュリティコード)はカードの署名欄の隅に印刷された3桁または4桁の数字です
-											。
-										</Modal.Body>
-										<Modal.Footer>
-											<Button
-												variant='primary'
-												onClick={handleClose}
-											>
-												閉じる
-											</Button>
-										</Modal.Footer>
-									</Modal>
+										handleClose={handleClose}
+									/>
 								</>
-							)}
+							) : null}
+							{bankTransferState || order.isBankTransfer ? (
+								<p className='mt-3'>
+									銀行振り込み口座
+									<br />
+									口座番号: XXXXXXXXXXX
+									<br />
+									名前: XXXXXXXXXXX
+								</p>
+							) : null}
 							{order.isPaid && (
 								<Message variant='success'>
 									お支払い済み {order.paidAt.substring(0, 10)}
@@ -318,7 +356,6 @@ const OrderScreen = ({ match, history }) => {
 									as='select'
 									placeholder='選択してください'
 									required
-									defaultValue={'aa'}
 								>
 									<option>ヤマトとか？ + ¥200</option>
 								</Form.Control>
@@ -333,7 +370,7 @@ const OrderScreen = ({ match, history }) => {
 									{order.orderItems.map((item, index) => (
 										<ListGroup.Item key={index}>
 											<Row>
-												<Col md={1}>
+												<Col md={1} xs={2}>
 													<Image
 														src={item.image}
 														alt={item.name}
@@ -341,14 +378,14 @@ const OrderScreen = ({ match, history }) => {
 														rounded
 													/>
 												</Col>
-												<Col>
+												<Col xs={5}>
 													<Link
 														to={`/product/${item.product}`}
 													>
 														{item.name}
 													</Link>
 												</Col>
-												<Col md={4}>
+												<Col md={4} xs={5}>
 													¥{item.price} x {item.qty} =
 													¥{item.qty * item.price}
 												</Col>
@@ -386,9 +423,9 @@ const OrderScreen = ({ match, history }) => {
 									<Col>¥&nbsp;{order.totalPrice}　</Col>
 								</Row>
 							</ListGroup.Item>
-							{!order.isPaid && (
+							{!order.isPaid && !order.isBankTransfer && (
 								<ListGroup.Item>
-									{loadingPay ? (
+									{loadingPay || loadingBankTransfer ? (
 										<Loader />
 									) : (
 										<Button
@@ -409,9 +446,11 @@ const OrderScreen = ({ match, history }) => {
 							)}
 
 							{userInfo &&
+								order &&
 								userInfo.isAdmin &&
 								order.isPaid &&
-								!order.isDelivered && (
+								!order.isDelivered &&
+								!order.isBankTransfer && (
 									<ListGroup.Item>
 										<Button
 											type='button'

@@ -53,7 +53,9 @@ const getOrderById = asyncHandler(async (req, res) => {
 		res.json(order)
 	} else {
 		res.status(404)
-		throw new Error('Order not found')
+		throw new Error(
+			'オーダーが見つかりません。ログインし直してもう一度お試しください。'
+		)
 	}
 })
 
@@ -85,7 +87,9 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 		res.json(updatedOrder)
 	} else {
 		res.status(404)
-		throw new Error('Order not found')
+		throw new Error(
+			'オーダーが見つかりません。ログインし直してもう一度お試しください。'
+		)
 	}
 })
 
@@ -104,7 +108,9 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 		res.json(updatedOrder)
 	} else {
 		res.status(404)
-		throw new Error('Order not found')
+		throw new Error(
+			'オーダーが見つかりません。ログインし直してもう一度お試しください。'
+		)
 	}
 })
 
@@ -162,50 +168,31 @@ const stripeApi = asyncHandler(async (req, res) => {
 			success: false,
 		})
 	}
-	// const { id, amount, metadata, name } = req.body
+})
 
-	// try {
-	// 	if (amount && id) {
-	// 		const payment = await stripe.paymentIntents.create({
-	// 			amount: amount,
-	// 			currency: 'JPY',
-	// 			description: name,
-	// 			payment_method: id,
-	// 			confirm: true,
-	// 			metadata,
-	// 		})
+// @description   Make it as bankTransfer
+// @route         POST /api/orders/:id/banktransfer
+// @access        Private
 
-	// 		console.log('Payment', payment)
-	// 		// res.json({
-	// 		// 	message: 'Payment successfull',
-	// 		// 	success: true,
-	// 		// })
-	// 		const order = await Order.findById(req.params.id)
-	// 		if (order) {
-	// 			order.isPaid = true
-	// 			order.paidAt = Date.now()
-	// 			order.paymentResult = {
-	// 				id,
-	// 				status: metadata.status,
-	// 				update_time: metadata.update_time,
-	// 				email_address: metadata.email_address,
-	// 			}
+const bankTransferOrder = asyncHandler(async (req, res) => {
+	const order = await Order.findById(req.params.id)
+	if (order) {
+		order.isBankTransfer = true
+		const updatedOrder = await order.save()
 
-	// 			const updatedOrder = await order.save()
-	// 			console.log(order)
-	// 			res.json(updatedOrder)
-	// 		} else {
-	// 			res.status(404)
-	// 			throw new Error('Order not found')
-	// 		}
-	// 	}
-	// } catch (error) {
-	// 	console.log(error)
-	// 	res.json({
-	// 		message: 'Payment failed',
-	// 		success: false,
-	// 	})
-	// }
+		for (let item of updatedOrder.orderItems) {
+			const product = await Product.findById(item.product)
+			product.countInStock -= item.qty
+			await product.save()
+		}
+		res.json(updatedOrder)
+	} else {
+		console.log(error)
+		res.status(500).json({
+			message: 'banktransfer Failed',
+			success: false,
+		})
+	}
 })
 
 // @description   Update order to paid
@@ -230,6 +217,7 @@ export {
 	getOrderById,
 	updateOrderToPaid,
 	stripeApi,
+	bankTransferOrder,
 	getMyOrders,
 	getOrders,
 	updateOrderToDelivered,

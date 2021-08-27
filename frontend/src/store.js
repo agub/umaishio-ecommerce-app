@@ -28,6 +28,7 @@ import {
 	orderListReducer,
 	stripePayReducer,
 	orderDeliverReducer,
+	bankTransferReducer,
 } from './reducers/orderReducers'
 
 const reducer = combineReducers({
@@ -48,6 +49,7 @@ const reducer = combineReducers({
 	orderCreate: orderCreateReducer,
 	orderDetails: orderDetailsReducer,
 	// orderPay: orderPayReducer,
+	bankTransfer: bankTransferReducer,
 	stripePay: stripePayReducer,
 	orderDeliver: orderDeliverReducer,
 	orderListMy: orderListMyReducer,

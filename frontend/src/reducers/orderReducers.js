@@ -33,6 +33,10 @@ import {
 	ORDER_LIST_MY_REQUEST,
 	ORDER_LIST_MY_FAIL,
 	ORDER_LIST_MY_RESET,
+	BANKTRANSFER_RESET,
+	BANKTRANSFER_FAIL,
+	BANKTRANSFER_REQUEST,
+	BANKTRANSFER_SUCCESS,
 } from '../constants/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -124,6 +128,29 @@ export const stripePayReducer = (state = {}, action) => {
 				error: action.payload,
 			}
 		case STRIPE_PAY_RESET:
+			return {}
+		default:
+			return state
+	}
+}
+
+export const bankTransferReducer = (state = {}, action) => {
+	switch (action.type) {
+		case BANKTRANSFER_REQUEST:
+			return {
+				loading: true,
+			}
+		case BANKTRANSFER_SUCCESS:
+			return {
+				loading: false,
+				success: true,
+			}
+		case BANKTRANSFER_FAIL:
+			return {
+				loading: false,
+				error: action.payload,
+			}
+		case BANKTRANSFER_RESET:
 			return {}
 		default:
 			return state

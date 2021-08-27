@@ -67,6 +67,11 @@ const orderSchema = mongoose.Schema(
 			required: true,
 			default: false,
 		},
+		isBankTransfer: {
+			type: Boolean,
+			required: true,
+			default: false,
+		},
 		paidAt: {
 			type: Date,
 		},
