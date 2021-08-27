@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Col, ListGroup, Image, Card, Row } from 'react-bootstrap'
+import {
+	Form,
+	Button,
+	Col,
+	ListGroup,
+	Image,
+	Card,
+	Row,
+	Modal,
+} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -13,10 +22,18 @@ import {
 } from '../actions/orderActions'
 import { STRIPE_PAY_RESET } from '../constants/orderConstants'
 
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import {
+	CardElement,
+	useStripe,
+	useElements,
+	CardNumberElement,
+	CardCvcElement,
+	CardExpiryElement,
+} from '@stripe/react-stripe-js'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { CART_ITEMS_RESET } from '../constants/cartConstants'
 import { ORDER_DELIVER_RESET } from '../constants/orderConstants'
+import cvc from '../data/images/cvc.png'
 
 const OrderScreen = ({ match, history }) => {
 	const stripe = useStripe()
@@ -120,6 +137,14 @@ const OrderScreen = ({ match, history }) => {
 		dispatch(deliverOrder(order))
 	}
 
+	//modal
+	const [show, setShow] = useState(false)
+
+	const handleClose = () => setShow(false)
+	const handleShow = () => setShow(true)
+
+	//modal
+
 	return loading ? (
 		<>
 			<Loader />
@@ -209,15 +234,59 @@ const OrderScreen = ({ match, history }) => {
 												base: {
 													fontSize: '16px',
 													'::placeholder': {
-														color: '#aab7c4',
+														color: '#919AA1',
 													},
 												},
 												invalid: {
-													color: '#9e2146',
+													color: '#919AA1',
 												},
 											},
 										}}
 									/>
+									<div>
+										<span
+											style={{
+												fontSize: '13px',
+												display: 'block',
+												width: '80px',
+												marginLeft: 'auto',
+											}}
+											onClick={handleShow}
+										>
+											CVCとは
+											<i className='far fa-question-circle'></i>
+										</span>
+									</div>
+									<Modal
+										show={show}
+										onHide={handleClose}
+										centered
+									>
+										<Modal.Header closeButton>
+											<Modal.Title>CVCとは？</Modal.Title>
+										</Modal.Header>
+										<Modal.Body>
+											<Image
+												src={cvc}
+												alt='cvc'
+												style={{
+													width: '100%',
+													marginBottom: '20px',
+												}}
+											/>
+											CVC
+											(セキュリティコード)はカードの署名欄の隅に印刷された3桁または4桁の数字です
+											。
+										</Modal.Body>
+										<Modal.Footer>
+											<Button
+												variant='primary'
+												onClick={handleClose}
+											>
+												閉じる
+											</Button>
+										</Modal.Footer>
+									</Modal>
 								</>
 							)}
 							{order.isPaid && (
