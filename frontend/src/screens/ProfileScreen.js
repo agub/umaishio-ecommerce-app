@@ -205,18 +205,41 @@ const ProfileScreen = ({ location, history }) => {
 							{orders.map((order) => (
 								<tr key={order._id}>
 									{/* responsive */}
-									<td>{order._id.substring(0, 10)}...</td>
+									<td>{order._id.substring(0, 7)}...</td>
 									<td>{order.createdAt.substring(0, 10)}</td>
 									{/* <td>¥{order.totalPrice}</td> */}
 									<td>
-										{order.isPaid ? (
-											order.paidAt.substring(0, 10)
-										) : (
-											<i
-												className='fas fa-times'
-												style={{ color: 'red' }}
-											></i>
-										)}
+										{
+											order.isPaid ? (
+												<div>支払い済み</div>
+											) : (
+												<div>
+													{order.isBankTransfer ? (
+														<div>
+															確認中...
+															{/* <i
+																className='fas fa-times'
+																style={{
+																	color:
+																		'red',
+																}}
+															></i> */}
+														</div>
+													) : (
+														<i
+															className='fas fa-times'
+															style={{
+																color: 'red',
+															}}
+														></i>
+													)}
+												</div>
+											)
+											// <i
+											// 	className='fas fa-times'
+											// 	style={{ color: 'red' }}
+											// ></i>
+										}
 									</td>
 									<td>
 										{order.isDelivered ? (
