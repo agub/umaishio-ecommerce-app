@@ -22,7 +22,7 @@ const PlaceOrderScreen = ({ history }) => {
 		cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
 	)
 	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
-	cart.taxPrice = addDecimals(Number((0.1 * cart.itemsPrice).toFixed(0)))
+	cart.taxPrice = addDecimals(Number((0.08 * cart.itemsPrice).toFixed(0)))
 	cart.totalPrice = (
 		Number(cart.itemsPrice) +
 		Number(cart.shippingPrice) +
@@ -141,6 +141,12 @@ const PlaceOrderScreen = ({ history }) => {
 								<Row>
 									<Col>商品の小計</Col>
 									<Col>¥{cart.itemsPrice}</Col>
+								</Row>
+							</ListGroup.Item>
+							<ListGroup.Item>
+								<Row>
+									<Col>消費税</Col>
+									<Col>¥{cart.taxPrice}</Col>
 								</Row>
 							</ListGroup.Item>
 							<ListGroup.Item>

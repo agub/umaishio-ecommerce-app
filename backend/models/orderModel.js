@@ -30,12 +30,18 @@ const orderSchema = mongoose.Schema(
 			postalCode: { type: String || Number, required: true },
 			prefecture: { type: String, required: true },
 			address: { type: String, required: true },
+
+			// shipperFullName: { type: String, default: null },
+			// shipperPhoneNumber: { type: Number, default: null },
+			// shipperPostalCode: { type: String || Number, default: null },
+			// shipperPrefecture: { type: String, default: null },
+			// shipperAddress: { type: String, default: null },
 		},
 		// paymentMethod: {
 		// 	type: String,
 		// 	required: true,
 		// },
-		//FROM PAYPAL RESPONSE
+
 		paymentResult: {
 			id: { type: String },
 			status: { type: String },

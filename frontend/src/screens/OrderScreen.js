@@ -414,6 +414,12 @@ const OrderScreen = ({ match, history }) => {
 							</ListGroup.Item>
 							<ListGroup.Item>
 								<Row>
+									<Col>消費税</Col>
+									<Col>¥&nbsp;{order.taxPrice}</Col>
+								</Row>
+							</ListGroup.Item>
+							<ListGroup.Item>
+								<Row>
 									<Col>配送料</Col>
 									<Col>¥&nbsp;{order.shippingPrice}</Col>
 								</Row>
