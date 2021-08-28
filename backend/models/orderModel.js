@@ -31,11 +31,13 @@ const orderSchema = mongoose.Schema(
 			prefecture: { type: String, required: true },
 			address: { type: String, required: true },
 
-			// shipperFullName: { type: String, default: null },
-			// shipperPhoneNumber: { type: Number, default: null },
-			// shipperPostalCode: { type: String || Number, default: null },
-			// shipperPrefecture: { type: String, default: null },
-			// shipperAddress: { type: String, default: null },
+			isShipper: { type: Boolean, default: false },
+
+			shipperFullName: { type: String },
+			shipperPhoneNumber: { type: Number },
+			shipperPostalCode: { type: String || Number },
+			shipperPrefecture: { type: String },
+			shipperAddress: { type: String },
 		},
 		// paymentMethod: {
 		// 	type: String,

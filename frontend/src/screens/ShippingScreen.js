@@ -29,8 +29,32 @@ const ShippingScreen = ({ history }) => {
 			shippingAddress.postalCode.substring(3, 7)) ||
 			''
 	)
+	//shipper addditional
 
-	console.log(prefecture)
+	const [isShipper, setIsShipper] = useState(false)
+
+	const [shipperFullName, setShipperFullName] = useState(
+		shippingAddress.shipperFullName || ''
+	)
+	const [shipperPhoneNumber, setShipperPhoneNumber] = useState(
+		shippingAddress.phoneNumber || null
+	)
+	const [shipperAddress, setShipperAddress] = useState(
+		shippingAddress.shipperAddress || null
+	)
+	const [shipperPrefecture, setShipperPrefecture] = useState(
+		shippingAddress.shipperPrefecture || isShipper ? '北海道' : null
+	)
+	const [shipperPostalCode1, setShipperPostalCode1] = useState(
+		(shippingAddress.shipperPostalCode &&
+			shippingAddress.shipperPostalCode.substring(0, 3)) ||
+			null
+	)
+	const [shipperPostalCode2, setShipperPostalCode2] = useState(
+		(shippingAddress.shipperPostalCode &&
+			shippingAddress.shipperPostalCode.substring(3, 7)) ||
+			null
+	)
 
 	const dispatch = useDispatch()
 
@@ -153,6 +177,39 @@ const ShippingScreen = ({ history }) => {
 						onChange={(e) => setAddress(e.target.value)}
 					></Form.Control>
 				</Form.Group>
+				<Form.Check
+					label='申し込み人と送り主が異なる場合'
+					onChange={(e) => setIsShipper(!isShipper)}
+					name='filter'
+					id='filter2'
+				/>
+				{isShipper && (
+					<>
+						<h1>依頼人情報</h1>
+						<Form.Group controlId='postalCode' className='mt-2'>
+							<Form.Label>送り主氏名</Form.Label>
+							<Form.Control
+								type='string'
+								value={shipperFullName}
+								required
+								onChange={(e) =>
+									setShipperFullName(e.target.value)
+								}
+							></Form.Control>
+						</Form.Group>
+						<Form.Group controlId='postalCode' className='mt-2'>
+							<Form.Label>電話番号</Form.Label>
+							<Form.Control
+								type='number'
+								value={shipperPhoneNumber}
+								required
+								onChange={(e) =>
+									setShipperPhoneNumber(e.target.value)
+								}
+							></Form.Control>
+						</Form.Group>
+					</>
+				)}
 
 				<Button type='submit' variant='primary' className='mt-3'>
 					次へ進む
