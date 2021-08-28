@@ -329,7 +329,7 @@ const OrderScreen = ({ match, history }) => {
 									振込額: ¥{order.totalPrice}
 								</p>
 							) : null}
-							{order.isPaid && (
+							{order && order.isPaid && (
 								<Message variant='success'>
 									お支払い済み {order.paidAt.substring(0, 10)}
 								</Message>
@@ -450,16 +450,15 @@ const OrderScreen = ({ match, history }) => {
 							{userInfo &&
 								order &&
 								userInfo.isAdmin &&
-								order.isPaid &&
 								!order.isDelivered &&
-								!order.isBankTransfer && (
+								order.isBankTransfer && (
 									<ListGroup.Item>
 										<Button
 											type='button'
 											className='btn btn-block w-100'
 											onClick={deliverHandler}
 										>
-											配送済み
+											入金確認＆配送ボタン
 										</Button>
 									</ListGroup.Item>
 								)}
