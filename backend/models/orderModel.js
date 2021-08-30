@@ -32,7 +32,8 @@ const orderSchema = mongoose.Schema(
 			address: { type: String, required: true },
 
 			isShipper: { type: Boolean, default: false },
-
+			isComment: { type: Boolean, default: false },
+			comment: { type: String },
 			shipperFullName: { type: String },
 			shipperPhoneNumber: { type: Number },
 			shipperPostalCode: { type: String || Number },

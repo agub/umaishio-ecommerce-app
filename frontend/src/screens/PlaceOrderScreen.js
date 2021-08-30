@@ -64,7 +64,7 @@ const PlaceOrderScreen = ({ history }) => {
 				<Col md={8}>
 					<ListGroup variant='flush'>
 						<ListGroup.Item>
-							<h4>配送</h4>
+							<h4>配送先</h4>
 							<p>
 								<strong>氏名: </strong>
 								{cart.shippingAddress.fullName}
@@ -89,7 +89,51 @@ const PlaceOrderScreen = ({ history }) => {
 								<strong>電話番号: </strong>
 								{cart.shippingAddress.phoneNumber}
 							</p>
+							{cart && cart.shippingAddress.comment && (
+								<p>
+									<strong>ご要望: </strong>
+									{cart.shippingAddress.comment}
+								</p>
+							)}
 						</ListGroup.Item>
+						{cart && cart.shippingAddress.isShipper && (
+							<ListGroup.Item>
+								<h4>依頼人住所</h4>
+								<p>
+									<strong>氏名: </strong>
+									{cart.shippingAddress.shipperFullName}
+									<br />
+									<strong>郵便番号: </strong>
+									{cart.shippingAddress.shipperPostalCode &&
+										cart.shippingAddress.shipperPostalCode.substring(
+											0,
+											3
+										)}
+									-
+									{cart.shippingAddress.shipperPostalCode &&
+										cart.shippingAddress.shipperPostalCode.substring(
+											3,
+											7
+										)}
+									<br />
+									<strong>住所: </strong>
+									{cart.shippingAddress.shipperPrefecture}
+									{cart.shippingAddress.address}
+									<br />
+									<strong>電話番号: </strong>
+									{cart.shippingAddress.phoneNumber}
+								</p>
+							</ListGroup.Item>
+						)}
+						{/* {cart && cart.shippingAddress.comment && (
+							<ListGroup.Item>
+								<p>
+									<strong>ご要望: </strong>
+									{cart.shippingAddress.comment}
+								</p>
+							</ListGroup.Item>
+						)} */}
+
 						{/* <ListGroup.Item>
 							<h4>お支払い方法</h4>
 							<strong>Method: </strong>

@@ -192,7 +192,7 @@ const OrderScreen = ({ match, history }) => {
 				<Col md={8}>
 					<ListGroup variant='flush'>
 						<ListGroup.Item>
-							<h4>配送</h4>
+							<h4>配送先</h4>
 							<p className='mt-3'>
 								<strong>氏名: </strong>
 								{order.shippingAddress.fullName}
@@ -221,6 +221,48 @@ const OrderScreen = ({ match, history }) => {
 								{order.shippingAddress.prefecture}
 								{order.shippingAddress.address}
 							</p>
+							{order && order.shippingAddress.isShipper && (
+								<>
+									<h4 className='mt-5'>依頼人住所</h4>
+									<p className='mt-3'>
+										<strong>氏名: </strong>
+										{order.shippingAddress.shipperFullName}
+									</p>
+									<p>
+										<strong>電話番号: </strong>
+										{
+											order.shippingAddress
+												.shipperPhoneNumber
+										}
+									</p>
+									<p>
+										<strong>郵便番号: </strong>
+										{/* {order.shippingAddress.postalCode} */}
+										{order.shippingAddress
+											.shipperPostalCode &&
+											order.shippingAddress.shipperPostalCode.substring(
+												0,
+												3
+											)}
+										-
+										{order.shippingAddress
+											.shipperPostalCode &&
+											order.shippingAddress.shipperPostalCode.substring(
+												3,
+												7
+											)}
+									</p>
+									<p>
+										<strong>住所: </strong>
+										{
+											order.shippingAddress
+												.shipperPrefecture
+										}
+										{order.shippingAddress.shipperAddress}
+									</p>
+								</>
+							)}
+
 							{order.isDelivered ? (
 								<Message variant='success'>
 									配送完了
