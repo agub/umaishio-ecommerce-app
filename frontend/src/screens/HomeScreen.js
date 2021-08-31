@@ -7,11 +7,9 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { listProducts } from '../actions/productActions'
 import Meta from '../components/Meta'
-
-import { Navbar, Nav, Container, NavDropdown, Image } from 'react-bootstrap'
+import useWindowSize from '../hooks/useWindowSize'
+import { Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import { logout } from '../actions/userActions'
-import logo from '../data/images/logo.png'
 
 const HomeScreen = () => {
 	const dispatch = useDispatch()
@@ -25,6 +23,15 @@ const HomeScreen = () => {
 
 	const getCartCount = () => {
 		return cartItems.reduce((qty, item) => Number(item.qty) + qty, 0)
+	}
+
+	const size = useWindowSize()
+	let mdScreen
+
+	if (size.width < 992) {
+		mdScreen = null
+	} else {
+		mdScreen = { display: 'none' }
 	}
 
 	return (
@@ -54,15 +61,20 @@ const HomeScreen = () => {
 			<LinkContainer
 				exact
 				to='/cart'
-				// style={{
-				// 	position: 'relative',
-				// 	justifyContent: 'center',
-				// }}
-				className='cartTo'
+				className={'cartTo'}
+				style={mdScreen}
 			>
 				<Nav.Link className='home-cartButton'>
-					<i className='fas fa-shopping-cart'></i>{' '}
-					<span className='header-cartnumber'>{getCartCount()}</span>
+					<i
+						style={{ marginRight: '4px', marginTop: '5px' }}
+						className='fas fa-shopping-cart'
+					></i>{' '}
+					<span
+						style={{ marginLeft: '6px', marginTop: '3px' }}
+						className='header-cartnumber'
+					>
+						{getCartCount()}
+					</span>
 				</Nav.Link>
 			</LinkContainer>
 		</>

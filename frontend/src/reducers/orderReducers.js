@@ -37,6 +37,9 @@ import {
 	BANKTRANSFER_FAIL,
 	BANKTRANSFER_REQUEST,
 	BANKTRANSFER_SUCCESS,
+	ORDER_UPDATE_SHIPPER_REQUEST,
+	ORDER_UPDATE_SHIPPER_SUCCESS,
+	ORDER_UPDATE_SHIPPER_FAIL,
 } from '../constants/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -217,6 +220,27 @@ export const orderListReducer = (state = { orders: [] }, action) => {
 				orders: action.payload,
 			}
 		case ORDER_LIST_FAIL:
+			return {
+				loading: false,
+				error: action.payload,
+			}
+		default:
+			return state
+	}
+}
+
+export const orderShippingUpdateReducer = (state = {}, action) => {
+	switch (action.type) {
+		case ORDER_UPDATE_SHIPPER_REQUEST:
+			return {
+				loading: true,
+			}
+		case ORDER_UPDATE_SHIPPER_SUCCESS:
+			return {
+				loading: false,
+				success: true,
+			}
+		case ORDER_UPDATE_SHIPPER_FAIL:
 			return {
 				loading: false,
 				error: action.payload,

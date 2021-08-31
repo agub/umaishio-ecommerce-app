@@ -1,36 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import {
-	Form,
-	Button,
-	Col,
-	ListGroup,
-	Image,
-	Card,
-	Row,
-	Modal,
-} from 'react-bootstrap'
+import { Form, Button, Col, ListGroup, Image, Card, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {
-	getOrderDetail,
 	getOrderDetails,
 	payOnStirpe,
-	payOrder,
 	deliverOrder,
 	bankTransferOrder,
 } from '../actions/orderActions'
 import { STRIPE_PAY_RESET } from '../constants/orderConstants'
 
-import {
-	CardElement,
-	useStripe,
-	useElements,
-	CardNumberElement,
-	CardCvcElement,
-	CardExpiryElement,
-} from '@stripe/react-stripe-js'
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { CART_ITEMS_RESET } from '../constants/cartConstants'
 import {
@@ -38,6 +20,7 @@ import {
 	BANKTRANSFER_RESET,
 } from '../constants/orderConstants'
 import CvcModal from '../components/CvcModal'
+import ModifyShippingInfoModal from '../components/ModifyShippingInfoModal'
 
 const OrderScreen = ({ match, history }) => {
 	const stripe = useStripe()
@@ -46,11 +29,17 @@ const OrderScreen = ({ match, history }) => {
 	const [name, setName] = useState('')
 	const [errorText, setErrorText] = useState(null)
 
-	//modal
+	//Cvcmodal
 	const [show, setShow] = useState(false)
 	const handleClose = () => setShow(false)
 	const handleShow = () => setShow(true)
-	//modal
+	//Cvcmodal
+
+	//changeaddressmodal
+	const [shippingModal, setShippingModal] = useState(false)
+	const shippingModalClose = () => setShippingModal(false)
+	const shippingModalShow = () => setShippingModal(true)
+	//Cvcmodal
 
 	//paymentMethod
 	const [bankTransferState, setBankTransferState] = useState(false)
@@ -118,8 +107,6 @@ const OrderScreen = ({ match, history }) => {
 		try {
 			if (name !== '' && order && !bankTransferState) {
 				if (!stripe || !elements) {
-					// Stripe.js has not loaded yet. Make sure to disable
-					// form submission until Stripe.js has loaded.
 					return
 				}
 				const {
@@ -130,17 +117,6 @@ const OrderScreen = ({ match, history }) => {
 					card: elements.getElement(CardElement),
 				})
 				const { id } = paymentMethod
-				console.log(orderId)
-				console.log(error)
-
-				//api connect to stripe
-				// const { paymentResult } = axios.put()
-				// const paymentResult = {
-				// 	id: 'idsample',
-				// 	status: 'completed',
-				// 	update_time: 'updatetime',
-				// 	payer: { email_address: 'fasdfas' },
-				// }
 				const paymentDetails = {
 					id: id,
 					amount: order.totalPrice,
@@ -188,11 +164,14 @@ const OrderScreen = ({ match, history }) => {
 	) : (
 		<>
 			<Row>
-				{!order.isPaid && <CheckoutSteps step1 step2 step3 step4 />}
+				{(!order.isPaid || !order.isBankTransfer) && (
+					<CheckoutSteps step1 step2 step3 step4 />
+				)}
 				<Col md={8}>
 					<ListGroup variant='flush'>
 						<ListGroup.Item>
 							<h4>配送先</h4>
+
 							<p className='mt-3'>
 								<strong>氏名: </strong>
 								{order.shippingAddress.fullName}
@@ -268,6 +247,25 @@ const OrderScreen = ({ match, history }) => {
 									{order.shippingAddress.comment}
 								</p>
 							)}
+							<div
+								style={{
+									display: 'flex',
+									justifyContent: 'flex-end',
+									alignItems: 'center',
+								}}
+							>
+								<Button
+									variant='flush'
+									onClick={shippingModalShow}
+								>
+									変更する
+								</Button>
+							</div>
+							<ModifyShippingInfoModal
+								match={match}
+								show={shippingModal}
+								handleClose={shippingModalClose}
+							/>
 							{order.isDelivered ? (
 								<Message variant='success'>
 									配送完了

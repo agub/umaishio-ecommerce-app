@@ -26,16 +26,15 @@ const Header = () => {
 		<header>
 			<Navbar collapseOnSelect bg='dark' variant='dark' expand='lg'>
 				<Container>
-					<LinkContainer exact to='/'>
-						<Navbar.Brand>
-							<Image
-								src={logo}
-								alt='logo'
-								style={{ width: '200px' }}
-							/>
-						</Navbar.Brand>
-					</LinkContainer>
-
+					{/* <LinkContainer to='/'> */}
+					<Navbar.Brand href='/'>
+						<Image
+							src={logo}
+							alt='logo'
+							style={{ width: '200px' }}
+						/>
+					</Navbar.Brand>
+					{/* </LinkContainer> */}
 					<Navbar.Toggle aria-controls='basic-navbar-nav' />
 					<Navbar.Collapse id='basic-navbar-nav'>
 						<Nav className='ms-auto'>

@@ -224,6 +224,27 @@ const getOrders = asyncHandler(async (req, res) => {
 	res.json(orders)
 })
 
+// @desc    Update ordered shipper info
+// @route   GET
+// @access  Private/Admin
+const updateOrderShippingInfo = asyncHandler(async (req, res) => {
+	const order = await Order.findById(req.params.id)
+	if (req.body) {
+		order.shippingAddress = {
+			...req.body,
+		}
+
+		const updatedOrder = await order.save()
+
+		res.json(updatedOrder)
+	} else {
+		res.status(404)
+		throw new Error(
+			'オーダーが見つかりません。ログインし最初からもう一度お試しください。'
+		)
+	}
+})
+
 export {
 	addOrderItems,
 	getOrderById,
@@ -233,4 +254,5 @@ export {
 	getMyOrders,
 	getOrders,
 	updateOrderToDelivered,
+	updateOrderShippingInfo,
 }

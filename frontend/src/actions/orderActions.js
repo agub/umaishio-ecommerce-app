@@ -25,6 +25,9 @@ import {
 	BANKTRANSFER_FAIL,
 	BANKTRANSFER_SUCCESS,
 	BANKTRANSFER_REQUEST,
+	ORDER_UPDATE_SHIPPER_FAIL,
+	ORDER_UPDATE_SHIPPER_SUCCESS,
+	ORDER_UPDATE_SHIPPER_REQUEST,
 	// ORDER_LIST_MY_REQUEST,
 	// ORDER_LIST_MY_SUCCESS,
 	// ORDER_LIST_MY_FAIL,
@@ -366,6 +369,50 @@ export const listOrders = () => async (dispatch, getState) => {
 		}
 		dispatch({
 			type: ORDER_LIST_FAIL,
+			payload: message,
+		})
+	}
+}
+
+export const updateShipperInfo = (orderId, shippingAddress) => async (
+	dispatch,
+	getState
+) => {
+	try {
+		dispatch({
+			type: ORDER_UPDATE_SHIPPER_REQUEST,
+		})
+
+		const {
+			userLogin: { userInfo },
+		} = getState()
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${userInfo.token}`,
+			},
+		}
+
+		const { data } = await axios.put(
+			`/api/orders/${orderId}/updateShipper`,
+			shippingAddress,
+			config
+		)
+
+		dispatch({
+			type: ORDER_UPDATE_SHIPPER_SUCCESS,
+			payload: data,
+		})
+	} catch (error) {
+		const message =
+			error.response && error.response.data.message
+				? error.response.data.message
+				: error.message
+		if (message === 'Not authorized, token failed') {
+			dispatch(logout())
+		}
+		dispatch({
+			type: ORDER_UPDATE_SHIPPER_FAIL,
 			payload: message,
 		})
 	}

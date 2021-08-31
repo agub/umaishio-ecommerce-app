@@ -83,8 +83,12 @@ main {
   /* color: white; */
   /* border: 1px solid; */
   box-shadow: 0px 3px 10px 1px;
-  animation: shake-animation 4.72s ease infinite;
+ 
   transform-origin: 50% 50%;
+}
+
+.animation-shake {
+  animation: shake-animation 4.72s ease infinite;
 }
 @keyframes shake-animation {
   0% { transform:translate(0,0) }
