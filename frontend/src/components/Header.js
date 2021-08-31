@@ -26,7 +26,7 @@ const Header = () => {
 		<header>
 			<Navbar collapseOnSelect bg='dark' variant='dark' expand='lg'>
 				<Container>
-					<LinkContainer to='/'>
+					<LinkContainer exact to='/'>
 						<Navbar.Brand>
 							<Image
 								src={logo}
@@ -39,7 +39,11 @@ const Header = () => {
 					<Navbar.Toggle aria-controls='basic-navbar-nav' />
 					<Navbar.Collapse id='basic-navbar-nav'>
 						<Nav className='ms-auto'>
+							<LinkContainer exact to='/'>
+								<Nav.Link>ホーム</Nav.Link>
+							</LinkContainer>
 							<LinkContainer
+								exact
 								to='/cart'
 								style={{
 									position: 'relative',

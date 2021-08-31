@@ -8,6 +8,11 @@ import Loader from '../components/Loader'
 import { listProducts } from '../actions/productActions'
 import Meta from '../components/Meta'
 
+import { Navbar, Nav, Container, NavDropdown, Image } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
+import { logout } from '../actions/userActions'
+import logo from '../data/images/logo.png'
+
 const HomeScreen = () => {
 	const dispatch = useDispatch()
 	const productList = useSelector((state) => state.productList)
@@ -15,6 +20,12 @@ const HomeScreen = () => {
 	useEffect(() => {
 		dispatch(listProducts())
 	}, [dispatch])
+	const cart = useSelector((state) => state.cart)
+	const { cartItems } = cart
+
+	const getCartCount = () => {
+		return cartItems.reduce((qty, item) => Number(item.qty) + qty, 0)
+	}
 
 	return (
 		<>
@@ -40,6 +51,20 @@ const HomeScreen = () => {
 					))}
 				</Row>
 			)}
+			<LinkContainer
+				exact
+				to='/cart'
+				// style={{
+				// 	position: 'relative',
+				// 	justifyContent: 'center',
+				// }}
+				className='cartTo'
+			>
+				<Nav.Link className='home-cartButton'>
+					<i className='fas fa-shopping-cart'></i>{' '}
+					<span className='header-cartnumber'>{getCartCount()}</span>
+				</Nav.Link>
+			</LinkContainer>
 		</>
 	)
 }

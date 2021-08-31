@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
 // import { Link } from 'react-router-dom'
 import { Table, Form, Button, Row, Col, Card, ListGroup } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
@@ -37,15 +37,19 @@ const ProfileScreen = ({ location, history }) => {
 		} else {
 			if (!user || !user.name) {
 				dispatch(getUserDetails('profile'))
-				// dispatch({ type: USER_UPDATE_PROFILE_RESET })
 				dispatch(listMyOrders())
 			} else {
 				setName(user.name)
 				setEmail(user.email)
 			}
 		}
-	}, [dispatch, history, userInfo, user])
+	}, [history, userInfo, user, dispatch])
 
+	const reLoad = () => {
+		if (userInfo) {
+			dispatch(listMyOrders())
+		}
+	}
 	const submitHandler = (e) => {
 		setMessage('')
 		e.preventDefault()
@@ -178,7 +182,34 @@ const ProfileScreen = ({ location, history }) => {
 			</Col>
 
 			<Col md={9}>
-				<h2>注文一覧</h2>
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+					}}
+				>
+					<h2>
+						注文一覧
+						{/* <span style={{ marginLeft: 'auto', width: 'auto' }}> */}
+						{/* </span> */}
+					</h2>
+					<Button
+						style={{
+							width: '50px',
+							height: '50px',
+							borderRadius: '50%',
+							textAlign: 'center',
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+						variant='light'
+						onClick={() => reLoad()}
+					>
+						<i className='fas fa-sync'></i>
+					</Button>
+				</div>
 				{loadingOrders ? (
 					<Loader />
 				) : errorOrders ? (
