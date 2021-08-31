@@ -22,7 +22,7 @@ import {
 import CvcModal from '../components/CvcModal'
 import ModifyShippingInfoModal from '../components/ModifyShippingInfoModal'
 
-const OrderScreen = ({ match, history }) => {
+const OrderScreen = ({ match, history, location }) => {
 	const stripe = useStripe()
 	const elements = useElements()
 
@@ -247,24 +247,31 @@ const OrderScreen = ({ match, history }) => {
 									{order.shippingAddress.comment}
 								</p>
 							)}
-							<div
-								style={{
-									display: 'flex',
-									justifyContent: 'flex-end',
-									alignItems: 'center',
-								}}
-							>
-								<Button
-									variant='flush'
-									onClick={shippingModalShow}
-								>
-									変更する
-								</Button>
-							</div>
+							{userInfo &&
+								order &&
+								!order.isDelivered &&
+								(!order.isBankTransfer || !order.isPaid) && (
+									<div
+										style={{
+											display: 'flex',
+											justifyContent: 'flex-end',
+											alignItems: 'center',
+										}}
+									>
+										<Button
+											variant='danger'
+											onClick={shippingModalShow}
+										>
+											変更する
+										</Button>
+									</div>
+								)}
+
 							<ModifyShippingInfoModal
 								match={match}
 								show={shippingModal}
 								handleClose={shippingModalClose}
+								history={history}
 							/>
 							{order.isDelivered ? (
 								<Message variant='success'>
@@ -343,7 +350,7 @@ const OrderScreen = ({ match, history }) => {
 											},
 										}}
 									/>
-									<div>
+									{/* <div>
 										<span
 											style={{
 												fontSize: '13px',
@@ -356,6 +363,22 @@ const OrderScreen = ({ match, history }) => {
 											CVCとは
 											<i className='far fa-question-circle'></i>
 										</span>
+									</div> */}
+
+									<div
+										style={{
+											display: 'flex',
+											justifyContent: 'flex-end',
+											alignItems: 'center',
+										}}
+									>
+										<Button
+											variant='flush'
+											onClick={handleShow}
+										>
+											CVCとは
+											<i className='far fa-question-circle'></i>
+										</Button>
 									</div>
 									<CvcModal
 										show={show}

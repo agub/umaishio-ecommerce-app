@@ -69,6 +69,10 @@ const ProductScreen = ({ match, history }) => {
 	// 	},
 	// }
 
+	const directToReview = () => {
+		document.getElementById('reviewComp').scrollIntoView()
+	}
+
 	const addToCartHandler = () => {
 		dispatch(addToCart(product._id, qty))
 		setMessage('買い物カゴへ追加しました。')
@@ -120,6 +124,7 @@ const ProductScreen = ({ match, history }) => {
 												showArrow
 												showComment={showComment}
 												setShowComment={setShowComment}
+												directToReview={directToReview}
 											/>
 										</>
 									)}
@@ -137,7 +142,7 @@ const ProductScreen = ({ match, history }) => {
 							{/* from here > */}
 
 							<Card>
-								<ListGroup variant='flush'>
+								<ListGroup variant='flush' id='reviewComp'>
 									{showComment && (
 										<>
 											<ListGroup.Item

@@ -20,6 +20,6 @@ router.route('/:id').get(protect, getOrderById)
 router.route('/:id/stripe').post(protect, stripeApi)
 router.route('/:id/banktransfer').post(protect, bankTransferOrder)
 router.route('/:id/deliver').put(protect, admin, updateOrderToDelivered)
-router.route('/:id/updateShipper').put(protect, admin, updateOrderShippingInfo)
+router.route('/:id/updateShipper').put(protect, updateOrderShippingInfo)
 
 export default router

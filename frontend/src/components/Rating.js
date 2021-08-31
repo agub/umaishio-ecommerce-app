@@ -7,12 +7,14 @@ const Rating = ({
 	showArrow,
 	showComment,
 	setShowComment,
+	directToReview,
 }) => {
 	const showCommentHandler = () => {
 		if (showComment) {
 			setShowComment(false)
 		} else {
 			setShowComment(true)
+			directToReview()
 		}
 	}
 	return (
@@ -89,7 +91,9 @@ const Rating = ({
 						</span>
 					) : (
 						<span
-							onClick={() => showCommentHandler()}
+							onClick={() => {
+								showCommentHandler()
+							}}
 							style={{ 'cursor': 'pointer' }}
 						>
 							<i className='fas fa-angle-down'></i>

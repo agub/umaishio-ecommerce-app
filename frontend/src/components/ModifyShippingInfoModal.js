@@ -1,20 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button, Row, Col, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { PREF_OPTIONS } from '../data/Prefecture'
 import { updateShipperInfo } from '../actions/orderActions'
+import Loader from '../components/Loader'
 
 const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 	const dispatch = useDispatch()
 	const productId = match.params.id
 
-	// const cart = useSelector((state) => state.cart)
-	// const { shippingAddress } = cart
-
 	const orderDetails = useSelector((state) => state.orderDetails)
-	const { order, loading, error } = orderDetails
+	const { order } = orderDetails
+
+	const orderShippingUpdate = useSelector(
+		(state) => state.orderShippingUpdate
+	)
+	const { success, loading } = orderShippingUpdate
 
 	const [fullName, setFullName] = useState(
 		order.shippingAddress.fullName || ''
@@ -70,7 +73,7 @@ const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 			order.shippingAddress.shipperPostalCode.substring(3, 7)) ||
 			''
 	)
-	const submitHandler = (e) => {
+	const submitHandler = async (e) => {
 		e.preventDefault()
 		let postalCode
 		if (postalCode1 !== '' && postalCode2 !== '') {
@@ -143,8 +146,13 @@ const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 				})
 			)
 		}
-		// history.push('/payment')
 	}
+
+	useEffect(() => {
+		if (success) {
+			window.location.reload()
+		}
+	}, [success])
 
 	const shipperCheck = () => {
 		setIsShipper(!isShipper)
@@ -402,20 +410,26 @@ const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 							alignItems: 'center',
 						}}
 					> */}
-					<Button
-						type='submit'
-						variant='primary'
-						className='mt-3 w-100'
-					>
-						変更する
-					</Button>
-					<Button
-						variant='flush'
-						onClick={handleClose}
-						className='mt-3 w-100'
-					>
-						キャンセル
-					</Button>
+					{loading ? (
+						<Loader />
+					) : (
+						<>
+							<Button
+								type='submit'
+								variant='primary'
+								className='mt-3 w-100'
+							>
+								変更する
+							</Button>
+							<Button
+								variant='flush'
+								onClick={handleClose}
+								className='mt-3 w-100'
+							>
+								キャンセル
+							</Button>
+						</>
+					)}
 					{/* </div> */}
 				</Form>
 			</Modal.Body>
