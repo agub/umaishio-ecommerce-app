@@ -250,7 +250,8 @@ const OrderScreen = ({ match, history, location }) => {
 							{userInfo &&
 								order &&
 								!order.isDelivered &&
-								(!order.isBankTransfer || !order.isPaid) && (
+								!order.isBankTransfer &&
+								!order.isPaid && (
 									<div
 										style={{
 											display: 'flex',

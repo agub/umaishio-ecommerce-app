@@ -17,6 +17,9 @@ const LoginScreen = ({ location, history }) => {
 	const userLogin = useSelector((state) => state.userLogin)
 	const { loading, error, userInfo } = userLogin
 
+	const cart = useSelector((state) => state.cart)
+	const { cartItems } = cart
+
 	// const redirect = location.search ? location.search.split('=')[1] : '/'
 
 	const redirect = location.search ? location.search.split('=')[1] : '/'
@@ -52,7 +55,7 @@ const LoginScreen = ({ location, history }) => {
 
 	return (
 		<FormContainer>
-			<h1>サインイン</h1>
+			<h1>ログイン</h1>
 			{error && <Message variant='danger'>{error}</Message>}
 			{loading && <Loader />}
 			<Form onSubmit={submitHandler}>
