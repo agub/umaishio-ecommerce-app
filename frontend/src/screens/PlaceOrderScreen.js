@@ -7,6 +7,7 @@ import CheckoutSteps from '../components/CheckoutSteps'
 import { createOrder } from '../actions/orderActions'
 import { ORDER_CREATE_RESET } from '../constants/orderConstants'
 import { USER_DETAILS_RESET } from '../constants/userConstants'
+import Loader from '../components/Loader'
 
 const PlaceOrderScreen = ({ history }) => {
 	const dispatch = useDispatch()
@@ -31,7 +32,7 @@ const PlaceOrderScreen = ({ history }) => {
 	// cart.itemsPrice = cart.itemsPrice.toFixed(0)
 
 	const orderCreate = useSelector((state) => state.orderCreate)
-	const { order, success, error } = orderCreate
+	const { order, success, error, loading: loadingOrder } = orderCreate
 	const orderDetails = useSelector((state) => state.orderDetails)
 	const { loading } = orderDetails
 
@@ -89,12 +90,12 @@ const PlaceOrderScreen = ({ history }) => {
 								<strong>電話番号: </strong>
 								{cart.shippingAddress.phoneNumber}
 							</p>
-							{cart && cart.shippingAddress.comment && (
+							{/* {cart && cart.shippingAddress.comment && (
 								<p>
 									<strong>ご要望: </strong>
 									{cart.shippingAddress.comment}
 								</p>
-							)}
+							)} */}
 						</ListGroup.Item>
 						{cart && cart.shippingAddress.isShipper && (
 							<ListGroup.Item>
@@ -125,14 +126,14 @@ const PlaceOrderScreen = ({ history }) => {
 								</p>
 							</ListGroup.Item>
 						)}
-						{/* {cart && cart.shippingAddress.comment && (
+						{cart && cart.shippingAddress.comment && (
 							<ListGroup.Item>
 								<p>
 									<strong>ご要望: </strong>
 									{cart.shippingAddress.comment}
 								</p>
 							</ListGroup.Item>
-						)} */}
+						)}
 
 						{/* <ListGroup.Item>
 							<h4>お支払い方法</h4>
@@ -223,14 +224,20 @@ const PlaceOrderScreen = ({ history }) => {
 								</ListGroup.Item>
 							)}
 							<ListGroup.Item>
-								<Button
-									type='button'
-									className='btn-block w-100'
-									disabled={cart.cartItems === 0}
-									onClick={placeOrderHandler}
-								>
-									支払いへ進む
-								</Button>
+								{loadingOrder ? (
+									<Loader />
+								) : (
+									<Button
+										type='button'
+										className='btn-block w-100'
+										disabled={
+											cart.cartItems === 0 || loadingOrder
+										}
+										onClick={placeOrderHandler}
+									>
+										支払いへ進む
+									</Button>
+								)}
 							</ListGroup.Item>
 						</ListGroup>
 					</Card>

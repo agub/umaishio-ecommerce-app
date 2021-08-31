@@ -35,8 +35,13 @@ const ShippingScreen = ({ history }) => {
 
 	const [comment, setComment] = useState(shippingAddress.comment || '')
 
-	const [isShipper, setIsShipper] = useState(false)
-	const [isComment, setIsComment] = useState(false)
+	const [isShipper, setIsShipper] = useState(
+		shippingAddress.isShipper || false
+	)
+
+	const [isComment, setIsComment] = useState(
+		shippingAddress.isComment || false
+	)
 
 	const [shipperFullName, setShipperFullName] = useState(
 		shippingAddress.shipperFullName || ''
@@ -63,16 +68,16 @@ const ShippingScreen = ({ history }) => {
 
 	const shipperCheck = () => {
 		setIsShipper(!isShipper)
-		setShipperFullName('')
-		setShipperPhoneNumber('')
-		setShipperAddress('')
-		setShipperPrefecture('北海道')
-		setShipperPostalCode1('')
-		setShipperPostalCode2('')
+		// setShipperFullName('')
+		// setShipperPhoneNumber('')
+		// setShipperAddress('')
+		// setShipperPrefecture('北海道')
+		// setShipperPostalCode1('')
+		// setShipperPostalCode2('')
 	}
 	const commentCheck = () => {
 		setIsComment(!isComment)
-		setComment('')
+		// setComment('')
 	}
 
 	const submitHandler = (e) => {
@@ -88,7 +93,7 @@ const ShippingScreen = ({ history }) => {
 			// postalCode1.substring(0, 2) + postalCode2.substring(2, 6)
 		}
 		console.log(postalCode)
-		if (isShipper || isComment) {
+		if (isShipper && isComment) {
 			dispatch(
 				saveShippingAddress({
 					fullName,
@@ -104,6 +109,36 @@ const ShippingScreen = ({ history }) => {
 					shipperPostalCode,
 					shipperPrefecture,
 					shipperAddress,
+				})
+			)
+		} else if (isShipper) {
+			dispatch(
+				saveShippingAddress({
+					fullName,
+					phoneNumber,
+					postalCode,
+					prefecture,
+					address,
+					isShipper,
+					isComment,
+					shipperFullName,
+					shipperPhoneNumber,
+					shipperPostalCode,
+					shipperPrefecture,
+					shipperAddress,
+				})
+			)
+		} else if (isComment) {
+			dispatch(
+				saveShippingAddress({
+					fullName,
+					phoneNumber,
+					postalCode,
+					prefecture,
+					address,
+					isComment,
+					comment,
+					isShipper,
 				})
 			)
 		} else {
@@ -223,26 +258,10 @@ const ShippingScreen = ({ history }) => {
 
 				<Form.Check
 					className='mt-3'
-					label='配送者へのご要望'
-					onChange={() => commentCheck()}
-					value={isComment}
-				/>
-				{isComment && (
-					<Form.Group controlId='comment' className='mt-3'>
-						<Form.Label>ご要望内容</Form.Label>
-						<Form.Control
-							as='textarea'
-							required
-							row='3'
-							onChange={(e) => setComment(e.target.value)}
-						></Form.Control>
-					</Form.Group>
-				)}
-				<Form.Check
-					className='mt-3'
 					label='申し込み人と送り主が異なる場合'
 					onChange={() => shipperCheck()}
-					value={isShipper}
+					// value={isShipper}
+					checked={isShipper}
 				/>
 
 				{isShipper && (
@@ -354,7 +373,24 @@ const ShippingScreen = ({ history }) => {
 						</Form.Group>
 					</>
 				)}
-
+				<Form.Check
+					className='mt-3'
+					label='配送者へのご要望'
+					onChange={() => commentCheck()}
+					checked={isComment}
+				/>
+				{isComment && (
+					<Form.Group controlId='comment' className='mt-3'>
+						<Form.Label>ご要望内容</Form.Label>
+						<Form.Control
+							as='textarea'
+							required
+							row='3'
+							onChange={(e) => setComment(e.target.value)}
+							value={comment}
+						></Form.Control>
+					</Form.Group>
+				)}
 				<Button type='submit' variant='primary' className='mt-3'>
 					次へ進む
 				</Button>

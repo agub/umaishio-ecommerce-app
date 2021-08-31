@@ -262,7 +262,12 @@ const OrderScreen = ({ match, history }) => {
 									</p>
 								</>
 							)}
-
+							{order && order.shippingAddress.comment && (
+								<p>
+									<strong>ご要望: </strong>
+									{order.shippingAddress.comment}
+								</p>
+							)}
 							{order.isDelivered ? (
 								<Message variant='success'>
 									配送完了

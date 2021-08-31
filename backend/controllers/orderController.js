@@ -20,11 +20,18 @@ const addOrderItems = asyncHandler(async (req, res) => {
 		totalPrice,
 	} = req.body
 
+	console.log(req.user)
 	if (orderItems && orderItems.lengh === 0) {
 		res.status(400)
 		throw new Error('No order Items')
 		return
 	} else {
+		const orders = await Order.find({ user: req.user._id })
+		const notOrders = orders.filter((o) => !o.isPaid && !o.isBankTransfer)
+		for (let item of notOrders) {
+			const unWantedProduct = await Order.findById(item._id)
+			await unWantedProduct.remove()
+		}
 		const order = new Order({
 			orderItems,
 			user: req.user._id,
