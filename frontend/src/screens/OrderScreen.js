@@ -504,7 +504,7 @@ const OrderScreen = ({ match, history }) => {
 								order &&
 								userInfo.isAdmin &&
 								!order.isDelivered &&
-								order.isBankTransfer && (
+								(order.isBankTransfer || order.isPaid) && (
 									<ListGroup.Item>
 										<Button
 											type='button'
