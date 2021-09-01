@@ -8,7 +8,9 @@ const FilteredLists = ({ orders, title }) => {
 					orders.map((order) => (
 						<tr key={order._id}>
 							<td>{order._id}</td>
-							<td>{order.user && order.user.name}</td>
+							<td>
+								{order.user && order.shippingAddress.fullName}
+							</td>
 							<td>{order.createdAt.substring(0, 10)}</td>
 							<td>¥{order.totalPrice}</td>
 							<td>
@@ -56,7 +58,10 @@ const FilteredLists = ({ orders, title }) => {
 						.map((order) => (
 							<tr key={order._id}>
 								<td>{order._id}</td>
-								<td>{order.user && order.user.name}</td>
+								<td>
+									{order.user &&
+										order.shippingAddress.fullName}
+								</td>
 								<td>{order.createdAt.substring(0, 10)}</td>
 								<td>¥{order.totalPrice}</td>
 								<td>
@@ -107,7 +112,10 @@ const FilteredLists = ({ orders, title }) => {
 						.map((order) => (
 							<tr key={order._id}>
 								<td>{order._id}</td>
-								<td>{order.user && order.user.name}</td>
+								<td>
+									{order.user &&
+										order.shippingAddress.fullName}
+								</td>
 								<td>{order.createdAt.substring(0, 10)}</td>
 								<td>¥{order.totalPrice}</td>
 								<td>
@@ -158,7 +166,10 @@ const FilteredLists = ({ orders, title }) => {
 						.map((order) => (
 							<tr key={order._id}>
 								<td>{order._id}</td>
-								<td>{order.user && order.user.name}</td>
+								<td>
+									{order.user &&
+										order.shippingAddress.fullName}
+								</td>
 								<td>{order.createdAt.substring(0, 10)}</td>
 								<td>¥{order.totalPrice}</td>
 								<td>

@@ -78,8 +78,8 @@ const OrderListScreen = ({ history }) => {
 						<thead>
 							<tr>
 								<th>ID</th>
-								<th>USER</th>
-								<th>日</th>
+								<th>発送宛て</th>
+								<th>注文日</th>
 								<th>合計</th>
 								<th>支払い済み</th>
 								<th>配送</th>
