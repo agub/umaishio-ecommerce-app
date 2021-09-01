@@ -136,6 +136,8 @@ const OrderScreen = ({ match, history, location }) => {
 				dispatch(payOnStirpe(orderId, paymentDetails))
 				// console.log(paymentResult)
 				// dispatch(payOrder(orderId, paymentDetails))
+			} else if (!bankTransferState) {
+				setErrorText('正しく記入してください')
 			} else {
 				console.log('bankTransfer')
 				dispatch(bankTransferOrder(orderId))
@@ -152,6 +154,7 @@ const OrderScreen = ({ match, history, location }) => {
 
 	const toBankTransfer = (boolean) => {
 		setBankTransferState(boolean)
+		setErrorText('')
 	}
 
 	return loading ? (
