@@ -56,6 +56,27 @@ main {
 }
 
 
+.shipping-form-lable {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.shipping-form-icon {
+  margin-left: 6px;
+  background-color: purple;
+  color: white;
+  font-size: 10px;
+  padding: 2px 8px;
+}
+
+.shipping-form-example {
+  text-align: end;
+  font-size: 0.7rem;
+  color: #90a4ae;
+
+}
+
 .rating span {
   margin: 0.1rem;
   width: 20px;
