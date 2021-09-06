@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { PREF_OPTIONS } from '../data/Prefecture'
+
+import { usePostalJp } from 'use-postal-jp'
 
 import { saveShippingAddress } from '../actions/cartActions'
 
@@ -65,6 +67,30 @@ const ShippingScreen = ({ history }) => {
 			shippingAddress.shipperPostalCode.substring(3, 7)) ||
 			''
 	)
+
+	//address
+	const {
+		address: pcAddress,
+		error,
+		pending,
+		sanitizedCode,
+		setPostalCode,
+	} = usePostalJp()
+
+	console.log(pcAddress, error, pending, sanitizedCode)
+	useEffect(() => {
+		let postalCode
+		if (postalCode1 !== '' && postalCode2 !== '') {
+			postalCode = postalCode1 + postalCode2
+			// postalCode1.substring(0, 2) + postalCode2.substring(2, 6)
+			setPostalCode(postalCode)
+			if (pcAddress) {
+				setPrefecture(pcAddress.prefecture)
+			}
+		}
+	}, [pcAddress, setPostalCode, postalCode1, postalCode2, setPrefecture])
+
+	//address
 
 	const shipperCheck = () => {
 		setIsShipper(!isShipper)
