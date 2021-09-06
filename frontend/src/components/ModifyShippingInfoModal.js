@@ -7,6 +7,9 @@ import { PREF_OPTIONS } from '../data/Prefecture'
 import { updateShipperInfo } from '../actions/orderActions'
 import Loader from '../components/Loader'
 
+import ShippingForm from '../components/ShippingForm'
+import ShipperForm from '../components/ShipperForm'
+
 const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 	const dispatch = useDispatch()
 	const productId = match.params.id
@@ -22,10 +25,18 @@ const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 	const [fullName, setFullName] = useState(
 		order.shippingAddress.fullName || ''
 	)
+
+	const [furigana, setFurigana] = useState(
+		order.shippingAddress.furigana || ''
+	)
+
 	const [phoneNumber, setPhoneNumber] = useState(
 		order.shippingAddress.phoneNumber || ''
 	)
 	const [address, setAddress] = useState(order.shippingAddress.address || '')
+	const [building, setBuilding] = useState(
+		order.shippingAddress.building || ''
+	)
 	const [prefecture, setPrefecture] = useState(
 		order.shippingAddress.prefecture || '北海道'
 	)
@@ -51,14 +62,22 @@ const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 		order.shippingAddress.isComment || false
 	)
 
+	//shipper addditional
+
 	const [shipperFullName, setShipperFullName] = useState(
 		order.shippingAddress.shipperFullName || ''
+	)
+	const [shipperFurigana, setShipperFurigana] = useState(
+		order.shippingAddress.shipperFurigana || ''
 	)
 	const [shipperPhoneNumber, setShipperPhoneNumber] = useState(
 		order.shippingAddress.phoneNumber || ''
 	)
 	const [shipperAddress, setShipperAddress] = useState(
 		order.shippingAddress.shipperAddress || ''
+	)
+	const [shipperBuilding, setShipperBuilding] = useState(
+		order.shippingAddress.shipperBuilding || ''
 	)
 	const [shipperPrefecture, setShipperPrefecture] = useState(
 		order.shippingAddress.shipperPrefecture && '北海道'
@@ -90,45 +109,55 @@ const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 			dispatch(
 				updateShipperInfo(productId, {
 					fullName,
+					furigana,
 					phoneNumber,
 					postalCode,
 					prefecture,
 					address,
+					building,
 					isComment,
 					comment,
 					isShipper,
 					shipperFullName,
+					shipperFurigana,
 					shipperPhoneNumber,
 					shipperPostalCode,
 					shipperPrefecture,
 					shipperAddress,
+					shipperBuilding,
 				})
 			)
 		} else if (isShipper) {
 			dispatch(
 				updateShipperInfo(productId, {
 					fullName,
+					furigana,
 					phoneNumber,
 					postalCode,
 					prefecture,
 					address,
+					building,
 					isShipper,
 					isComment,
 					shipperFullName,
+					shipperFurigana,
 					shipperPhoneNumber,
 					shipperPostalCode,
 					shipperPrefecture,
 					shipperAddress,
+					shipperBuilding,
 				})
 			)
 		} else if (isComment) {
 			dispatch(
 				updateShipperInfo(productId, {
 					fullName,
+					furigana,
 					phoneNumber,
 					postalCode,
 					prefecture,
 					address,
+					building,
 					isComment,
 					comment,
 					isShipper,
@@ -138,10 +167,12 @@ const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 			dispatch(
 				updateShipperInfo(productId, {
 					fullName,
+					furigana,
 					phoneNumber,
 					postalCode,
 					prefecture,
 					address,
+					building,
 					isShipper,
 				})
 			)
@@ -169,100 +200,24 @@ const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 			<Modal.Body className='p-20'>
 				<h1>お届け先の住所</h1>
 				<Form onSubmit={submitHandler} className='shippingContainer'>
-					<Form.Group controlId='postalCode' className='mt-2'>
-						<Form.Label>氏名</Form.Label>
-						<Form.Control
-							type='string'
-							value={fullName}
-							required
-							onChange={(e) => setFullName(e.target.value)}
-						></Form.Control>
-					</Form.Group>
-					<Form.Group controlId='postalCode' className='mt-2'>
-						<Form.Label>電話番号</Form.Label>
-						<Form.Control
-							type='number'
-							value={phoneNumber}
-							required
-							onChange={(e) => setPhoneNumber(e.target.value)}
-						></Form.Control>
-					</Form.Group>
-					<Row>
-						<Form.Group
-							controlId='postalCode'
-							className='mt-2'
-							as={Col}
-							sm={3}
-							xs={4}
-						>
-							<Form.Label>郵便番号</Form.Label>
-							<Form.Control
-								type='string'
-								value={postalCode1}
-								maxLength='3'
-								minLength='3'
-								required
-								onChange={(e) => setPostalCode1(e.target.value)}
-							></Form.Control>
-						</Form.Group>
-						<div
-							style={{
-								width: '10px',
-								height: '100%',
-								display: 'flex',
-								marginTop: 'auto',
-								paddingBottom: '15px',
-							}}
-						>
-							{/* <h3 style={{ marginTop: '6px' }}>-</h3> */}-
-						</div>
-						<Form.Group
-							controlId='postalCode'
-							className='mt-2'
-							as={Col}
-							sm={3}
-							xs={4}
-						>
-							<Form.Label>&nbsp;</Form.Label>
-
-							<Form.Control
-								type='string'
-								value={postalCode2}
-								maxLength='4'
-								minLength='4'
-								required
-								onChange={(e) => setPostalCode2(e.target.value)}
-							></Form.Control>
-						</Form.Group>
-					</Row>
-					<Form.Group controlId='prefecture' className='mt-2'>
-						<Form.Label>都道府県</Form.Label>
-						<Form.Control
-							className='form-select'
-							as='select'
-							value={prefecture}
-							placeholder='選択してください'
-							required
-							onChange={(e) => setPrefecture(e.target.value)}
-						>
-							{PREF_OPTIONS.map((x) => (
-								<option key={x} value={x}>
-									{x}
-								</option>
-							))}
-						</Form.Control>
-					</Form.Group>
-
-					<Form.Group controlId='address' className='mt-2'>
-						<Form.Label>住所</Form.Label>
-						<Form.Control
-							type='text'
-							value={address}
-							required
-							onChange={(e) => setAddress(e.target.value)}
-						></Form.Control>
-					</Form.Group>
-
+					<ShippingForm
+						fullName={fullName}
+						furigana={furigana}
+						phoneNumber={phoneNumber}
+						postalCode1={postalCode1}
+						postalCode2={postalCode2}
+						prefecture={prefecture}
+						address={address}
+						building={building}
+						setFullName={setFullName}
+						setFurigana={setFurigana}
+						setPhoneNumber={setPhoneNumber}
+						setPostalCode1={setPostalCode1}
+						setPostalCode2={setPostalCode2}
+						setPrefecture={setPrefecture}
+						setAddress={setAddress}
+						setBuilding={setBuilding}
+					/>
 					<Form.Check
 						className='mt-3'
 						label='申し込み人と送り主が異なる場合'
@@ -270,121 +225,25 @@ const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 						// value={isShipper}
 						checked={isShipper}
 					/>
-
-					{isShipper && (
-						<>
-							<h1 className='mt-3'>依頼人情報</h1>
-							<Form.Group controlId='postalCode' className='mt-2'>
-								<Form.Label>送り主氏名</Form.Label>
-								<Form.Control
-									type='string'
-									value={shipperFullName}
-									required
-									onChange={(e) =>
-										setShipperFullName(e.target.value)
-									}
-								></Form.Control>
-							</Form.Group>
-							<Form.Group controlId='postalCode' className='mt-2'>
-								<Form.Label>電話番号</Form.Label>
-								<Form.Control
-									type='number'
-									value={shipperPhoneNumber}
-									required
-									onChange={(e) =>
-										setShipperPhoneNumber(e.target.value)
-									}
-								></Form.Control>
-							</Form.Group>
-							<Row>
-								<Form.Group
-									controlId='postalCode'
-									className='mt-2'
-									as={Col}
-									sm={3}
-									xs={4}
-								>
-									<Form.Label>郵便番号</Form.Label>
-									<Form.Control
-										type='string'
-										value={shipperPostalCode1}
-										maxLength='3'
-										minLength='3'
-										required
-										onChange={(e) =>
-											setShipperPostalCode1(
-												e.target.value
-											)
-										}
-									></Form.Control>
-								</Form.Group>
-								<div
-									style={{
-										width: '10px',
-										height: '100%',
-										display: 'flex',
-										marginTop: 'auto',
-										paddingBottom: '15px',
-									}}
-								>
-									{/* <h3 style={{ marginTop: '6px' }}>-</h3> */}
-									-
-								</div>
-								<Form.Group
-									controlId='postalCode'
-									className='mt-2'
-									as={Col}
-									sm={3}
-									xs={4}
-								>
-									<Form.Label>&nbsp;</Form.Label>
-
-									<Form.Control
-										type='string'
-										value={shipperPostalCode2}
-										maxLength='4'
-										minLength='4'
-										required
-										onChange={(e) =>
-											setShipperPostalCode2(
-												e.target.value
-											)
-										}
-									></Form.Control>
-								</Form.Group>
-							</Row>
-							<Form.Group controlId='prefecture' className='mt-2'>
-								<Form.Label>都道府県</Form.Label>
-								<Form.Control
-									className='form-select'
-									as='select'
-									value={shipperPrefecture}
-									placeholder='選択してください'
-									required
-									onChange={(e) =>
-										setShipperPrefecture(e.target.value)
-									}
-								>
-									{PREF_OPTIONS.map((x) => (
-										<option key={x} value={x}>
-											{x}
-										</option>
-									))}
-								</Form.Control>
-							</Form.Group>
-							<Form.Group controlId='address' className='mt-2'>
-								<Form.Label>住所</Form.Label>
-								<Form.Control
-									type='text'
-									value={shipperAddress}
-									required
-									onChange={(e) =>
-										setShipperAddress(e.target.value)
-									}
-								></Form.Control>
-							</Form.Group>
-						</>
-					)}
+					<ShipperForm
+						isShipper={isShipper}
+						shipperFullName={shipperFullName}
+						shipperFurigana={shipperFurigana}
+						shipperPhoneNumber={shipperPhoneNumber}
+						shipperPostalCode1={shipperPostalCode1}
+						shipperPostalCode2={shipperPostalCode2}
+						shipperPrefecture={shipperPrefecture}
+						shipperAddress={shipperAddress}
+						shipperBuilding={shipperBuilding}
+						setShipperFullName={setShipperFullName}
+						setShipperFurigana={setShipperFurigana}
+						setShipperPhoneNumber={setShipperPhoneNumber}
+						setShipperPostalCode1={setShipperPostalCode1}
+						setShipperPostalCode2={setShipperPostalCode2}
+						setShipperPrefecture={setShipperPrefecture}
+						setShipperAddress={setShipperAddress}
+						setShipperBuilding={setShipperBuilding}
+					/>
 					<Form.Check
 						className='mt-3'
 						label='配送者へのご要望'

@@ -65,11 +65,9 @@ const PlaceOrderScreen = ({ history }) => {
 				<Col md={8}>
 					<ListGroup variant='flush'>
 						<ListGroup.Item>
-							<h4>配送先</h4>
+							<h4>お届け先</h4>
 							<p>
 								{/* <strong>氏名: </strong> */}
-								{cart.shippingAddress.fullName}
-								<br />
 								<strong>〒</strong>
 								{cart.shippingAddress.postalCode &&
 									cart.shippingAddress.postalCode.substring(
@@ -89,16 +87,22 @@ const PlaceOrderScreen = ({ history }) => {
 								<br />
 								{cart.shippingAddress.building !== '' &&
 									cart.shippingAddress.building}
-								<i
-									className='fa fa-phone'
-									style={{
-										display: 'inline-block',
-										transform: 'scaleX(-1)',
-										marginRight: '5px',
-									}}
-									aria-hidden='true'
-								></i>
-								{cart.shippingAddress.phoneNumber}
+								{cart.shippingAddress.fullName}
+								<br />
+								{cart.shippingAddress.phoneNumber && (
+									<>
+										<i
+											className='fa fa-phone'
+											style={{
+												display: 'inline-block',
+												transform: 'scaleX(-1)',
+												marginRight: '5px',
+											}}
+											aria-hidden='true'
+										></i>
+										{cart.shippingAddress.phoneNumber}
+									</>
+								)}
 							</p>
 							{/* {cart && cart.shippingAddress.comment && (
 								<p>
@@ -112,8 +116,6 @@ const PlaceOrderScreen = ({ history }) => {
 								<h4>依頼人住所</h4>
 								<p>
 									{/* <strong>氏名: </strong> */}
-									{cart.shippingAddress.shipperFullName}
-									<br />
 									<strong>〒</strong>
 									{cart.shippingAddress.shipperPostalCode &&
 										cart.shippingAddress.shipperPostalCode.substring(
@@ -130,9 +132,11 @@ const PlaceOrderScreen = ({ history }) => {
 									{/* <strong>住所: </strong> */}
 									{cart.shippingAddress.shipperPrefecture}
 									{cart.shippingAddress.address}
-									<br />
 									{cart.shippingAddress.building !== '' &&
-										cart.shippingAddress.building}{' '}
+										cart.shippingAddress.building}
+									<br />
+									{cart.shippingAddress.shipperFullName}
+									<br />
 									<i
 										className='fa fa-phone'
 										style={{

@@ -173,18 +173,9 @@ const OrderScreen = ({ match, history, location }) => {
 				<Col md={8}>
 					<ListGroup variant='flush'>
 						<ListGroup.Item>
-							<h4>配送先</h4>
-
+							<h4>お届け先</h4>
 							<p className='mt-3'>
-								<strong>氏名: </strong>
-								{order.shippingAddress.fullName}
-							</p>
-							<p>
-								<strong>電話番号: </strong>
-								{order.shippingAddress.phoneNumber}
-							</p>
-							<p>
-								<strong>郵便番号: </strong>
+								<strong>〒</strong>
 								{/* {order.shippingAddress.postalCode} */}
 								{order.shippingAddress.postalCode &&
 									order.shippingAddress.postalCode.substring(
@@ -197,29 +188,36 @@ const OrderScreen = ({ match, history, location }) => {
 										3,
 										7
 									)}
-							</p>
-							<p>
-								<strong>住所: </strong>
+								<br />
 								{order.shippingAddress.prefecture}
 								{order.shippingAddress.address}
+								{order.shippingAddress.building !== '' &&
+									order.shippingAddress.building}
+								<br />
+								{order.shippingAddress.fullName}(
+								{order.shippingAddress.furigana})
+								<br />
+								{order.shippingAddress.phoneNumber && (
+									<>
+										<i
+											className='fa fa-phone'
+											style={{
+												display: 'inline-block',
+												transform: 'scaleX(-1)',
+												marginRight: '5px',
+											}}
+											aria-hidden='true'
+										></i>
+										{order.shippingAddress.phoneNumber}
+									</>
+								)}
+								<br />
 							</p>
 							{order && order.shippingAddress.isShipper && (
 								<>
 									<h4 className='mt-5'>依頼人住所</h4>
 									<p className='mt-3'>
-										<strong>氏名: </strong>
-										{order.shippingAddress.shipperFullName}
-									</p>
-									<p>
-										<strong>電話番号: </strong>
-										{
-											order.shippingAddress
-												.shipperPhoneNumber
-										}
-									</p>
-									<p>
-										<strong>郵便番号: </strong>
-										{/* {order.shippingAddress.postalCode} */}
+										<strong>〒</strong>
 										{order.shippingAddress
 											.shipperPostalCode &&
 											order.shippingAddress.shipperPostalCode.substring(
@@ -233,14 +231,39 @@ const OrderScreen = ({ match, history, location }) => {
 												3,
 												7
 											)}
-									</p>
-									<p>
-										<strong>住所: </strong>
+										<br />
 										{
 											order.shippingAddress
 												.shipperPrefecture
 										}
 										{order.shippingAddress.shipperAddress}
+										{order.shippingAddress
+											.shipperBuilding !== '' &&
+											order.shippingAddress
+												.shipperBuilding}
+										<br />
+										{order.shippingAddress.shipperFullName}(
+										{order.shippingAddress.shipperFurigana})
+										<br />
+										{order.shippingAddress
+											.shipperPhoneNumber && (
+											<>
+												<i
+													className='fa fa-phone'
+													style={{
+														display: 'inline-block',
+														transform: 'scaleX(-1)',
+														marginRight: '5px',
+													}}
+													aria-hidden='true'
+												></i>
+												{
+													order.shippingAddress
+														.shipperPhoneNumber
+												}
+											</>
+										)}
+										<br />
 									</p>
 								</>
 							)}
@@ -263,14 +286,14 @@ const OrderScreen = ({ match, history, location }) => {
 										}}
 									>
 										<Button
-											variant='danger'
+											variant='light'
 											onClick={shippingModalShow}
 										>
-											変更する
+											変更する　
+											<i class='fas fa-chevron-right'></i>
 										</Button>
 									</div>
 								)}
-
 							<ModifyShippingInfoModal
 								match={match}
 								show={shippingModal}
@@ -508,19 +531,21 @@ const OrderScreen = ({ match, history, location }) => {
 									{loadingPay || loadingBankTransfer ? (
 										<Loader />
 									) : (
-										<Button
-											type='button'
-											className='btn-block w-100'
-											disabled={
-												!stripe ||
-												cart.cartItems === 0 ||
-												loadingPay ||
-												successPay
-											}
-											onClick={submitHandler}
-										>
-											注文を確定する
-										</Button>
+										<>
+											<Button
+												type='button'
+												className='btn-block w-100'
+												disabled={
+													!stripe ||
+													cart.cartItems === 0 ||
+													loadingPay ||
+													successPay
+												}
+												onClick={submitHandler}
+											>
+												注文を確定する
+											</Button>
+										</>
 									)}
 								</ListGroup.Item>
 							)}
