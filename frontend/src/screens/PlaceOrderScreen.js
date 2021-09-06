@@ -67,10 +67,10 @@ const PlaceOrderScreen = ({ history }) => {
 						<ListGroup.Item>
 							<h4>配送先</h4>
 							<p>
-								<strong>氏名: </strong>
+								{/* <strong>氏名: </strong> */}
 								{cart.shippingAddress.fullName}
 								<br />
-								<strong>郵便番号: </strong>
+								<strong>〒</strong>
 								{cart.shippingAddress.postalCode &&
 									cart.shippingAddress.postalCode.substring(
 										0,
@@ -83,11 +83,21 @@ const PlaceOrderScreen = ({ history }) => {
 										7
 									)}
 								<br />
-								<strong>住所: </strong>
+								{/* <strong>住所: </strong> */}
 								{cart.shippingAddress.prefecture}
 								{cart.shippingAddress.address}
 								<br />
-								<strong>電話番号: </strong>
+								{cart.shippingAddress.building !== '' &&
+									cart.shippingAddress.building}
+								<i
+									className='fa fa-phone'
+									style={{
+										display: 'inline-block',
+										transform: 'scaleX(-1)',
+										marginRight: '5px',
+									}}
+									aria-hidden='true'
+								></i>
 								{cart.shippingAddress.phoneNumber}
 							</p>
 							{/* {cart && cart.shippingAddress.comment && (
@@ -101,10 +111,10 @@ const PlaceOrderScreen = ({ history }) => {
 							<ListGroup.Item>
 								<h4>依頼人住所</h4>
 								<p>
-									<strong>氏名: </strong>
+									{/* <strong>氏名: </strong> */}
 									{cart.shippingAddress.shipperFullName}
 									<br />
-									<strong>郵便番号: </strong>
+									<strong>〒</strong>
 									{cart.shippingAddress.shipperPostalCode &&
 										cart.shippingAddress.shipperPostalCode.substring(
 											0,
@@ -117,11 +127,21 @@ const PlaceOrderScreen = ({ history }) => {
 											7
 										)}
 									<br />
-									<strong>住所: </strong>
+									{/* <strong>住所: </strong> */}
 									{cart.shippingAddress.shipperPrefecture}
 									{cart.shippingAddress.address}
 									<br />
-									<strong>電話番号: </strong>
+									{cart.shippingAddress.building !== '' &&
+										cart.shippingAddress.building}{' '}
+									<i
+										className='fa fa-phone'
+										style={{
+											display: 'inline-block',
+											transform: 'scaleX(-1)',
+											marginRight: '5px',
+										}}
+										aria-hidden='true'
+									></i>
 									{cart.shippingAddress.phoneNumber}
 								</p>
 							</ListGroup.Item>

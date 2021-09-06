@@ -18,10 +18,14 @@ const ShippingScreen = ({ history }) => {
 	const { shippingAddress } = cart
 
 	const [fullName, setFullName] = useState(shippingAddress.fullName || '')
+
+	const [furigana, setFurigana] = useState(shippingAddress.furigana || '')
+
 	const [phoneNumber, setPhoneNumber] = useState(
 		shippingAddress.phoneNumber || ''
 	)
 	const [address, setAddress] = useState(shippingAddress.address || '')
+	const [building, setBuilding] = useState(shippingAddress.building || '')
 	const [prefecture, setPrefecture] = useState(
 		shippingAddress.prefecture || '北海道'
 	)
@@ -35,26 +39,33 @@ const ShippingScreen = ({ history }) => {
 			shippingAddress.postalCode.substring(3, 7)) ||
 			''
 	)
-	//shipper addditional
 
+	//shipper addditional
 	const [comment, setComment] = useState(shippingAddress.comment || '')
 
 	const [isShipper, setIsShipper] = useState(
 		shippingAddress.isShipper || false
 	)
-
 	const [isComment, setIsComment] = useState(
 		shippingAddress.isComment || false
 	)
 
+	//shipper info
+
 	const [shipperFullName, setShipperFullName] = useState(
 		shippingAddress.shipperFullName || ''
+	)
+	const [shipperFurigana, setShipperFurigana] = useState(
+		shippingAddress.shipperFurigana || ''
 	)
 	const [shipperPhoneNumber, setShipperPhoneNumber] = useState(
 		shippingAddress.phoneNumber || ''
 	)
 	const [shipperAddress, setShipperAddress] = useState(
 		shippingAddress.shipperAddress || ''
+	)
+	const [shipperBuilding, setShipperBuilding] = useState(
+		shippingAddress.shipperBuilding || ''
 	)
 	const [shipperPrefecture, setShipperPrefecture] = useState(
 		shippingAddress.shipperPrefecture && '北海道'
@@ -70,42 +81,11 @@ const ShippingScreen = ({ history }) => {
 			''
 	)
 
-	//address
-	// const {
-	// 	address: pcAddress,
-	// 	error,
-	// 	pending,
-	// 	sanitizedCode,
-	// 	setPostalCode,
-	// } = usePostalJp()
-
-	// console.log(pcAddress, error, pending, sanitizedCode)
-	// useEffect(() => {
-	// 	let postalCode
-	// 	if (postalCode1 !== '' && postalCode2 !== '') {
-	// 		postalCode = postalCode1 + postalCode2
-	// 		// postalCode1.substring(0, 2) + postalCode2.substring(2, 6)
-	// 		setPostalCode(postalCode)
-	// 		if (pcAddress) {
-	// 			setPrefecture(pcAddress.prefecture)
-	// 		}
-	// 	}
-	// }, [pcAddress, setPostalCode, postalCode1, postalCode2, setPrefecture])
-
-	//address
-
 	const shipperCheck = () => {
 		setIsShipper(!isShipper)
-		// setShipperFullName('')
-		// setShipperPhoneNumber('')
-		// setShipperAddress('')
-		// setShipperPrefecture('北海道')
-		// setShipperPostalCode1('')
-		// setShipperPostalCode2('')
 	}
 	const commentCheck = () => {
 		setIsComment(!isComment)
-		// setComment('')
 	}
 
 	const submitHandler = (e) => {
@@ -113,57 +93,65 @@ const ShippingScreen = ({ history }) => {
 		let postalCode
 		if (postalCode1 !== '' && postalCode2 !== '') {
 			postalCode = postalCode1 + postalCode2
-			// postalCode1.substring(0, 2) + postalCode2.substring(2, 6)
 		}
 		let shipperPostalCode
 		if (shipperPostalCode1 !== '' && shipperPostalCode2 !== '') {
 			shipperPostalCode = shipperPostalCode1 + shipperPostalCode2
-			// postalCode1.substring(0, 2) + postalCode2.substring(2, 6)
 		}
 		console.log(postalCode)
 		if (isShipper && isComment) {
 			dispatch(
 				saveShippingAddress({
 					fullName,
+					furigana,
 					phoneNumber,
 					postalCode,
 					prefecture,
 					address,
+					building,
 					isComment,
 					comment,
 					isShipper,
 					shipperFullName,
+					shipperFurigana,
 					shipperPhoneNumber,
 					shipperPostalCode,
 					shipperPrefecture,
 					shipperAddress,
+					shipperBuilding,
 				})
 			)
 		} else if (isShipper) {
 			dispatch(
 				saveShippingAddress({
 					fullName,
+					furigana,
 					phoneNumber,
 					postalCode,
 					prefecture,
 					address,
+					building,
 					isShipper,
 					isComment,
 					shipperFullName,
+					shipperFurigana,
 					shipperPhoneNumber,
 					shipperPostalCode,
 					shipperPrefecture,
 					shipperAddress,
+					shipperBuilding,
 				})
 			)
 		} else if (isComment) {
 			dispatch(
 				saveShippingAddress({
 					fullName,
+					furigana,
 					phoneNumber,
 					postalCode,
 					prefecture,
 					address,
+					building,
 					isComment,
 					comment,
 					isShipper,
@@ -173,10 +161,12 @@ const ShippingScreen = ({ history }) => {
 			dispatch(
 				saveShippingAddress({
 					fullName,
+					furigana,
 					phoneNumber,
 					postalCode,
 					prefecture,
 					address,
+					building,
 					isShipper,
 				})
 			)
@@ -192,17 +182,21 @@ const ShippingScreen = ({ history }) => {
 			<Form onSubmit={submitHandler} className='shippingContainer'>
 				<ShippingForm
 					fullName={fullName}
+					furigana={furigana}
 					phoneNumber={phoneNumber}
 					postalCode1={postalCode1}
 					postalCode2={postalCode2}
 					prefecture={prefecture}
 					address={address}
+					building={building}
 					setFullName={setFullName}
+					setFurigana={setFurigana}
 					setPhoneNumber={setPhoneNumber}
 					setPostalCode1={setPostalCode1}
 					setPostalCode2={setPostalCode2}
 					setPrefecture={setPrefecture}
 					setAddress={setAddress}
+					setBuilding={setBuilding}
 				/>
 				<Form.Check
 					className='mt-3'
@@ -211,24 +205,25 @@ const ShippingScreen = ({ history }) => {
 					// value={isShipper}
 					checked={isShipper}
 				/>
-
-				{/* shippingshipper */}
 				<ShipperForm
 					isShipper={isShipper}
 					shipperFullName={shipperFullName}
+					shipperFurigana={shipperFurigana}
 					shipperPhoneNumber={shipperPhoneNumber}
 					shipperPostalCode1={shipperPostalCode1}
 					shipperPostalCode2={shipperPostalCode2}
 					shipperPrefecture={shipperPrefecture}
 					shipperAddress={shipperAddress}
+					shipperBuilding={shipperBuilding}
 					setShipperFullName={setShipperFullName}
+					setShipperFurigana={setShipperFurigana}
 					setShipperPhoneNumber={setShipperPhoneNumber}
 					setShipperPostalCode1={setShipperPostalCode1}
 					setShipperPostalCode2={setShipperPostalCode2}
 					setShipperPrefecture={setShipperPrefecture}
 					setShipperAddress={setShipperAddress}
+					setShipperBuilding={setShipperBuilding}
 				/>
-
 				<Form.Check
 					className='mt-3'
 					label='配送者へのご要望'
