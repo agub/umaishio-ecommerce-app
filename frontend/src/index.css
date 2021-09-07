@@ -70,6 +70,14 @@ main {
   padding: 2px 8px;
 }
 
+.login-guest-btn{
+  margin-left: 6px;
+  background-color: rgb(50, 74, 130);
+  color: white;
+  font-size: 12px;
+  padding: 12px 8px;
+}
+
 .shipping-form-example {
   text-align: end;
   font-size: 0.7rem;

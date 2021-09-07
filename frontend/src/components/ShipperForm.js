@@ -40,16 +40,16 @@ const ShipperForm = ({
 			postalCode = shipperPostalCode1 + shipperPostalCode2
 			// postalCode1.substring(0, 2) + postalCode2.substring(2, 6)
 			setPostalCode(postalCode)
-			if (
-				!pending &&
-				!error &&
-				pcAddress.prefecture &&
-				pcAddress.address1 &&
-				pcAddress.address2
-			) {
-				setShipperPrefecture(pcAddress.prefecture)
-				setShipperAddress(pcAddress.address1 + pcAddress.address2)
-			}
+			setTimeout(() => {
+				if (
+					pcAddress.prefecture &&
+					pcAddress.address1 &&
+					pcAddress.address2
+				) {
+					setShipperPrefecture(pcAddress.prefecture)
+					setShipperAddress(pcAddress.address1 + pcAddress.address2)
+				}
+			}, 300)
 		}
 	}, [
 		pcAddress,

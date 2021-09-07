@@ -52,7 +52,8 @@ const LoginScreen = ({ location, history }) => {
 
 	return (
 		<FormContainer>
-			<h1>ログイン</h1>
+			<h1 style={{ fontSize: '1.5rem' }}>ログイン</h1>
+
 			{error && <Message variant='danger'>{error}</Message>}
 			{registerError && (
 				<Message variant='danger'>{registerError}</Message>
@@ -63,7 +64,7 @@ const LoginScreen = ({ location, history }) => {
 					<Form.Label>
 						<div className='shipping-form-lable'>
 							Email{' '}
-							<span className='shipping-form-icon'>必須</span>
+							{/* <span className='shipping-form-icon'>必須</span> */}
 						</div>
 					</Form.Label>
 					<Form.Control
@@ -80,7 +81,7 @@ const LoginScreen = ({ location, history }) => {
 					<Form.Label>
 						<div className='shipping-form-lable'>
 							パスワード{' '}
-							<span className='shipping-form-icon'>必須</span>
+							{/* <span className='shipping-form-icon'>必須</span> */}
 						</div>
 					</Form.Label>
 					<Form.Control
@@ -105,13 +106,14 @@ const LoginScreen = ({ location, history }) => {
 					<Link
 						to={redirect ? `/guest?redirect=${redirect}` : '/guest'}
 					>
-						<Button variant='secondary'>
+						<Button className='login-guest-btn' variant='secondary'>
 							ゲストして次へ進む&nbsp;&nbsp;&nbsp;
 							<i className='fas fa-chevron-right'></i>
 						</Button>
 					</Link>
 				</div>
 			</Form>
+
 			<Row className='py-3'>
 				<Col>
 					未登録の方は{' '}

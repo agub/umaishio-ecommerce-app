@@ -57,6 +57,7 @@ const ShippingForm = ({
 		postalCode1,
 		postalCode2,
 		setPrefecture,
+		setAddress,
 		prefecture,
 	])
 	// useEffect(() => {
