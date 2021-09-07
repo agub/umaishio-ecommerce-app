@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Col, ListGroup, Image, Card, Row } from 'react-bootstrap'
+import { Button, Col, ListGroup, Image, Card, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -33,8 +33,8 @@ const PlaceOrderScreen = ({ history }) => {
 
 	const orderCreate = useSelector((state) => state.orderCreate)
 	const { order, success, error, loading: loadingOrder } = orderCreate
-	const orderDetails = useSelector((state) => state.orderDetails)
-	const { loading } = orderDetails
+	// const orderDetails = useSelector((state) => state.orderDetails)
+	// const { loading } = orderDetails
 
 	useEffect(() => {
 		if (success) {

@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
-import { PREF_OPTIONS } from '../data/Prefecture'
-
-import { usePostalJp } from 'use-postal-jp'
 
 import { saveShippingAddress } from '../actions/cartActions'
 import ShippingForm from '../components/ShippingForm'
@@ -98,7 +95,7 @@ const ShippingScreen = ({ history }) => {
 		if (shipperPostalCode1 !== '' && shipperPostalCode2 !== '') {
 			shipperPostalCode = shipperPostalCode1 + shipperPostalCode2
 		}
-		console.log(postalCode)
+
 		if (isShipper && isComment) {
 			dispatch(
 				saveShippingAddress({

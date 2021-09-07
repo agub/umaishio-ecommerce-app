@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { CART_CLEAR_ITEMS } from '../constants/cartConstants'
 import {
 	ORDER_CREATE_REQUEST,
 	ORDER_CREATE_SUCCESS,
@@ -28,12 +27,6 @@ import {
 	ORDER_UPDATE_SHIPPER_FAIL,
 	ORDER_UPDATE_SHIPPER_SUCCESS,
 	ORDER_UPDATE_SHIPPER_REQUEST,
-	// ORDER_LIST_MY_REQUEST,
-	// ORDER_LIST_MY_SUCCESS,
-	// ORDER_LIST_MY_FAIL,
-	// ORDER_LIST_FAIL,
-	// ORDER_LIST_SUCCESS,
-	// ORDER_LIST_REQUEST,
 } from '../constants/orderConstants'
 
 import { logout } from './userActions'

@@ -27,7 +27,7 @@ import {
 } from '../constants/userConstants'
 
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
-import { CART_SAVE_SHIPPING_ADDRESS } from '../constants/cartConstants'
+// import { CART_SAVE_SHIPPING_ADDRESS } from '../constants/cartConstants'
 
 export const login = (email, password) => async (dispatch) => {
 	try {
@@ -95,21 +95,6 @@ export const logout = () => async (dispatch, getState) => {
 	dispatch({ type: ORDER_LIST_MY_RESET })
 	dispatch({ type: USER_LIST_RESET })
 }
-
-// export const guestLogout = () => async (dispatch, getState) => {
-// 	localStorage.removeItem('userInfo')
-// 	const {
-// 		userLogin: { userInfo },
-// 	} = getState()
-
-// 	if (userInfo.googleId) {
-// 		await axios.get('/api/auth/logout')
-// 	}
-// 	dispatch({ type: USER_LOGOUT })
-// 	dispatch({ type: USER_DETAILS_RESET })
-// 	dispatch({ type: ORDER_LIST_MY_RESET })
-// 	dispatch({ type: USER_LIST_RESET })
-// }
 
 export const register = (name, email, password) => async (dispatch) => {
 	try {

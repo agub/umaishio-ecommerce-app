@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Form, Button, Row, Col } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
-import FormContainer from '../components/FormContainer'
-import CheckoutSteps from '../components/CheckoutSteps'
+
 import { PREF_OPTIONS } from '../data/Prefecture'
 
 import { usePostalJp } from 'use-postal-jp'
@@ -26,13 +24,7 @@ const ShipperForm = ({
 	setShipperAddress,
 	setShipperBuilding,
 }) => {
-	const {
-		address: pcAddress,
-		error,
-		pending,
-		sanitizedCode,
-		setPostalCode,
-	} = usePostalJp()
+	const { address: pcAddress, setPostalCode } = usePostalJp()
 
 	useEffect(() => {
 		let postalCode

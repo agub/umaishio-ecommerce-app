@@ -15,8 +15,6 @@ const CartScreen = ({ match, location, history }) => {
 	const productDetails = useSelector((state) => state.productDetails)
 	const { loading } = productDetails
 
-	console.log(cartItems)
-
 	useEffect(() => {
 		if (productId) {
 			dispatch(addToCart(productId, qty))

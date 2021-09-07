@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Row, Col, Modal } from 'react-bootstrap'
+import { Form, Button, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import FormContainer from '../components/FormContainer'
-import CheckoutSteps from '../components/CheckoutSteps'
-import { PREF_OPTIONS } from '../data/Prefecture'
 import { updateShipperInfo } from '../actions/orderActions'
 import Loader from '../components/Loader'
 

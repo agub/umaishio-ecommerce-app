@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Form, Button, Row, Col } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
-import FormContainer from '../components/FormContainer'
-import CheckoutSteps from '../components/CheckoutSteps'
+
 import { PREF_OPTIONS } from '../data/Prefecture'
 
 import { usePostalJp } from 'use-postal-jp'
@@ -26,13 +24,7 @@ const ShippingForm = ({
 	setBuilding,
 }) => {
 	//address
-	const {
-		address: pcAddress,
-		error,
-		pending,
-		sanitizedCode,
-		setPostalCode,
-	} = usePostalJp()
+	const { address: pcAddress, setPostalCode } = usePostalJp()
 
 	useEffect(() => {
 		let postalCode
@@ -60,27 +52,7 @@ const ShippingForm = ({
 		setAddress,
 		prefecture,
 	])
-	// useEffect(() => {
-	// 	console.log('fire')
-	// 	let postalCode
-	// 	if (postalCode1 !== '' && postalCode2 !== '') {
-	// 		postalCode = postalCode1 + postalCode2
-	// 		// postalCode1.substring(0, 2) + postalCode2.substring(2, 6)
-	// 		setPostalCode(postalCode)
-	// 		if (
-	// 			!pending &&
-	// 			!error &&
-	// 			pcAddress.prefecture &&
-	// 			pcAddress.address1 &&
-	// 			pcAddress.address2
-	// 		) {
-	// 			setPrefecture(pcAddress.prefecture)
-	// 			setAddress(pcAddress.address1 + pcAddress.address2)
-	// 		}
-	// 	}
-	// })
 
-	//address
 	return (
 		<>
 			<Form.Group controlId='postalCode' className='mt-2'>

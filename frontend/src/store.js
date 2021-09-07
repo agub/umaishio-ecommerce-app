@@ -24,7 +24,6 @@ import {
 	orderCreateReducer,
 	orderDetailsReducer,
 	orderListMyReducer,
-	orderPayReducer,
 	orderListReducer,
 	stripePayReducer,
 	orderDeliverReducer,
