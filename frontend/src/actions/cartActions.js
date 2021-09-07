@@ -31,20 +31,23 @@ export const removeFromCart = (id) => (dispatch, getState) => {
 	localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 }
 
-export const saveShippingAddress = (objects) => (dispatch) => {
+export const saveShippingAddress = (objects) => async (dispatch, getState) => {
+	// const {
+	// 	userLogin: { userInfo },
+	// } = getState()
+
+	// const config = {
+	// 	headers: {
+	// 		Authorization: `Bearer ${userInfo.token}`,
+	// 	},
+	// }
+
 	dispatch({
 		type: CART_SAVE_SHIPPING_ADDRESS,
 		payload: objects,
 	})
 
+	//save to user data
+
 	localStorage.setItem('shippingAddress', JSON.stringify(objects))
 }
-
-// export const savePaymentMethod = (data) => (dispatch) => {
-// 	dispatch({
-// 		type: CART_SAVE_PAYMENT_METHOD,
-// 		payload: data,
-// 	})
-
-// 	localStorage.setItem('paymentMethod', JSON.stringify(data))
-// }

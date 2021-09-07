@@ -27,7 +27,7 @@ const orderSchema = mongoose.Schema(
 			// country: { type: String, required: true },
 			fullName: { type: String, required: true },
 			furigana: { type: String, required: true },
-			phoneNumber: { type: Number, required: true },
+			phoneNumber: { type: Number },
 			postalCode: { type: String || Number, required: true },
 			prefecture: { type: String, required: true },
 			address: { type: String, required: true },

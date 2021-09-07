@@ -16,6 +16,8 @@ const authUser = asyncHandler(async (req, res) => {
 			name: user.name,
 			email: user.email,
 			isAdmin: user.isAdmin,
+			isGuest: user.isGuest,
+			shippingAddress: user.shippingAddress,
 			token: generateToken(user._id),
 		})
 	} else {
@@ -49,6 +51,8 @@ const registerUser = asyncHandler(async (req, res) => {
 			name: user.name,
 			email: user.email,
 			isAdmin: user.isAdmin,
+			isGuest: user.isGuest,
+			shippingAddress: user.shippingAddress,
 			token: generateToken(user._id),
 		})
 	} else {
@@ -199,6 +203,45 @@ const updateUser = asyncHandler(async (req, res) => {
 	}
 })
 
+// @description   Update user profile
+// @route         PUT /api/users/:id
+// @access        Private/ admin
+const addUserShippingInfo = asyncHandler(async (req, res) => {
+	const {
+		fullName,
+		furigana,
+		phoneNumber,
+		postalCode,
+		prefecture,
+		address,
+		building,
+	} = req.body
+
+	const user = await User.findById(req.params.id)
+
+	if (user && !user.isGuest) {
+		user.shippingAddress = {
+			fullName: fullName || user.shippingAddress.fullName,
+			furigana: furigana || user.shippingAddress.furigana,
+			phoneNumber: phoneNumber || user.shippingAddress.phoneNumber,
+			postalCode: postalCode || user.shippingAddress.postalCode,
+			prefecture: prefecture || user.shippingAddress.prefecture,
+			address: address || user.shippingAddress.address,
+			building: building || user.shippingAddress.building,
+		}
+
+		const updatedUser = await user.save()
+
+		res.json({
+			_id: updatedUser._id,
+			shippingAddress: updatedUser.shippingAddress,
+		})
+	} else {
+		res.status(404)
+		throw new Error('User not found')
+	}
+})
+
 export {
 	authUser,
 	getUserProfile,
@@ -209,4 +252,5 @@ export {
 	deleteUser,
 	getUserById,
 	updateUser,
+	addUserShippingInfo,
 }

@@ -91,7 +91,6 @@ const ShippingForm = ({
 				<Form.Control
 					type='number'
 					value={phoneNumber}
-					required
 					onChange={(e) => setPhoneNumber(e.target.value)}
 				></Form.Control>
 			</Form.Group>

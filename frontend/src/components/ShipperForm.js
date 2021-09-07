@@ -96,7 +96,6 @@ const ShipperForm = ({
 						<Form.Control
 							type='number'
 							value={shipperPhoneNumber}
-							required
 							onChange={(e) =>
 								setShipperPhoneNumber(e.target.value)
 							}

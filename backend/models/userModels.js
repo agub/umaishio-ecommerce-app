@@ -32,6 +32,16 @@ const userSchema = mongoose.Schema(
 			required: true,
 			default: false,
 		},
+
+		shippingAddress: {
+			fullName: { type: String },
+			furigana: { type: String },
+			phoneNumber: { type: Number },
+			postalCode: { type: String || Number },
+			prefecture: { type: String },
+			address: { type: String },
+			building: { type: String },
+		},
 		//googleauth
 		googleId: {
 			type: String,
