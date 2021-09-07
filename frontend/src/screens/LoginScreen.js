@@ -49,21 +49,6 @@ const LoginScreen = ({ location, history }) => {
 		e.preventDefault()
 		dispatch(login(email, password))
 	}
-	const guestHandler = (e) => {
-		e.preventDefault()
-		dispatch(registerGuest(guestEmail))
-	}
-
-	// const signInWithGoogleHandler = async (e) => {
-	// 	e.preventDefault()
-	// 	// await axios.get('/api/auth/google')
-
-	// 	// window.location.href = `/api/auth/google?redirect=${redirect}`
-
-	// 	window.location.href = `http://127.0.0.1:5000/api/auth/google`
-
-	// 	// dispatch(getGoogleUserInfo())
-	// }
 
 	return (
 		<FormContainer>
@@ -116,10 +101,14 @@ const LoginScreen = ({ location, history }) => {
 					<Button type='submit' variant='primary'>
 						サインイン
 					</Button>
+
 					<Link
 						to={redirect ? `/guest?redirect=${redirect}` : '/guest'}
 					>
-						<Button variant='secondary'>ゲストして次へ進む</Button>
+						<Button variant='secondary'>
+							ゲストして次へ進む&nbsp;&nbsp;&nbsp;
+							<i className='fas fa-chevron-right'></i>
+						</Button>
 					</Link>
 				</div>
 			</Form>

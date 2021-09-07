@@ -120,8 +120,8 @@ const RegisterScreen = ({ location, history }) => {
 						justifyContent: 'space-between',
 					}}
 				>
-					<Button type='submit' variant='primary' className='mt-3'>
-						次へ進む
+					<Button type='submit' variant='primary'>
+						次へ進む　
 					</Button>
 					<Link className='btn btn-light my-3' to='/login'>
 						戻る
