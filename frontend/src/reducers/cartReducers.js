@@ -4,6 +4,7 @@ import {
 	CART_SAVE_PAYMENT_METHOD,
 	CART_SAVE_SHIPPING_ADDRESS,
 	CART_ITEMS_RESET,
+	CART_SAVE_SHIPPING_ADDRESS_REQUEST,
 	CART_SAVE_SHIPPING_ADDRESS_SUCCESS,
 	CART_SAVE_SHIPPING_ADDRESS_DATA_UPDATED_SUCCESS,
 	CART_SAVE_SHIPPING_ADDRESS_DATA_UPDATED_RESET,
@@ -13,7 +14,7 @@ export const cartReducer = (
 	state = {
 		cartItems: [],
 		shippingAddress: {},
-		// loading: false,
+		loading: false,
 		updated: false,
 	},
 	action
@@ -51,15 +52,16 @@ export const cartReducer = (
 				...state,
 				shippingAddress: action.payload,
 			}
-		// case CART_SAVE_SHIPPING_ADDRESS_REQUEST:
-		// 	return {
-		// 		...state,
-		// 		loading: true,
-		// 	}
+		case CART_SAVE_SHIPPING_ADDRESS_REQUEST:
+			return {
+				...state,
+				loading: true,
+			}
 		case CART_SAVE_SHIPPING_ADDRESS_DATA_UPDATED_SUCCESS:
 			return {
 				...state,
 				updated: true,
+				loading: false,
 			}
 		case CART_SAVE_SHIPPING_ADDRESS_DATA_UPDATED_RESET:
 			return {

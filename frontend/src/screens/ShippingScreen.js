@@ -8,12 +8,13 @@ import { saveShippingAddress } from '../actions/cartActions'
 import ShippingForm from '../components/ShippingForm'
 import ShipperForm from '../components/ShipperForm'
 import AddressHistory from '../components/AddressHistory'
+import Loader from '../components/Loader'
 
 const ShippingScreen = ({ history }) => {
 	const dispatch = useDispatch()
 
 	const cart = useSelector((state) => state.cart)
-	const { shippingAddress, updated } = cart
+	const { shippingAddress, updated, loading } = cart
 
 	const userLogin = useSelector((state) => state.userLogin)
 	const { userInfo } = userLogin
@@ -180,7 +181,6 @@ const ShippingScreen = ({ history }) => {
 	const [show, setShow] = useState(true)
 	const handleClose = () => setShow(false)
 	const [useAddressHistory, setUseAddressHistory] = useState(false)
-	const handleShow = () => setShow(true)
 
 	//modal
 
@@ -292,9 +292,13 @@ const ShippingScreen = ({ history }) => {
 						></Form.Control>
 					</Form.Group>
 				)}
-				<Button type='submit' variant='primary' className='mt-3'>
-					次へ進む
-				</Button>
+				{loading ? (
+					<Loader />
+				) : (
+					<Button type='submit' variant='primary' className='mt-3'>
+						次へ進む
+					</Button>
+				)}
 			</Form>
 		</FormContainer>
 	)
