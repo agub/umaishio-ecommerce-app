@@ -7,12 +7,16 @@ import CheckoutSteps from '../components/CheckoutSteps'
 import { saveShippingAddress } from '../actions/cartActions'
 import ShippingForm from '../components/ShippingForm'
 import ShipperForm from '../components/ShipperForm'
+import AddressHistory from '../components/AddressHistory'
 
 const ShippingScreen = ({ history }) => {
 	const dispatch = useDispatch()
 
 	const cart = useSelector((state) => state.cart)
 	const { shippingAddress, updated } = cart
+
+	const userLogin = useSelector((state) => state.userLogin)
+	const { userInfo } = userLogin
 
 	const [fullName, setFullName] = useState(shippingAddress.fullName || '')
 
@@ -172,13 +176,58 @@ const ShippingScreen = ({ history }) => {
 		// history.push('/placeorder')
 	}
 
+	//modal
+	const [show, setShow] = useState(true)
+	const handleClose = () => setShow(false)
+	const [useAddressHistory, setUseAddressHistory] = useState(false)
+	const handleShow = () => setShow(true)
+
+	//modal
+
 	useEffect(() => {
 		if (updated) history.push('/placeorder')
-	}, [updated])
+		if (
+			!userInfo.isGuest &&
+			Object.keys(userInfo.shippingAddress).length === 0 &&
+			userInfo.shippingAddress.constructor === Object
+		) {
+			handleClose()
+		}
+		if (
+			useAddressHistory &&
+			Object.keys(userInfo.shippingAddress).length !== 0
+		) {
+			setFullName(userInfo.shippingAddress.fullName || '')
+			setFurigana(userInfo.shippingAddress.furigana || '')
+			setPhoneNumber(userInfo.shippingAddress.phoneNumber || '')
+			setPostalCode1(
+				(userInfo.shippingAddress.postalCode &&
+					userInfo.shippingAddress.postalCode.substring(0, 3)) ||
+					''
+			)
+			setPostalCode2(
+				(userInfo.shippingAddress.postalCode &&
+					userInfo.shippingAddress.postalCode.substring(3, 7)) ||
+					''
+			)
+			setPrefecture(userInfo.shippingAddress.prefecture || '')
+			setAddress(userInfo.shippingAddress.address || '')
+			setBuilding(userInfo.shippingAddress.building || '')
+		}
+	}, [updated, userInfo, useAddressHistory])
 
 	return (
 		<FormContainer>
 			<CheckoutSteps step1 step2 />
+			{!userInfo.isGuest ? (
+				<AddressHistory
+					show={show}
+					handleClose={handleClose}
+					userInfo={userInfo}
+					setUseAddressHistory={setUseAddressHistory}
+				/>
+			) : null}
+
 			<h1>お届け先の住所</h1>
 			<Form onSubmit={submitHandler} className='shippingContainer'>
 				<ShippingForm

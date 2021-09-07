@@ -85,8 +85,12 @@ const PlaceOrderScreen = ({ history }) => {
 								{cart.shippingAddress.prefecture}
 								{cart.shippingAddress.address}
 								<br />
-								{cart.shippingAddress.building !== '' &&
-									cart.shippingAddress.building}
+								{cart.shippingAddress.building !== '' && (
+									<>
+										{cart.shippingAddress.building}
+										<br />
+									</>
+								)}
 								{cart.shippingAddress.fullName}
 								<br />
 								{cart.shippingAddress.phoneNumber && (

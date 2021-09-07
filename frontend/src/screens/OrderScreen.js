@@ -375,21 +375,6 @@ const OrderScreen = ({ match, history, location }) => {
 											},
 										}}
 									/>
-									{/* <div>
-										<span
-											style={{
-												fontSize: '13px',
-												display: 'block',
-												width: '80px',
-												marginLeft: 'auto',
-											}}
-											onClick={handleShow}
-										>
-											CVCとは
-											<i className='far fa-question-circle'></i>
-										</span>
-									</div> */}
-
 									<div
 										style={{
 											display: 'flex',
