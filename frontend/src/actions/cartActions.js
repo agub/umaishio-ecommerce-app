@@ -2,8 +2,14 @@ import axios from 'axios'
 import {
 	CART_ADD_ITEM,
 	CART_REMOVE_ITEM,
-	CART_SAVE_SHIPPING_ADDRESS,
+	CART_SAVE_SHIPPING_ADDRESS_REQUEST,
+	CART_SAVE_SHIPPING_ADDRESS_SUCCESS,
+	CART_SAVE_SHIPPING_ADDRESS_FAIL,
+	CART_SAVE_SHIPPING_ADDRESS_DATA_UPDATED_SUCCESS,
+	CART_SAVE_SHIPPING_ADDRESS_DATA_UPDATED_RESET,
 } from '../constants/cartConstants'
+
+import { USER_LOGIN_SUCCESS } from '../constants/userConstants'
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
 	const { data } = await axios.get(`/api/products/${id}`)
@@ -32,22 +38,63 @@ export const removeFromCart = (id) => (dispatch, getState) => {
 }
 
 export const saveShippingAddress = (objects) => async (dispatch, getState) => {
-	// const {
-	// 	userLogin: { userInfo },
-	// } = getState()
+	//only for !isGuest
+	try {
+		dispatch({
+			type: CART_SAVE_SHIPPING_ADDRESS_REQUEST,
+		})
 
-	// const config = {
-	// 	headers: {
-	// 		Authorization: `Bearer ${userInfo.token}`,
-	// 	},
-	// }
+		localStorage.setItem('shippingAddress', JSON.stringify(objects))
+		dispatch({
+			type: CART_SAVE_SHIPPING_ADDRESS_SUCCESS,
+			payload: objects,
+		})
 
-	dispatch({
-		type: CART_SAVE_SHIPPING_ADDRESS,
-		payload: objects,
-	})
+		const {
+			userLogin: { userInfo },
+		} = getState()
 
-	//save to user data
+		const config = {
+			headers: {
+				Authorization: `Bearer ${userInfo.token}`,
+			},
+		}
 
-	localStorage.setItem('shippingAddress', JSON.stringify(objects))
+		const { data } = await axios.put(
+			`/api/users/shipping/${userInfo._id}`,
+			objects,
+			config
+		)
+		localStorage.setItem('userInfo', JSON.stringify(data))
+		dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
+		dispatch({
+			type: CART_SAVE_SHIPPING_ADDRESS_DATA_UPDATED_SUCCESS,
+			payload: data,
+		})
+		dispatch({
+			type: CART_SAVE_SHIPPING_ADDRESS_DATA_UPDATED_RESET,
+		})
+
+		//save to user data
+	} catch (error) {
+		const message =
+			error.response && error.response.data.message
+				? error.response.data.message
+				: error.message
+
+		dispatch({
+			type: CART_SAVE_SHIPPING_ADDRESS_FAIL,
+			payload: message,
+		})
+	}
 }
+// export const saveShippingAddress = (objects) => async (dispatch, getState) => {
+// 	dispatch({
+// 		type: CART_SAVE_SHIPPING_ADDRESS,
+// 		payload: objects,
+// 	})
+
+// 	//save to user data
+
+// 	localStorage.setItem('shippingAddress', JSON.stringify(objects))
+// }

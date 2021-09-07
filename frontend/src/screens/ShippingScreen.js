@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
@@ -12,7 +12,7 @@ const ShippingScreen = ({ history }) => {
 	const dispatch = useDispatch()
 
 	const cart = useSelector((state) => state.cart)
-	const { shippingAddress } = cart
+	const { shippingAddress, updated } = cart
 
 	const [fullName, setFullName] = useState(shippingAddress.fullName || '')
 
@@ -169,8 +169,12 @@ const ShippingScreen = ({ history }) => {
 			)
 		}
 		// history.push('/payment')
-		history.push('/placeorder')
+		// history.push('/placeorder')
 	}
+
+	useEffect(() => {
+		if (updated) history.push('/placeorder')
+	}, [updated])
 
 	return (
 		<FormContainer>

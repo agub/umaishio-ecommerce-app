@@ -4,10 +4,18 @@ import {
 	CART_SAVE_PAYMENT_METHOD,
 	CART_SAVE_SHIPPING_ADDRESS,
 	CART_ITEMS_RESET,
+	CART_SAVE_SHIPPING_ADDRESS_SUCCESS,
+	CART_SAVE_SHIPPING_ADDRESS_DATA_UPDATED_SUCCESS,
+	CART_SAVE_SHIPPING_ADDRESS_DATA_UPDATED_RESET,
 } from '../constants/cartConstants'
 
 export const cartReducer = (
-	state = { cartItems: [], shippingAddress: {} },
+	state = {
+		cartItems: [],
+		shippingAddress: {},
+		// loading: false,
+		updated: false,
+	},
 	action
 ) => {
 	switch (action.type) {
@@ -38,10 +46,25 @@ export const cartReducer = (
 					(x) => x.product !== action.payload
 				),
 			}
-		case CART_SAVE_SHIPPING_ADDRESS:
+		case CART_SAVE_SHIPPING_ADDRESS_SUCCESS:
 			return {
 				...state,
 				shippingAddress: action.payload,
+			}
+		// case CART_SAVE_SHIPPING_ADDRESS_REQUEST:
+		// 	return {
+		// 		...state,
+		// 		loading: true,
+		// 	}
+		case CART_SAVE_SHIPPING_ADDRESS_DATA_UPDATED_SUCCESS:
+			return {
+				...state,
+				updated: true,
+			}
+		case CART_SAVE_SHIPPING_ADDRESS_DATA_UPDATED_RESET:
+			return {
+				...state,
+				updated: false,
 			}
 		case CART_ITEMS_RESET:
 			return {

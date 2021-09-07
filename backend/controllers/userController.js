@@ -132,6 +132,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 			name: updatedUser.name,
 			email: updatedUser.email,
 			isAdmin: updatedUser.isAdmin,
+			isGuest: updatedUser.isGuest,
+			shippingAddress: user.shippingAddress,
 			token: generateToken(updatedUser._id),
 		})
 	} else {
@@ -221,20 +223,35 @@ const addUserShippingInfo = asyncHandler(async (req, res) => {
 
 	if (user && !user.isGuest) {
 		user.shippingAddress = {
-			fullName: fullName || user.shippingAddress.fullName,
-			furigana: furigana || user.shippingAddress.furigana,
-			phoneNumber: phoneNumber || user.shippingAddress.phoneNumber,
-			postalCode: postalCode || user.shippingAddress.postalCode,
-			prefecture: prefecture || user.shippingAddress.prefecture,
-			address: address || user.shippingAddress.address,
-			building: building || user.shippingAddress.building,
+			fullName: fullName,
+			furigana: furigana,
+			phoneNumber: phoneNumber,
+			postalCode: postalCode,
+			prefecture: prefecture,
+			address: address,
+			building: building,
 		}
 
 		const updatedUser = await user.save()
 
 		res.json({
 			_id: updatedUser._id,
-			shippingAddress: updatedUser.shippingAddress,
+			name: updatedUser.name,
+			email: updatedUser.email,
+			isAdmin: updatedUser.isAdmin,
+			isGuest: updatedUser.isGuest,
+			shippingAddress: user.shippingAddress,
+			token: generateToken(updatedUser._id),
+		})
+	} else if (user && user.isGuest) {
+		res.json({
+			_id: user._id,
+			name: user.name,
+			email: user.email,
+			isAdmin: user.isAdmin,
+			isGuest: user.isGuest,
+			shippingAddress: user.shippingAddress,
+			token: generateToken(user._id),
 		})
 	} else {
 		res.status(404)

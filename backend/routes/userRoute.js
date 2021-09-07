@@ -22,7 +22,7 @@ router
 	.get(protect, getUserProfile)
 	.put(protect, updateUserProfile)
 
-router.route('/shippingInfo/:id').put(protect, addUserShippingInfo)
+router.route('/shipping/:id').put(protect, addUserShippingInfo)
 
 router
 	.route('/:id')
