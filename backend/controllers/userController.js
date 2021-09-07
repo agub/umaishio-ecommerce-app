@@ -34,7 +34,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
 	if (userExists) {
 		res.status(400)
-		throw new Error('User already exists')
+		throw new Error('このメールアドレスは既に使用されています')
 	}
 
 	const user = await User.create({
@@ -49,6 +49,39 @@ const registerUser = asyncHandler(async (req, res) => {
 			name: user.name,
 			email: user.email,
 			isAdmin: user.isAdmin,
+			token: generateToken(user._id),
+		})
+	} else {
+		res.status(400)
+		throw new Error('Invalid user data')
+	}
+})
+// @description   guest Register
+// @route         POST /api/guest
+// @access        Public
+const registerGuest = asyncHandler(async (req, res) => {
+	const { email } = req.body
+
+	const userExists = await User.findOne({ email })
+
+	if (userExists) {
+		res.status(400)
+		throw new Error('このメールアドレスは既に使用されています')
+	}
+
+	const user = await User.create({
+		name: 'ゲスト',
+		isGuest: true,
+		email,
+	})
+
+	if (user) {
+		res.status(201).json({
+			_id: user._id,
+			name: user.name,
+			email: user.email,
+			isAdmin: user.isAdmin,
+			isGuest: user.isGuest,
 			token: generateToken(user._id),
 		})
 	} else {
@@ -170,6 +203,7 @@ export {
 	authUser,
 	getUserProfile,
 	registerUser,
+	registerGuest,
 	updateUserProfile,
 	getUsers,
 	deleteUser,

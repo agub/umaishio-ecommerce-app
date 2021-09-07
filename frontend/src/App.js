@@ -19,6 +19,8 @@ import ProductListScreen from './screens/ProductListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
 import OrderListScreen from './screens/OrderListScreen'
 
+import GuestScreen from './screens/GuestScreen'
+
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 
@@ -37,6 +39,8 @@ function App() {
 						<Route path='/order/:id' component={OrderScreen} />
 					</Elements>
 					<Route path='/shipping' component={ShippingScreen} />
+					<Route path='/guest' component={GuestScreen} />
+
 					{/* <Route path='/payment' component={PaymentScreen} /> */}
 					<Route path='/placeorder' component={PlaceOrderScreen} />
 					<Route path='/login' component={LoginScreen} />

@@ -8,17 +8,25 @@ import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { login, getGoogleUserInfo } from '../actions/userActions'
 import axios from 'axios'
+import { registerGuest } from '../actions/userActions'
 
 const LoginScreen = ({ location, history }) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
-
+	const [guestEmail, setGuestEmail] = useState('')
 	const dispatch = useDispatch()
 	const userLogin = useSelector((state) => state.userLogin)
 	const { loading, error, userInfo } = userLogin
 
 	const cart = useSelector((state) => state.cart)
 	const { cartItems } = cart
+
+	const userRegister = useSelector((state) => state.userRegister)
+	const {
+		loading: registerLoading,
+		error: registerError,
+		userInfo: registerUserInfo,
+	} = userRegister
 
 	// const redirect = location.search ? location.search.split('=')[1] : '/'
 
@@ -41,6 +49,10 @@ const LoginScreen = ({ location, history }) => {
 		e.preventDefault()
 		dispatch(login(email, password))
 	}
+	const guestHandler = (e) => {
+		e.preventDefault()
+		dispatch(registerGuest(guestEmail))
+	}
 
 	// const signInWithGoogleHandler = async (e) => {
 	// 	e.preventDefault()
@@ -57,10 +69,18 @@ const LoginScreen = ({ location, history }) => {
 		<FormContainer>
 			<h1>ログイン</h1>
 			{error && <Message variant='danger'>{error}</Message>}
+			{registerError && (
+				<Message variant='danger'>{registerError}</Message>
+			)}
 			{loading && <Loader />}
 			<Form onSubmit={submitHandler}>
 				<Form.Group controlId='email'>
-					<Form.Label>Email</Form.Label>
+					<Form.Label>
+						<div className='shipping-form-lable'>
+							Email{' '}
+							<span className='shipping-form-icon'>必須</span>
+						</div>
+					</Form.Label>
 					<Form.Control
 						type='email'
 						placeholder='Email'
@@ -68,8 +88,16 @@ const LoginScreen = ({ location, history }) => {
 						onChange={(e) => setEmail(e.target.value)}
 					></Form.Control>
 				</Form.Group>
+				<p className='m-2 shipping-form-example'>
+					例: umaishio@gmail.com
+				</p>
 				<Form.Group controlId='password'>
-					<Form.Label className='mt-2'>パスワード</Form.Label>
+					<Form.Label>
+						<div className='shipping-form-lable'>
+							パスワード{' '}
+							<span className='shipping-form-icon'>必須</span>
+						</div>
+					</Form.Label>
 					<Form.Control
 						type='password'
 						placeholder='パスワード'
@@ -77,18 +105,24 @@ const LoginScreen = ({ location, history }) => {
 						onChange={(e) => setPassword(e.target.value)}
 					></Form.Control>
 				</Form.Group>
-				<Button type='submit' variant='primary' className='mt-3'>
-					サインイン
-				</Button>
+				<p className='m-2 shipping-form-example'>&nbsp;</p>
+				<div
+					style={{
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'space-between',
+					}}
+				>
+					<Button type='submit' variant='primary'>
+						サインイン
+					</Button>
+					<Link
+						to={redirect ? `/guest?redirect=${redirect}` : '/guest'}
+					>
+						<Button variant='secondary'>ゲストして次へ進む</Button>
+					</Link>
+				</div>
 			</Form>
-			{/* <Button
-				type='button'
-				variant='danger'
-				onClick={signInWithGoogleHandler}
-			>
-				<i className='fab fa-google left'> Sign In With Google</i>
-			</Button> */}
-
 			<Row className='py-3'>
 				<Col>
 					未登録の方は{' '}

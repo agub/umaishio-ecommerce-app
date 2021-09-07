@@ -290,7 +290,7 @@ const OrderScreen = ({ match, history, location }) => {
 											onClick={shippingModalShow}
 										>
 											変更する　
-											<i class='fas fa-chevron-right'></i>
+											<i className='fas fa-chevron-right'></i>
 										</Button>
 									</div>
 								)}

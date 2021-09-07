@@ -96,7 +96,7 @@ const ShippingForm = ({
 				></Form.Control>
 			</Form.Group>
 			<p className='m-2 shipping-form-example'>例: 旨い塩太郎</p>
-			<Form.Group controlId='postalCode' className='mt-2'>
+			<Form.Group controlId='postalCode'>
 				<Form.Label>
 					<div className='shipping-form-lable'>
 						フリガナ{' '}

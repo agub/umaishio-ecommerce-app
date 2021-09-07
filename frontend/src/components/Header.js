@@ -57,7 +57,7 @@ const Header = () => {
 									&nbsp; Cart
 								</Nav.Link>
 							</LinkContainer>
-							{userInfo ? (
+							{userInfo && !userInfo.isGuest ? (
 								<NavDropdown
 									title={userInfo.name}
 									id='username'
@@ -67,6 +67,15 @@ const Header = () => {
 											アカウント
 										</NavDropdown.Item>
 									</LinkContainer>
+									<NavDropdown.Item onClick={logoutHandler}>
+										ログアウト
+									</NavDropdown.Item>
+								</NavDropdown>
+							) : userInfo && userInfo.isGuest ? (
+								<NavDropdown
+									title={userInfo.name}
+									id='username'
+								>
 									<NavDropdown.Item onClick={logoutHandler}>
 										ログアウト
 									</NavDropdown.Item>

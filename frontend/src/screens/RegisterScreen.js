@@ -44,16 +44,30 @@ const RegisterScreen = ({ location, history }) => {
 			{loading && <Loader />}
 			<Form onSubmit={submitHandler}>
 				<Form.Group controlId='name' className='mt-2'>
-					<Form.Label>名前</Form.Label>
+					<Form.Label>
+						{' '}
+						<div className='shipping-form-lable'>
+							氏名{' '}
+							<span className='shipping-form-icon'>必須</span>
+						</div>
+					</Form.Label>
 					<Form.Control
 						type='name'
-						placeholder='名前'
+						placeholder='氏名'
+						required
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 					></Form.Control>
 				</Form.Group>
-				<Form.Group className='mt-2' controlId='email'>
-					<Form.Label>Email</Form.Label>
+				<p className='m-2 shipping-form-example'>例: 旨い塩太郎</p>
+				<Form.Group controlId='email'>
+					<Form.Label>
+						{' '}
+						<div className='shipping-form-lable'>
+							Email{' '}
+							<span className='shipping-form-icon'>必須</span>
+						</div>
+					</Form.Label>
 					<Form.Control
 						required
 						type='email'
@@ -62,27 +76,57 @@ const RegisterScreen = ({ location, history }) => {
 						onChange={(e) => setEmail(e.target.value)}
 					></Form.Control>
 				</Form.Group>
+				<p className='m-2 shipping-form-example'>
+					例: umaishio@gmail.com
+				</p>
 				<Form.Group controlId='password'>
-					<Form.Label className='mt-2'>パスワード</Form.Label>
+					<Form.Label>
+						{' '}
+						<div className='shipping-form-lable'>
+							パスワード{' '}
+							<span className='shipping-form-icon'>必須</span>
+						</div>
+					</Form.Label>
 					<Form.Control
 						type='password'
+						required
 						placeholder='パスワード'
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 					></Form.Control>
 				</Form.Group>
+				<p className='m-2 shipping-form-example'>&nbsp;</p>
 				<Form.Group controlId='confirmPassword'>
-					<Form.Label className='mt-2'>確認パスワード</Form.Label>
+					<Form.Label>
+						{' '}
+						<div className='shipping-form-lable'>
+							確認パスワード{' '}
+							<span className='shipping-form-icon'>必須</span>
+						</div>
+					</Form.Label>
 					<Form.Control
 						type='password'
+						required
 						placeholder='確認パスワード'
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 					></Form.Control>
 				</Form.Group>
-				<Button type='submit' variant='primary' className='mt-3'>
-					登録
-				</Button>
+				<p className='m-2 shipping-form-example'>&nbsp;</p>
+				<div
+					style={{
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'space-between',
+					}}
+				>
+					<Button type='submit' variant='primary' className='mt-3'>
+						次へ進む
+					</Button>
+					<Link className='btn btn-light my-3' to='/login'>
+						戻る
+					</Link>
+				</div>
 			</Form>
 
 			<Row className='py-3'>
