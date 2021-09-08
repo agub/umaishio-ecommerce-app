@@ -232,6 +232,9 @@ const GuestShippingScreen = ({ history }) => {
 						onChange={(e) => setEmail(e.target.value)}
 					></Form.Control>
 				</Form.Group>
+				<p className='m-2 shipping-form-example'>
+					例: umaishio@gmail.com
+				</p>
 				<ShippingForm
 					fullName={fullName}
 					furigana={furigana}

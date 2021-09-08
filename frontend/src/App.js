@@ -20,7 +20,7 @@ import ProductEditScreen from './screens/ProductEditScreen'
 import OrderListScreen from './screens/OrderListScreen'
 
 import GuestShippingScreen from './screens/GuestShippingScreen'
-import GuestScreen from './screens/GuestScreen'
+// import GuestScreen from './screens/GuestScreen'
 
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'

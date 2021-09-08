@@ -37,7 +37,7 @@ const HomeScreen = () => {
 	return (
 		<>
 			<Meta />
-			<h3 className='my-3'>商品一覧</h3>
+			<h3 className='my-3'>*現在メンテナンス中です</h3>
 			{loading ? (
 				<Loader />
 			) : error ? (

@@ -16,6 +16,10 @@ const LoginScreen = ({ location, history }) => {
 	const userLogin = useSelector((state) => state.userLogin)
 	const { loading, error, userInfo } = userLogin
 
+	const cart = useSelector((state) => state.cart)
+	const { cartItems } = cart
+
+	console.log(cartItems.length)
 	const redirect = location.search ? location.search.split('=')[1] : '/'
 
 	useEffect(() => {
@@ -79,16 +83,20 @@ const LoginScreen = ({ location, history }) => {
 					<Button type='submit' variant='primary'>
 						サインイン
 					</Button>
-
-					<Link
-						// to={redirect ? `/guest?redirect=${redirect}` : '/guest'}
-						to={'/guestshipping'}
-					>
-						<Button className='login-guest-btn' variant='secondary'>
-							ゲストして次へ進む&nbsp;&nbsp;&nbsp;
-							<i className='fas fa-chevron-right'></i>
-						</Button>
-					</Link>
+					{Array.isArray(cartItems) && cartItems.length !== 0 && (
+						<Link
+							// to={redirect ? `/guest?redirect=${redirect}` : '/guest'}
+							to={'/guestshipping'}
+						>
+							<Button
+								className='login-guest-btn'
+								variant='secondary'
+							>
+								ゲストして次へ進む&nbsp;&nbsp;&nbsp;
+								<i className='fas fa-chevron-right'></i>
+							</Button>
+						</Link>
+					)}
 				</div>
 			</Form>
 
