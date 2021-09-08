@@ -42,6 +42,16 @@ const userSchema = mongoose.Schema(
 			address: { type: String },
 			building: { type: String },
 		},
+
+		//forgotPassword
+		resetPasswordToken: {
+			type: String,
+		},
+		resetPasswordExpires: {
+			type: Date,
+		},
+
+		//forgotPassword
 		//googleauth
 		googleId: {
 			type: String,

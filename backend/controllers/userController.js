@@ -1,6 +1,9 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModels.js'
 import generateToken from '../utils/generateToken.js'
+import crypto from 'crypto'
+
+import { sendResetEmail } from '../utils/email.js'
 
 // @description   Auth user & get token
 // @route         POST /api/products
@@ -259,6 +262,49 @@ const addUserShippingInfo = asyncHandler(async (req, res) => {
 	}
 })
 
+//forgotPassword
+const forgotPassword = asyncHandler(async (req, res) => {
+	try {
+		const user = await User.findOne({ email: req.body.email })
+		if (!user) {
+			return res.status(404).send('このemailは登録されていません')
+		}
+		user.resetPasswordToken = crypto.randomBytes(20).toString('hex')
+		// user.resetPasswordToken = generateToken(user._id)
+		user.resetPasswordExpires = Date.now() + 3600000
+		await user.save()
+		sendResetEmail(user.email, user.name, user.resetPasswordToken)
+		console.log(user.email, user.name, user.resetPasswordToken)
+		res.status(200).send()
+	} catch (err) {
+		res.status(500).send(err.message)
+	}
+})
+
+const resetPassword = asyncHandler(async (req, res) => {
+	try {
+		const user = await User.findOne({
+			resetPasswordToken: req.params.token,
+			resetPasswordExpires: { $gt: Date.now() },
+		})
+		if (!user) {
+			throw new Error('Token is invalid or has expired.')
+		}
+		if (!req.body.password) {
+			throw new Error('No new password provided.')
+		}
+		user.password = req.body.password
+		user.resetPasswordToken = undefined
+		user.resetPasswordExpires = undefined
+		await user.save()
+		res.status(200).send()
+	} catch (err) {
+		res.status(400).send(err.message)
+	}
+})
+
+//forgotPassword
+
 export {
 	authUser,
 	getUserProfile,
@@ -270,4 +316,6 @@ export {
 	getUserById,
 	updateUser,
 	addUserShippingInfo,
+	forgotPassword,
+	resetPassword,
 }

@@ -11,6 +11,12 @@ import {
 	updateUser,
 	registerGuest,
 	addUserShippingInfo,
+
+	//forgotPassword
+	resetPassword,
+	forgotPassword,
+
+	//forgotPassword
 } from '../controllers/userController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -23,6 +29,12 @@ router
 	.put(protect, updateUserProfile)
 
 router.route('/shipping/:id').put(protect, addUserShippingInfo)
+
+//forgotPassword
+router.route('/forgot').post(forgotPassword)
+
+router.route('/password-reset/:token').put(resetPassword)
+//forgotPassword
 
 router
 	.route('/:id')
