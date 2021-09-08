@@ -81,7 +81,8 @@ const LoginScreen = ({ location, history }) => {
 					</Button>
 
 					<Link
-						to={redirect ? `/guest?redirect=${redirect}` : '/guest'}
+						// to={redirect ? `/guest?redirect=${redirect}` : '/guest'}
+						to={'/guestshipping'}
 					>
 						<Button className='login-guest-btn' variant='secondary'>
 							ゲストして次へ進む&nbsp;&nbsp;&nbsp;

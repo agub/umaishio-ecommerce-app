@@ -19,6 +19,7 @@ import ProductListScreen from './screens/ProductListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
 import OrderListScreen from './screens/OrderListScreen'
 
+import GuestShippingScreen from './screens/GuestShippingScreen'
 import GuestScreen from './screens/GuestScreen'
 
 import { Elements } from '@stripe/react-stripe-js'
@@ -33,13 +34,16 @@ function App() {
 	return (
 		<Router>
 			<Header />
-			<main className='py-3'>
+			<main className='py-3 main-bgc'>
 				<Container>
 					<Elements stripe={stripePromise}>
 						<Route path='/order/:id' component={OrderScreen} />
 					</Elements>
 					<Route path='/shipping' component={ShippingScreen} />
-					<Route path='/guest' component={GuestScreen} />
+					<Route
+						path='/guestshipping'
+						component={GuestShippingScreen}
+					/>
 
 					{/* <Route path='/payment' component={PaymentScreen} /> */}
 					<Route path='/placeorder' component={PlaceOrderScreen} />

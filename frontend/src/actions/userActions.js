@@ -83,6 +83,10 @@ export const getGoogleUserInfo = () => {
 
 export const logout = () => async (dispatch, getState) => {
 	localStorage.removeItem('userInfo')
+	//maybe
+	localStorage.removeItem('shippingAddress')
+	//maybe
+
 	const {
 		userLogin: { userInfo },
 	} = getState()

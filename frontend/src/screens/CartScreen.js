@@ -146,6 +146,13 @@ const CartScreen = ({ match, location, history }) => {
 							>
 								レジに進む
 							</Button>
+							<Button
+								variant='secondary'
+								type='button'
+								className='btn-block w-100'
+							>
+								<Link to='/'>戻る</Link>
+							</Button>
 						</ListGroup.Item>
 					</ListGroup>
 				</Card>
