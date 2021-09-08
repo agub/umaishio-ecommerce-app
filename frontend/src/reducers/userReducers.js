@@ -25,6 +25,9 @@ import {
 	USER_UPDATE_SUCCESS,
 	USER_UPDATE_FAIL,
 	USER_UPDATE_RESET,
+	USER_PASSWORD_RESET_REQUEST,
+	USER_PASSWORD_RESET_SUCCESS,
+	USER_PASSWORD_RESET_FAIL,
 } from '../constants/userConstants.js'
 
 export const userLoginReducer = (state = {}, action) => {
@@ -80,6 +83,14 @@ export const userUpdateProfileReducer = (state = { user: {} }, action) => {
 			return { loading: false, error: action.payload }
 		case USER_UPDATE_PROFILE_RESET:
 			return {}
+
+		//password reset
+		case USER_PASSWORD_RESET_REQUEST:
+			return { loading: true }
+		case USER_PASSWORD_RESET_SUCCESS:
+			return { success: true, loading: false }
+		case USER_PASSWORD_RESET_FAIL:
+			return { loading: false, error: action.payload }
 		default:
 			return state
 	}

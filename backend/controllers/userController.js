@@ -267,15 +267,16 @@ const forgotPassword = asyncHandler(async (req, res) => {
 	try {
 		const user = await User.findOne({ email: req.body.email })
 		if (!user) {
-			return res.status(404).send('このemailは登録されていません')
+			return res
+				.status(404)
+				.json({ message: 'このメールアドレスは登録されていません' })
 		}
 		user.resetPasswordToken = crypto.randomBytes(20).toString('hex')
 		// user.resetPasswordToken = generateToken(user._id)
 		user.resetPasswordExpires = Date.now() + 3600000
 		await user.save()
 		sendResetEmail(user.email, user.name, user.resetPasswordToken)
-		console.log(user.email, user.name, user.resetPasswordToken)
-		res.status(200).send()
+		res.status(200).send(user.email, user.name, user.resetPasswordToken)
 	} catch (err) {
 		res.status(500).send(err.message)
 	}

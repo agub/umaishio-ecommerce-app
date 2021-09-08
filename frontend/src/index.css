@@ -84,8 +84,13 @@ main {
   text-align: end;
   font-size: 0.7rem;
   color: #90a4ae;
-
 }
+
+.login-forgot {
+  text-align: end;
+  font-size: 0.7rem;
+}
+
 
 .rating span {
   margin: 0.1rem;

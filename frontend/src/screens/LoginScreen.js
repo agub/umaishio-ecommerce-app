@@ -19,7 +19,6 @@ const LoginScreen = ({ location, history }) => {
 	const cart = useSelector((state) => state.cart)
 	const { cartItems } = cart
 
-	console.log(cartItems.length)
 	const redirect = location.search ? location.search.split('=')[1] : '/'
 
 	useEffect(() => {
@@ -36,7 +35,16 @@ const LoginScreen = ({ location, history }) => {
 	return (
 		<FormContainer>
 			<h1 style={{ fontSize: '1.5rem' }}>ログイン</h1>
-
+			<div className='login-forgot'>
+				<Link
+					// to={redirect ? `/guest?redirect=${redirect}` : '/guest'}
+					to={'/forgot'}
+				>
+					<Button style={{ padding: '3px 8px' }} variant='secondary'>
+						パスワードをお忘れた方
+					</Button>
+				</Link>
+			</div>
 			{error && <Message variant='danger'>{error}</Message>}
 
 			{loading && <Loader />}

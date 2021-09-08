@@ -20,6 +20,7 @@ import ProductEditScreen from './screens/ProductEditScreen'
 import OrderListScreen from './screens/OrderListScreen'
 
 import GuestShippingScreen from './screens/GuestShippingScreen'
+import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 // import GuestScreen from './screens/GuestScreen'
 
 import { Elements } from '@stripe/react-stripe-js'
@@ -44,6 +45,7 @@ function App() {
 						path='/guestshipping'
 						component={GuestShippingScreen}
 					/>
+					<Route path='/forgot' component={ForgotPasswordScreen} />
 
 					{/* <Route path='/payment' component={PaymentScreen} /> */}
 					<Route path='/placeorder' component={PlaceOrderScreen} />
