@@ -3,7 +3,7 @@ import User from '../models/userModels.js'
 import generateToken from '../utils/generateToken.js'
 import crypto from 'crypto'
 
-import { sendResetEmail } from '../utils/email.js'
+import { sendResetEmail, sendWelcomeEmail } from '../utils/email.js'
 
 // @description   Auth user & get token
 // @route         POST /api/products
@@ -12,7 +12,9 @@ const authUser = asyncHandler(async (req, res) => {
 	const { email, password } = req.body
 
 	const user = await User.findOne({ email })
-
+	if (user.verify) {
+		throw new Error('メールをチェックして')
+	}
 	if (user && (await user.matchPassword(password))) {
 		res.json({
 			_id: user._id,
@@ -41,13 +43,15 @@ const registerUser = asyncHandler(async (req, res) => {
 		res.status(400)
 		throw new Error('このメールアドレスは既に使用されています')
 	}
-
+	const emailVerificationToken = crypto.randomBytes(20).toString('hex')
 	const user = await User.create({
 		name,
 		email,
 		password,
+		verify: emailVerificationToken,
 	})
 
+	sendWelcomeEmail(email, name, user._id, user.verify)
 	if (user) {
 		res.status(201).json({
 			_id: user._id,
@@ -56,6 +60,7 @@ const registerUser = asyncHandler(async (req, res) => {
 			isAdmin: user.isAdmin,
 			isGuest: user.isGuest,
 			shippingAddress: user.shippingAddress,
+			verify: user.verify,
 			token: generateToken(user._id),
 		})
 	} else {
@@ -63,6 +68,26 @@ const registerUser = asyncHandler(async (req, res) => {
 		throw new Error('Invalid user data')
 	}
 })
+
+///verify ??
+
+const verifyEmail = asyncHandler(async (req, res) => {
+	console.log(req.body)
+
+	try {
+		const user = await User.findById(req.params.id)
+		if (!user || user.verify !== req.params.token) {
+			throw new Error()
+		}
+		user.verify = undefined
+		await user.save()
+
+		res.send('You may now log in.')
+	} catch (err) {
+		res.status(400).send()
+	}
+})
+
 // @description   guest Register
 // @route         POST /api/guest
 // @access        Public
@@ -307,6 +332,7 @@ const resetPassword = asyncHandler(async (req, res) => {
 //forgotPassword
 
 export {
+	verifyEmail,
 	authUser,
 	getUserProfile,
 	registerUser,

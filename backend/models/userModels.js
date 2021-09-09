@@ -52,6 +52,13 @@ const userSchema = mongoose.Schema(
 		},
 
 		//forgotPassword
+
+		//verify
+		verify: {
+			type: String,
+		},
+		//verify
+
 		//googleauth
 		googleId: {
 			type: String,

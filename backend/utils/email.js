@@ -33,12 +33,12 @@ const sendEmail = asyncHandler(async (mailObj) => {
 	}
 })
 
-const sendWelcomeEmail = asyncHandler(async (email, name, id, host, token) => {
+const sendWelcomeEmail = asyncHandler(async (email, name, id, token) => {
 	const mailObj = {
 		from: 'info@umaishio.com',
 		recipients: [email],
 		subject: 'Welcome',
-		message: `<p>Dear ${name}, welcome to the website. <a href="http://${host}/users/${id}/${token}">Click here</a> to verify your email address.</p>`,
+		message: `<p>Dear ${name}, welcome to the website. <a href="http://localhost:3000/${id}/${token}">Click here</a> to verify your email address.</p>`,
 	}
 
 	sendEmail(mailObj).then((res) => {

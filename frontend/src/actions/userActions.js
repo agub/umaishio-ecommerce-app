@@ -119,7 +119,8 @@ export const register = (name, email, password) => async (dispatch) => {
 			config
 		)
 		dispatch({ type: USER_REGISTER_SUCCESS, payload: data })
-		dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
+
+		// dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
 		localStorage.setItem('userInfo', JSON.stringify(data))
 	} catch (error) {
 		dispatch({
@@ -386,5 +387,29 @@ export const sendResetPassword = (token, password) => async (dispatch) => {
 			type: USER_PASSWORD_RESET_FAIL,
 			payload: message,
 		})
+	}
+}
+
+export const verifyUser = (id, token) => async (dispatch) => {
+	try {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+
+		const { data } = await axios.post(
+			`/api/users/${id}/${token}`,
+			{ id, token },
+			config
+		)
+
+		console.log(data)
+	} catch (error) {
+		const message =
+			error.response && error.response.data.message
+				? error.response.data.message
+				: error.message
+		console.log(message)
 	}
 }

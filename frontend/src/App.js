@@ -22,6 +22,7 @@ import OrderListScreen from './screens/OrderListScreen'
 import GuestShippingScreen from './screens/GuestShippingScreen'
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 // import GuestScreen from './screens/GuestScreen'
+import VerifyUserScreen from './screens/VerifyUserScreen'
 
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
@@ -77,6 +78,7 @@ function App() {
 						path='/admin/orderlist'
 						component={OrderListScreen}
 					/>
+					<Route path='/:id/:token' component={VerifyUserScreen} />
 					<Route path='/' component={HomeScreen} exact />
 				</Container>
 			</main>

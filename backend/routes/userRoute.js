@@ -15,14 +15,16 @@ import {
 	//forgotPassword
 	resetPassword,
 	forgotPassword,
-
 	//forgotPassword
+	verifyEmail,
 } from '../controllers/userController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
 router.route('/').post(registerUser).get(protect, admin, getUsers)
 router.post('/login', authUser)
 router.route('/guest').post(registerGuest)
+//verify
+router.route('/:id/:token').post(verifyEmail)
 router
 	.route('/profile')
 	.get(protect, getUserProfile)
@@ -41,4 +43,5 @@ router
 	.delete(protect, admin, deleteUser)
 	.get(protect, admin, getUserById)
 	.put(protect, admin, updateUser)
+
 export default router
