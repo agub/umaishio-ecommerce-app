@@ -353,3 +353,38 @@ export const forgotPassword = (email) => async (dispatch) => {
 		})
 	}
 }
+
+export const sendResetPassword = (token, password) => async (dispatch) => {
+	try {
+		dispatch({
+			type: USER_PASSWORD_RESET_REQUEST,
+		})
+
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+
+		const { data } = await axios.put(
+			`/api/users/password-reset/${token}`,
+			{ password },
+			config
+		)
+
+		dispatch({
+			type: USER_PASSWORD_RESET_SUCCESS,
+			payload: data,
+		})
+	} catch (error) {
+		const message =
+			error.response && error.response.data.message
+				? error.response.data.message
+				: error.message
+
+		dispatch({
+			type: USER_PASSWORD_RESET_FAIL,
+			payload: message,
+		})
+	}
+}

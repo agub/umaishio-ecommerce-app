@@ -266,7 +266,7 @@ const addUserShippingInfo = asyncHandler(async (req, res) => {
 const forgotPassword = asyncHandler(async (req, res) => {
 	try {
 		const user = await User.findOne({ email: req.body.email })
-		if (!user) {
+		if (!user || user.isGuest) {
 			return res
 				.status(404)
 				.json({ message: 'このメールアドレスは登録されていません' })
@@ -298,7 +298,7 @@ const resetPassword = asyncHandler(async (req, res) => {
 		user.resetPasswordToken = undefined
 		user.resetPasswordExpires = undefined
 		await user.save()
-		res.status(200).send()
+		res.status(200).json({ message: 'パスワードを変更しました' })
 	} catch (err) {
 		res.status(400).send(err.message)
 	}

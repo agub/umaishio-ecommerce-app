@@ -19,11 +19,9 @@ const ForgotPasswordScreen = ({ location, history }) => {
 
 	const redirect = location.search ? location.search.split('=')[1] : '/'
 
-	// useEffect(() => {
-	// 	// if () {
-	// 	history.push(redirect)
-	// 	// }
-	// }, [history, redirect])
+	useEffect(() => {
+		dispatch({ type: USER_UPDATE_PROFILE_RESET })
+	}, [])
 
 	const resetPasswordRequest = (e) => {
 		e.preventDefault()
@@ -39,6 +37,7 @@ const ForgotPasswordScreen = ({ location, history }) => {
 			{success && (
 				<Message>
 					パスワード再設定ページへのメールをお送りました。
+					info@umaishio.comからのメールをお探しください。
 				</Message>
 			)}
 			{error && <Message>{error}</Message>}

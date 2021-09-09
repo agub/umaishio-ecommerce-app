@@ -25,6 +25,7 @@ import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
+import ResetPasswordScreen from './screens/ResetPasswordScreen'
 
 function App() {
 	const PUBLIC_KEY =
@@ -46,6 +47,10 @@ function App() {
 						component={GuestShippingScreen}
 					/>
 					<Route path='/forgot' component={ForgotPasswordScreen} />
+					<Route
+						path='/password-reset/:id'
+						component={ResetPasswordScreen}
+					/>
 
 					{/* <Route path='/payment' component={PaymentScreen} /> */}
 					<Route path='/placeorder' component={PlaceOrderScreen} />

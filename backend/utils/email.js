@@ -51,7 +51,7 @@ const sendResetEmail = asyncHandler(async (email, name, token) => {
 		from: 'info@umaishio.com',
 		recipients: [email],
 		subject: '旨い塩ショップ　パスワードリセット',
-		message: `<p>${name}様, 旨い塩ショップをご利用いただきありがとうございます。<br/><a href="http://localhost:3000/password-reset/${token}">ここのリンク</a>からパスワードをリセットしてください</p>`,
+		message: `<p>${name}様, 旨い塩ショップをご利用いただきありがとうございます。<br/><a href="http://localhost:3000/password-reset/${token}">ここ</a>からパスワードをリセットしてください  りあるリンク<a href="http://umaishio.com/password-reset/${token}">ここ</a></p>`,
 	}
 
 	sendEmail(mailObj).then((res) => {
