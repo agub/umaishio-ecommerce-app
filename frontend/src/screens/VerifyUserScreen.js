@@ -11,7 +11,7 @@ const VerifyUserScreen = ({ match }) => {
 	useEffect(() => {
 		dispatch(verifyUser(id, token))
 	}, [])
-	return <>afsfasda</>
+	return <></>
 }
 
 export default VerifyUserScreen
