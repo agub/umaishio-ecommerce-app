@@ -1,6 +1,10 @@
 import asyncHandler from 'express-async-handler'
 import nodemailer from 'nodemailer'
 
+import dotenv from 'dotenv'
+
+dotenv.config()
+
 const sendEmail = asyncHandler(async (mailObj) => {
 	const { from, recipients, subject, message } = mailObj
 
@@ -38,7 +42,7 @@ const sendWelcomeEmail = asyncHandler(async (email, name, id, token) => {
 		from: 'info@umaishio.com',
 		recipients: [email],
 		subject: 'Welcome',
-		message: `<p>${name}様, 旨い塩ショップの登録ありがとうございます。 <a href="http://localhost:3000/verify/${id}/${token}">こちら</a>から登録完了・・・</p>`,
+		message: `<p>${name}様, 旨い塩ショップの登録ありがとうございます。 <a href="${process.env.API_URI}/verify/${id}/${token}">こちら</a>から登録完了・・・</p>`,
 	}
 
 	sendEmail(mailObj).then((res) => {
@@ -51,7 +55,7 @@ const sendResetEmail = asyncHandler(async (email, name, token) => {
 		from: 'info@umaishio.com',
 		recipients: [email],
 		subject: '旨い塩ショップ　パスワードリセット',
-		message: `<p>${name}様, 旨い塩ショップをご利用いただきありがとうございます。<br/><a href="http://localhost:3000/password-reset/${token}">ここ</a>からパスワードをリセットしてください  りあるリンク<a href="http://umaishio.com/password-reset/${token}">ここ</a></p>`,
+		message: `<p>${name}様, 旨い塩ショップをご利用いただきありがとうございます。<br/><a href="${process.env.API_URI}/password-reset/${token}">ここ</a>からパスワードをリセットしてください  りあるリンク<a href="http://umaishio.com/password-reset/${token}">ここ</a></p>`,
 	}
 
 	sendEmail(mailObj).then((res) => {
