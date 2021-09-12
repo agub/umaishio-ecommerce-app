@@ -72,8 +72,6 @@ const registerUser = asyncHandler(async (req, res) => {
 ///verify ??
 
 const verifyEmail = asyncHandler(async (req, res) => {
-	console.log(req.body)
-
 	try {
 		const user = await User.findById(req.params.id)
 		if (!user || user.verify !== req.params.token) {
@@ -84,7 +82,8 @@ const verifyEmail = asyncHandler(async (req, res) => {
 
 		res.send('You may now log in.')
 	} catch (err) {
-		res.status(400).send()
+		res.status(400)
+		throw new Error('このページは存在しません')
 	}
 })
 

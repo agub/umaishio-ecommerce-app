@@ -24,7 +24,7 @@ router.route('/').post(registerUser).get(protect, admin, getUsers)
 router.post('/login', authUser)
 router.route('/guest').post(registerGuest)
 //verify
-router.route('/:id/:token').post(verifyEmail)
+router.route('/verify/:id/:token').post(verifyEmail)
 router
 	.route('/profile')
 	.get(protect, getUserProfile)

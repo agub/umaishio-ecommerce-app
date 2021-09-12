@@ -38,7 +38,7 @@ const sendWelcomeEmail = asyncHandler(async (email, name, id, token) => {
 		from: 'info@umaishio.com',
 		recipients: [email],
 		subject: 'Welcome',
-		message: `<p>Dear ${name}, welcome to the website. <a href="http://localhost:3000/${id}/${token}">Click here</a> to verify your email address.</p>`,
+		message: `<p>${name}様, 旨い塩ショップの登録ありがとうございます。 <a href="http://localhost:3000/verify/${id}/${token}">こちら</a>から登録完了・・・</p>`,
 	}
 
 	sendEmail(mailObj).then((res) => {

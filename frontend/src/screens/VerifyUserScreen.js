@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Button } from 'react-bootstrap'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { verifyUser } from '../actions/userActions'
@@ -11,7 +12,13 @@ const VerifyUserScreen = ({ match }) => {
 	useEffect(() => {
 		dispatch(verifyUser(id, token))
 	}, [])
-	return <></>
+	return (
+		<>
+			<h1>認証完了!</h1>
+			<p>redirect to ????</p>
+			<Button>ボタン？</Button>
+		</>
+	)
 }
 
 export default VerifyUserScreen

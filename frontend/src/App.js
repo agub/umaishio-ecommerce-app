@@ -78,7 +78,10 @@ function App() {
 						path='/admin/orderlist'
 						component={OrderListScreen}
 					/>
-					<Route path='/:id/:token' component={VerifyUserScreen} />
+					<Route
+						path='/verify/:id/:token'
+						component={VerifyUserScreen}
+					/>
 					<Route path='/' component={HomeScreen} exact />
 				</Container>
 			</main>

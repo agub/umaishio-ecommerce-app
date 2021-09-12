@@ -399,7 +399,7 @@ export const verifyUser = (id, token) => async (dispatch) => {
 		}
 
 		const { data } = await axios.post(
-			`/api/users/${id}/${token}`,
+			`/api/users/verify/${id}/${token}`,
 			{ id, token },
 			config
 		)
