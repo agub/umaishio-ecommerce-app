@@ -24,6 +24,7 @@ import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 // import GuestScreen from './screens/GuestScreen'
 import VerifyUserScreen from './screens/VerifyUserScreen'
 import CheckEmailScreen from './screens/CheckEmailScreen'
+import LandingScreen from './screens/LandingScreen'
 
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
@@ -84,7 +85,8 @@ function App() {
 						path='/verify/:id/:token'
 						component={VerifyUserScreen}
 					/>
-					<Route path='/' component={HomeScreen} exact />
+					<Route path='/list' component={HomeScreen} exact />
+					<Route path='/' component={LandingScreen} exact />
 				</Container>
 			</main>
 			<Footer />

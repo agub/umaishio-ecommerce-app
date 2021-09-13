@@ -41,6 +41,9 @@ const Header = () => {
 							<LinkContainer exact to='/'>
 								<Nav.Link>ホーム</Nav.Link>
 							</LinkContainer>
+							<LinkContainer exact to='/list'>
+								<Nav.Link>リスト</Nav.Link>
+							</LinkContainer>
 							<LinkContainer
 								exact
 								to='/cart'
@@ -64,7 +67,7 @@ const Header = () => {
 								>
 									<LinkContainer to='/profile'>
 										<NavDropdown.Item>
-											アカウント
+											注文履歴 & 設定
 										</NavDropdown.Item>
 									</LinkContainer>
 									<NavDropdown.Item onClick={logoutHandler}>

@@ -456,7 +456,7 @@ const OrderScreen = ({ match, history, location }) => {
 							</Form.Group>
 						</ListGroup.Item>
 						<ListGroup.Item className='mt-3'>
-							<h4>注文内容を確認</h4>
+							<h4>注文内容</h4>
 							{order.orderItems.length === 0 ? (
 								<Message>注文がありません</Message>
 							) : (
@@ -561,7 +561,7 @@ const OrderScreen = ({ match, history, location }) => {
 														type='number'
 														required
 														value={trackingId}
-														placeholder='*ヤマトトラッキングナンバー'
+														placeholder='*ヤマトのトラッキングナンバー'
 														onChange={(e) =>
 															setTrackingId(
 																e.target.value

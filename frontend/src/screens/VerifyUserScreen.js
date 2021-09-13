@@ -11,14 +11,11 @@ const VerifyUserScreen = ({ match, history }) => {
 
 	useEffect(() => {
 		dispatch(verifyUser(id, token))
-		setTimeout(() => {
-			history.push('/')
-		}, 5000)
+		history.push('/login')
 	}, [])
 	return (
 		<>
-			<h1>認証完了マーク!　５秒後にホーム？</h1>
-			<p>redirect to ????</p>
+			<p>認証完了　＋　マーク!　５秒後にログイン画面？</p>
 		</>
 	)
 }

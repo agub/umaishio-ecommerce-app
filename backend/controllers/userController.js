@@ -15,19 +15,18 @@ const authUser = asyncHandler(async (req, res) => {
 	if (user.verify) {
 		throw new Error('メールをチェックして')
 	}
-	try {
-		if (user && (await user.matchPassword(password))) {
-			res.json({
-				_id: user._id,
-				name: user.name,
-				email: user.email,
-				isAdmin: user.isAdmin,
-				isGuest: user.isGuest,
-				shippingAddress: user.shippingAddress,
-				token: generateToken(user._id),
-			})
-		}
-	} catch (error) {
+
+	if (user && (await user.matchPassword(password))) {
+		res.json({
+			_id: user._id,
+			name: user.name,
+			email: user.email,
+			isAdmin: user.isAdmin,
+			isGuest: user.isGuest,
+			shippingAddress: user.shippingAddress,
+			token: generateToken(user._id),
+		})
+	} else {
 		res.status(401)
 		throw new Error('メールアドレス、もしくはパスワードが異なります。')
 	}

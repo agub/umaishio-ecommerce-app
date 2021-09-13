@@ -7,6 +7,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { login } from '../actions/userActions'
+import { USER_VERIFY_RESET } from '../constants/userConstants'
 
 const LoginScreen = ({ location, history }) => {
 	const [email, setEmail] = useState('')
@@ -15,6 +16,8 @@ const LoginScreen = ({ location, history }) => {
 	const dispatch = useDispatch()
 	const userLogin = useSelector((state) => state.userLogin)
 	const { loading, error, userInfo } = userLogin
+	const userVerify = useSelector((state) => state.userVerify)
+	const { success } = userVerify
 
 	const cart = useSelector((state) => state.cart)
 	const { cartItems } = cart
@@ -29,6 +32,9 @@ const LoginScreen = ({ location, history }) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault()
+		dispatch({
+			type: USER_VERIFY_RESET,
+		})
 		dispatch(login(email, password))
 	}
 
@@ -46,7 +52,7 @@ const LoginScreen = ({ location, history }) => {
 				</Link>
 			</div>
 			{error && <Message variant='danger'>{error}</Message>}
-
+			{success && <Message>登録メールアドレスを認証しました。</Message>}
 			{loading && <Loader />}
 			<Form onSubmit={submitHandler}>
 				<Form.Group controlId='email'>
