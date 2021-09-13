@@ -27,6 +27,9 @@ import {
 	USER_PASSWORD_RESET_SUCCESS,
 	USER_PASSWORD_RESET_REQUEST,
 	USER_PASSWORD_RESET_FAIL,
+	USER_VERIFY_REQUEST,
+	USER_VERIFY_SUCCESS,
+	USER_VERIFY_FAIL,
 } from '../constants/userConstants'
 
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
@@ -392,6 +395,9 @@ export const sendResetPassword = (token, password) => async (dispatch) => {
 
 export const verifyUser = (id, token) => async (dispatch) => {
 	try {
+		dispatch({
+			type: USER_VERIFY_REQUEST,
+		})
 		const config = {
 			headers: {
 				'Content-Type': 'application/json',
@@ -403,6 +409,10 @@ export const verifyUser = (id, token) => async (dispatch) => {
 			{ id, token },
 			config
 		)
+		dispatch({
+			type: USER_VERIFY_SUCCESS,
+			payload: data,
+		})
 
 		console.log(data)
 	} catch (error) {
@@ -410,6 +420,10 @@ export const verifyUser = (id, token) => async (dispatch) => {
 			error.response && error.response.data.message
 				? error.response.data.message
 				: error.message
-		console.log(message)
+
+		dispatch({
+			type: USER_VERIFY_FAIL,
+			payload: message,
+		})
 	}
 }

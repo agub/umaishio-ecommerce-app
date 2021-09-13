@@ -11,21 +11,23 @@ import { sendResetEmail, sendWelcomeEmail } from '../utils/email.js'
 const authUser = asyncHandler(async (req, res) => {
 	const { email, password } = req.body
 
-	const user = await User.findOne({ email })
-	if (user.verify) {
-		throw new Error('メールをチェックして')
-	}
-	if (user && (await user.matchPassword(password))) {
-		res.json({
-			_id: user._id,
-			name: user.name,
-			email: user.email,
-			isAdmin: user.isAdmin,
-			isGuest: user.isGuest,
-			shippingAddress: user.shippingAddress,
-			token: generateToken(user._id),
-		})
-	} else {
+	try {
+		const user = await User.findOne({ email })
+		if (user.verify) {
+			throw new Error('メールをチェックして')
+		}
+		if (user && (await user.matchPassword(password))) {
+			res.json({
+				_id: user._id,
+				name: user.name,
+				email: user.email,
+				isAdmin: user.isAdmin,
+				isGuest: user.isGuest,
+				shippingAddress: user.shippingAddress,
+				token: generateToken(user._id),
+			})
+		}
+	} catch (error) {
 		res.status(401)
 		throw new Error('メールアドレス、もしくはパスワードが異なります。')
 	}

@@ -3,6 +3,13 @@ import Order from '../models/orderModel.js'
 import Product from '../models/productModel.js'
 import Stripe from 'stripe'
 import dotenv from 'dotenv'
+
+import {
+	sendOrderSuccessEmail,
+	sendShippingStartedEmail,
+	sendBankTransferInfo,
+} from '../utils/email.js'
+
 dotenv.config()
 const stripe = Stripe(process.env.STRIPE_SECRET)
 // @description   Create new order
@@ -104,8 +111,9 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/:id/deliver
 // @access  Private/Admin
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
-	const order = await Order.findById(req.params.id)
+	const { email, name, orderId, trackingId } = req.body.emailInfo
 
+	const order = await Order.findById(req.params.id)
 	if (order) {
 		if (order.isPaid !== true) {
 			order.isPaid = true
@@ -116,7 +124,7 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 		order.deliveredAt = Date.now()
 
 		const updatedOrder = await order.save()
-
+		sendShippingStartedEmail(email, name, orderId, trackingId)
 		res.json(updatedOrder)
 	} else {
 		res.status(404)
@@ -167,6 +175,12 @@ const stripeApi = asyncHandler(async (req, res) => {
 			await product.save()
 		}
 
+		sendOrderSuccessEmail(
+			metadata.email_address,
+			metadata.fullName,
+			metadata.orderId
+		)
+
 		console.log(order)
 		res.json(updatedOrder)
 		// } else {
@@ -187,6 +201,8 @@ const stripeApi = asyncHandler(async (req, res) => {
 // @access        Private
 
 const bankTransferOrder = asyncHandler(async (req, res) => {
+	const { email, name, orderId, price } = req.body.banckTransferInfo
+
 	const order = await Order.findById(req.params.id)
 	if (order) {
 		order.isBankTransfer = true
@@ -197,6 +213,8 @@ const bankTransferOrder = asyncHandler(async (req, res) => {
 			product.countInStock -= item.qty
 			await product.save()
 		}
+		sendBankTransferInfo(email, name, orderId, price)
+		//sendEmail
 		res.json(updatedOrder)
 	} else {
 		console.log(error)

@@ -28,6 +28,10 @@ import {
 	USER_PASSWORD_RESET_REQUEST,
 	USER_PASSWORD_RESET_SUCCESS,
 	USER_PASSWORD_RESET_FAIL,
+	USER_VERIFY_REQUEST,
+	USER_VERIFY_SUCCESS,
+	USER_VERIFY_FAIL,
+	USER_VERIFY_RESET,
 } from '../constants/userConstants.js'
 
 export const userLoginReducer = (state = {}, action) => {
@@ -136,6 +140,21 @@ export const userUpdateReducer = (state = { user: {} }, action) => {
 			return {
 				user: {},
 			}
+		default:
+			return state
+	}
+}
+
+export const userVerifyReducer = (state = {}, action) => {
+	switch (action.type) {
+		case USER_VERIFY_REQUEST:
+			return { loading: true }
+		case USER_VERIFY_SUCCESS:
+			return { loading: false, success: true }
+		case USER_VERIFY_FAIL:
+			return { loading: false, error: action.payload }
+		case USER_VERIFY_RESET:
+			return {}
 		default:
 			return state
 	}

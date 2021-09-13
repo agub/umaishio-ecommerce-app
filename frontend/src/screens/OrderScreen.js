@@ -44,6 +44,7 @@ const OrderScreen = ({ match, history, location }) => {
 	//paymentMethod
 	const [bankTransferState, setBankTransferState] = useState(false)
 	//paymentMethod
+	const [trackingId, setTrackingId] = useState('')
 
 	const dispatch = useDispatch()
 	const cart = useSelector((state) => state.cart)
@@ -73,7 +74,7 @@ const OrderScreen = ({ match, history, location }) => {
 
 	useEffect(() => {
 		if (!userInfo) {
-			history.push('/login')
+			history.push(`/login?redirect=order/${orderId}`)
 		}
 		if (
 			successPay ||
@@ -122,6 +123,7 @@ const OrderScreen = ({ match, history, location }) => {
 					amount: order.totalPrice,
 					name: name,
 					metadata: {
+						//fixme add more shipper info
 						email_address: order.user.email,
 						userId: order.user._id,
 						orderId: orderId,
@@ -138,7 +140,13 @@ const OrderScreen = ({ match, history, location }) => {
 				setErrorText('正しく記入してください')
 			} else {
 				console.log('bankTransfer')
-				dispatch(bankTransferOrder(orderId))
+				const banckTransferInfo = {
+					email: order.user.email,
+					name: order.shippingAddress.fullName,
+					orderId,
+					price: order.totalPrice,
+				}
+				dispatch(bankTransferOrder(orderId, banckTransferInfo))
 			}
 		} catch (error) {
 			console.log(error)
@@ -147,7 +155,13 @@ const OrderScreen = ({ match, history, location }) => {
 	}
 
 	const deliverHandler = () => {
-		dispatch(deliverOrder(order))
+		const emailInfo = {
+			email: order.user.email,
+			name: order.shippingAddress.fullName,
+			orderId,
+			trackingId,
+		}
+		dispatch(deliverOrder(order, emailInfo))
 	}
 
 	const toBankTransfer = (boolean) => {
@@ -300,7 +314,7 @@ const OrderScreen = ({ match, history, location }) => {
 							/>
 							{order.isDelivered ? (
 								<Message variant='success'>
-									配送完了
+									発送手配の完了
 									{order.deliveredAt.substring(0, 10)}
 								</Message>
 							) : null}
@@ -538,15 +552,34 @@ const OrderScreen = ({ match, history, location }) => {
 								userInfo.isAdmin &&
 								!order.isDelivered &&
 								(order.isBankTransfer || order.isPaid) && (
-									<ListGroup.Item>
-										<Button
-											type='button'
-											className='btn btn-block w-100'
-											onClick={deliverHandler}
-										>
-											入金確認＆配送ボタン
-										</Button>
-									</ListGroup.Item>
+									<>
+										<ListGroup.Item>
+											<Form>
+												<Form.Group className='m-2'>
+													{/* <Form.Label>クレジットカード名義人</Form.Label> */}
+													<Form.Control
+														type='number'
+														required
+														value={trackingId}
+														placeholder='*ヤマトトラッキングナンバー'
+														onChange={(e) =>
+															setTrackingId(
+																e.target.value
+															)
+														}
+													></Form.Control>
+												</Form.Group>
+												<Button
+													type='button'
+													className='btn btn-block w-100'
+													disabled={trackingId === ''}
+													onClick={deliverHandler}
+												>
+													入金確認＆配送ボタン
+												</Button>
+											</Form>
+										</ListGroup.Item>
+									</>
 								)}
 							{/* <ListGroup.Item>
 							 {error && (

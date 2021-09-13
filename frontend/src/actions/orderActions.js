@@ -214,7 +214,10 @@ export const payOnStirpe = (orderId, paymentDetails) => async (
 	}
 }
 
-export const bankTransferOrder = (orderId) => async (dispatch, getState) => {
+export const bankTransferOrder = (orderId, banckTransferInfo) => async (
+	dispatch,
+	getState
+) => {
 	try {
 		dispatch({
 			type: BANKTRANSFER_REQUEST,
@@ -232,7 +235,7 @@ export const bankTransferOrder = (orderId) => async (dispatch, getState) => {
 
 		const { data } = await axios.post(
 			`/api/orders/${orderId}/banktransfer`,
-			orderId,
+			{ banckTransferInfo },
 			config
 		)
 
@@ -256,7 +259,10 @@ export const bankTransferOrder = (orderId) => async (dispatch, getState) => {
 	}
 }
 
-export const deliverOrder = (order) => async (dispatch, getState) => {
+export const deliverOrder = (order, emailInfo) => async (
+	dispatch,
+	getState
+) => {
 	try {
 		dispatch({
 			type: ORDER_DELIVER_REQUEST,
@@ -274,7 +280,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
 
 		const { data } = await axios.put(
 			`/api/orders/${order._id}/deliver`,
-			{},
+			{ emailInfo },
 			config
 		)
 

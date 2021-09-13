@@ -23,6 +23,7 @@ import GuestShippingScreen from './screens/GuestShippingScreen'
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 // import GuestScreen from './screens/GuestScreen'
 import VerifyUserScreen from './screens/VerifyUserScreen'
+import CheckEmailScreen from './screens/CheckEmailScreen'
 
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
@@ -52,6 +53,7 @@ function App() {
 						path='/password-reset/:id'
 						component={ResetPasswordScreen}
 					/>
+					<Route path='/checkemail' component={CheckEmailScreen} />
 
 					{/* <Route path='/payment' component={PaymentScreen} /> */}
 					<Route path='/placeorder' component={PlaceOrderScreen} />

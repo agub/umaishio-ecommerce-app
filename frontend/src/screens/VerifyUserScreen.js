@@ -13,13 +13,12 @@ const VerifyUserScreen = ({ match, history }) => {
 		dispatch(verifyUser(id, token))
 		setTimeout(() => {
 			history.push('/')
-		}, 2000)
+		}, 5000)
 	}, [])
 	return (
 		<>
-			<h1>認証完了!</h1>
+			<h1>認証完了マーク!　５秒後にホーム？</h1>
 			<p>redirect to ????</p>
-			<Button>ボタン？</Button>
 		</>
 	)
 }
