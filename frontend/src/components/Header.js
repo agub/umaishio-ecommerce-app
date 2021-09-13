@@ -25,9 +25,8 @@ const Header = () => {
 	return (
 		<header>
 			<Navbar
-				style={{ zIndex: 1000 }}
 				collapseOnSelect
-				style={{ backgroundColor: '#f5f5f5' }}
+				style={{ backgroundColor: '#f5f5f5', zIndex: 1000 }}
 				// bg='dark'
 				// variant='dark'
 				expand='lg'

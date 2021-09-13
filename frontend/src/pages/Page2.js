@@ -2,10 +2,26 @@ import React from 'react'
 import { Card, Image } from 'react-bootstrap'
 import x_logo from '../data/images/x_logo.png'
 import salt from '../data/images/salt+object.png'
+import useWindowSize from '../hooks/useWindowSize'
+
 const Page2 = () => {
+	const size = useWindowSize()
 	return (
-		<div className='page2-wrap'>
-			<Card className='my-3 p-3 page2-card'>
+		<div className={size.width > 767 ? 'page2-wrap' : 'page2-wrap-mobile'}>
+			<Image
+				src={salt}
+				alt='salt'
+				className={
+					size.width > 767 ? 'page2-image' : 'page2-image-mobile'
+				}
+			/>
+			<Card
+				className={
+					size.width > 767
+						? 'my-3 p-3 page2-card'
+						: 'my-3 p-3 page2-card-mobile'
+				}
+			>
 				<Card.Body className='page2-card-body'>
 					<Card.Title as='h2' className='page2-card-title'>
 						<Card.Img
@@ -23,7 +39,6 @@ const Page2 = () => {
 					</Card.Text>
 				</Card.Body>
 			</Card>
-			<Image src={salt} alt='salt' className='page2-image' />
 		</div>
 	)
 }
