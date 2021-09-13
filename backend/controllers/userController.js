@@ -11,11 +11,11 @@ import { sendResetEmail, sendWelcomeEmail } from '../utils/email.js'
 const authUser = asyncHandler(async (req, res) => {
 	const { email, password } = req.body
 
+	const user = await User.findOne({ email })
+	if (user.verify) {
+		throw new Error('メールをチェックして')
+	}
 	try {
-		const user = await User.findOne({ email })
-		if (user.verify) {
-			throw new Error('メールをチェックして')
-		}
 		if (user && (await user.matchPassword(password))) {
 			res.json({
 				_id: user._id,
