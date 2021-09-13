@@ -39,6 +39,7 @@ function App() {
 	return (
 		<Router>
 			<Header />
+			<Route path='/' component={LandingScreen} exact />
 			<main className='py-3 main-bgc'>
 				<Container>
 					<Elements stripe={stripePromise}>
@@ -85,10 +86,10 @@ function App() {
 						path='/verify/:id/:token'
 						component={VerifyUserScreen}
 					/>
-					<Route path='/list' component={HomeScreen} exact />
-					<Route path='/' component={LandingScreen} exact />
+					<Route path='/shop' component={HomeScreen} />
 				</Container>
 			</main>
+
 			<Footer />
 		</Router>
 	)

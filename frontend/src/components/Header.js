@@ -24,7 +24,14 @@ const Header = () => {
 
 	return (
 		<header>
-			<Navbar collapseOnSelect bg='dark' variant='dark' expand='lg'>
+			<Navbar
+				style={{ zIndex: 1000 }}
+				collapseOnSelect
+				style={{ backgroundColor: '#f5f5f5' }}
+				// bg='dark'
+				// variant='dark'
+				expand='lg'
+			>
 				<Container>
 					{/* <LinkContainer to='/'> */}
 					<Navbar.Brand href='/'>
@@ -41,8 +48,8 @@ const Header = () => {
 							<LinkContainer exact to='/'>
 								<Nav.Link>ホーム</Nav.Link>
 							</LinkContainer>
-							<LinkContainer exact to='/list'>
-								<Nav.Link>リスト</Nav.Link>
+							<LinkContainer exact to='/shop'>
+								<Nav.Link>ショップ</Nav.Link>
 							</LinkContainer>
 							<LinkContainer
 								exact
