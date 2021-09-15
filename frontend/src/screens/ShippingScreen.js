@@ -282,6 +282,7 @@ const ShippingScreen = ({ history }) => {
 			<h1>お届け先の住所</h1>
 			{error && <Message varient='danger'>{error}</Message>}
 			<Form onSubmit={submitHandler} className='shippingContainer'>
+				{/* responsiveCss */}
 				<ShippingForm
 					fullName={fullName}
 					furigana={furigana}

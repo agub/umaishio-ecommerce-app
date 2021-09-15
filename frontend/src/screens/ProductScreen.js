@@ -72,9 +72,9 @@ const ProductScreen = ({ match, history }) => {
 
 	return (
 		<>
-			<Link className='btn btn-light my-3' to='/'>
+			{/* <Link className='btn btn-light my-3' to='/'>
 				戻る
-			</Link>
+			</Link> */}
 			{message && (
 				<Message variant='success'>
 					{message} <Link to='/cart'>購入手続きへ</Link>
@@ -89,58 +89,67 @@ const ProductScreen = ({ match, history }) => {
 				<>
 					<Meta title={product.name} />
 					<Row>
-						<Col md={6} className='product-page-section'>
+						<Col lg={6} md={12}>
+							{/* <div className='product-page-img'> */}
 							<Image
 								src={product.image}
 								alt={product.name}
 								fluid
 							/>
+							{/* </div> */}
 						</Col>
-						<Col md={3} className='product-page-section'>
-							<ListGroup variant='flush'>
-								<ListGroup.Item as='h3'>
-									{product.name}
-								</ListGroup.Item>
-								<ListGroup.Item>
-									{product.rating && product.numReviews && (
-										<>
-											<Rating
-												value={product.rating}
-												text={`${product.numReviews} 個の評価`}
-												showArrow
-												showComment={showComment}
-												setShowComment={setShowComment}
-												directToReview={directToReview}
-											/>
-										</>
-									)}
-								</ListGroup.Item>
-								<ListGroup.Item>
-									¥{product.price}
-								</ListGroup.Item>
-								<ListGroup.Item>
-									{product.description}
-								</ListGroup.Item>
-							</ListGroup>
-						</Col>
+						<Col lg={6} md={12}>
+							<div className='product-page-section'>
+								<ListGroup variant='flush'>
+									<h3>{product.name}</h3>
+									<div className='product-page-review-stock-wrap'>
+										{product.rating && product.numReviews && (
+											<>
+												<Rating
+													value={product.rating}
+													text={`( ${product.numReviews} )`}
+													showArrow
+													showComment={showComment}
+													setShowComment={
+														setShowComment
+													}
+													directToReview={
+														directToReview
+													}
+												/>
+											</>
+										)}
+										<div className='product-page-stock'>
+											{product.countInStock > 0 ? (
+												<>
+													在庫あり&nbsp;
+													<span>
+														<i className='fas fa-check'></i>
+													</span>
+												</>
+											) : (
+												'在庫なし'
+											)}
+										</div>
+									</div>
+									<div className='product-page-description'>
+										{product.description}
+									</div>
+								</ListGroup>
+							</div>
+							<Col md={12}>
+								{/* from here > */}
 
-						<Col md={3} className='product-page-section'>
-							{/* from here > */}
-
-							<Card>
-								<ListGroup variant='flush' id='reviewComp'>
-									{showComment && (
-										<>
-											<ListGroup.Item
-												className='mb-3'
-												variant='flush'
-											>
-												<Row>
+								<div>
+									<div variant='flush' id='reviewComp'>
+										{showComment && (
+											<div className='product-page-review-wrap'>
+												<Row className='product-page-review-container'>
 													<Col>
 														<h3 className='mt-3'>
 															カスタマーレビュー
 														</h3>
-														<ListGroup variant='flush'>
+														<div variant='flush'>
 															{product.reviews
 																.length ===
 																0 && (
@@ -150,7 +159,7 @@ const ProductScreen = ({ match, history }) => {
 															)}
 															{product.reviews.map(
 																(review) => (
-																	<ListGroup.Item
+																	<div
 																		key={
 																			review._id
 																		}
@@ -181,7 +190,7 @@ const ProductScreen = ({ match, history }) => {
 																				review.comment
 																			}
 																		</p>
-																	</ListGroup.Item>
+																	</div>
 																)
 															)}
 
@@ -195,154 +204,116 @@ const ProductScreen = ({ match, history }) => {
 																	}
 																</Message>
 															)}
-															{
-																userInfo && (
-																	// !hasReviewed ? (
-																	<>
-																		{/* <h2 className='mt-3'>
+															{userInfo && (
+																// !hasReviewed ? (
+																<>
+																	{/* <h2 className='mt-3'>
 																			レビュー
 																		</h2> */}
-																		{successProductReview && (
-																			<Message variant='success'>
-																				レビューを書き込みました。
-																			</Message>
-																		)}
-																		<Form
-																			onSubmit={
-																				submitHandler
-																			}
-																		>
-																			<Form.Group controlId='rating'>
-																				<Form.Label>
-																					評価
-																				</Form.Label>
-																				<Form.Control
-																					as='select'
-																					value={
-																						rating
-																					}
-																					onChange={(
-																						e
-																					) =>
-																						setRating(
-																							e
-																								.target
-																								.value
-																						)
-																					}
-																				>
-																					<option value=''>
-																						選択してください
-																					</option>
-																					<option value='1'>
-																						★
-																					</option>
-																					<option value='2'>
-																						★★
-																					</option>
-																					<option value='3'>
-																						★★★
-																					</option>
-																					<option value='4'>
-																						★★★★
-																					</option>
-																					<option value='5'>
-																						★★★★★
-																					</option>
-																				</Form.Control>
-																			</Form.Group>
-																			<Form.Group controlId='comment'>
-																				<Form.Label>
-																					コメント
-																				</Form.Label>
-																				<Form.Control
-																					as='textarea'
-																					row='3'
-																					value={
-																						comment
-																					}
-																					onChange={(
-																						e
-																					) =>
-																						setComment(
-																							e
-																								.target
-																								.value
-																						)
-																					}
-																				></Form.Control>
-																			</Form.Group>
-
-																			<Button
-																				disabled={
-																					loadingProductReview ||
-																					comment ===
-																						''
+																	{successProductReview && (
+																		<Message variant='success'>
+																			レビューを書き込みました。
+																		</Message>
+																	)}
+																	<Form
+																		onSubmit={
+																			submitHandler
+																		}
+																	>
+																		<Form.Group controlId='rating'>
+																			<Form.Label>
+																				評価
+																			</Form.Label>
+																			<Form.Control
+																				className='product-page-review-form'
+																				as='select'
+																				value={
+																					rating
 																				}
-																				className='w-100 mt-2'
-																				type='submit'
-																				variant='primary'
+																				onChange={(
+																					e
+																				) =>
+																					setRating(
+																						e
+																							.target
+																							.value
+																					)
+																				}
 																			>
-																				投稿
-																			</Button>
-																		</Form>
-																	</>
-																)
-																// ) : null
-																// : (
-																// 	<Message>
-																// 		<Link to='/login'>
-																// 			ログイン
-																// 		</Link>
-																// 		後にレビューを記入できます
-																// 	</Message>
-																// )
-															}
-															{/* </ListGroup.Item> */}
-														</ListGroup>
+																				<option value=''>
+																					選択してください
+																				</option>
+																				<option value='1'>
+																					★
+																				</option>
+																				<option value='2'>
+																					★★
+																				</option>
+																				<option value='3'>
+																					★★★
+																				</option>
+																				<option value='4'>
+																					★★★★
+																				</option>
+																				<option value='5'>
+																					★★★★★
+																				</option>
+																			</Form.Control>
+																		</Form.Group>
+																		<Form.Group controlId='comment'>
+																			<Form.Label>
+																				コメント
+																			</Form.Label>
+																			<Form.Control
+																				as='textarea'
+																				row='3'
+																				className='product-page-review-form'
+																				value={
+																					comment
+																				}
+																				onChange={(
+																					e
+																				) =>
+																					setComment(
+																						e
+																							.target
+																							.value
+																					)
+																				}
+																			></Form.Control>
+																		</Form.Group>
+
+																		<Button
+																			disabled={
+																				loadingProductReview ||
+																				comment ===
+																					''
+																			}
+																			className='product-page-button mt-3 w-100'
+																			type='submit'
+																			variant='primary'
+																		>
+																			投稿
+																		</Button>
+																	</Form>
+																</>
+															)}
+														</div>
 													</Col>
 												</Row>
-											</ListGroup.Item>
-										</>
-									)}
-									<ListGroup.Item>
-										<Row>
-											<Col className='product-page-section'>
-												値段:{' '}
+											</div>
+										)}
+										<div className='product-page-option-wrap'>
+											<Col
+												md={3}
+												className='product-page-price'
+											>
+												¥{product.price}
 											</Col>
-											<Col className='product-page-section'>
-												<strong>
-													¥{product.price}
-												</strong>
-											</Col>
-										</Row>
-									</ListGroup.Item>
-									<ListGroup.Item>
-										<Row>
-											<Col className='product-page-section'>
-												在庫状況:{' '}
-											</Col>
-											<Col className='product-page-section'>
-												{product.countInStock > 0
-													? '在庫あり'
-													: '在庫なし'}
-											</Col>
-										</Row>
-									</ListGroup.Item>
-
-									{product.countInStock > 0 && (
-										<ListGroup.Item>
-											<Row>
-												<Col className='product-page-section'>
-													個数:
-												</Col>
-												<Col className='product-page-section'>
-													<Form.Control
+											{product.countInStock > 0 && (
+												<Col md={4}>
+													{/* <Form.Control
 														className='form-select form-control-select'
-														style={{
-															padding:
-																'0.75rem 0.2rem 0.75rem 0.4rem',
-														}}
 														as='select'
 														value={qty}
 														onChange={(e) =>
@@ -363,27 +334,94 @@ const ProductScreen = ({ match, history }) => {
 																{x + 1}
 															</option>
 														))}
-													</Form.Control>
+													</Form.Control> */}
+													<div className='product-page-crement-wrap'>
+														<button
+															className='product-page-crement'
+															onClick={() => {
+																if (qty === 1) {
+																	return
+																} else {
+																	setQty(
+																		Number(
+																			qty
+																		) - 1
+																	)
+																}
+															}}
+														>
+															<i className='fa fa-minus'></i>
+														</button>
+														<select
+															className='form-select form-control-select'
+															value={qty}
+															onChange={(e) =>
+																setQty(
+																	e.target
+																		.value
+																)
+															}
+														>
+															{[
+																...Array(
+																	product.countInStock
+																).keys(),
+															].map((x) => (
+																<option
+																	key={x + 1}
+																	value={
+																		x + 1
+																	}
+																>
+																	{x + 1}
+																</option>
+															))}
+														</select>
+														<button
+															className='product-page-crement'
+															onClick={() =>
+																setQty(
+																	Number(
+																		qty
+																	) + 1
+																)
+															}
+														>
+															<i className='fas fa-plus'></i>
+														</button>
+													</div>
 												</Col>
-											</Row>
-										</ListGroup.Item>
-									)}
-
-									<ListGroup.Item>
-										<Button
-											onClick={addToCartHandler}
-											className='btn my-20 w-100 custombtn'
-											type='button'
-											disabled={
-												product.countInStock === 0
-											}
-										>
-											カートへ入れる
-										</Button>
-										　
-									</ListGroup.Item>
-								</ListGroup>
-							</Card>
+											)}
+											<Col md={5}>
+												<Button
+													onClick={addToCartHandler}
+													className='product-page-button w-100'
+													type='button'
+													disabled={
+														product.countInStock ===
+														0
+													}
+												>
+													<div
+														style={{
+															display: 'flex',
+															justifyContent:
+																'space-between',
+														}}
+													>
+														<span>
+															カートへ入れる&nbsp;&nbsp;
+														</span>
+														<span>
+															<i className='fas fa-plus'></i>
+														</span>
+													</div>
+												</Button>
+											</Col>
+										</div>
+									</div>
+								</div>
+							</Col>
 						</Col>
 					</Row>
 				</>

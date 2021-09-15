@@ -197,6 +197,7 @@ const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 			<Modal.Body className='p-20'>
 				<h1>お届け先の住所</h1>
 				<Form onSubmit={submitHandler} className='shippingContainer'>
+					{/* responsiveCss */}
 					<ShippingForm
 						fullName={fullName}
 						furigana={furigana}

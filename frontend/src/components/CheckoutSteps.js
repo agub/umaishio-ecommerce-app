@@ -5,6 +5,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
 	return (
 		<Nav
 			className='checkoutStepBar justify-content-center align-items-center mb-4 mt-4'
+			//responsiveCss
 			style={
 				{
 					// 'width': '100%',

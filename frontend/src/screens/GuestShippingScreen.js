@@ -265,6 +265,7 @@ const GuestShippingScreen = ({ history }) => {
 			)}
 			<h1>お届け先の住所</h1>
 			<Form onSubmit={submitHandler} className='shippingContainer'>
+					{/* responsiveCss */}
 				<Form.Group controlId='postalCode' className='mt-2'>
 					<Form.Label>
 						<div className='shipping-form-lable'>
