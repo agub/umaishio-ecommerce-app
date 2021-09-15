@@ -7,7 +7,10 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { login } from '../actions/userActions'
-import { USER_VERIFY_RESET } from '../constants/userConstants'
+import {
+	USER_VERIFY_RESET,
+	USER_LOGIN_SUCCESS_RESET,
+} from '../constants/userConstants'
 
 const LoginScreen = ({ location, history }) => {
 	const [email, setEmail] = useState('')
@@ -15,7 +18,7 @@ const LoginScreen = ({ location, history }) => {
 
 	const dispatch = useDispatch()
 	const userLogin = useSelector((state) => state.userLogin)
-	const { loading, error, userInfo } = userLogin
+	const { loading, error, userInfo, success: successLogin } = userLogin
 	const userVerify = useSelector((state) => state.userVerify)
 	const { success } = userVerify
 
@@ -26,9 +29,15 @@ const LoginScreen = ({ location, history }) => {
 
 	useEffect(() => {
 		if (userInfo) {
-			history.push(redirect)
+			console.log(redirect)
+			if (successLogin) {
+				history.push(redirect)
+				dispatch({ type: USER_LOGIN_SUCCESS_RESET })
+			} else {
+				history.goBack()
+			}
 		}
-	}, [history, redirect, userInfo])
+	}, [history, userInfo])
 
 	const submitHandler = (e) => {
 		e.preventDefault()
