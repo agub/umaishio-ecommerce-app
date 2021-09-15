@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
-
+import { createOrder } from '../actions/orderActions'
 import { saveShippingAddress } from '../actions/cartActions'
 import ShippingForm from '../components/ShippingForm'
 import ShipperForm from '../components/ShipperForm'
@@ -11,6 +11,9 @@ import AddressHistory from '../components/AddressHistory'
 import Loader from '../components/Loader'
 import { registerGuest } from '../actions/userActions'
 import Message from '../components/Message'
+
+import { ORDER_CREATE_RESET } from '../constants/orderConstants'
+import { USER_DETAILS_RESET } from '../constants/userConstants'
 
 const GuestShippingScreen = ({ history }) => {
 	const dispatch = useDispatch()
@@ -203,12 +206,56 @@ const GuestShippingScreen = ({ history }) => {
 					})
 				)
 			}
-
-			history.push('/placeorder')
+			// history.push('/placeorder')
 		}
 
 		//registered
 	}, [registerUserInfo])
+
+	//PlaceOrderScreen
+
+	cart.itemsPrice = cart.cartItems.reduce
+
+	const addDecimals = (num) => {
+		return (Math.round(num * 100) / 100).toFixed(0)
+	}
+
+	cart.itemsPrice = addDecimals(
+		cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+	)
+	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
+	cart.taxPrice = addDecimals(Number((0.08 * cart.itemsPrice).toFixed(0)))
+	cart.totalPrice = (
+		Number(cart.itemsPrice) +
+		Number(cart.shippingPrice) +
+		Number(cart.taxPrice)
+	).toFixed(0)
+
+	const orderCreate = useSelector((state) => state.orderCreate)
+	const { order, success, error, loading: loadingOrder } = orderCreate
+
+	//PlaceOrderScreen
+
+	useEffect(() => {
+		if (updated) {
+			dispatch(
+				createOrder({
+					orderItems: cart.cartItems,
+					shippingAddress: cart.shippingAddress,
+					// paymentMethod: cart.paymentMethod,
+					itemsPrice: cart.itemsPrice,
+					shippingPrice: cart.shippingPrice,
+					taxPrice: cart.taxPrice,
+					totalPrice: cart.totalPrice,
+				})
+			)
+		}
+		if (success) {
+			history.push(`/order/${order._id}`)
+			dispatch({ type: USER_DETAILS_RESET })
+			dispatch({ type: ORDER_CREATE_RESET })
+		}
+	}, [updated, success, history])
 
 	return (
 		<FormContainer>
@@ -297,7 +344,7 @@ const GuestShippingScreen = ({ history }) => {
 						></Form.Control>
 					</Form.Group>
 				)}
-				{loading ? (
+				{loading || loadingOrder ? (
 					<Loader />
 				) : (
 					<Button type='submit' variant='primary' className='mt-3'>
