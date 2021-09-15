@@ -55,7 +55,7 @@ main {
 .page1-box{
     position: relative;
     /* height: 100vh; */
-    min-height: 100vh;
+    min-height: 90vh;
     display: flex;
     /* align-items: center; */
     /* margin: 0 calc(50% - 50vw); */
@@ -235,7 +235,7 @@ main {
 /* productScreen */
 
 .product-page-name{
-  /* font-weight: normal; */
+  font-weight: normal; 
   font-size: 1.8rem;
 }
 
@@ -305,13 +305,13 @@ main {
 
 .form-control-select {
   margin: 0 auto;
-  max-width: 27px;
+  max-width: 26px;
   margin: 5px;
   padding: 1px 1px;
+  appearance:none;
   border-width: 0;
   -moz-appearance:none; /* Firefox */
   -webkit-appearance:none; /* Safari and Chrome */
-  appearance:none;
   text-align-last:center;
 }
 

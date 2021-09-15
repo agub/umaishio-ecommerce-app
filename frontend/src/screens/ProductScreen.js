@@ -404,7 +404,7 @@ const ProductScreen = ({ match, history }) => {
 											<Col md={5}>
 												<Button
 													onClick={addToCartHandler}
-													className='product-page-button w-100'
+													className='product-page-button'
 													type='button'
 													disabled={
 														product.countInStock ===
