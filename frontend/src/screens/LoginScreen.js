@@ -29,15 +29,16 @@ const LoginScreen = ({ location, history }) => {
 
 	useEffect(() => {
 		if (userInfo) {
-			console.log(redirect)
 			if (successLogin) {
 				history.push(redirect)
 				dispatch({ type: USER_LOGIN_SUCCESS_RESET })
+			} else if (successLogin && redirect) {
+				history.push(redirect)
 			} else {
-				history.goBack()
+				history.push('/shop')
 			}
 		}
-	}, [history, userInfo])
+	}, [history, userInfo, dispatch, successLogin])
 
 	const submitHandler = (e) => {
 		e.preventDefault()

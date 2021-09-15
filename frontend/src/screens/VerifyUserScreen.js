@@ -5,19 +5,26 @@ import { useDispatch, useSelector } from 'react-redux'
 import { verifyUser } from '../actions/userActions'
 
 const VerifyUserScreen = ({ match, history }) => {
+	const dispatch = useDispatch()
 	const { id, token } = match.params
 
-	const dispatch = useDispatch()
+	const cart = useSelector((state) => state.cart)
+	const { cartItems } = cart
+
+	const userVerify = useSelector((state) => state.userVerify)
+	const { success } = userVerify
 
 	useEffect(() => {
-		dispatch(verifyUser(id, token))
-		history.push('/login')
-	}, [])
-	return (
-		<>
-			<p>認証完了　＋　マーク!　５秒後にログイン画面？</p>
-		</>
-	)
+		if (!success) {
+			dispatch(verifyUser(id, token))
+			if (cartItems.length === 0) {
+				history.push('/shop')
+			} else {
+				history.push('/login?redirect=shipping')
+			}
+		}
+	}, [success])
+	return null
 }
 
 export default VerifyUserScreen

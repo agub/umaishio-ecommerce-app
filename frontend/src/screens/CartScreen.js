@@ -48,7 +48,7 @@ const CartScreen = ({ match, location, history }) => {
 				{cartItems.length === 0 ? (
 					<Message variant='info'>
 						カートが空です
-						<Link to='/' className='ms-3'>
+						<Link to='/shop' className='ms-3'>
 							戻る
 						</Link>
 					</Message>
@@ -153,13 +153,15 @@ const CartScreen = ({ match, location, history }) => {
 							>
 								レジに進む
 							</Button>
-							<Button
-								variant='secondary'
-								type='button'
-								className='btn-block w-100'
-							>
-								<Link to='/'>戻る</Link>
-							</Button>
+							<Link to='/shop'>
+								<Button
+									variant='secondary'
+									type='button'
+									className='btn-block w-100'
+								>
+									戻る
+								</Button>
+							</Link>
 						</ListGroup.Item>
 					</ListGroup>
 				</Card>

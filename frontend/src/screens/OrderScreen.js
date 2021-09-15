@@ -525,7 +525,9 @@ const OrderScreen = ({ match, history, location }) => {
 							</ListGroup.Item>
 							{!order.isPaid && !order.isBankTransfer && (
 								<ListGroup.Item>
-									{loadingPay || loadingBankTransfer ? (
+									{loadingPay ||
+									loading ||
+									loadingBankTransfer ? (
 										<Loader />
 									) : (
 										<>
