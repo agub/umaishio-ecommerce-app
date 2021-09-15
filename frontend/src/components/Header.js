@@ -50,6 +50,9 @@ const Header = () => {
 							<LinkContainer exact to='/shop'>
 								<Nav.Link>ショップ</Nav.Link>
 							</LinkContainer>
+							<LinkContainer exact to='/contact'>
+								<Nav.Link>お問い合わせ</Nav.Link>
+							</LinkContainer>
 							<LinkContainer
 								exact
 								to='/cart'
@@ -66,6 +69,7 @@ const Header = () => {
 									&nbsp; Cart
 								</Nav.Link>
 							</LinkContainer>
+
 							{userInfo && !userInfo.isGuest ? (
 								<NavDropdown
 									title={userInfo.name}

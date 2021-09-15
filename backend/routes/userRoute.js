@@ -17,6 +17,7 @@ import {
 	forgotPassword,
 	//forgotPassword
 	verifyEmail,
+	contactEmailApi,
 } from '../controllers/userController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -31,6 +32,8 @@ router
 	.put(protect, updateUserProfile)
 
 router.route('/shipping/:id').put(protect, addUserShippingInfo)
+
+router.route('/contact').post(contactEmailApi)
 
 //forgotPassword
 router.route('/forgot').post(forgotPassword)

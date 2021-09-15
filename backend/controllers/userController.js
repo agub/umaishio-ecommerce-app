@@ -3,7 +3,11 @@ import User from '../models/userModels.js'
 import generateToken from '../utils/generateToken.js'
 import crypto from 'crypto'
 
-import { sendResetEmail, sendWelcomeEmail } from '../utils/email.js'
+import {
+	sendResetEmail,
+	sendWelcomeEmail,
+	sendShippingStartedEmail,
+} from '../utils/email.js'
 
 // @description   Auth user & get token
 // @route         POST /api/products
@@ -330,6 +334,15 @@ const resetPassword = asyncHandler(async (req, res) => {
 })
 
 //forgotPassword
+const contactEmailApi = asyncHandler(async (req, res) => {
+	const { email, fullName, content } = req.body
+	try {
+		sendShippingStartedEmail(email, fullName, content)
+		res.status(200).json({ message: '送信完了' })
+	} catch (err) {
+		res.status(400).send(err.message)
+	}
+})
 
 export {
 	verifyEmail,
@@ -345,4 +358,5 @@ export {
 	addUserShippingInfo,
 	forgotPassword,
 	resetPassword,
+	contactEmailApi,
 }

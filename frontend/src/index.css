@@ -42,7 +42,8 @@ main {
 
 .page1-box{
     position: relative;
-    height: 100vh;
+    /* height: 100vh; */
+    min-height: 100vh;
     display: flex;
     /* align-items: center; */
     /* margin: 0 calc(50% - 50vw); */
@@ -154,6 +155,9 @@ main {
   display: flex;
   padding: 20px;
   align-items: center;
+  min-height: 100%;
+  margin-bottom: 200px;
+  /* ?????????????????????????????????????????????????? */
 }
 
 .page2-wrap-mobile{
@@ -161,6 +165,7 @@ main {
   display: flex;
   padding: 20px;
   flex-direction: column;
+  min-height: 100%;
 }
 
 .page2-card {

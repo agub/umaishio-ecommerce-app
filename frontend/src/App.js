@@ -18,6 +18,7 @@ import UserEditScreen from './screens/UserEditScreen'
 import ProductListScreen from './screens/ProductListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
 import OrderListScreen from './screens/OrderListScreen'
+import ContactScreen from './screens/ContactScreen'
 
 import GuestShippingScreen from './screens/GuestShippingScreen'
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
@@ -62,8 +63,10 @@ function App() {
 					<Route path='/login' component={LoginScreen} />
 					<Route path='/register' component={RegisterScreen} />
 					<Route path='/profile' component={ProfileScreen} />
+					<Route path='/contact' component={ContactScreen} />
 					<Route path='/product/:id' component={ProductScreen} />
 					<Route path='/cart/:id?' component={CartScreen} />
+
 					<Route path='/admin/userlist' component={UserListScreen} />
 					<Route
 						path='/admin/user/:id/edit'

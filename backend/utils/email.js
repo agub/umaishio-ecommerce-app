@@ -137,27 +137,20 @@ const sendBankTransferInfo = asyncHandler(
 	}
 )
 
-const sendShippingStartedEmail = asyncHandler(
-	async (email, name, orderId, trackingId) => {
-		const mailObj = {
-			from: '旨い塩ショップ　<info@umaishio.com>',
-			recipients: [email],
-			subject: '旨い塩ショップ　発送開始',
-			message: `<p>${name}様, 旨い塩ショップをご利用いただきありがとうございます。<br/>ご注文商品（ご注文番号：${orderId}）の発送手配が完了いたしましたので
-								ご案内させていただきます。<br/>
-								[お荷物伝票番号]
-								<br/>
-								ヤマト: ${trackingId}
-								<br/>
-								*注意事項など
-								<br/>
-								注文内容の確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a></p>`,
-		}
-		sendEmailBcc(mailObj).then((res) => {
-			console.log(res)
-		})
+const sendShippingStartedEmail = asyncHandler(async (email, name, content) => {
+	const mailObj = {
+		from: '旨い塩ショップ　<info@umaishio.com>',
+		recipients: [email],
+		subject: '旨い塩ショップのお問い合わせ',
+		message: `${name}様からのお問い合わせ内容: xxxxxxx
+		<br/>
+		内容: ${content}
+		`,
 	}
-)
+	sendEmailBcc(mailObj).then((res) => {
+		console.log(res)
+	})
+})
 
 export {
 	sendEmail,
