@@ -101,7 +101,9 @@ const ProductScreen = ({ match, history }) => {
 						<Col lg={6} md={12}>
 							<div className='product-page-section'>
 								<ListGroup variant='flush'>
-									<h3>{product.name}</h3>
+									<h3 className='product-page-name'>
+										{product.name}
+									</h3>
 									<div className='product-page-review-stock-wrap'>
 										{product.rating && product.numReviews && (
 											<>
@@ -311,7 +313,14 @@ const ProductScreen = ({ match, history }) => {
 												¥{product.price}
 											</Col>
 											{product.countInStock > 0 && (
-												<Col md={4}>
+												<Col
+													style={{
+														display: 'flex',
+														justifyContent:
+															'center',
+													}}
+													md={4}
+												>
 													{/* <Form.Control
 														className='form-select form-control-select'
 														as='select'
