@@ -11,6 +11,7 @@
 
 body {
   font-family: "AxisStd";
+  font-weight: bold;
 }
 
 /*
@@ -28,7 +29,7 @@ a {
 }
 
 h1 {
-  font-size: 1.8rem;
+  text-align: start;
   padding: 1rem 0;
 }
 
@@ -416,23 +417,6 @@ main {
 }
 
 /* product */
-.login-password-icon-container {
-  background-color: #f5f5f5;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  overflow: hidden;
-  border: 1px solid #374669;
-  border-radius: 5px;
-}
-
 .header-cartnumber {
   display: -webkit-box;
   display: -ms-flexbox;

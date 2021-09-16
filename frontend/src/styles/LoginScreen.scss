@@ -1,0 +1,12 @@
+@import "../variables/Variables.scss";
+
+
+.login-password-icon-container{
+  background-color: $main-background-color;
+  display: flex;
+  flex-direction: row;
+  align-items : center;
+  overflow: hidden;
+  border: 1px solid #374669;
+  border-radius: 5px;
+}

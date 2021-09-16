@@ -1,4 +1,20 @@
-$main-background-color: #f5f5f5;
+@import "./variables/Variables.scss";
+
+
+
+
+// $main-background-color: #f5f5f5;
+
+// @mixin shadowRounded {
+//   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+//   border-radius: 25px;
+// } 
+// @mixin customFlex($justify: center) {
+//   display: flex;
+//   justify-content: $justify;
+//   align-items: center;
+// } 
+
 @font-face {
   font-family: "AxisStd";
   src: local("AxisStd"),
@@ -15,17 +31,9 @@ $main-background-color: #f5f5f5;
 body {
   // font-family: "AxisStd";
   font-family: "AxisStd";
+  font-weight: bold; 
 }
 
-@mixin shadowRounded {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border-radius: 25px;
-} 
-@mixin customFlex($justify: center) {
-  display: flex;
-  justify-content: $justify;
-  align-items: center;
-} 
 /*
 
 .bg-dark {
@@ -42,7 +50,8 @@ a {
 }
 
 h1 {
-  font-size: 1.8rem;
+  text-align: start;
+  // font-size: $size;
   padding: 1rem 0;
 }
  
@@ -383,15 +392,6 @@ main {
 //   right: 200px;
 //   bottom: 190px;
 // }
-.login-password-icon-container{
-  background-color:$main-background-color;
-  display: flex;
-  flex-direction: row;
-  align-items : center;
-  overflow: hidden;
-  border: 1px solid #374669;
-  border-radius: 5px;
-}
 
 
 // loginScreen

@@ -12,6 +12,8 @@ import {
 	USER_LOGIN_SUCCESS_RESET,
 } from '../constants/userConstants'
 
+import '../styles/LoginScreen.scss'
+
 const LoginScreen = ({ location, history }) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -56,13 +58,17 @@ const LoginScreen = ({ location, history }) => {
 
 	return (
 		<FormContainer>
-			<h1 style={{ fontSize: '1.5rem' }}>ログイン</h1>
+			<h1 className='text-center'>ログイン</h1>
 			<div className='login-forgot'>
 				<Link
 					// to={redirect ? `/guest?redirect=${redirect}` : '/guest'}
 					to={'/forgot'}
 				>
-					<Button style={{ padding: '3px 8px' }} variant='secondary'>
+					<Button
+						className='login-forgot-button'
+						style={{ padding: '3px 8px' }}
+						variant='secondary'
+					>
 						パスワードをお忘れた方
 					</Button>
 				</Link>

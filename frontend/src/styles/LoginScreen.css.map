@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAGA,AAAA,8BAA8B,CAAA;EAC5B,gBAAgB,ECJM,OAAO;EDK7B,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,GAAG;EACnB,WAAW,EAAG,MAAM;EACpB,QAAQ,EAAE,MAAM;EAChB,MAAM,EAAE,iBAAiB;EACzB,aAAa,EAAE,GAAG;CACnB",
+    "sources": [
+        "LoginScreen.scss",
+        "../variables/Variables.scss"
+    ],
+    "names": [],
+    "file": "LoginScreen.css"
+}

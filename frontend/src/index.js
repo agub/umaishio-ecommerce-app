@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import store from './store'
 import './bootstrap.min.css'
 import './index.scss'
+
 import './fonts/AxisStd/AxisStd-ExtraLight.otf'
 import './fonts/AxisStd/AxisStd-UltraLight.otf'
 
