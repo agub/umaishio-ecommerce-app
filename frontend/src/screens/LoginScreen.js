@@ -16,6 +16,12 @@ const LoginScreen = ({ location, history }) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
+	const [savePassword, setSavePassword] = useState(false)
+
+	const [showPassword, setShowPassword] = useState(false)
+
+	console.log(savePassword)
+
 	const dispatch = useDispatch()
 	const userLogin = useSelector((state) => state.userLogin)
 	const { loading, error, userInfo, success: successLogin } = userLogin
@@ -45,7 +51,7 @@ const LoginScreen = ({ location, history }) => {
 		dispatch({
 			type: USER_VERIFY_RESET,
 		})
-		dispatch(login(email, password))
+		dispatch(login(email, password, savePassword))
 	}
 
 	return (
@@ -89,14 +95,37 @@ const LoginScreen = ({ location, history }) => {
 							{/* <span className='shipping-form-icon'>必須</span> */}
 						</div>
 					</Form.Label>
-					<Form.Control
-						type='password'
-						placeholder='パスワード'
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-					></Form.Control>
+					<div class='login-password-icon-container'>
+						<Form.Control
+							className='login-password-input'
+							type={showPassword ? 'string' : 'password'}
+							placeholder='パスワード'
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+						></Form.Control>
+						{showPassword ? (
+							<i
+								onClick={() => setShowPassword(!showPassword)}
+								style={{ cursor: 'pointer' }}
+								className='fa fa-eye me-2 '
+							></i>
+						) : (
+							<i
+								onClick={() => setShowPassword(!showPassword)}
+								style={{ cursor: 'pointer' }}
+								className='fa fa-eye-slash me-2 '
+							></i>
+						)}
+					</div>
 				</Form.Group>
 				<p className='m-2 shipping-form-example'>&nbsp;</p>
+				<input
+					type='checkbox'
+					value={savePassword}
+					onChange={() => setSavePassword(!savePassword)}
+					className='mb-4'
+				></input>
+				　パスワードを保存
 				<div
 					style={{
 						display: 'flex',
@@ -107,6 +136,7 @@ const LoginScreen = ({ location, history }) => {
 					<Button type='submit' variant='primary'>
 						サインイン
 					</Button>
+
 					{Array.isArray(cartItems) && cartItems.length !== 0 && (
 						<Link
 							// to={redirect ? `/guest?redirect=${redirect}` : '/guest'}

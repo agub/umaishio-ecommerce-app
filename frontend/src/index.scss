@@ -1,6 +1,21 @@
 $main-background-color: #f5f5f5;
+@font-face {
+  font-family: "AxisStd";
+  src: local("AxisStd"),
+  url("./fonts/AxisStd/AxisStd-UltraLight.otf") format('truetype');
 
+}
+@font-face {
+  font-family: "AxisStd";
+  src: local("AxisStd"),
+  url("./fonts/AxisStd/AxisStd-ExtraLight.otf") format('truetype');
+  font-weight: bold
+}
 
+body {
+  // font-family: "AxisStd";
+  font-family: "AxisStd";
+}
 
 @mixin shadowRounded {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -236,8 +251,8 @@ main {
 /* productScreen */
 
 .product-page-name{
-  font-weight: normal; 
-  font-size: 1.8rem;
+  font-weight: bold; 
+  font-size: 2.0rem;
 }
 
 .product-page-section{
@@ -363,7 +378,27 @@ main {
 /* product */
 
 
+// .login-password-visibleIcon {
+//   position: absolute;
+//   right: 200px;
+//   bottom: 190px;
+// }
+.login-password-icon-container{
+  background-color:$main-background-color;
+  display: flex;
+  flex-direction: row;
+  align-items : center;
+  overflow: hidden;
+  border: 1px solid #374669;
+  border-radius: 5px;
+}
 
+
+// loginScreen
+
+
+
+// loginScreen
 
 
 
@@ -400,6 +435,7 @@ main {
 }
 
 .login-guest-btn{
+  position: relative;
   margin-left: 6px;
   background-color: rgb(50, 74, 130);
   color: white;

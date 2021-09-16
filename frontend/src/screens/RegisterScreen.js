@@ -14,6 +14,9 @@ const RegisterScreen = ({ location, history }) => {
 	const [confirmPassword, setConfirmPassword] = useState('')
 	const [message, setMessage] = useState(null)
 
+	const [showPassword, setShowPassword] = useState(false)
+	const [confirmShowPassword, setConfirmShowPassword] = useState(false)
+
 	const dispatch = useDispatch()
 	const userRegister = useSelector((state) => state.userRegister)
 	const { loading, error, userInfo } = userRegister
@@ -87,13 +90,28 @@ const RegisterScreen = ({ location, history }) => {
 							<span className='shipping-form-icon'>必須</span>
 						</div>
 					</Form.Label>
-					<Form.Control
-						type='password'
-						required
-						placeholder='パスワード'
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-					></Form.Control>
+					<div class='login-password-icon-container'>
+						<Form.Control
+							type={showPassword ? 'string' : 'password'}
+							required
+							placeholder='パスワード'
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+						></Form.Control>
+						{showPassword ? (
+							<i
+								onClick={() => setShowPassword(!showPassword)}
+								style={{ cursor: 'pointer' }}
+								className='fa fa-eye me-2 '
+							></i>
+						) : (
+							<i
+								onClick={() => setShowPassword(!showPassword)}
+								style={{ cursor: 'pointer' }}
+								className='fa fa-eye-slash me-2 '
+							></i>
+						)}
+					</div>
 				</Form.Group>
 				<p className='m-2 shipping-form-example'>&nbsp;</p>
 				<Form.Group controlId='confirmPassword'>
@@ -104,13 +122,32 @@ const RegisterScreen = ({ location, history }) => {
 							<span className='shipping-form-icon'>必須</span>
 						</div>
 					</Form.Label>
-					<Form.Control
-						type='password'
-						required
-						placeholder='確認パスワード'
-						value={confirmPassword}
-						onChange={(e) => setConfirmPassword(e.target.value)}
-					></Form.Control>
+					<div class='login-password-icon-container'>
+						<Form.Control
+							type={confirmShowPassword ? 'string' : 'password'}
+							required
+							placeholder='確認パスワード'
+							value={confirmPassword}
+							onChange={(e) => setConfirmPassword(e.target.value)}
+						></Form.Control>
+						{confirmShowPassword ? (
+							<i
+								onClick={() =>
+									setConfirmShowPassword(!confirmShowPassword)
+								}
+								style={{ cursor: 'pointer' }}
+								className='fa fa-eye me-2 '
+							></i>
+						) : (
+							<i
+								onClick={() =>
+									setConfirmShowPassword(!confirmShowPassword)
+								}
+								style={{ cursor: 'pointer' }}
+								className='fa fa-eye-slash me-2 '
+							></i>
+						)}
+					</div>
 				</Form.Group>
 				<p className='m-2 shipping-form-example'>&nbsp;</p>
 				<div

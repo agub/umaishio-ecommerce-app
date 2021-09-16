@@ -1,3 +1,18 @@
+@font-face {
+  font-family: "AxisStd";
+  src: local("AxisStd"), url("./fonts/AxisStd/AxisStd-UltraLight.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "AxisStd";
+  src: local("AxisStd"), url("./fonts/AxisStd/AxisStd-ExtraLight.otf") format("truetype");
+  font-weight: bold;
+}
+
+body {
+  font-family: "AxisStd";
+}
+
 /*
 
 .bg-dark {
@@ -230,8 +245,8 @@ main {
 /* page2 */
 /* productScreen */
 .product-page-name {
-  font-weight: normal;
-  font-size: 1.8rem;
+  font-weight: bold;
+  font-size: 2.0rem;
 }
 
 .product-page-section {
@@ -401,6 +416,23 @@ main {
 }
 
 /* product */
+.login-password-icon-container {
+  background-color: #f5f5f5;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  overflow: hidden;
+  border: 1px solid #374669;
+  border-radius: 5px;
+}
+
 .header-cartnumber {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -441,6 +473,7 @@ main {
 }
 
 .login-guest-btn {
+  position: relative;
   margin-left: 6px;
   background-color: #324a82;
   color: white;

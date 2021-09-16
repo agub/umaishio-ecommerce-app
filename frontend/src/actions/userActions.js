@@ -35,7 +35,7 @@ import {
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 // import { CART_SAVE_SHIPPING_ADDRESS } from '../constants/cartConstants'
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (email, password, savePassword) => async (dispatch) => {
 	try {
 		dispatch({
 			type: USER_LOGIN_REQUEST,
@@ -51,7 +51,9 @@ export const login = (email, password) => async (dispatch) => {
 			config
 		)
 		dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
-		localStorage.setItem('userInfo', JSON.stringify(data))
+		if (savePassword) {
+			localStorage.setItem('userInfo', JSON.stringify(data))
+		}
 	} catch (error) {
 		const message =
 			error.response && error.response.data.message
