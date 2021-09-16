@@ -289,7 +289,7 @@ main {
   margin-bottom: 30px;
   width: 100%;
   border-width: 1px;
-  padding: 15px;
+  padding: 15px 40px;
 }
 
 .product-page-review-wrap {
@@ -308,6 +308,7 @@ main {
 
 .product-page-button {
   border-radius: 10px;
+  width: 100%;
   font-weight: normal;
   padding: 7px 15px;
 }
@@ -599,6 +600,9 @@ main {
   }
   .product-page-button {
     padding: 10px;
+  }
+  .product-page-option-wrap {
+    padding: 15px 20px;
   }
   /* .checkoutStepBar{
     display: inline;
