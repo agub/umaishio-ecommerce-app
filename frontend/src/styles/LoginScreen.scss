@@ -1,12 +1,95 @@
 @import "../variables/Variables.scss";
 
 
+.login-bgi {
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 0 calc(50% - 50vw);
+  height: 100vh;
+}
+
+.login-container{
+  background-color: $main-background-color;
+  
+  @include shadowRounded;
+  @include customFlex();
+  max-width: 700px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 40px 40px;
+  @include mq(sm) { // 引数を個別に指定
+    padding: 20px 0px;
+  }
+}
+
 .login-password-icon-container{
   background-color: $main-background-color;
-  display: flex;
+  @include customFlex();
   flex-direction: row;
-  align-items : center;
   overflow: hidden;
-  border: 1px solid #374669;
-  border-radius: 5px;
+  border: 1px solid #909090;
+  border-radius: $button-border-radius;
+}
+
+.login-options-wrap{
+  @include customFlex($justify:  space-between);
+  font-size: 0.8rem;
+  margin-top: 10px ;
+
+  input {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 1px solid hsl(0, 0%, 85%);
+    border-radius: 1px;
+    background: $main-background-color;
+    outline: none;
+  }
+}
+.login-forgot-button{
+  // font-size: 0.3rem;
+  color: #E71F7F;
+  padding: 0;
+
+  // background-color: $main-background-color;
+}
+
+.login-button {
+  margin-top: 30px;
+  width: 100%;
+  border-radius: $button-border-radius;
+  background: linear-gradient(to right top, #E71F7F, #A7228F);
+  position: relative;
+  // background-color: #fff;
+}
+
+.login-guest-btn{
+  margin-top: 5px;
+ @include basicButton()
+}
+
+.fa-position-right {
+  position: absolute;
+  top: calc(50% - .5em);
+  right: 1rem;
+}
+
+.login-register-button{
+  color: #E71F7F;
+  padding: 0;
+  font-size: 0.8rem;
+}
+
+
+.login-or {
+  width: 100%; 
+  text-align: center; 
+  border-bottom: 0.3px solid #909090;
+  line-height: 0.1px;
+  margin: 10px 0 20px; 
+} 
+
+.login-or span { 
+   background: $main-background-color;
+   padding:0 10px; 
+   color: #909090;
 }

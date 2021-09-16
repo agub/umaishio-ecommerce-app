@@ -29,6 +29,7 @@ const Header = () => {
 				style={{ backgroundColor: '#f5f5f5', zIndex: 1000 }}
 				// bg='dark'
 				// variant='dark'
+				// fixed='top'
 				expand='lg'
 			>
 				<Container>

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import store from './store'
 import './bootstrap.min.css'
+// import 'bootstrap/dist/css/bootstrap.css'
 import './index.scss'
 
 import './fonts/AxisStd/AxisStd-ExtraLight.otf'

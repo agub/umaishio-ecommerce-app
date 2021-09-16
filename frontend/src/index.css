@@ -33,6 +33,10 @@ h1 {
   padding: 1rem 0;
 }
 
+p {
+  font-size: 0.9rem;
+}
+
 .subtotal-text {
   font-size: 1.4rem;
   padding: 0.5rem 0;
@@ -456,24 +460,10 @@ main {
   padding: 2px 8px;
 }
 
-.login-guest-btn {
-  position: relative;
-  margin-left: 6px;
-  background-color: #324a82;
-  color: white;
-  font-size: 12px;
-  padding: 12px 8px;
-}
-
 .shipping-form-example {
   text-align: end;
   font-size: 0.7rem;
   color: #90a4ae;
-}
-
-.login-forgot {
-  text-align: end;
-  font-size: 0.7rem;
 }
 
 .rating span {

@@ -1,6 +1,21 @@
 $main-background-color: #f5f5f5;
-
+$btn-font-weight: normal;
+$button-border-radius: 10px;
+$pink-Border: 1px solid #E71F7F;
 $size: 300px;
+
+$breakpoints: (
+  'sm': 'screen and (max-width: 478px)',
+  'md': 'screen and (min-width: 768px)',
+  'lg': 'screen and (min-width: 1000px)',
+  'xl': 'screen and (min-width: 1200px)',
+) !default;
+
+@mixin mq($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
 @mixin shadowRounded {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 25px;
@@ -10,3 +25,17 @@ $size: 300px;
   justify-content: $justify;
   align-items: center;
 } 
+
+@mixin basicButton($background: $main-background-color, $border: $pink-Border ) {
+    width: 100%;
+    border-width: 0;
+    background: $background;
+    border: $pink-Border;
+    margin-left: 6px;
+    border-radius: $button-border-radius;
+    font-size: 12px;
+    text-align: center;
+    padding: 12px;
+    font-weight: bold;
+  }
+  

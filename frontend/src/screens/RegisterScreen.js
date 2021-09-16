@@ -90,7 +90,7 @@ const RegisterScreen = ({ location, history }) => {
 							<span className='shipping-form-icon'>必須</span>
 						</div>
 					</Form.Label>
-					<div class='login-password-icon-container'>
+					<div className='login-password-icon-container'>
 						<Form.Control
 							type={showPassword ? 'string' : 'password'}
 							required
@@ -122,7 +122,7 @@ const RegisterScreen = ({ location, history }) => {
 							<span className='shipping-form-icon'>必須</span>
 						</div>
 					</Form.Label>
-					<div class='login-password-icon-container'>
+					<div className='login-password-icon-container'>
 						<Form.Control
 							type={confirmShowPassword ? 'string' : 'password'}
 							required

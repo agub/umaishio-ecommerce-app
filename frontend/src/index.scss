@@ -2,7 +2,6 @@
 
 
 
-
 // $main-background-color: #f5f5f5;
 
 // @mixin shadowRounded {
@@ -14,6 +13,8 @@
 //   justify-content: $justify;
 //   align-items: center;
 // } 
+
+
 
 @font-face {
   font-family: "AxisStd";
@@ -33,6 +34,12 @@ body {
   font-family: "AxisStd";
   font-weight: bold; 
 }
+
+// .btn {
+//   display: inline-block;
+//   margin-bottom: 0; // For input.btn
+//   font-weight: $btn-font-weight;
+// }
 
 /*
 
@@ -55,6 +62,9 @@ h1 {
   padding: 1rem 0;
 }
  
+p {
+  font-size: 0.9rem;
+}
 
 .subtotal-text {
   font-size: 1.4rem;
@@ -315,7 +325,7 @@ main {
 }
 
 .product-page-button{
-  border-radius: 10px;
+  border-radius: $button-border-radius;
   width: 100%;
   font-weight: normal;
   padding: 7px 15px;
@@ -346,7 +356,7 @@ main {
   @include customFlex($justify: space-around);
   border-width: 0.2px;
   border-color: gray;
-  border-radius: 10px;
+  border-radius: $button-border-radius;
   padding: 0px 10px;
   max-width: 150px;
   border-style: solid;
@@ -370,7 +380,7 @@ main {
 }
 
 .product-page-review-form {
-  border-radius: 10px;
+  border-radius: $button-border-radius;
   border-width: 1px;
 }
 
@@ -394,12 +404,17 @@ main {
 // }
 
 
-// loginScreen
+// ModalContainer
 
 
 
-// loginScreen
+// ModalContainer
 
+// .btn-primary {
+//   color: #fff;
+//   background-color: linear-gradient(to right bottom, #E71F7F, #A7228F);;
+
+// }
 
 
 
@@ -434,14 +449,7 @@ main {
   padding: 2px 8px;
 }
 
-.login-guest-btn{
-  position: relative;
-  margin-left: 6px;
-  background-color: rgb(50, 74, 130);
-  color: white;
-  font-size: 12px;
-  padding: 12px 8px;
-}
+
 
 .shipping-form-example {
   text-align: end;
@@ -449,10 +457,10 @@ main {
   color: #90a4ae;
 }
 
-.login-forgot {
-  text-align: end;
-  font-size: 0.7rem;
-}
+// .login-forgot {
+//   text-align: end;
+//   font-size: 0.7rem;
+// }
 
 
 .rating span {
