@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Form, Button, Col, Row, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -10,15 +11,17 @@ import ShipperForm from '../components/ShipperForm'
 import AddressHistory from '../components/AddressHistory'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-
+import Rating from '../components/Rating'
 import { ORDER_CREATE_RESET } from '../constants/orderConstants'
 import { USER_DETAILS_RESET } from '../constants/userConstants'
+
+import '../styles/ShippingScreen.scss'
 
 const ShippingScreen = ({ history }) => {
 	const dispatch = useDispatch()
 
 	const cart = useSelector((state) => state.cart)
-	const { shippingAddress, updated, loading } = cart
+	const { shippingAddress, updated, loading, cartItems } = cart
 
 	const userLogin = useSelector((state) => state.userLogin)
 	const { userInfo } = userLogin
@@ -268,92 +271,172 @@ const ShippingScreen = ({ history }) => {
 	}, [updated, success, history])
 
 	return (
-		<FormContainer>
+		// <FormContainer>
+		<Row>
 			<CheckoutSteps step1 step2 />
-			{!userInfo.isGuest ? (
-				<AddressHistory
-					show={show}
-					handleClose={handleClose}
-					userInfo={userInfo}
-					setUseAddressHistory={setUseAddressHistory}
-				/>
-			) : null}
-
 			<h1>お届け先の住所</h1>
-			{error && <Message varient='danger'>{error}</Message>}
-			<Form onSubmit={submitHandler} className='shippingContainer'>
-				{/* responsiveCss */}
-				<ShippingForm
-					fullName={fullName}
-					furigana={furigana}
-					phoneNumber={phoneNumber}
-					postalCode1={postalCode1}
-					postalCode2={postalCode2}
-					prefecture={prefecture}
-					address={address}
-					building={building}
-					setFullName={setFullName}
-					setFurigana={setFurigana}
-					setPhoneNumber={setPhoneNumber}
-					setPostalCode1={setPostalCode1}
-					setPostalCode2={setPostalCode2}
-					setPrefecture={setPrefecture}
-					setAddress={setAddress}
-					setBuilding={setBuilding}
-				/>
-				<Form.Check
-					className='mt-3'
-					label='申し込み人と送り主が異なる場合'
-					onChange={() => shipperCheck()}
-					// value={isShipper}
-					checked={isShipper}
-				/>
-				<ShipperForm
-					isShipper={isShipper}
-					shipperFullName={shipperFullName}
-					shipperFurigana={shipperFurigana}
-					shipperPhoneNumber={shipperPhoneNumber}
-					shipperPostalCode1={shipperPostalCode1}
-					shipperPostalCode2={shipperPostalCode2}
-					shipperPrefecture={shipperPrefecture}
-					shipperAddress={shipperAddress}
-					shipperBuilding={shipperBuilding}
-					setShipperFullName={setShipperFullName}
-					setShipperFurigana={setShipperFurigana}
-					setShipperPhoneNumber={setShipperPhoneNumber}
-					setShipperPostalCode1={setShipperPostalCode1}
-					setShipperPostalCode2={setShipperPostalCode2}
-					setShipperPrefecture={setShipperPrefecture}
-					setShipperAddress={setShipperAddress}
-					setShipperBuilding={setShipperBuilding}
-				/>
-				<Form.Check
-					className='mt-3'
-					label='配送者へのご要望'
-					onChange={() => commentCheck()}
-					checked={isComment}
-				/>
-				{isComment && (
-					<Form.Group controlId='comment' className='mt-3'>
-						<Form.Label>ご要望内容</Form.Label>
-						<Form.Control
-							as='textarea'
-							required
-							row='3'
-							onChange={(e) => setComment(e.target.value)}
-							value={comment}
-						></Form.Control>
-					</Form.Group>
-				)}
-				{loading || loadingOrder ? (
-					<Loader />
-				) : (
-					<Button type='submit' variant='primary' className='mt-3'>
-						次へ進む
+			<Col lg={8} md={12}>
+				{!userInfo.isGuest ? (
+					<AddressHistory
+						show={show}
+						handleClose={handleClose}
+						userInfo={userInfo}
+						setUseAddressHistory={setUseAddressHistory}
+					/>
+				) : null}
+
+				{error && <Message varient='danger'>{error}</Message>}
+				<Form
+					onSubmit={submitHandler}
+					className='shippingContainer shipping-form-container'
+				>
+					{/* responsiveCss */}
+					<ShippingForm
+						fullName={fullName}
+						furigana={furigana}
+						phoneNumber={phoneNumber}
+						postalCode1={postalCode1}
+						postalCode2={postalCode2}
+						prefecture={prefecture}
+						address={address}
+						building={building}
+						setFullName={setFullName}
+						setFurigana={setFurigana}
+						setPhoneNumber={setPhoneNumber}
+						setPostalCode1={setPostalCode1}
+						setPostalCode2={setPostalCode2}
+						setPrefecture={setPrefecture}
+						setAddress={setAddress}
+						setBuilding={setBuilding}
+					/>
+					<Form.Check
+						className='mt-3'
+						label='申し込み人と送り主が異なる場合'
+						onChange={() => shipperCheck()}
+						// value={isShipper}
+						checked={isShipper}
+					/>
+					<ShipperForm
+						isShipper={isShipper}
+						shipperFullName={shipperFullName}
+						shipperFurigana={shipperFurigana}
+						shipperPhoneNumber={shipperPhoneNumber}
+						shipperPostalCode1={shipperPostalCode1}
+						shipperPostalCode2={shipperPostalCode2}
+						shipperPrefecture={shipperPrefecture}
+						shipperAddress={shipperAddress}
+						shipperBuilding={shipperBuilding}
+						setShipperFullName={setShipperFullName}
+						setShipperFurigana={setShipperFurigana}
+						setShipperPhoneNumber={setShipperPhoneNumber}
+						setShipperPostalCode1={setShipperPostalCode1}
+						setShipperPostalCode2={setShipperPostalCode2}
+						setShipperPrefecture={setShipperPrefecture}
+						setShipperAddress={setShipperAddress}
+						setShipperBuilding={setShipperBuilding}
+					/>
+					<Form.Check
+						className='mt-3'
+						label='配送者へのご要望'
+						onChange={() => commentCheck()}
+						checked={isComment}
+					/>
+					{isComment && (
+						<Form.Group controlId='comment' className='mt-3'>
+							<Form.Label>ご要望内容</Form.Label>
+							<Form.Control
+								as='textarea'
+								required
+								row='3'
+								onChange={(e) => setComment(e.target.value)}
+								value={comment}
+							></Form.Control>
+						</Form.Group>
+					)}
+					{loading || loadingOrder ? (
+						<Loader />
+					) : (
+						<Button
+							type='submit'
+							variant='primary'
+							className='mt-3'
+						>
+							次へ進む
+						</Button>
+					)}
+				</Form>
+			</Col>
+			<Col lg={4} md={12}>
+				<div className='cart-item cart-price-wrap'>
+					{cartItems.map((item) => (
+						<>
+							<Row>
+								<Col xs={5} md={5}>
+									<Image
+										src={item.image}
+										alt={item.name}
+										fluid
+										rounded
+									/>
+								</Col>
+								<Col
+									xs={7}
+									md={7}
+									className='shipping-items-wrap'
+								>
+									<p>{item.name}</p>
+									<p>¥&nbsp;{item.price}</p>
+								</Col>
+							</Row>
+							<p className='cart-underline'></p>
+						</>
+					))}
+					<p className='cart-subtotal-text'>
+						<span>商品合計:</span>
+						<span>
+							¥&nbsp;
+							{cart.itemsPrice}
+						</span>
+					</p>
+					<p className='cart-subtotal-text'>
+						<span>送料:</span>
+						<span>¥&nbsp; ????</span>
+					</p>
+					<p className='cart-subtotal-text'>
+						<span>消費税:</span>
+						<span>¥&nbsp; ????</span>
+					</p>
+					<p className='cart-underline'></p>
+					<p className='cart-subtotal-text'>
+						<span>商品合計:</span>
+						<span>¥&nbsp; ????</span>
+					</p>
+
+					{/* fix this to 0 for yen */}
+				</div>
+				<div>
+					<Button
+						type='button'
+						className='next-gradient-btn__g cart-next-btn mt-4'
+						disabled={cart.length === 0}
+						// onClick={checkoutHandler}
+					>
+						レジに進む
 					</Button>
-				)}
-			</Form>
-		</FormContainer>
+					<Link to='/shop'>
+						<Button
+							// variant='secondary'
+							className='cart-back-btn mt-4'
+							type='button'
+							// className='btn-block w-100'
+						>
+							戻る
+						</Button>
+					</Link>
+				</div>
+			</Col>
+		</Row>
+		// </FormContainer>
 	)
 }
 

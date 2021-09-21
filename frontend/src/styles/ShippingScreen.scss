@@ -1,0 +1,27 @@
+@import "../variables/Variables.scss";
+
+.shipping-items-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // align-items: center;
+  text-align: end;
+}
+
+
+
+.shipping-row-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.shipping-form-container{
+  @include shadowRounded;
+  padding: 40px 40px;
+
+  background-color: $main-background-color;
+  // @include mq(md) { // 引数を個別に指定
+  // }
+  /* responsive */
+}

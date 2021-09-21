@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,oBAAoB,CAAC;EACnB,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,MAAM;EACtB,eAAe,EAAE,MAAM;EAEvB,UAAU,EAAE,GAAG;CAChB;;AAID,AAAA,mBAAmB,CAAA;EACf,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,MAAM;EACtB,eAAe,EAAE,MAAM;CAC1B;;AAED,AAAA,wBAAwB,CAAA;ECEtB,UAAU,EAAE,mBAAmB,CAAC,GAAG,CAAC,GAAG,CAAC,GAAG;EAC3C,aAAa,EAAE,IAAI;EDDnB,OAAO,EAAE,SAAS;EAElB,gBAAgB,ECtBM,OAAO;EDyB7B,gBAAgB;CACjB",
+    "sources": [
+        "ShippingScreen.scss",
+        "../variables/Variables.scss"
+    ],
+    "names": [],
+    "file": "ShippingScreen.css"
+}
