@@ -206,10 +206,10 @@ const LoginScreen = ({ location, history }) => {
 							<p className='text-center'>
 								アカウントを作らない場合
 							</p>
+
 							<Link
 								// to={redirect ? `/guest?redirect=${redirect}` : '/guest'}
 								to={'/guestshipping'}
-								// style={{ width: '100%' }}
 							>
 								<button className='login-guest-btn'>
 									<span style={{ color: '#E71F7F' }}>

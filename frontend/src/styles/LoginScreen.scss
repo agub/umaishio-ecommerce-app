@@ -63,8 +63,8 @@
 }
 
 .login-guest-btn{
+  @include basicButton();
   margin-top: 5px;
- @include basicButton()
 }
 
 .fa-position-right {
