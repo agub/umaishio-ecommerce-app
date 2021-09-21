@@ -153,7 +153,7 @@ const LoginScreen = ({ location, history }) => {
 							</span>
 						</Link>
 					</div>
-					<Button type='submit' className='next-gradient-btn__g'>
+					<Button type='submit' className='next-gradient-btn__g mt-4'>
 						<div>
 							ログイン
 							{/* <span style={{ marginLeft: 'auto' }}> */}

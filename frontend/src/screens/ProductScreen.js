@@ -11,6 +11,8 @@ import { listProductDetails } from '../actions/productActions'
 
 import CustomerReview from '../components/CustomerReview'
 
+import '../styles/ProductScreen.scss'
+
 const ProductScreen = ({ match, history }) => {
 	const [qty, setQty] = useState(1)
 
@@ -179,7 +181,7 @@ const ProductScreen = ({ match, history }) => {
 															<i className='fa fa-minus'></i>
 														</button>
 														<select
-															className='form-select form-control-select'
+															className='form-select form-control-select__g'
 															value={qty}
 															onChange={(e) =>
 																setQty(
@@ -236,7 +238,7 @@ const ProductScreen = ({ match, history }) => {
 														}}
 													>
 														<span>
-															カートへ入れる&nbsp;&nbsp;
+															カートへ追加&nbsp;&nbsp;
 														</span>
 														<span>
 															<i className='fas fa-plus'></i>

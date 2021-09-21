@@ -7,9 +7,9 @@ $solidColor: #E71F7F;
 
 $breakpoints: (
   'sm': 'screen and (max-width: 478px)',
-  'md': 'screen and (min-width: 768px)',
-  'lg': 'screen and (min-width: 1000px)',
-  'xl': 'screen and (min-width: 1200px)',
+  'md': 'screen and (max-width: 768px)',
+  'lg': 'screen and (max-width: 1000px)',
+  'xl': 'screen and (max-width: 1200px)',
 ) !default;
 
 @mixin mq($breakpoint: md) {
@@ -20,6 +20,10 @@ $breakpoints: (
 @mixin shadowRounded {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 25px;
+} 
+@mixin justsShadow {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
 } 
 @mixin customFlex($justify: center) {
   display: flex;
@@ -39,3 +43,7 @@ $breakpoints: (
     font-weight: bold;
   }
   
+@mixin buttonReset() {
+  border: none;
+
+}

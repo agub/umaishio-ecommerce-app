@@ -184,7 +184,10 @@ const RegisterScreen = ({ location, history }) => {
 						</Form.Group>
 						{/* <p className='m-2 shipping-form-example__g'>&nbsp;</p> */}
 
-						<Button type='submit' className='next-gradient-btn__g'>
+						<Button
+							type='submit'
+							className='next-gradient-btn__g mt-4'
+						>
 							<div>
 								次へ進む
 								{/* <span style={{ marginLeft: 'auto' }}> */}

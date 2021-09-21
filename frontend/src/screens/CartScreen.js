@@ -1,9 +1,20 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
+import {
+	Row,
+	Col,
+	ListGroup,
+	Image,
+	Form,
+	Button,
+	Card,
+	Container,
+} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
+import Rating from '../components/Rating'
+import '../styles/CartScreen.scss'
 
 const CartScreen = ({ match, location, history }) => {
 	const productId = match.params.id
@@ -41,10 +52,11 @@ const CartScreen = ({ match, location, history }) => {
 		return cartItems.reduce((qty, item) => Number(item.qty) + qty, 0)
 	}
 
+	console.log(cartItems)
 	return (
 		<Row>
-			<Col md={8}>
-				<h1>ショッピングカート</h1>
+			<h1>ショッピングカート</h1>
+			<Col lg={8} md={12}>
 				{cartItems.length === 0 ? (
 					<Message variant='info'>
 						カートが空です
@@ -53,11 +65,11 @@ const CartScreen = ({ match, location, history }) => {
 						</Link>
 					</Message>
 				) : (
-					<ListGroup variant='flush'>
+					<div>
 						{cartItems.map((item) => (
-							<ListGroup.Item key={item.product}>
-								<Row>
-									<Col md={2}>
+							<div className='cart-item' key={item.product}>
+								<Row className='cart-row'>
+									<Col xs={4} md={2}>
 										<Image
 											src={item.image}
 											alt={item.name}
@@ -65,48 +77,41 @@ const CartScreen = ({ match, location, history }) => {
 											rounded
 										/>
 									</Col>
-									<Col md={4}>
-										<Link to={`/product/${item.product}`}>
-											{item.name}
-										</Link>
-									</Col>
-									<Col md={2}>¥ {item.price}</Col>
-									<Col md={2} sm={10} xs={9}>
-										<Form.Control
-											as='select'
-											value={item.qty}
-											className='form-select form-control-select-checkout'
-											style={{
-												padding:
-													'0.75rem 0.2rem 0.75rem 0.4rem',
-											}}
-											onChange={(e) =>
-												dispatch(
-													addToCart(
-														item.product,
-														Number(e.target.value)
-													)
-												)
-											}
-										>
-											{[
-												...Array(
-													item.countInStock
-												).keys(),
-											].map((x) => (
-												<option
-													key={x + 1}
-													value={x + 1}
+									<Col
+										xs={8}
+										md={10}
+										className='cart-row-right'
+									>
+										{/* <Row> */}
+										<Col md={6} xs={12}>
+											<div>
+												<Link
+													to={`/product/${item.product}`}
 												>
-													{x + 1}
-												</option>
-											))}
-										</Form.Control>
-									</Col>
-									<Col md={1} sm={2} xs={3}>
-										<Button
-											type='button'
-											variant='light'
+													{item.name}
+												</Link>
+												<div>
+													<div
+														style={{
+															fontSize: '10px',
+														}}
+													>
+														<Rating
+															value={4}
+															text={`( xx )`}
+														/>
+													</div>
+												</div>
+											</div>
+										</Col>
+										{/* <Col
+										md={1}
+										sm={2}
+										xs={3}
+										style={{ textAlign: 'center' }}
+									>
+										<button
+											className='cart-delete-btn'
 											onClick={() =>
 												removeFromCartHandler(
 													item.product
@@ -114,27 +119,95 @@ const CartScreen = ({ match, location, history }) => {
 											}
 										>
 											<i className='fas fa-trash'></i>
-										</Button>
+										</button>
+									</Col> */}
+										<Col
+											md={2}
+											xs={12}
+											// sm={10}
+											// xs={9}
+											className='cart-select-wrap cart-row-mg__mobile'
+										>
+											<span className='cart-select-top'>
+												数量
+											</span>
+											<select
+												as='select'
+												value={item.qty}
+												className='cart-select-form'
+												// style={{
+												// 	padding:
+												// 		'0.75rem 0.2rem 0.75rem 0.4rem',
+												// }}
+												onChange={(e) =>
+													dispatch(
+														addToCart(
+															item.product,
+															Number(
+																e.target.value
+															)
+														)
+													)
+												}
+											>
+												{[
+													...Array(
+														item.countInStock
+													).keys(),
+												].map((x) => (
+													<option
+														key={x + 1}
+														value={x + 1}
+													>
+														{x + 1}
+													</option>
+												))}
+											</select>
+										</Col>
+
+										<Col
+											md={4}
+											xs={12}
+											className='cart-row-mg__mobile cart-row-total__mobile'
+										>
+											<button
+												className='cart-delete-btn'
+												onClick={() =>
+													removeFromCartHandler(
+														item.product
+													)
+												}
+											>
+												<i
+													style={{
+														fontWeight: 'normal',
+													}}
+													className='far fa-trash-alt'
+												></i>
+											</button>
+											小計:
+											<span className='cart-price'>
+												¥{item.price}
+											</span>
+										</Col>
+										{/* </Row> */}
 									</Col>
 								</Row>
-							</ListGroup.Item>
+							</div>
 						))}
-					</ListGroup>
+					</div>
 				)}
 			</Col>
-			<Col md={4}>
-				<Card>
-					<ListGroup variant='flush'>
-						<ListGroup.Item>
-							<p className='subtotal-text'>
-								カートの小計:　(
-								{/* {cartItems.reduce(
-									(acc, item) => acc + item.qty,
-									0
-								)} */}
-								{getCartCount()}
-								個の商品)
-							</p>
+			<Col lg={4} md={12}>
+				<div className='cart-item cart-price-wrap'>
+					<p className='cart-subtotal-text'>
+						<span>注文内容:</span>
+						<span>{`${getCartCount()}件`}</span>
+					</p>
+					<p className='cart-underline'></p>
+					<p className='cart-subtotal-text'>
+						<span>商品合計:</span>
+						<span>
 							¥&nbsp;
 							{cartItems
 								.reduce(
@@ -142,29 +215,44 @@ const CartScreen = ({ match, location, history }) => {
 									0
 								)
 								.toFixed(0)}
-							{/* fix this to 0 for yen */}
-						</ListGroup.Item>
-						<ListGroup.Item>
-							<Button
-								type='button'
-								className='btn-block w-100'
-								disabled={cartItems.length === 0}
-								onClick={checkoutHandler}
-							>
-								レジに進む
-							</Button>
-							<Link to='/shop'>
-								<Button
-									variant='secondary'
-									type='button'
-									className='btn-block w-100'
-								>
-									戻る
-								</Button>
-							</Link>
-						</ListGroup.Item>
-					</ListGroup>
-				</Card>
+						</span>
+					</p>
+					<p className='cart-subtotal-text'>
+						<span>送料:</span>
+						<span>¥&nbsp; ????</span>
+					</p>
+					<p className='cart-subtotal-text'>
+						<span>消費税:</span>
+						<span>¥&nbsp; ????</span>
+					</p>
+					<p className='cart-underline'></p>
+					<p className='cart-subtotal-text'>
+						<span>商品合計:</span>
+						<span>¥&nbsp; ????</span>
+					</p>
+
+					{/* fix this to 0 for yen */}
+				</div>
+				<div>
+					<Button
+						type='button'
+						className='next-gradient-btn__g cart-next-btn mt-4'
+						disabled={cartItems.length === 0}
+						onClick={checkoutHandler}
+					>
+						レジに進む
+					</Button>
+					<Link to='/shop'>
+						<Button
+							// variant='secondary'
+							className='cart-back-btn mt-4'
+							type='button'
+							// className='btn-block w-100'
+						>
+							戻る
+						</Button>
+					</Link>
+				</div>
 			</Col>
 		</Row>
 	)

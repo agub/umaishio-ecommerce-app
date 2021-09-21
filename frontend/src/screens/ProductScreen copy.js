@@ -338,7 +338,7 @@ const ProductScreen = ({ match, history }) => {
 												</Col>
 												<Col className='product-page-section'>
 													<Form.Control
-														className='form-select form-control-select'
+														className='form-select form-control-select__g'
 														style={{
 															padding:
 																'0.75rem 0.2rem 0.75rem 0.4rem',
