@@ -46,9 +46,9 @@ const LoginScreen = ({ location, history }) => {
 			<Form onSubmit={guestHandler}>
 				<Form.Group controlId='email' className='mt-3'>
 					<Form.Label>
-						<div className='shipping-form-lable'>
+						<div className='shipping-form-lable__g'>
 							Email{' '}
-							<span className='shipping-form-icon'>必須</span>
+							<span className='shipping-form-icon__g'>必須</span>
 						</div>
 					</Form.Label>
 					<Form.Control
@@ -59,7 +59,7 @@ const LoginScreen = ({ location, history }) => {
 						onChange={(e) => setGuestEmail(e.target.value)}
 					></Form.Control>
 				</Form.Group>
-				<p className='m-2 shipping-form-example'>
+				<p className='m-2 shipping-form-example__g'>
 					例: umaishio@gmail.com
 				</p>
 				<div

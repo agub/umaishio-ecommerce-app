@@ -58,12 +58,7 @@ const HomeScreen = () => {
 					))}
 				</Row>
 			)}
-			<LinkContainer
-				exact
-				to='/cart'
-				className={'cartTo'}
-				style={mdScreen}
-			>
+			<LinkContainer exact to='/cart' className='cartTo' style={mdScreen}>
 				<Nav.Link className='home-cartButton'>
 					<i
 						style={{ marginRight: '4px', marginTop: '5px' }}

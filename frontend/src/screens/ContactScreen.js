@@ -53,9 +53,11 @@ const ContactScreen = () => {
 					{loading && <Loader />}
 					<Form.Group controlId='postalCode' className='mt-2'>
 						<Form.Label>
-							<div className='shipping-form-lable'>
+							<div className='shipping-form-lable__g'>
 								Email{' '}
-								<span className='shipping-form-icon'>必須</span>
+								<span className='shipping-form-icon__g'>
+									必須
+								</span>
 							</div>
 						</Form.Label>
 						<Form.Control
@@ -67,9 +69,11 @@ const ContactScreen = () => {
 					</Form.Group>
 					<Form.Group controlId='postalCode' className='mt-2'>
 						<Form.Label>
-							<div className='shipping-form-lable'>
+							<div className='shipping-form-lable__g'>
 								氏名{' '}
-								<span className='shipping-form-icon'>必須</span>
+								<span className='shipping-form-icon__g'>
+									必須
+								</span>
 							</div>
 						</Form.Label>
 						<Form.Control
@@ -81,9 +85,11 @@ const ContactScreen = () => {
 					</Form.Group>
 					<Form.Group controlId='postalCode' className='mt-2'>
 						<Form.Label>
-							<div className='shipping-form-lable'>
+							<div className='shipping-form-lable__g'>
 								内容{' '}
-								<span className='shipping-form-icon'>必須</span>
+								<span className='shipping-form-icon__g'>
+									必須
+								</span>
 							</div>
 						</Form.Label>
 						<Form.Control

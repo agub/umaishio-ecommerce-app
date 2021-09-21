@@ -1,18 +1,17 @@
 @import "../variables/Variables.scss";
 
 
-.login-bgi {
-  background-size: contain;
-  background-repeat: no-repeat;
-  margin: 0 calc(50% - 50vw);
-  height: 100vh;
-}
+// .login-bgi {
+//   background-size: contain;
+//   background-repeat: no-repeat;
+//   margin: 0 calc(50% - 50vw);
+//   height: 100vh;
+// }
 
 .login-container{
-  background-color: $main-background-color;
-  
   @include shadowRounded;
   @include customFlex();
+  background-color: $main-background-color;
   max-width: 700px;
   height: 100%;
   margin: 0 auto;
@@ -20,15 +19,6 @@
   @include mq(sm) { // 引数を個別に指定
     padding: 20px 0px;
   }
-}
-
-.login-password-icon-container{
-  background-color: $main-background-color;
-  @include customFlex();
-  flex-direction: row;
-  overflow: hidden;
-  border: 1px solid #909090;
-  border-radius: $button-border-radius;
 }
 
 .login-options-wrap{
@@ -53,14 +43,14 @@
   // background-color: $main-background-color;
 }
 
-.login-button {
-  margin-top: 30px;
-  width: 100%;
-  border-radius: $button-border-radius;
-  background: linear-gradient(to right top, #E71F7F, #A7228F);
-  position: relative;
-  // background-color: #fff;
-}
+// .login-button {
+//   margin-top: 30px;
+//   width: 100%;
+//   border-radius: $button-border-radius;
+//   background: linear-gradient(to right top, #E71F7F, #A7228F);
+//   position: relative;
+//   // background-color: #fff;
+// }
 
 .login-guest-btn{
   @include basicButton();

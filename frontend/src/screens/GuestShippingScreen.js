@@ -265,12 +265,12 @@ const GuestShippingScreen = ({ history }) => {
 			)}
 			<h1>お届け先の住所</h1>
 			<Form onSubmit={submitHandler} className='shippingContainer'>
-					{/* responsiveCss */}
+				{/* responsiveCss */}
 				<Form.Group controlId='postalCode' className='mt-2'>
 					<Form.Label>
-						<div className='shipping-form-lable'>
+						<div className='shipping-form-lable__g'>
 							Email{' '}
-							<span className='shipping-form-icon'>必須</span>
+							<span className='shipping-form-icon__g'>必須</span>
 						</div>
 					</Form.Label>
 					<Form.Control
@@ -280,7 +280,7 @@ const GuestShippingScreen = ({ history }) => {
 						onChange={(e) => setEmail(e.target.value)}
 					></Form.Control>
 				</Form.Group>
-				<p className='m-2 shipping-form-example'>
+				<p className='m-2 shipping-form-example__g'>
 					例: umaishio@gmail.com
 				</p>
 				<ShippingForm

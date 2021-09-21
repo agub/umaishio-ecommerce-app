@@ -62,7 +62,7 @@ const LoginScreen = ({ location, history }) => {
 			style={{
 				backgroundImage: `url(${Background})`,
 			}}
-			className='login-bgi'
+			className='bgi-register__g'
 		>
 			<ModalContainer>
 				<h1 className='text-center'>ログイン</h1>
@@ -75,13 +75,13 @@ const LoginScreen = ({ location, history }) => {
 				<Form onSubmit={submitHandler}>
 					<Form.Group controlId='email'>
 						<Form.Label>
-							<div className='shipping-form-lable'>
+							<div className='shipping-form-lable__g'>
 								メールアドレス
-								<span style={{ color: '#E71F7F' }}>*</span>
+								<span className='form-asterisk__g'>*</span>
 								{/* <span className='shipping-form-icon'>必須</span> */}
 							</div>
 						</Form.Label>
-						<div className='login-password-icon-container'>
+						<div className='form-container-pw-icon__g'>
 							<Form.Control
 								type='email'
 								placeholder='メールアドレス'
@@ -90,18 +90,18 @@ const LoginScreen = ({ location, history }) => {
 							></Form.Control>
 						</div>
 					</Form.Group>
-					<p className='m-2 shipping-form-example'>
+					<p className='m-2 shipping-form-example__g'>
 						例: umaishio@gmail.com
 					</p>
 					<Form.Group controlId='password'>
 						<Form.Label>
-							<div className='shipping-form-lable'>
+							<div className='shipping-form-lable__g'>
 								パスワード
-								<span style={{ color: '#E71F7F' }}>*</span>
+								<span className='form-asterisk__g'>*</span>
 								{/* <span className='shipping-form-icon'>必須</span> */}
 							</div>
 						</Form.Label>
-						<div className='login-password-icon-container'>
+						<div className='form-container-pw-icon__g'>
 							<Form.Control
 								className='login-password-input'
 								type={showPassword ? 'string' : 'password'}
@@ -128,7 +128,7 @@ const LoginScreen = ({ location, history }) => {
 							)}
 						</div>
 					</Form.Group>
-					{/* <p className='shipping-form-example'>&nbsp;</p> */}
+					{/* <p className='shipping-form-example__g'>&nbsp;</p> */}
 					<div className='login-options-wrap'>
 						<span
 							style={{
@@ -153,7 +153,7 @@ const LoginScreen = ({ location, history }) => {
 							</span>
 						</Link>
 					</div>
-					<Button type='submit' className='login-button'>
+					<Button type='submit' className='next-gradient-btn__g'>
 						<div>
 							ログイン
 							{/* <span style={{ marginLeft: 'auto' }}> */}
@@ -180,21 +180,21 @@ const LoginScreen = ({ location, history }) => {
 							&nbsp;または&nbsp;
 						</span>
 					</div> */}
-					<Row className='py-3'>
-						<div style={{ textAlign: 'end' }}>
-							<Link
-								to={
-									redirect
-										? `/register?redirect=${redirect}`
-										: '/register'
-								}
-							>
-								<span className='login-register-button'>
-									新規登録の方はこちら
-								</span>
-							</Link>
-						</div>
-					</Row>
+					{/* <Row className='py-3'> */}
+					<div className='py-3' style={{ textAlign: 'end' }}>
+						<Link
+							to={
+								redirect
+									? `/register?redirect=${redirect}`
+									: '/register'
+							}
+						>
+							<span className='login-register-button'>
+								新規登録の方はこちら
+							</span>
+						</Link>
+					</div>
+					{/* </Row> */}
 
 					{Array.isArray(cartItems) && cartItems.length !== 0 && (
 						<>

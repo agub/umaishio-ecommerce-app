@@ -60,7 +60,7 @@ const ResetPasswordScreen = ({ location, history, match }) => {
 			<Form onSubmit={submitHandler}>
 				<Form.Group controlId='password'>
 					<Form.Label>
-						<div className='shipping-form-lable'>
+						<div className='shipping-form-lable__g'>
 							パスワード{' '}
 							{/* <span className='shipping-form-icon'>必須</span> */}
 						</div>
@@ -72,10 +72,10 @@ const ResetPasswordScreen = ({ location, history, match }) => {
 						onChange={(e) => setPassword(e.target.value)}
 					></Form.Control>
 				</Form.Group>
-				<p className='m-2 shipping-form-example'>&nbsp;</p>
+				<p className='m-2 shipping-form-example__g'>&nbsp;</p>
 				<Form.Group controlId='password'>
 					<Form.Label>
-						<div className='shipping-form-lable'>
+						<div className='shipping-form-lable__g'>
 							確認パスワード{' '}
 							{/* <span className='shipping-form-icon'>必須</span> */}
 						</div>
@@ -87,7 +87,7 @@ const ResetPasswordScreen = ({ location, history, match }) => {
 						onChange={(e) => setConfirmPassword(e.target.value)}
 					></Form.Control>
 				</Form.Group>
-				<p className='m-2 shipping-form-example'>&nbsp;</p>
+				<p className='m-2 shipping-form-example__g'>&nbsp;</p>
 				<div
 					style={{
 						display: 'flex',
