@@ -160,7 +160,7 @@ const ShippingForm = ({
 					<p className='m-2 shipping-form-example__g'>例: 0021</p>
 				</Form.Group>
 
-				<Button
+				{/* <Button
 					className='btn-sm'
 					size='sm'
 					variant='secondary'
@@ -172,7 +172,7 @@ const ShippingForm = ({
 					}}
 				>
 					住所検索
-				</Button>
+				</Button> */}
 			</Row>
 
 			<Form.Group controlId='prefecture'>

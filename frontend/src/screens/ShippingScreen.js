@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Col, Row, Image } from 'react-bootstrap'
+import { Form, Button, Col, Row, Image, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -14,11 +14,17 @@ import Message from '../components/Message'
 import Rating from '../components/Rating'
 import { ORDER_CREATE_RESET } from '../constants/orderConstants'
 import { USER_DETAILS_RESET } from '../constants/userConstants'
+import { addToCart } from '../actions/cartActions'
+import EditableCartItems from '../components/EditableCartItems'
 
 import '../styles/ShippingScreen.scss'
 
 const ShippingScreen = ({ history }) => {
 	const dispatch = useDispatch()
+
+	const getCartCount = () => {
+		return cartItems.reduce((qty, item) => Number(item.qty) + qty, 0)
+	}
 
 	const cart = useSelector((state) => state.cart)
 	const { shippingAddress, updated, loading, cartItems } = cart
@@ -215,6 +221,12 @@ const ShippingScreen = ({ history }) => {
 
 	//PlaceOrderScreen
 
+	useEffect(() => {
+		if (!userInfo) {
+			history.push('/login')
+		}
+	}, userInfo)
+
 	//Shipping Address History
 	useEffect(() => {
 		if (
@@ -270,172 +282,222 @@ const ShippingScreen = ({ history }) => {
 		}
 	}, [updated, success, history])
 
+	// shoppingcart modal
+
+	const [showCart, setShowCart] = useState(false)
+	const showCartClose = () => {
+		setShowCart(!showCart)
+	}
+	// useEffect(() => {
+	// 	dispatch(addToCart(productId, qty))
+	// }, [dispatch, productId, qty])
+	// shoppingcart modal
+
 	return (
 		// <FormContainer>
-		<Row>
-			<CheckoutSteps step1 step2 />
-			<h1>お届け先の住所</h1>
-			<Col lg={8} md={12}>
-				{!userInfo.isGuest ? (
-					<AddressHistory
-						show={show}
-						handleClose={handleClose}
-						userInfo={userInfo}
-						setUseAddressHistory={setUseAddressHistory}
-					/>
-				) : null}
+		<>
+			<Form
+				onSubmit={submitHandler}
+				// className='shippingContainer shipping-form-container'
+			>
+				<Row>
+					<CheckoutSteps step1 step2 />
+					<h1>お届け先の住所</h1>
+					<Col lg={8} md={12}>
+						{!userInfo.isGuest ? (
+							<AddressHistory
+								show={show}
+								handleClose={handleClose}
+								userInfo={userInfo}
+								setUseAddressHistory={setUseAddressHistory}
+							/>
+						) : null}
 
-				{error && <Message varient='danger'>{error}</Message>}
-				<Form
-					onSubmit={submitHandler}
-					className='shippingContainer shipping-form-container'
-				>
-					{/* responsiveCss */}
-					<ShippingForm
-						fullName={fullName}
-						furigana={furigana}
-						phoneNumber={phoneNumber}
-						postalCode1={postalCode1}
-						postalCode2={postalCode2}
-						prefecture={prefecture}
-						address={address}
-						building={building}
-						setFullName={setFullName}
-						setFurigana={setFurigana}
-						setPhoneNumber={setPhoneNumber}
-						setPostalCode1={setPostalCode1}
-						setPostalCode2={setPostalCode2}
-						setPrefecture={setPrefecture}
-						setAddress={setAddress}
-						setBuilding={setBuilding}
-					/>
-					<Form.Check
-						className='mt-3'
-						label='申し込み人と送り主が異なる場合'
-						onChange={() => shipperCheck()}
-						// value={isShipper}
-						checked={isShipper}
-					/>
-					<ShipperForm
-						isShipper={isShipper}
-						shipperFullName={shipperFullName}
-						shipperFurigana={shipperFurigana}
-						shipperPhoneNumber={shipperPhoneNumber}
-						shipperPostalCode1={shipperPostalCode1}
-						shipperPostalCode2={shipperPostalCode2}
-						shipperPrefecture={shipperPrefecture}
-						shipperAddress={shipperAddress}
-						shipperBuilding={shipperBuilding}
-						setShipperFullName={setShipperFullName}
-						setShipperFurigana={setShipperFurigana}
-						setShipperPhoneNumber={setShipperPhoneNumber}
-						setShipperPostalCode1={setShipperPostalCode1}
-						setShipperPostalCode2={setShipperPostalCode2}
-						setShipperPrefecture={setShipperPrefecture}
-						setShipperAddress={setShipperAddress}
-						setShipperBuilding={setShipperBuilding}
-					/>
-					<Form.Check
-						className='mt-3'
-						label='配送者へのご要望'
-						onChange={() => commentCheck()}
-						checked={isComment}
-					/>
-					{isComment && (
-						<Form.Group controlId='comment' className='mt-3'>
-							<Form.Label>ご要望内容</Form.Label>
-							<Form.Control
-								as='textarea'
-								required
-								row='3'
-								onChange={(e) => setComment(e.target.value)}
-								value={comment}
-							></Form.Control>
-						</Form.Group>
-					)}
-					{loading || loadingOrder ? (
-						<Loader />
-					) : (
-						<Button
-							type='submit'
-							variant='primary'
-							className='mt-3'
-						>
-							次へ進む
-						</Button>
-					)}
-				</Form>
-			</Col>
-			<Col lg={4} md={12}>
-				<div className='cart-item cart-price-wrap'>
-					{cartItems.map((item) => (
-						<>
-							<Row>
-								<Col xs={5} md={5}>
-									<Image
-										src={item.image}
-										alt={item.name}
-										fluid
-										rounded
-									/>
-								</Col>
-								<Col
-									xs={7}
-									md={7}
-									className='shipping-items-wrap'
+						{error && <Message varient='danger'>{error}</Message>}
+						<div className='shippingContainer shipping-form-container'>
+							{/* responsiveCss */}
+							<ShippingForm
+								fullName={fullName}
+								furigana={furigana}
+								phoneNumber={phoneNumber}
+								postalCode1={postalCode1}
+								postalCode2={postalCode2}
+								prefecture={prefecture}
+								address={address}
+								building={building}
+								setFullName={setFullName}
+								setFurigana={setFurigana}
+								setPhoneNumber={setPhoneNumber}
+								setPostalCode1={setPostalCode1}
+								setPostalCode2={setPostalCode2}
+								setPrefecture={setPrefecture}
+								setAddress={setAddress}
+								setBuilding={setBuilding}
+							/>
+							<Form.Check
+								className='mt-3'
+								label='申し込み人と送り主が異なる場合'
+								onChange={() => shipperCheck()}
+								// value={isShipper}
+								checked={isShipper}
+							/>
+							<ShipperForm
+								isShipper={isShipper}
+								shipperFullName={shipperFullName}
+								shipperFurigana={shipperFurigana}
+								shipperPhoneNumber={shipperPhoneNumber}
+								shipperPostalCode1={shipperPostalCode1}
+								shipperPostalCode2={shipperPostalCode2}
+								shipperPrefecture={shipperPrefecture}
+								shipperAddress={shipperAddress}
+								shipperBuilding={shipperBuilding}
+								setShipperFullName={setShipperFullName}
+								setShipperFurigana={setShipperFurigana}
+								setShipperPhoneNumber={setShipperPhoneNumber}
+								setShipperPostalCode1={setShipperPostalCode1}
+								setShipperPostalCode2={setShipperPostalCode2}
+								setShipperPrefecture={setShipperPrefecture}
+								setShipperAddress={setShipperAddress}
+								setShipperBuilding={setShipperBuilding}
+							/>
+							<Form.Check
+								className='mt-3'
+								label='配送者へのご要望'
+								onChange={() => commentCheck()}
+								checked={isComment}
+							/>
+							{isComment && (
+								<Form.Group
+									controlId='comment'
+									className='mt-3'
 								>
-									<p>{item.name}</p>
-									<p>¥&nbsp;{item.price}</p>
-								</Col>
-							</Row>
-							<p className='cart-underline'></p>
-						</>
+									<Form.Label>ご要望内容</Form.Label>
+									<div className='form-container-pw-icon__g'>
+										<Form.Control
+											as='textarea'
+											required
+											row='3'
+											onChange={(e) =>
+												setComment(e.target.value)
+											}
+											value={comment}
+										></Form.Control>
+									</div>
+								</Form.Group>
+							)}
+						</div>
+					</Col>
+					<Col lg={4} md={12}>
+						<div className='shipper-wrap__g cart-price-wrap'>
+							{cartItems.map((item) => (
+								<EditableCartItems item={item} />
+							))}
+							<p className='underline__g'></p>
+							<p className='d-flex justify-content-between'>
+								<span>商品合計:</span>
+								<span>
+									¥&nbsp;
+									{cart.itemsPrice}
+								</span>
+							</p>
+							<p className='d-flex justify-content-between'>
+								<span>送料:</span>
+								<span>¥&nbsp; ????</span>
+							</p>
+							<p className='d-flex justify-content-between'>
+								<span>消費税:</span>
+								<span>¥&nbsp; ????</span>
+							</p>
+							<p className='underline__g'></p>
+							<p className='d-flex justify-content-between'>
+								<span>商品合計:</span>
+								<span>¥&nbsp; ????</span>
+							</p>
+
+							{/* fix this to 0 for yen */}
+						</div>
+						<div>
+							{loading || loadingOrder ? (
+								<Loader />
+							) : (
+								<>
+									<Button
+										type='submit'
+										className='next-gradient-btn__g cart-next-btn mt-4'
+										disabled={cart.length === 0}
+										// onClick={submitHandler}
+									>
+										レジに進む
+									</Button>
+									<Link to='/cart'>
+										<Button
+											// variant='secondary'
+											className='cart-back-btn mt-4'
+											// type='button'
+											// className='btn-block w-100'
+										>
+											買い物を続ける
+										</Button>
+									</Link>
+								</>
+							)}
+						</div>
+					</Col>
+				</Row>
+			</Form>
+			<button
+				className='stickyBottom'
+				onClick={() => setShowCart(!showCart)}
+			>
+				買い物カゴ　
+				{getCartCount()}件　デザイン！
+				{/* <span className='home-cartButton'>
+					<i
+						style={{ marginRight: '4px', marginTop: '5px' }}
+						className='fas fa-shopping-cart'
+					></i>{' '}
+				</span> */}
+			</button>
+			<Modal show={showCart} onHide={showCartClose} centered>
+				{/* <div> */}
+				<div className='item-modal-wrap__g'>
+					{cartItems.map((item) => (
+						<EditableCartItems item={item} />
 					))}
-					<p className='cart-subtotal-text'>
+					<p className='underline__g'></p>
+					<p className='d-flex justify-content-between'>
 						<span>商品合計:</span>
 						<span>
 							¥&nbsp;
 							{cart.itemsPrice}
 						</span>
 					</p>
-					<p className='cart-subtotal-text'>
+					<p className='d-flex justify-content-between'>
 						<span>送料:</span>
 						<span>¥&nbsp; ????</span>
 					</p>
-					<p className='cart-subtotal-text'>
+					<p className='d-flex justify-content-between'>
 						<span>消費税:</span>
 						<span>¥&nbsp; ????</span>
 					</p>
-					<p className='cart-underline'></p>
-					<p className='cart-subtotal-text'>
+					<p className='underline__g'></p>
+					<p className='d-flex justify-content-between'>
 						<span>商品合計:</span>
 						<span>¥&nbsp; ????</span>
 					</p>
 
-					{/* fix this to 0 for yen */}
-				</div>
-				<div>
 					<Button
-						type='button'
-						className='next-gradient-btn__g cart-next-btn mt-4'
-						disabled={cart.length === 0}
-						// onClick={checkoutHandler}
+						// variant='secondary'
+						className='cart-back-btn mt-4'
+						onClick={() => showCartClose()}
+						// type='button'
+						// className='btn-block w-100'
 					>
-						レジに進む
+						閉じる
 					</Button>
-					<Link to='/shop'>
-						<Button
-							// variant='secondary'
-							className='cart-back-btn mt-4'
-							type='button'
-							// className='btn-block w-100'
-						>
-							戻る
-						</Button>
-					</Link>
 				</div>
-			</Col>
-		</Row>
+			</Modal>
+		</>
 		// </FormContainer>
 	)
 }

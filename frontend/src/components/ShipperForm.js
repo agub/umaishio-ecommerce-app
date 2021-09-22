@@ -60,35 +60,40 @@ const ShipperForm = ({
 					<Form.Group controlId='postalCode' className='mt-2'>
 						<Form.Label>
 							<div className='shipping-form-lable__g'>
-								氏名{' '}
-								<span className='shipping-form-icon__g'>
-									必須
-								</span>
+								氏名 <span className='form-asterisk__g'>*</span>
 							</div>
 						</Form.Label>
-						<Form.Control
-							type='string'
-							value={shipperFullName}
-							required
-							onChange={(e) => setShipperFullName(e.target.value)}
-						></Form.Control>
+						<div className='form-container-pw-icon__g'>
+							<Form.Control
+								type='string'
+								value={shipperFullName}
+								required
+								onChange={(e) =>
+									setShipperFullName(e.target.value)
+								}
+							></Form.Control>
+						</div>
 					</Form.Group>
-					<p className='m-2 shipping-form-example__g'>例: 旨い塩太郎</p>
+					<p className='m-2 shipping-form-example__g'>
+						例: 旨い塩太郎
+					</p>
 					<Form.Group controlId='postalCode' className='mt-2'>
 						<Form.Label>
 							<div className='shipping-form-lable__g'>
 								フリガナ{' '}
-								<span className='shipping-form-icon__g'>
-									必須
-								</span>
+								<span className='form-asterisk__g'>*</span>
 							</div>
 						</Form.Label>
-						<Form.Control
-							type='string'
-							value={shipperFurigana}
-							required
-							onChange={(e) => setShipperFurigana(e.target.value)}
-						></Form.Control>
+						<div className='form-container-pw-icon__g'>
+							<Form.Control
+								type='string'
+								value={shipperFurigana}
+								required
+								onChange={(e) =>
+									setShipperFurigana(e.target.value)
+								}
+							></Form.Control>
+						</div>
 					</Form.Group>
 					<p className='m-2 shipping-form-example__g'>
 						例: ウマイシオタロウ
@@ -99,20 +104,23 @@ const ShipperForm = ({
 								電話番号{' '}
 							</div>
 						</Form.Label>
-						<Form.Control
-							type='number'
-							value={shipperPhoneNumber}
-							onChange={(e) =>
-								setShipperPhoneNumber(e.target.value)
-							}
-						></Form.Control>
+						<div className='form-container-pw-icon__g'>
+							<Form.Control
+								type='number'
+								value={shipperPhoneNumber}
+								onChange={(e) =>
+									setShipperPhoneNumber(e.target.value)
+								}
+							></Form.Control>
+						</div>
 					</Form.Group>
-					<p className='m-2 shipping-form-example__g'>例: 09022516873</p>
+					<p className='m-2 shipping-form-example__g'>
+						例: 09022516873
+					</p>
 					<Form.Label>
 						{' '}
 						<div className='shipping-form-lable__g'>
-							郵便番号{' '}
-							<span className='shipping-form-icon__g'>必須</span>
+							郵便番号 <span className='form-asterisk__g'>*</span>
 						</div>
 					</Form.Label>
 					<Row>
@@ -123,17 +131,21 @@ const ShipperForm = ({
 							sm={3}
 							xs={4}
 						>
-							<Form.Control
-								type='string'
-								value={shipperPostalCode1}
-								maxLength='3'
-								minLength='3'
-								required
-								onChange={(e) =>
-									setShipperPostalCode1(e.target.value)
-								}
-							></Form.Control>
-							<p className='m-2 shipping-form-example__g'>例: 210</p>
+							<div className='form-container-pw-icon__g'>
+								<Form.Control
+									type='string'
+									value={shipperPostalCode1}
+									maxLength='3'
+									minLength='3'
+									required
+									onChange={(e) =>
+										setShipperPostalCode1(e.target.value)
+									}
+								></Form.Control>
+							</div>
+							<p className='m-2 shipping-form-example__g'>
+								例: 210
+							</p>
 						</Form.Group>
 						<div
 							style={{
@@ -154,21 +166,23 @@ const ShipperForm = ({
 							sm={3}
 							xs={4}
 						>
-							<Form.Control
-								type='string'
-								value={shipperPostalCode2}
-								maxLength='4'
-								minLength='4'
-								required
-								onChange={(e) =>
-									setShipperPostalCode2(e.target.value)
-								}
-							></Form.Control>
+							<div className='form-container-pw-icon__g'>
+								<Form.Control
+									type='string'
+									value={shipperPostalCode2}
+									maxLength='4'
+									minLength='4'
+									required
+									onChange={(e) =>
+										setShipperPostalCode2(e.target.value)
+									}
+								></Form.Control>
+							</div>
 							<p className='m-2 shipping-form-example__g'>
 								例: 0021
 							</p>
 						</Form.Group>
-						<Button
+						{/* <Button
 							className='btn-sm'
 							size='sm'
 							variant='secondary'
@@ -180,44 +194,55 @@ const ShipperForm = ({
 							}}
 						>
 							住所検索
-						</Button>
+						</Button> */}
 					</Row>
 					<Form.Group controlId='prefecture' className='mt-2'>
-						<Form.Label>都道府県</Form.Label>
-						<Form.Control
-							className='form-select'
-							as='select'
-							value={shipperPrefecture}
-							placeholder='選択してください'
-							required
-							onChange={(e) =>
-								setShipperPrefecture(e.target.value)
-							}
-						>
-							{PREF_OPTIONS.map((x) => (
-								<option key={x} value={x}>
-									{x}
-								</option>
-							))}
-						</Form.Control>
+						<Form.Label>
+							<div className='shipping-form-lable__g'>
+								都道府県
+								<span className='form-asterisk__g'>*</span>
+							</div>
+						</Form.Label>
+						<div className='form-container-pw-icon__g'>
+							<Form.Control
+								className='form-select'
+								as='select'
+								value={shipperPrefecture}
+								placeholder='選択してください'
+								required
+								onChange={(e) =>
+									setShipperPrefecture(e.target.value)
+								}
+							>
+								{PREF_OPTIONS.map((x) => (
+									<option key={x} value={x}>
+										{x}
+									</option>
+								))}
+							</Form.Control>
+						</div>
 					</Form.Group>
 					<p className='m-2 shipping-form-example__g'>&nbsp;</p>
 					<Form.Group controlId='address' className='mt-2'>
 						<Form.Label>
 							<div className='shipping-form-lable__g'>
 								市区町村・番地
-								<span className='shipping-form-icon__g'>
-									必須
-								</span>
+								<span className='form-asterisk__g'>*</span>
 							</div>
 						</Form.Label>
-						<Form.Control
-							type='text'
-							value={shipperAddress}
-							required
-							onChange={(e) => setShipperAddress(e.target.value)}
-						></Form.Control>
-						<p className='m-2 shipping-form-example__g'>例: 1020021</p>
+						<div className='form-container-pw-icon__g'>
+							<Form.Control
+								type='text'
+								value={shipperAddress}
+								required
+								onChange={(e) =>
+									setShipperAddress(e.target.value)
+								}
+							></Form.Control>
+						</div>
+						<p className='m-2 shipping-form-example__g'>
+							例: 1020021
+						</p>
 					</Form.Group>
 					<Form.Group controlId='address'>
 						<Form.Label>
@@ -226,11 +251,15 @@ const ShipperForm = ({
 								建物名・部屋番号
 							</div>
 						</Form.Label>
-						<Form.Control
-							type='text'
-							value={shipperBuilding}
-							onChange={(e) => setShipperBuilding(e.target.value)}
-						></Form.Control>
+						<div className='form-container-pw-icon__g'>
+							<Form.Control
+								type='text'
+								value={shipperBuilding}
+								onChange={(e) =>
+									setShipperBuilding(e.target.value)
+								}
+							></Form.Control>
+						</div>
 					</Form.Group>
 					<p className='m-2 shipping-form-example__g'>例: 1020021</p>
 				</>

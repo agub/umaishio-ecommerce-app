@@ -1,13 +1,13 @@
 @import "../variables/Variables.scss";
 
-.cart-item{
-  @include shadowRounded;
-  background-color: $main-background-color;
-  @include mq(md) { // 引数を個別に指定
-  padding: 40px 10px;
-  }
-  /* responsive */
-}
+// .cart-item{
+//   @include shadowRounded;
+//   background-color: $main-background-color;
+//   @include mq(md) { // 引数を個別に指定
+//   padding: 40px 10px;
+//   }
+//   /* responsive */
+// }
 
 .cart-title {
   display: flex;
@@ -71,7 +71,7 @@
   z-index: 1000;
   @include mq(md) { // 引数を個別に指定
     position: absolute;
-    bottom: 30px;
+    bottom: 35px;
   }
 }
 
@@ -85,18 +85,13 @@
 }
 
 
-.cart-underline {
-  width: 100%; 
-  text-align: center; 
-  border-bottom: 0.3px solid #909090;
-  line-height: 0.1px;
-  // margin: 10px 0 20px; 
-} 
-.cart-subtotal-text {
-  display: flex;
-  justify-content: space-between;
-  // font-size: 1.4rem;
-}
+// .cart-underline {
+//   width: 100%; 
+//   text-align: center; 
+//   border-bottom: 0.3px solid #909090;
+//   line-height: 0.1px;
+//   // margin: 10px 0 20px; 
+// } 
 
 .cart-price-wrap {
   padding: 40px 40px;
@@ -104,11 +99,6 @@
    margin-top: 1.5rem;
   }
 }
-
-.cart-next-btn {
-  @include justsShadow();
-}
-
 
 .cart-back-btn {
   @include basicButton();

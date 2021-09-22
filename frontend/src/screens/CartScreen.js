@@ -67,7 +67,10 @@ const CartScreen = ({ match, location, history }) => {
 				) : (
 					<div>
 						{cartItems.map((item) => (
-							<div className='cart-item' key={item.product}>
+							<div
+								className='item-responsive-wrap__g mb-3'
+								key={item.product}
+							>
 								<Row className='cart-row'>
 									<Col xs={4} md={2}>
 										<Image
@@ -199,13 +202,13 @@ const CartScreen = ({ match, location, history }) => {
 				)}
 			</Col>
 			<Col lg={4} md={12}>
-				<div className='cart-item cart-price-wrap'>
-					<p className='cart-subtotal-text'>
+				<div className='item-responsive-wrap__g cart-price-wrap'>
+					<p className='d-flex justify-content-between'>
 						<span>注文内容:</span>
 						<span>{`${getCartCount()}件`}</span>
 					</p>
-					<p className='cart-underline'></p>
-					<p className='cart-subtotal-text'>
+					<p className='underline__g'></p>
+					<p className='d-flex justify-content-between'>
 						<span>商品合計:</span>
 						<span>
 							¥&nbsp;
@@ -217,16 +220,16 @@ const CartScreen = ({ match, location, history }) => {
 								.toFixed(0)}
 						</span>
 					</p>
-					<p className='cart-subtotal-text'>
+					<p className='d-flex justify-content-between'>
 						<span>送料:</span>
 						<span>¥&nbsp; ????</span>
 					</p>
-					<p className='cart-subtotal-text'>
+					<p className='d-flex justify-content-between'>
 						<span>消費税:</span>
 						<span>¥&nbsp; ????</span>
 					</p>
-					<p className='cart-underline'></p>
-					<p className='cart-subtotal-text'>
+					<p className='underline__g'></p>
+					<p className='d-flex justify-content-between'>
 						<span>商品合計:</span>
 						<span>¥&nbsp; ????</span>
 					</p>
@@ -235,10 +238,10 @@ const CartScreen = ({ match, location, history }) => {
 				</div>
 				<div>
 					<Button
-						type='button'
 						className='next-gradient-btn__g cart-next-btn mt-4'
 						disabled={cartItems.length === 0}
 						onClick={checkoutHandler}
+						type='button'
 					>
 						レジに進む
 					</Button>

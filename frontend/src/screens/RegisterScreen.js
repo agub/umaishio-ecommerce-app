@@ -215,14 +215,14 @@ const RegisterScreen = ({ location, history }) => {
 				</ModalContainer>
 			</div>
 			{/* <div className='stickyBottom'>asfasdfa</div> */}
-			<button exact to='/cart' className='stickyBottom'>
+			{/* <button exact to='/cart' className='stickyBottom'>
 				<span className='home-cartButton'>
 					<i
 						style={{ marginRight: '4px', marginTop: '5px' }}
 						className='fas fa-shopping-cart'
 					></i>{' '}
 				</span>
-			</button>
+			</button> */}
 		</>
 	)
 }

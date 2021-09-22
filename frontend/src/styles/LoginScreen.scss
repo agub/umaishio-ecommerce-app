@@ -53,6 +53,7 @@
 // }
 
 .login-guest-btn{
+  @include shadowRounded();
   @include basicButton();
   margin-top: 5px;
 }

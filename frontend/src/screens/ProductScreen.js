@@ -238,7 +238,7 @@ const ProductScreen = ({ match, history }) => {
 														}}
 													>
 														<span>
-															カートへ追加&nbsp;&nbsp;
+															カートへ追加
 														</span>
 														<span>
 															<i className='fas fa-plus'></i>

@@ -3,33 +3,23 @@
 @font-face {
   font-family: "AxisStd";
   src: local("AxisStd"),
-  url("./fonts/AxisStd/AxisStd-UltraLight.otf") format('truetype');
-
+  url("./fonts/AxisStd/AxisStd-UltraLight.woff2") format('truetype');
+  font-display: swap;
 }
 @font-face {
   font-family: "AxisStd";
   src: local("AxisStd"),
-  url("./fonts/AxisStd/AxisStd-ExtraLight.otf") format('truetype');
-  font-weight: bold
+  url("./fonts/AxisStd/AxisStd-ExtraLight.woff2") format('truetype');
+  font-weight: bold;
+  font-display: swap;
 }
 
 body {
   // font-family: "AxisStd";
   font-family: "AxisStd";
+  font-display: swap;
   font-weight: bold; 
 }
-
-// .btn {
-//   display: inline-block;
-//   margin-bottom: 0; // For input.btn
-//   font-weight: $btn-font-weight;
-// }
-
-/*
-
-.bg-dark {
-  background-color: #5c2d91 !important;
-} */
 
 a {
   text-decoration: none;
@@ -49,6 +39,16 @@ h1 {
 p {
   // font-size: 0.9rem;
   
+}
+
+
+.form-control {
+  color: black;
+  border: 0 solid #ced4da;
+}
+
+.modal-content {
+  @include shadowRounded;
 }
 
 main {
@@ -86,6 +86,7 @@ main {
   border-radius: $button-border-radius;
   background: linear-gradient(to right top, #E71F7F, #A7228F);
   position: relative;
+  @include justsShadow();
   // background-color: #fff;
 }
 
@@ -133,6 +134,92 @@ main {
   -webkit-appearance:none; /* Safari and Chrome */
   text-align-last:center;
 }
+
+.item-responsive-wrap__g{
+  @include shadowRounded;
+  background-color: $main-background-color;
+  @include mq(md) { // 引数を個別に指定
+  padding: 40px 10px;
+  }
+  /* responsive */
+}
+
+.item-modal-wrap__g{
+  @include shadowRounded;
+  padding: 40px 30px;
+  background-color: $main-background-color;
+
+  /* responsive */
+}
+
+.edit-cart-row-right__g{
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.select-wrap-sm__g{
+  position: relative;
+  margin-top: 20px;
+}
+
+.shipping-row-mg__g {
+  margin-top: 25px;
+}
+
+
+.shipping-select-top__g {
+  font-size: 0.8rem;
+  z-index: 1000;
+  position: absolute;
+  bottom: 35px;
+}
+
+// .item-modal-wrap__g{
+//   position: absolute;
+//   position: fixed; /* Stay in place */
+//   z-index: 1; /* Sit on top */
+//   left: 0;
+//   bottom: 50px;
+//   width: 100%; /* Full width */
+//   height: auto; /* Full height */
+//   // @include shadowRounded;
+
+//   // background-color: rgb(0,0,0); /* Fallback color */
+//   // background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+//   background-color: $main-background-color;
+//   /* responsive */
+// }
+// .item-container__g{
+ 
+//   width: 100%; /* Full width */
+//   height: auto; /* Full height */
+//   // @include shadowRounded;
+
+//   // background-color: rgb(0,0,0); /* Fallback color */
+//   // background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+//   background-color: $main-background-color;
+//   /* responsive */
+// }
+
+
+.shipper-wrap__g{
+  @include shadowRounded;
+  background-color: $main-background-color;
+  @include mq(lg) { // 引数を個別に指定
+  display: none;
+  }
+  /* responsive */
+}
+.underline__g {
+  width: 100%; 
+  text-align: center; 
+  border-bottom: 0.3px solid #909090;
+  line-height: 0.1px;
+  // margin: 10px 0 20px; 
+} 
+
+
 
 // ------------------------------global-css ----------------------------------
 
@@ -515,24 +602,25 @@ main {
 }
 
 .stickyBottom  {
-  @include customFlex();
-  width: 100%;
-  height: 60px;
-  position: fixed;
-  // margin-bottom: 20px;
-  // margin-right: 20px;
-  right: 0;
-  bottom: 0;
-  /* background-color: blueviolet; */
-  
-  
-  height: 50px;
-  
-  /* color: white; */
-  /* border: 1px solid; */
-  box-shadow: 0px 3px 10px 1px;
- 
-  transform-origin: 50% 50%;
+  display: none;
+  @include mq(lg) { // 引数を個別に指定
+    @include customFlex();
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    border-width: 0ch;
+    right: 0;
+    bottom: 0;
+    
+    height: 50px;
+    
+    /* color: white; */
+    /* border: 1px solid; */
+    // box-shadow: 0px 3px 10px 1px;
+   
+    transform-origin: 50% 50%;
+    
+  }
 }
 
 .animation-shake {
