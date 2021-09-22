@@ -134,10 +134,12 @@ const CartScreen = ({ match, location, history }) => {
 											<span className='cart-select-top'>
 												数量
 											</span>
+											{/* <Form.Control */}
 											<select
 												as='select'
 												value={item.qty}
 												className='cart-select-form'
+												// className='cart-select-form form-select'
 												// style={{
 												// 	padding:
 												// 		'0.75rem 0.2rem 0.75rem 0.4rem',
