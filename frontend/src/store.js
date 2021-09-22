@@ -66,6 +66,14 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 	? JSON.parse(localStorage.getItem('userInfo'))
 	: null
 
+if (
+	userInfoFromStorage &&
+	userInfoFromStorage.expiry &&
+	new Date().getTime() > userInfoFromStorage.expiry
+) {
+	localStorage.removeItem('userInfo')
+}
+
 const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
 	? JSON.parse(localStorage.getItem('shippingAddress'))
 	: {}

@@ -13,16 +13,21 @@ import {
 // @route         POST /api/products
 // @access        Public
 const authUser = asyncHandler(async (req, res) => {
-	const { email, password } = req.body
+	const { email, password, savePassword } = req.body
 
 	const user = await User.findOne({ email })
 	if (user.verify) {
 		throw new Error('メールをチェックして')
 	}
+	let expiryTime = undefined
+	if (!savePassword) {
+		expiryTime = Date.now() + 3600000
+	}
 
 	if (user && (await user.matchPassword(password))) {
 		res.json({
 			_id: user._id,
+			expiry: expiryTime,
 			name: user.name,
 			email: user.email,
 			isAdmin: user.isAdmin,

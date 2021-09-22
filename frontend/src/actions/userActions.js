@@ -47,13 +47,13 @@ export const login = (email, password, savePassword) => async (dispatch) => {
 		}
 		const { data } = await axios.post(
 			'/api/users/login',
-			{ email, password },
+			{ email, password, savePassword },
 			config
 		)
 		dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
-		if (savePassword) {
-			localStorage.setItem('userInfo', JSON.stringify(data))
-		}
+		// localStorage.setItem('userInfo', JSON.stringify(data))
+
+		localStorage.setItem('userInfo', JSON.stringify(data))
 	} catch (error) {
 		const message =
 			error.response && error.response.data.message

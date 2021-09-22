@@ -221,15 +221,10 @@ const ShippingScreen = ({ history }) => {
 
 	//PlaceOrderScreen
 
-	useEffect(() => {
-		if (!userInfo) {
-			history.push('/login')
-		}
-	}, userInfo)
-
 	//Shipping Address History
 	useEffect(() => {
 		if (
+			userInfo &&
 			!userInfo.isGuest &&
 			Object.keys(userInfo.shippingAddress).length === 0 &&
 			userInfo.shippingAddress.constructor === Object
@@ -259,6 +254,12 @@ const ShippingScreen = ({ history }) => {
 		}
 	}, [userInfo, useAddressHistory])
 	//Shipping Address History
+
+	useEffect(() => {
+		if (!userInfo) {
+			history.push('/login')
+		}
+	})
 
 	//submit order and move to order
 	useEffect(() => {
@@ -304,7 +305,7 @@ const ShippingScreen = ({ history }) => {
 					<CheckoutSteps step1 step2 />
 					<h1>お届け先の住所</h1>
 					<Col lg={8} md={12}>
-						{!userInfo.isGuest ? (
+						{userInfo && !userInfo.isGuest ? (
 							<AddressHistory
 								show={show}
 								handleClose={handleClose}
