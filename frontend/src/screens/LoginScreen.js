@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Message from '../components/Message'
@@ -14,6 +14,7 @@ import {
 import Background from '../data/images/bgc_blur.png'
 
 import '../styles/LoginScreen.scss'
+import VerifySuccessModal from '../components/VerifySuccessModal'
 
 const LoginScreen = ({ location, history }) => {
 	const [email, setEmail] = useState('')
@@ -23,7 +24,10 @@ const LoginScreen = ({ location, history }) => {
 
 	const [showPassword, setShowPassword] = useState(false)
 
-	console.log(savePassword)
+	// VerifySuccessModal
+	const [show, setShow] = useState(false)
+	const handleClose = () => setShow(false)
+	// VerifySuccessModal
 
 	const dispatch = useDispatch()
 	const userLogin = useSelector((state) => state.userLogin)
@@ -49,6 +53,15 @@ const LoginScreen = ({ location, history }) => {
 		}
 	}, [history, userInfo, dispatch, successLogin])
 
+	useEffect(() => {
+		if (success) {
+			setShow(true)
+			dispatch({
+				type: USER_VERIFY_RESET,
+			})
+		}
+	}, [success])
+
 	const submitHandler = (e) => {
 		e.preventDefault()
 		dispatch({
@@ -68,9 +81,9 @@ const LoginScreen = ({ location, history }) => {
 				<h1 className='text-center'>ログイン</h1>
 
 				{error && <Message variant='danger'>{error}</Message>}
-				{success && (
-					<Message>登録メールアドレスを認証しました。</Message>
-				)}
+
+				<VerifySuccessModal show={show} handleClose={handleClose} />
+
 				{loading && <Loader />}
 				<Form onSubmit={submitHandler}>
 					<Form.Group controlId='email'>

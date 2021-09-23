@@ -18,7 +18,7 @@ const CheckEmailScreen = () => {
 					<div className='d-flex flex-row justify-content-center'>
 						<Image
 							src={EamilVerify}
-							alt={EamilVerify}
+							alt='EamilVerify'
 							fluid
 							style={{ maxWidth: '60%' }}
 						/>
