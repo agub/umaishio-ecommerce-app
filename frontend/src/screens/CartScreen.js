@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
 	Row,
@@ -19,6 +19,7 @@ import '../styles/CartScreen.scss'
 const CartScreen = ({ match, location, history }) => {
 	const productId = match.params.id
 	const qty = location.search ? Number(location.search.split('=')[1]) : 1
+	const [countQty, setCountQty] = useState(1)
 
 	const userLogin = useSelector((state) => state.userLogin)
 	const { userInfo } = userLogin
@@ -135,15 +136,11 @@ const CartScreen = ({ match, location, history }) => {
 												数量
 											</span>
 											{/* <Form.Control */}
-											<select
+											{/* <select
 												as='select'
 												value={item.qty}
 												className='cart-select-form'
 												// className='cart-select-form form-select'
-												// style={{
-												// 	padding:
-												// 		'0.75rem 0.2rem 0.75rem 0.4rem',
-												// }}
 												onChange={(e) =>
 													dispatch(
 														addToCart(
@@ -167,7 +164,71 @@ const CartScreen = ({ match, location, history }) => {
 														{x + 1}
 													</option>
 												))}
-											</select>
+											</select> */}
+											<div className='crement-wrap__g'>
+												<button
+													className='product-page-crement'
+													onClick={() => {
+														if (item.qty === 1) {
+															return
+														} else {
+															dispatch(
+																addToCart(
+																	item.product,
+																	Number(
+																		item.qty
+																	) - 1
+																)
+															)
+														}
+													}}
+												>
+													<i className='fa fa-minus'></i>
+												</button>
+												<select
+													className='form-select form-control-select__g'
+													value={item.qty}
+													onChange={(e) =>
+														dispatch(
+															addToCart(
+																item.product,
+																Number(
+																	e.target
+																		.value
+																)
+															)
+														)
+													}
+												>
+													{[
+														...Array(
+															item.countInStock
+														).keys(),
+													].map((x) => (
+														<option
+															key={x + 1}
+															value={x + 1}
+														>
+															{x + 1}
+														</option>
+													))}
+												</select>
+												<button
+													className='product-page-crement'
+													onClick={() =>
+														dispatch(
+															addToCart(
+																item.product,
+																Number(
+																	item.qty
+																) + 1
+															)
+														)
+													}
+												>
+													<i className='fas fa-plus'></i>
+												</button>
+											</div>
 										</Col>
 
 										<Col

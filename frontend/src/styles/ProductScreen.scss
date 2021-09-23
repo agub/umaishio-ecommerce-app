@@ -89,8 +89,9 @@
   border-color: gray;
   border-radius: $button-border-radius;
   padding: 0px 10px;
-  max-width: 150px;
+  max-width: 120px;
   border-style: solid;
+  
   
 }
 
@@ -98,6 +99,7 @@
   border-width: 0;
   background-color: $main-background-color;
   border-radius: 50px;
+  font-size: 14px;
   /* margin: 0px 15px; */
 }
 

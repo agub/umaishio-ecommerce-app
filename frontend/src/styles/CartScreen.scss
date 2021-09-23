@@ -60,7 +60,7 @@
 .cart-select-wrap{
   position: relative;
   @include mq(md) { // 引数を個別に指定
-    margin-top: 20px;
+    margin-top: 25px;
   }
 }
 

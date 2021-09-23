@@ -126,7 +126,10 @@ main {
 .form-control-select__g {
   margin: 0 auto;
   max-width: 26px;
-  margin: 5px;
+  // margin: 5px;
+  
+  z-index: 1000;
+  font-size: 14px;
   padding: 1px 1px;
   appearance:none;
   border-width: 0;
@@ -219,7 +222,17 @@ main {
   // margin: 10px 0 20px; 
 } 
 
-
+.crement-wrap__g {
+  @include customFlex($justify: space-around);
+  border-width: 0.2px;
+  border-color: gray;
+  border-radius: $button-border-radius;
+  padding: 0px 5px;
+  min-height: 30px;
+  max-width: 90px;
+  border-style: solid;
+  
+}
 
 // ------------------------------global-css ----------------------------------
 

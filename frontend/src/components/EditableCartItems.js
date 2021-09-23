@@ -30,7 +30,7 @@ const EditableCartItems = ({ item }) => {
 				</Col>
 				<Col xs={12} className='select-wrap-sm__g shipping-row-mg__g'>
 					<span className='shipping-select-top__g'>数量</span>
-					<select
+					{/* <select
 						as='select'
 						value={item.qty}
 						className='cart-select-form'
@@ -49,7 +49,57 @@ const EditableCartItems = ({ item }) => {
 								{x + 1}
 							</option>
 						))}
-					</select>
+					</select> */}
+					<div className='crement-wrap__g'>
+						<button
+							className='product-page-crement'
+							onClick={() => {
+								if (item.qty === 1) {
+									return
+								} else {
+									dispatch(
+										addToCart(
+											item.product,
+											Number(item.qty) - 1
+										)
+									)
+								}
+							}}
+						>
+							<i className='fa fa-minus'></i>
+						</button>
+						<select
+							className='form-select form-control-select__g'
+							value={item.qty}
+							onChange={(e) =>
+								dispatch(
+									addToCart(
+										item.product,
+										Number(e.target.value)
+									)
+								)
+							}
+						>
+							{[...Array(item.countInStock).keys()].map((x) => (
+								<option key={x + 1} value={x + 1}>
+									{x + 1}
+								</option>
+							))}
+						</select>
+						<button
+							className='product-page-crement'
+							onClick={() =>
+								dispatch(
+									addToCart(
+										item.product,
+										Number(item.qty) + 1
+									)
+								)
+							}
+						>
+							<i className='fas fa-plus'></i>
+						</button>
+					</div>
 					{/* <span className='ml-20'>
 											¥{item.price}
 										</span> */}
