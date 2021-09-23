@@ -10,6 +10,7 @@ import { login } from '../actions/userActions'
 import {
 	USER_VERIFY_RESET,
 	USER_LOGIN_SUCCESS_RESET,
+	USER_UPDATE_RESET,
 } from '../constants/userConstants'
 import Background from '../data/images/bgc_blur.png'
 
@@ -28,12 +29,20 @@ const LoginScreen = ({ location, history }) => {
 	const [show, setShow] = useState(false)
 	const handleClose = () => setShow(false)
 	// VerifySuccessModal
+	// VerifySuccessModal
+	const [showPwSucess, setShowPwSucess] = useState(false)
+	const handlePwClose = () => setShowPwSucess(false)
+	// VerifySuccessModal
 
 	const dispatch = useDispatch()
 	const userLogin = useSelector((state) => state.userLogin)
 	const { loading, error, userInfo, success: successLogin } = userLogin
+
 	const userVerify = useSelector((state) => state.userVerify)
 	const { success } = userVerify
+
+	const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
+	const { success: userUpdateSucess } = userUpdateProfile
 
 	const cart = useSelector((state) => state.cart)
 	const { cartItems } = cart
@@ -60,7 +69,13 @@ const LoginScreen = ({ location, history }) => {
 				type: USER_VERIFY_RESET,
 			})
 		}
-	}, [success])
+		if (userUpdateSucess) {
+			setShowPwSucess(true)
+			dispatch({
+				type: USER_UPDATE_RESET,
+			})
+		}
+	}, [success, userUpdateSucess])
 
 	const submitHandler = (e) => {
 		e.preventDefault()
@@ -82,7 +97,16 @@ const LoginScreen = ({ location, history }) => {
 
 				{error && <Message variant='danger'>{error}</Message>}
 
-				<VerifySuccessModal show={show} handleClose={handleClose} />
+				<VerifySuccessModal
+					text='Eメールの認証が完了しました。'
+					show={show}
+					handleClose={handleClose}
+				/>
+				<VerifySuccessModal
+					text='パスワードを変更しました。'
+					show={showPwSucess}
+					handleClose={handlePwClose}
+				/>
 
 				{loading && <Loader />}
 				<Form onSubmit={submitHandler}>

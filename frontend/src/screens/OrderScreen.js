@@ -179,7 +179,9 @@ const OrderScreen = ({ match, history, location }) => {
 	) : (
 		<>
 			<Row>
-				{(!order.isPaid || !order.isBankTransfer) && (
+				{!order.isPaid && !order.isBankTransfer ? (
+					<CheckoutSteps step1 step2 step3 />
+				) : (
 					<CheckoutSteps step1 step2 step3 step4 />
 				)}
 				<Col md={8}>

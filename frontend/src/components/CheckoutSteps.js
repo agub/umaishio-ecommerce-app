@@ -42,12 +42,10 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
 
 			<Nav.Item className='checkoutStep'>
 				{step3 ? (
-					<LinkContainer to='/placeorder' className='p-0'>
-						<Nav.Link>ご注文の確認</Nav.Link>
-					</LinkContainer>
+					<Nav.Link>チェックアウト</Nav.Link>
 				) : (
 					<Nav.Link disabled className='p-0'>
-						ご注文の確認
+						チェックアウト
 					</Nav.Link>
 				)}
 			</Nav.Item>

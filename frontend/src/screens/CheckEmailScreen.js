@@ -27,7 +27,7 @@ const CheckEmailScreen = () => {
 					<p className='text-center mt-4'>
 						info@umaishio.com　からのEメールから
 						<br />
-						認証してください
+						お探しください。迷惑メールに入っている可能性がございます。
 					</p>
 					<Link to='/login'>
 						<Button className='next-gradient-btn__g mt-4'>

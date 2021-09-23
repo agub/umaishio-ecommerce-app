@@ -191,105 +191,114 @@ const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 	}
 	return (
 		<Modal show={show} onHide={handleClose} size='lg' centered>
-			<Modal.Header closeButton>
+			{/* <Modal.Header closeButton>
 				<Modal.Title>お届け先の変更</Modal.Title>
-			</Modal.Header>
-			<Modal.Body className='p-20'>
-				<h1>お届け先の住所</h1>
-				<Form onSubmit={submitHandler} className='shippingContainer'>
-					{/* responsiveCss */}
-					<ShippingForm
-						fullName={fullName}
-						furigana={furigana}
-						phoneNumber={phoneNumber}
-						postalCode1={postalCode1}
-						postalCode2={postalCode2}
-						prefecture={prefecture}
-						address={address}
-						building={building}
-						setFullName={setFullName}
-						setFurigana={setFurigana}
-						setPhoneNumber={setPhoneNumber}
-						setPostalCode1={setPostalCode1}
-						setPostalCode2={setPostalCode2}
-						setPrefecture={setPrefecture}
-						setAddress={setAddress}
-						setBuilding={setBuilding}
-					/>
-					<Form.Check
-						className='mt-3'
-						label='申し込み人と送り主が異なる場合'
-						onChange={() => shipperCheck()}
-						// value={isShipper}
-						checked={isShipper}
-					/>
-					<ShipperForm
-						isShipper={isShipper}
-						shipperFullName={shipperFullName}
-						shipperFurigana={shipperFurigana}
-						shipperPhoneNumber={shipperPhoneNumber}
-						shipperPostalCode1={shipperPostalCode1}
-						shipperPostalCode2={shipperPostalCode2}
-						shipperPrefecture={shipperPrefecture}
-						shipperAddress={shipperAddress}
-						shipperBuilding={shipperBuilding}
-						setShipperFullName={setShipperFullName}
-						setShipperFurigana={setShipperFurigana}
-						setShipperPhoneNumber={setShipperPhoneNumber}
-						setShipperPostalCode1={setShipperPostalCode1}
-						setShipperPostalCode2={setShipperPostalCode2}
-						setShipperPrefecture={setShipperPrefecture}
-						setShipperAddress={setShipperAddress}
-						setShipperBuilding={setShipperBuilding}
-					/>
-					<Form.Check
-						className='mt-3'
-						label='配送者へのご要望'
-						onChange={() => commentCheck()}
-						checked={isComment}
-					/>
-					{isComment && (
-						<Form.Group controlId='comment' className='mt-3'>
-							<Form.Label>ご要望内容</Form.Label>
-							<Form.Control
-								as='textarea'
-								required
-								row='3'
-								onChange={(e) => setComment(e.target.value)}
-								value={comment}
-							></Form.Control>
-						</Form.Group>
-					)}
-					{/* <div
+			</Modal.Header> */}
+			<div className='item-modal-wrap__g'>
+				<Modal.Body className='p-20'>
+					<h1>お届け先の住所</h1>
+					<Form
+						onSubmit={submitHandler}
+						className='shippingContainer'
+					>
+						{/* responsiveCss */}
+						<ShippingForm
+							fullName={fullName}
+							furigana={furigana}
+							phoneNumber={phoneNumber}
+							postalCode1={postalCode1}
+							postalCode2={postalCode2}
+							prefecture={prefecture}
+							address={address}
+							building={building}
+							setFullName={setFullName}
+							setFurigana={setFurigana}
+							setPhoneNumber={setPhoneNumber}
+							setPostalCode1={setPostalCode1}
+							setPostalCode2={setPostalCode2}
+							setPrefecture={setPrefecture}
+							setAddress={setAddress}
+							setBuilding={setBuilding}
+						/>
+						<Form.Check
+							className='mt-3'
+							label='申し込み人と送り主が異なる場合'
+							onChange={() => shipperCheck()}
+							// value={isShipper}
+							checked={isShipper}
+						/>
+						<ShipperForm
+							isShipper={isShipper}
+							shipperFullName={shipperFullName}
+							shipperFurigana={shipperFurigana}
+							shipperPhoneNumber={shipperPhoneNumber}
+							shipperPostalCode1={shipperPostalCode1}
+							shipperPostalCode2={shipperPostalCode2}
+							shipperPrefecture={shipperPrefecture}
+							shipperAddress={shipperAddress}
+							shipperBuilding={shipperBuilding}
+							setShipperFullName={setShipperFullName}
+							setShipperFurigana={setShipperFurigana}
+							setShipperPhoneNumber={setShipperPhoneNumber}
+							setShipperPostalCode1={setShipperPostalCode1}
+							setShipperPostalCode2={setShipperPostalCode2}
+							setShipperPrefecture={setShipperPrefecture}
+							setShipperAddress={setShipperAddress}
+							setShipperBuilding={setShipperBuilding}
+						/>
+						<Form.Check
+							className='mt-3'
+							label='配送者へのご要望'
+							onChange={() => commentCheck()}
+							checked={isComment}
+						/>
+						{isComment && (
+							<Form.Group controlId='comment' className='mt-3'>
+								<Form.Label>ご要望内容</Form.Label>
+								<div className='form-container-pw-icon__g'>
+									<Form.Control
+										as='textarea'
+										required
+										row='3'
+										onChange={(e) =>
+											setComment(e.target.value)
+										}
+										value={comment}
+									></Form.Control>
+								</div>
+							</Form.Group>
+						)}
+						{/* <div
 						style={{
 							display: 'flex',
 							justifyContent: 'space-between',
 							alignItems: 'center',
 						}}
 					> */}
-					{loading ? (
-						<Loader />
-					) : (
-						<>
-							<Button
-								type='submit'
-								variant='primary'
-								className='mt-3 w-100'
-							>
-								変更する
-							</Button>
-							<Button
-								variant='flush'
-								onClick={handleClose}
-								className='mt-3 w-100'
-							>
-								キャンセル
-							</Button>
-						</>
-					)}
-					{/* </div> */}
-				</Form>
-			</Modal.Body>
+						{loading ? (
+							<Loader />
+						) : (
+							<>
+								<Button
+									type='submit'
+									variant='primary'
+									className='mt-3 w-100'
+								>
+									変更する
+								</Button>
+								<Button
+									variant='flush'
+									onClick={handleClose}
+									className='mt-3 w-100'
+								>
+									キャンセル
+								</Button>
+							</>
+						)}
+						{/* </div> */}
+					</Form>
+				</Modal.Body>
+			</div>
 			{/* <Modal.Footer>
 				<Button variant='primary' onClick={handleClose}>
 					閉じる

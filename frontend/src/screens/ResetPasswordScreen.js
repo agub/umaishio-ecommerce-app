@@ -10,6 +10,9 @@ import { login } from '../actions/userActions'
 import { sendResetPassword } from '../actions/userActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
+import Background from '../data/images/bgc_blur.png'
+import ModalContainer from '../components/ModalContainer'
+
 const ResetPasswordScreen = ({ location, history, match }) => {
 	const [password, setPassword] = useState('')
 	const [confirmPassword, setConfirmPassword] = useState('')
@@ -28,10 +31,7 @@ const ResetPasswordScreen = ({ location, history, match }) => {
 
 	useEffect(() => {
 		if (success) {
-			setTimeout(() => {
-				history.push('/login')
-				dispatch({ type: USER_UPDATE_PROFILE_RESET })
-			}, 10000)
+			history.push('/login')
 		}
 	}, [history, success])
 
@@ -46,61 +46,81 @@ const ResetPasswordScreen = ({ location, history, match }) => {
 	}
 
 	return (
-		<FormContainer>
-			<h1 style={{ fontSize: '1.5rem' }}>パスワードのリセット</h1>
-			{error && <Message variant='danger'>{error}</Message>}
-			{errorMsg && <Message variant='danger'>{errorMsg}</Message>}
-			{success && (
-				<Message>
-					パスワードが変更されました。数秒後に
-					<Link to={'/login'}>ログイン画面</Link>に移動します。
-				</Message>
-			)}
-			{loading && <Loader />}
-			<Form onSubmit={submitHandler}>
-				<Form.Group controlId='password'>
-					<Form.Label>
-						<div className='shipping-form-lable__g'>
-							パスワード{' '}
-							{/* <span className='shipping-form-icon'>必須</span> */}
+		<div
+			style={{
+				backgroundImage: `url(${Background})`,
+			}}
+			className='bgi-register__g'
+		>
+			<ModalContainer>
+				<h1 style={{ fontSize: '1.5rem' }}>パスワードのリセット</h1>
+				{error && <Message variant='danger'>{error}</Message>}
+				{errorMsg && <Message variant='danger'>{errorMsg}</Message>}
+				{success && (
+					<Message>
+						パスワードが変更されました。数秒後に
+						<Link to={'/login'}>ログイン画面</Link>に移動します。
+					</Message>
+				)}
+				{loading && <Loader />}
+				<Form onSubmit={submitHandler}>
+					<Form.Group controlId='password'>
+						<Form.Label>
+							<div className='shipping-form-lable__g'>
+								パスワード{' '}
+								<span className='form-asterisk__g'>*</span>
+							</div>
+						</Form.Label>
+						<div className='form-container-pw-icon__g'>
+							<Form.Control
+								type='password'
+								placeholder='パスワード'
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+							></Form.Control>
 						</div>
-					</Form.Label>
-					<Form.Control
-						type='password'
-						placeholder='パスワード'
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-					></Form.Control>
-				</Form.Group>
-				<p className='m-2 shipping-form-example__g'>&nbsp;</p>
-				<Form.Group controlId='password'>
-					<Form.Label>
-						<div className='shipping-form-lable__g'>
-							確認パスワード{' '}
-							{/* <span className='shipping-form-icon'>必須</span> */}
+					</Form.Group>
+					<p className='m-2 shipping-form-example__g'>&nbsp;</p>
+					<Form.Group controlId='password'>
+						<Form.Label>
+							<div className='shipping-form-lable__g'>
+								確認パスワード{' '}
+								<span className='form-asterisk__g'>*</span>
+							</div>
+						</Form.Label>
+						<div className='form-container-pw-icon__g'>
+							<Form.Control
+								type='password'
+								placeholder='確認パスワード'
+								value={confirmPassword}
+								onChange={(e) =>
+									setConfirmPassword(e.target.value)
+								}
+							></Form.Control>
 						</div>
-					</Form.Label>
-					<Form.Control
-						type='password'
-						placeholder='確認パスワード'
-						value={confirmPassword}
-						onChange={(e) => setConfirmPassword(e.target.value)}
-					></Form.Control>
-				</Form.Group>
-				<p className='m-2 shipping-form-example__g'>&nbsp;</p>
-				<div
-					style={{
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'space-between',
-					}}
-				>
-					<Button type='submit' variant='primary'>
-						パスワードを変更する
+					</Form.Group>
+					<p className='m-2 shipping-form-example__g'>&nbsp;</p>
+					<Button type='submit' className='next-gradient-btn__g mt-4'>
+						<div>
+							パスワードを変更する
+							{/* <span style={{ marginLeft: 'auto' }}> */}
+							<i className='fas fa-chevron-right fa-position-right'></i>
+						</div>
 					</Button>
-				</div>
-			</Form>
-		</FormContainer>
+					{/* <div
+						style={{
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'space-between',
+						}}
+					>
+						<Button type='submit' variant='primary'>
+							パスワードを変更する
+						</Button>
+					</div> */}
+				</Form>
+			</ModalContainer>
+		</div>
 	)
 }
 
