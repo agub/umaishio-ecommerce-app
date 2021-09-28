@@ -55,7 +55,7 @@ const sendEmailBcc = asyncHandler(async (mailObj) => {
 		// send mail with defined transport object
 		let mailStatus = await transporter.sendMail({
 			from: from, // sender address
-			bcc: 'sales@tobira.page',
+			bcc: ['sales@tobira.page', 'info@umaishio.com'],
 			to: recipients, // list of recipients
 			subject: subject, // Subject line
 			html: message, // plain text
@@ -142,7 +142,7 @@ const sendShippingStartedEmail = asyncHandler(async (email, name, content) => {
 		from: '旨い塩ショップ　<info@umaishio.com>',
 		recipients: [email],
 		subject: '旨い塩ショップのお問い合わせ',
-		message: `${name}様からのお問い合わせ内容: xxxxxxx
+		message: `${name}様からのお問い合わせ内容: 
 		<br/>
 		内容: ${content}
 		`,
