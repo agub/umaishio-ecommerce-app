@@ -75,6 +75,8 @@ const ProductScreen = ({ match, history }) => {
 									<h3 className='product-page-name'>
 										{product.name}
 									</h3>
+									<div>¥{product.price}</div>
+
 									<div className='product-page-review-stock-wrap'>
 										{product.rating && product.numReviews && (
 											<>
@@ -123,22 +125,21 @@ const ProductScreen = ({ match, history }) => {
 											/>
 										)}
 										<div className='product-page-option-wrap'>
-											<Col
+											{/* <Col
 												md={3}
 												sm={2}
 												className='product-page-price'
 											>
 												¥{product.price}
-											</Col>
+											</Col> */}
 											{product.countInStock > 0 && (
 												<Col
 													style={{
 														display: 'flex',
-														justifyContent:
-															'center',
+														justifyContent: 'end',
 													}}
 													md={4}
-													sm={5}
+													sm={4}
 												>
 													{/* <Form.Control
 														className='form-select form-control-select'
@@ -220,7 +221,7 @@ const ProductScreen = ({ match, history }) => {
 													</div>
 												</Col>
 											)}
-											<Col md={5} sm={6}>
+											<Col md={6} xs={8}>
 												<Button
 													onClick={addToCartHandler}
 													className='product-page-button'

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, Image, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import x_logo from '../data/images/x_logo.png'
 import umaishio from '../data/images/Umaishio.png'
 import useWindowSize from '../hooks/useWindowSize'
@@ -23,7 +24,6 @@ const AboutPage = () => {
 							: 'about-image-wrap-mobile'
 					}
 				>
-					{' '}
 					<Image
 						src={umaishio}
 						alt='umaishio'
@@ -32,12 +32,14 @@ const AboutPage = () => {
 						style={{ width: '300px' }}
 					/>
 					{size.width > 991 && (
-						<Button type='submit' className='about-purchase-btn'>
-							<div>
-								購入する
-								{/* <span style={{ marginLeft: 'auto' }}> */}
-								<i className='fas fa-chevron-right fa-position-right'></i>
-							</div>
+						<Button className='about-purchase-btn'>
+							<Link to={'/shop'}>
+								<div style={{ color: 'white' }}>
+									購入する
+									{/* <span style={{ marginLeft: 'auto' }}> */}
+									<i className='fas fa-chevron-right fa-position-right'></i>
+								</div>
+							</Link>
 						</Button>
 					)}
 				</div>

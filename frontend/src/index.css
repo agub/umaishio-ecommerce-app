@@ -31,6 +31,10 @@ h1 {
   padding: 1rem 0;
 }
 
+p {
+  color: black;
+}
+
 .form-control {
   color: black;
   border: 0 solid #ced4da;
@@ -824,9 +828,6 @@ main {
   }
   .product-page-review-container {
     padding: 40px 40px;
-  }
-  .product-page-button {
-    padding: 10px;
   }
   .product-page-option-wrap {
     padding: 15px 20px;

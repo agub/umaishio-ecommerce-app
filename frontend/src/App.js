@@ -40,8 +40,8 @@ function App() {
 	return (
 		<Router>
 			<Header />
-			<Route path='/' component={LandingScreen} exact />
 			<main className='py-3 main-bgc'>
+				<Route path='/' component={LandingScreen} exact />
 				<Container>
 					<Elements stripe={stripePromise}>
 						<Route path='/order/:id' component={OrderScreen} />
