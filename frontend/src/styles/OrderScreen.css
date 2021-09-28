@@ -1,0 +1,51 @@
+.order-left-wrap {
+  padding: 40px 40px;
+}
+
+.modify-btn-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.modify-text {
+  font-size: 0.8rem;
+  color: black;
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .order-left {
+    margin-top: 40px;
+  }
+}
+
+.order-list-item-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modify-btn {
+  background-color: #f5f5f5;
+  position: relative;
+  border-width: 0;
+}
+/*# sourceMappingURL=OrderScreen.css.map */

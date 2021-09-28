@@ -65,8 +65,19 @@ main {
   background-color: $main-background-color;
 } 
 
+.cardElementCss {
+  margin-top: 10px;
+  padding: 15px;
+  // font-family: "AxisStd";
+  border: 1px solid #909090;
+  border-radius: $button-border-radius;
+}
 
 // ------------------------------global-css ----------------------------------
+
+.borderRadius__g {
+  border-radius: $button-border-radius;
+}
 
 .form-asterisk__g {
   color: $solidColor;
@@ -243,15 +254,13 @@ main {
 .page1-box{
     position: relative;
     /* height: 100vh; */
-    min-height: 90vh;
+    min-height: 100vh;
     display: flex;
     /* align-items: center; */
     /* margin: 0 calc(50% - 50vw); */
 }
 .page1-bgc {
-  
   position: absolute;
-  
   width: 80%;
   /* height: 100vh; */
   /* padding-top: 850px; */

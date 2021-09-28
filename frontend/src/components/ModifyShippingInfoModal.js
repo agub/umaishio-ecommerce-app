@@ -282,7 +282,7 @@ const ModifyShippingInfoModal = ({ match, show, handleClose }) => {
 								<Button
 									type='submit'
 									variant='primary'
-									className='mt-3 w-100'
+									className='borderRadius__g mt-3 w-100'
 								>
 									変更する
 								</Button>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Col, div, Image, Card, Row } from 'react-bootstrap'
+import { Form, Button, Col, ListGroup, Image, Card, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -21,9 +21,6 @@ import {
 } from '../constants/orderConstants'
 import CvcModal from '../components/CvcModal'
 import ModifyShippingInfoModal from '../components/ModifyShippingInfoModal'
-import fontFamily from '../fonts/AxisStd/AxisStd-ExtraLight.otf'
-
-import '../styles/OrderScreen.scss'
 
 const OrderScreen = ({ match, history, location }) => {
 	const stripe = useStripe()
@@ -187,120 +184,9 @@ const OrderScreen = ({ match, history, location }) => {
 				) : (
 					<CheckoutSteps step1 step2 step3 step4 />
 				)}
-				<Col md={6}>
-					<div className='item-responsive-wrap__g order-left-wrap'>
-						<div className='mt-3'>
-							<h4>注文内容</h4>
-							<p style={{ fontSize: '0.8rem' }}>ID:{order._id}</p>
-							<p className='underline__g'></p>
-							{order.orderItems.length === 0 ? (
-								<Message>注文がありません</Message>
-							) : (
-								<div variant='flush'>
-									{order.orderItems.map((item, index) => (
-										<div key={index}>
-											<div className='order-list-item-wrap'>
-												<Col md={2} xs={2}>
-													<Image
-														src={item.image}
-														alt={item.name}
-														fluid
-														rounded
-													/>
-												</Col>
-												<Col md={5} xs={5}>
-													<Link
-														to={`/product/${item.product}`}
-													>
-														{item.name}
-													</Link>
-												</Col>
-												<Col md={5} xs={5}>
-													<span className='d-flex justify-content-between'>
-														<span>
-															x {item.qty}
-														</span>
-														<span>
-															¥{item.price}
-														</span>
-													</span>
-												</Col>
-											</div>
-										</div>
-									))}
-									<p className='underline__g'></p>
-								</div>
-							)}
-						</div>
-
-						<div>
-							<p className='d-flex justify-content-between'>
-								<span>商品の小計</span>
-								<span>¥&nbsp;{order.itemsPrice}</span>
-							</p>
-						</div>
-						<div>
-							<p className='d-flex justify-content-between'>
-								<span>消費税</span>
-								<span>¥&nbsp;{order.taxPrice}</span>
-							</p>
-						</div>
-						<div>
-							<p className='d-flex justify-content-between'>
-								<span>配送料</span>
-								<span>¥&nbsp;{order.shippingPrice}</span>
-							</p>
-						</div>
-
-						<div>
-							<p className='d-flex justify-content-between'>
-								<span>税込合計</span>
-								<span>¥&nbsp;{order.totalPrice}</span>
-							</p>
-						</div>
-						<p className='underline__g'></p>
-
-						{userInfo &&
-							order &&
-							userInfo.isAdmin &&
-							!order.isDelivered &&
-							(order.isBankTransfer || order.isPaid) && (
-								<>
-									<div>
-										<Form>
-											<Form.Group className='m-2'>
-												{/* <Form.Label>クレジットカード名義人</Form.Label> */}
-												<Form.Control
-													type='number'
-													required
-													value={trackingId}
-													placeholder='*ヤマトのトラッキングナンバー'
-													onChange={(e) =>
-														setTrackingId(
-															e.target.value
-														)
-													}
-												></Form.Control>
-											</Form.Group>
-											<Button
-												type='button'
-												className='btn btn-block w-100'
-												disabled={trackingId === ''}
-												onClick={deliverHandler}
-											>
-												入金確認＆配送ボタン
-											</Button>
-										</Form>
-									</div>
-								</>
-							)}
-						{/* <div>
-							 {error && (
-									<Message variant='danger'>{error}</Message>
-				
-							</div> */}
-
-						<div>
+				<Col md={8}>
+					<ListGroup variant='flush'>
+						<ListGroup.Item>
 							<h4>お届け先</h4>
 							<p className='mt-3'>
 								<strong>〒</strong>
@@ -406,16 +292,20 @@ const OrderScreen = ({ match, history, location }) => {
 								!order.isDelivered &&
 								!order.isBankTransfer &&
 								!order.isPaid && (
-									<div className='modify-btn-wrap'>
-										<button
-											className='modify-btn'
+									<div
+										style={{
+											display: 'flex',
+											justifyContent: 'flex-end',
+											alignItems: 'center',
+										}}
+									>
+										<Button
+											variant='light'
 											onClick={shippingModalShow}
 										>
-											<span className='modify-text'>
-												変更する&nbsp;&nbsp;
-												<i className='fas fa-chevron-right'></i>
-											</span>
-										</button>
+											変更する　
+											<i className='fas fa-chevron-right'></i>
+										</Button>
 									</div>
 								)}
 							<ModifyShippingInfoModal
@@ -437,30 +327,8 @@ const OrderScreen = ({ match, history, location }) => {
 									振り込み確認後の配送になります。
 								</Message>
 							)}
-							<Form.Group controlId='prefecture' className='mt-2'>
-								<h4>配送オプション</h4>
-								<p className='mt-3'>
-									お届け予定:　入金確認後２日後
-								</p>
-								{/* <Form.Label></Form.Label> */}
-								<div className='form-container-pw-icon__g'>
-									<Form.Control
-										disabled={order.isPaid}
-										className='form-select'
-										as='select'
-										placeholder='選択してください'
-										required
-									>
-										<option>郵便 + ¥140</option>
-									</Form.Control>
-								</div>
-							</Form.Group>
-						</div>
-					</div>
-				</Col>
-				<Col md={6}>
-					<div className='item-responsive-wrap__g order-left-wrap order-left'>
-						<div className='mt-3'>
+						</ListGroup.Item>
+						<ListGroup.Item className='mt-3'>
 							<h4>お支払い方法</h4>
 							{order && !order.isPaid && !order.isBankTransfer ? (
 								<Col>
@@ -494,41 +362,27 @@ const OrderScreen = ({ match, history, location }) => {
 										className='mt-2'
 									>
 										{/* <Form.Label>クレジットカード名義人</Form.Label> */}
-										<div className='form-container-pw-icon__g'>
-											<Form.Control
-												type='text'
-												required
-												disabled={bankTransferState}
-												placeholder='カード名義人'
-												onChange={(e) =>
-													setName(e.target.value)
-												}
-											></Form.Control>
-										</div>
+										<Form.Control
+											type='text'
+											required
+											disabled={bankTransferState}
+											placeholder='カード名義人'
+											onChange={(e) =>
+												setName(e.target.value)
+											}
+										></Form.Control>
 									</Form.Group>
-									{/* <div className='form-container-pw-icon__g'> */}
 									<CardElement
-										// className='mt-3 mb-3'
-										className='cardElementCss'
+										className='mt-3 mb-3'
 										disabled={true}
 										required
 										hidePostalCode={true}
 										options={{
 											style: {
-												fonts: [
-													{
-														src: `url(${fontFamily})`,
-														family: 'AxisStd',
-													},
-												],
 												base: {
-													fontSize: '17px',
-													border: '1px solid #909090',
-													fontWeight: 'lighter',
+													fontSize: '16px',
 													'::placeholder': {
-														color: '#55595c',
-														fontSize: '17px',
-														fontWeight: 'lighter',
+														color: '#919AA1',
 													},
 												},
 												invalid: {
@@ -537,18 +391,20 @@ const OrderScreen = ({ match, history, location }) => {
 											},
 										}}
 									/>
-									{/* </div> */}
-
-									<div className='mb-2 modify-btn-wrap'>
-										<button
-											className='modify-btn'
+									<div
+										style={{
+											display: 'flex',
+											justifyContent: 'flex-end',
+											alignItems: 'center',
+										}}
+									>
+										<Button
+											variant='flush'
 											onClick={handleShow}
 										>
-											<span className='modify-text'>
-												CVCとは
-												<i className='far fa-question-circle'></i>
-											</span>
-										</button>
+											CVCとは
+											<i className='far fa-question-circle'></i>
+										</Button>
 									</div>
 									<CvcModal
 										show={show}
@@ -584,21 +440,102 @@ const OrderScreen = ({ match, history, location }) => {
 									</a>
 								</Message>
 							)}
+						</ListGroup.Item>
+						<ListGroup.Item className='mt-3'>
+							<Form.Group controlId='prefecture' className='mt-2'>
+								<h4>配送オプション</h4>
+								<p className='mt-3'>お届け予定日: </p>
+								{/* <Form.Label></Form.Label> */}
+								<Form.Control
+									disabled={order.isPaid}
+									className='form-select'
+									as='select'
+									placeholder='選択してください'
+									required
+								>
+									<option>郵便 + ¥140</option>
+								</Form.Control>
+							</Form.Group>
+						</ListGroup.Item>
+						<ListGroup.Item className='mt-3'>
+							<h4>注文内容</h4>
+							{order.orderItems.length === 0 ? (
+								<Message>注文がありません</Message>
+							) : (
+								<ListGroup variant='flush'>
+									{order.orderItems.map((item, index) => (
+										<ListGroup.Item key={index}>
+											<Row>
+												<Col md={1} xs={2}>
+													<Image
+														src={item.image}
+														alt={item.name}
+														fluid
+														rounded
+													/>
+												</Col>
+												<Col xs={5}>
+													<Link
+														to={`/product/${item.product}`}
+													>
+														{item.name}
+													</Link>
+												</Col>
+												<Col md={4} xs={5}>
+													¥{item.price} x {item.qty} =
+													¥{item.qty * item.price}
+												</Col>
+											</Row>
+										</ListGroup.Item>
+									))}
+								</ListGroup>
+							)}
+						</ListGroup.Item>
+					</ListGroup>
+				</Col>
+				<Col md={4}>
+					<Card>
+						<ListGroup variant='flush'>
+							<ListGroup.Item className='mt-3'>
+								<h2>注文内容</h2>
+								<p>ID:{order._id}</p>
+							</ListGroup.Item>
+							<ListGroup.Item>
+								<Row>
+									<Col>商品の小計</Col>
+									<Col>¥&nbsp;{order.itemsPrice}</Col>
+								</Row>
+							</ListGroup.Item>
+							<ListGroup.Item>
+								<Row>
+									<Col>消費税</Col>
+									<Col>¥&nbsp;{order.taxPrice}</Col>
+								</Row>
+							</ListGroup.Item>
+							<ListGroup.Item>
+								<Row>
+									<Col>配送料</Col>
+									<Col>¥&nbsp;{order.shippingPrice}</Col>
+								</Row>
+							</ListGroup.Item>
+
+							<ListGroup.Item>
+								<Row>
+									<Col>税込合計</Col>
+									<Col>¥&nbsp;{order.totalPrice}　</Col>
+								</Row>
+							</ListGroup.Item>
 							{!order.isPaid && !order.isBankTransfer && (
-								<div>
+								<ListGroup.Item>
 									{loadingPay ||
 									loading ||
 									loadingBankTransfer ? (
 										<Loader />
 									) : (
 										<>
-											<p className='text-center'>
-												* このボタンで購入が完了します。
-											</p>
 											<Button
 												type='button'
-												className='btn-block w-100 borderRadius__g'
-												// style={{ borderRadius: '20px' }}
+												className='btn-block w-100'
 												disabled={
 													!stripe ||
 													cart.cartItems === 0 ||
@@ -607,14 +544,54 @@ const OrderScreen = ({ match, history, location }) => {
 												}
 												onClick={submitHandler}
 											>
-												注文を完了する
+												注文を確定する
 											</Button>
 										</>
 									)}
-								</div>
+								</ListGroup.Item>
 							)}
-						</div>
-					</div>
+
+							{userInfo &&
+								order &&
+								userInfo.isAdmin &&
+								!order.isDelivered &&
+								(order.isBankTransfer || order.isPaid) && (
+									<>
+										<ListGroup.Item>
+											<Form>
+												<Form.Group className='m-2'>
+													{/* <Form.Label>クレジットカード名義人</Form.Label> */}
+													<Form.Control
+														type='number'
+														required
+														value={trackingId}
+														placeholder='*ヤマトのトラッキングナンバー'
+														onChange={(e) =>
+															setTrackingId(
+																e.target.value
+															)
+														}
+													></Form.Control>
+												</Form.Group>
+												<Button
+													type='button'
+													className='btn btn-block w-100'
+													disabled={trackingId === ''}
+													onClick={deliverHandler}
+												>
+													入金確認＆配送ボタン
+												</Button>
+											</Form>
+										</ListGroup.Item>
+									</>
+								)}
+							{/* <ListGroup.Item>
+							 {error && (
+									<Message variant='danger'>{error}</Message>
+				
+							</ListGroup.Item> */}
+						</ListGroup>
+					</Card>
 				</Col>
 			</Row>
 		</>
