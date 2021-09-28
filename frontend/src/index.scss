@@ -348,9 +348,101 @@ main {
 
 /* page1 */
 
+// AboutPage
+.aboutPage-wrap {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 20px;
+  align-items: center;
+  min-height: 100vh;
+  margin-bottom: 100px;
+  margin-top: 50px;
+}
+.aboutPage-wrap-mobile {
+  display: flex;
+  flex-direction: column;
+  // margin-bottom: 30px;
+ }
 
-/* page2 */
 
+.about-image-wrap {
+  width: 50%;
+  @include customFlex();
+  flex-direction: column;
+}
+.about-image-wrap-mobile {
+  width: 100%;
+  @include customFlex();
+  flex-direction: column;
+}
+
+.about-page-text-wrap {
+  width: 50%;
+}
+
+.about-card {
+  
+  background-color:$main-background-color;
+  border-width: 0;
+  width: 55%;
+  font-size: 1.3rem;
+  // padding: 10px;
+  margin-right: auto;
+}
+.about-card-mobile {
+  margin-top: 50px;
+  background-color:$main-background-color;
+  border-width: 0;
+  width: 100%;
+  padding: 3px;
+  
+ 
+}
+
+.about-card-title{
+  
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+}
+.about-card-title-mobile{
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.about-card-body{
+  padding: 30px;
+}
+
+.about-purchase-btn {
+  margin-top: 40px;
+  width: 50%;
+  border-radius: $button-border-radius;
+  background: linear-gradient(to right top, #E71F7F, #A7228F);
+  position: relative;
+  @include justsShadow();
+  // background-color: #fff;
+}
+
+.about-purchase-btn-mobile-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+// AboutPage
+
+
+
+/* page2 RIGHT OBJECT*/
 
 .page2-wrap{
   position: relative;  
@@ -358,7 +450,8 @@ main {
   padding: 20px;
   align-items: center;
   min-height: 100%;
-  margin-bottom: 200px;
+  // margin-bottom: 100px;
+  
   /* ?????????????????????????????????????????????????? */
 }
 
@@ -368,23 +461,35 @@ main {
   padding: 20px;
   flex-direction: column;
   min-height: 100%;
+  margin-bottom: 0px;
 }
 
 .page2-card {
   @include shadowRounded;
   background-color:$main-background-color;
-  width: 50%;
+  width: 55%;
 
+  padding: 3rem;
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+  
 }
 .page2-card-mobile {
   @include shadowRounded;
   background-color:$main-background-color;
   width: 100%;
+  
  
 }
 
 .page2-card-body{
   padding: 80px 10px;
+  // font-size: 1.3rem;
+  
+}
+.page2-card-body-mobile{
+  padding: 10px 10px;
+  
 }
 
 .page2-card-logo{
@@ -394,20 +499,27 @@ main {
   padding: 30px 0;
 } */
 .page2-card-title{
-  font-size: 50px;
+  // font-size: 50px;
   display: flex;
   align-items: center;
+  font-size: 3rem;
 }
 
 .page2-card-text{
   margin-top: 50px;
+  font-size: 1.3rem;
+}
+
+.page2-card-text-mobile{
+  margin-top: 20px;
+
 }
 
 .page2-image{
   position: absolute;
   top: 30;
   right: 0;
-  width: 60%;
+  width: 50%;
   margin: 0 calc(50% - 50vw);
   object-fit: cover;  
 }
@@ -418,7 +530,56 @@ main {
   object-fit: cover;  
 }
 
-/* page2 */
+/* page2 RIGHT OBJECT*/
+
+.page3-image{
+  position: absolute;
+  top: 30;
+  left: 0;
+  width: 50%;
+  margin: 0 calc(50% - 50vw);
+  object-fit: cover;  
+}
+
+.page3-image-mobile{
+  margin: 0 calc(50% - 50vw);
+  margin-right: auto;
+  width: 100%;
+  object-fit: cover;  
+}
+
+.page3-card-title-mobile{
+  font-size: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 3rem;
+}
+
+.page3-card {
+  @include shadowRounded;
+  background-color:$main-background-color;
+  width: 55%;
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+  padding: 3rem;
+  margin-left: auto;
+  font-size: 1.3rem;
+}
+
+.page2-card-mobile {
+  @include shadowRounded;
+  background-color:$main-background-color;
+  width: 100%;
+  margin-right: auto;
+ 
+}
+
+/* page3 LEFT OBJECT */
+
+
+
+/* page3 LEFT OBJECT */
 
 /* productScreen */
 
