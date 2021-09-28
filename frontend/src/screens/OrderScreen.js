@@ -187,7 +187,25 @@ const OrderScreen = ({ match, history, location }) => {
 				) : (
 					<CheckoutSteps step1 step2 step3 step4 />
 				)}
-				<Col md={6}>
+				{order && order.isPaid && (
+					<Message variant='success'>
+						お支払い済み {order.paidAt.substring(0, 10)}
+					</Message>
+				)}
+				{order.isDelivered ? (
+					<Message variant='success'>
+						発送手配の完了
+						{order.deliveredAt.substring(0, 10)}
+					</Message>
+				) : null}
+				{!order.isPaid && order.isBankTransfer && (
+					<Message variant='danger'>
+						注文ありがとうございした。
+						<br />
+						振り込み確認後の配送になります。
+					</Message>
+				)}
+				<Col md={order && order.isPaid ? '12' : '6'}>
 					<div className='item-responsive-wrap__g order-left-wrap'>
 						<div className='mt-3'>
 							<h4>注文内容</h4>
@@ -260,40 +278,6 @@ const OrderScreen = ({ match, history, location }) => {
 						</div>
 						<p className='underline__g'></p>
 
-						{userInfo &&
-							order &&
-							userInfo.isAdmin &&
-							!order.isDelivered &&
-							(order.isBankTransfer || order.isPaid) && (
-								<>
-									<div>
-										<Form>
-											<Form.Group className='m-2'>
-												{/* <Form.Label>クレジットカード名義人</Form.Label> */}
-												<Form.Control
-													type='number'
-													required
-													value={trackingId}
-													placeholder='*ヤマトのトラッキングナンバー'
-													onChange={(e) =>
-														setTrackingId(
-															e.target.value
-														)
-													}
-												></Form.Control>
-											</Form.Group>
-											<Button
-												type='button'
-												className='btn btn-block w-100'
-												disabled={trackingId === ''}
-												onClick={deliverHandler}
-											>
-												入金確認＆配送ボタン
-											</Button>
-										</Form>
-									</div>
-								</>
-							)}
 						{/* <div>
 							 {error && (
 									<Message variant='danger'>{error}</Message>
@@ -424,7 +408,7 @@ const OrderScreen = ({ match, history, location }) => {
 								handleClose={shippingModalClose}
 								history={history}
 							/>
-							{order.isDelivered ? (
+							{/* {order.isDelivered ? (
 								<Message variant='success'>
 									発送手配の完了
 									{order.deliveredAt.substring(0, 10)}
@@ -436,7 +420,7 @@ const OrderScreen = ({ match, history, location }) => {
 									<br />
 									振り込み確認後の配送になります。
 								</Message>
-							)}
+							)} */}
 							<Form.Group controlId='prefecture' className='mt-2'>
 								<h4>配送オプション</h4>
 								<p className='mt-3'>
@@ -455,167 +439,212 @@ const OrderScreen = ({ match, history, location }) => {
 									</Form.Control>
 								</div>
 							</Form.Group>
+							{userInfo &&
+								order &&
+								userInfo.isAdmin &&
+								!order.isDelivered &&
+								(order.isBankTransfer || order.isPaid) && (
+									<>
+										<div>
+											<Form>
+												<Form.Group className='m-2'>
+													{/* <Form.Label>クレジットカード名義人</Form.Label> */}
+													<Form.Control
+														type='number'
+														required
+														value={trackingId}
+														placeholder='*ヤマトのトラッキングナンバー'
+														onChange={(e) =>
+															setTrackingId(
+																e.target.value
+															)
+														}
+													></Form.Control>
+												</Form.Group>
+												<Button
+													type='button'
+													className='btn btn-block w-100'
+													disabled={trackingId === ''}
+													onClick={deliverHandler}
+												>
+													入金確認＆配送ボタン
+												</Button>
+											</Form>
+										</div>
+									</>
+								)}
 						</div>
 					</div>
 				</Col>
-				<Col md={6}>
-					<div className='item-responsive-wrap__g order-left-wrap order-left'>
-						<div className='mt-3'>
-							<h4>お支払い方法</h4>
-							{order && !order.isPaid && !order.isBankTransfer ? (
-								<Col>
-									<Form.Check
-										className='mt-3'
-										type='radio'
-										label='クレジットカード'
-										id='Stripe'
-										name='paymentMethod'
-										onClick={() => toBankTransfer(false)}
-										defaultChecked
-									></Form.Check>
-									<Form.Check
-										className='mt-3'
-										type='radio'
-										label='銀行振り込み'
-										id='bank'
-										name='paymentMethod'
-										onClick={() => toBankTransfer(true)}
-									></Form.Check>
-								</Col>
-							) : null}
+				{order && !order.isPaid && (
+					<Col md={6}>
+						<div className='item-responsive-wrap__g order-left-wrap order-left'>
+							<div className='mt-3'>
+								<h4>お支払い方法</h4>
+								{order &&
+								!order.isPaid &&
+								!order.isBankTransfer ? (
+									<Col>
+										<Form.Check
+											className='mt-3'
+											type='radio'
+											label='クレジットカード'
+											id='Stripe'
+											name='paymentMethod'
+											onClick={() =>
+												toBankTransfer(false)
+											}
+											defaultChecked
+										></Form.Check>
+										<Form.Check
+											className='mt-3'
+											type='radio'
+											label='銀行振り込み'
+											id='bank'
+											name='paymentMethod'
+											onClick={() => toBankTransfer(true)}
+										></Form.Check>
+									</Col>
+								) : null}
 
-							{order &&
-							!order.isPaid &&
-							!order.isBankTransfer &&
-							!bankTransferState ? (
-								<>
-									<Form.Group
-										controlId='address'
-										className='mt-2'
-									>
-										{/* <Form.Label>クレジットカード名義人</Form.Label> */}
-										<div className='form-container-pw-icon__g'>
-											<Form.Control
-												type='text'
-												required
-												disabled={bankTransferState}
-												placeholder='カード名義人'
-												onChange={(e) =>
-													setName(e.target.value)
-												}
-											></Form.Control>
-										</div>
-									</Form.Group>
-									{/* <div className='form-container-pw-icon__g'> */}
-									<CardElement
-										// className='mt-3 mb-3'
-										className='cardElementCss'
-										disabled={true}
-										required
-										hidePostalCode={true}
-										options={{
-											style: {
-												fonts: [
-													{
-														src: `url(${fontFamily})`,
-														family: 'AxisStd',
-													},
-												],
-												base: {
-													fontSize: '17px',
-													border: '1px solid #909090',
-													fontWeight: 'lighter',
-													'::placeholder': {
-														color: '#55595c',
-														fontSize: '17px',
-														fontWeight: 'lighter',
-													},
-												},
-												invalid: {
-													color: '#919AA1',
-												},
-											},
-										}}
-									/>
-									{/* </div> */}
-
-									<div className='mb-2 modify-btn-wrap'>
-										<button
-											className='modify-btn'
-											onClick={handleShow}
+								{order &&
+								!order.isPaid &&
+								!order.isBankTransfer &&
+								!bankTransferState ? (
+									<>
+										<Form.Group
+											controlId='address'
+											className='mt-2'
 										>
-											<span className='modify-text'>
-												CVCとは
-												<i className='far fa-question-circle'></i>
-											</span>
-										</button>
-									</div>
-									<CvcModal
-										show={show}
-										handleClose={handleClose}
-									/>
-								</>
-							) : null}
-							{bankTransferState || order.isBankTransfer ? (
-								<p className='mt-3'>
-									銀行振り込み口座
-									<br />
-									口座番号: XXXXXXXXXXX
-									<br />
-									名前: XXXXXXXXXXX
-									<br />
-									振込額: ¥{order.totalPrice}
-								</p>
-							) : null}
-							{order && order.isPaid && (
+											{/* <Form.Label>クレジットカード名義人</Form.Label> */}
+											<div className='form-container-pw-icon__g'>
+												<Form.Control
+													type='text'
+													required
+													disabled={bankTransferState}
+													placeholder='カード名義人'
+													onChange={(e) =>
+														setName(e.target.value)
+													}
+												></Form.Control>
+											</div>
+										</Form.Group>
+										{/* <div className='form-container-pw-icon__g'> */}
+										<CardElement
+											// className='mt-3 mb-3'
+											className='cardElementCss'
+											disabled={true}
+											required
+											hidePostalCode={true}
+											options={{
+												style: {
+													fonts: [
+														{
+															src: `url(${fontFamily})`,
+															family: 'AxisStd',
+														},
+													],
+													base: {
+														fontSize: '17px',
+														border:
+															'1px solid #909090',
+														fontWeight: 'lighter',
+														'::placeholder': {
+															color: '#55595c',
+															fontSize: '17px',
+															fontWeight:
+																'lighter',
+														},
+													},
+													invalid: {
+														color: '#919AA1',
+													},
+												},
+											}}
+										/>
+										{/* </div> */}
+
+										<div className='mb-2 modify-btn-wrap'>
+											<button
+												className='modify-btn'
+												onClick={handleShow}
+											>
+												<span className='modify-text'>
+													CVCとは
+													<i className='far fa-question-circle'></i>
+												</span>
+											</button>
+										</div>
+										<CvcModal
+											show={show}
+											handleClose={handleClose}
+										/>
+									</>
+								) : null}
+								{bankTransferState || order.isBankTransfer ? (
+									<p className='mt-3'>
+										銀行振り込み口座
+										<br />
+										口座番号: XXXXXXXXXXX
+										<br />
+										名前: XXXXXXXXXXX
+										<br />
+										振込額: ¥{order.totalPrice}
+									</p>
+								) : null}
+								{/* {order && order.isPaid && (
 								<Message variant='success'>
 									お支払い済み {order.paidAt.substring(0, 10)}
 								</Message>
-							)}
-							{errorText && (
-								<Message variant='danger'>{errorText}</Message>
-							)}
-							{errorPay && (
-								<Message variant='danger'>
-									{errorPay}
-									<br />
-									<a href='mailto: info@umaishio.com'>
-										カスタマーサービスへお問い合わせはこちらへ
-									</a>
-								</Message>
-							)}
-							{!order.isPaid && !order.isBankTransfer && (
-								<div>
-									{loadingPay ||
-									loading ||
-									loadingBankTransfer ? (
-										<Loader />
-									) : (
-										<>
-											<p className='text-center'>
-												* このボタンで購入が完了します。
-											</p>
-											<Button
-												type='button'
-												className='btn-block w-100 borderRadius__g'
-												// style={{ borderRadius: '20px' }}
-												disabled={
-													!stripe ||
-													cart.cartItems === 0 ||
-													loadingPay ||
-													successPay
-												}
-												onClick={submitHandler}
-											>
-												注文を完了する
-											</Button>
-										</>
-									)}
-								</div>
-							)}
+							)} */}
+								{errorText && (
+									<Message variant='danger'>
+										{errorText}
+									</Message>
+								)}
+								{errorPay && (
+									<Message variant='danger'>
+										{errorPay}
+										<br />
+										<a href='mailto: info@umaishio.com'>
+											カスタマーサービスへお問い合わせはこちらへ
+										</a>
+									</Message>
+								)}
+								{!order.isPaid && !order.isBankTransfer && (
+									<div>
+										{loadingPay ||
+										loading ||
+										loadingBankTransfer ? (
+											<Loader />
+										) : (
+											<>
+												<p className='text-center'>
+													*
+													このボタンで購入が完了します。
+												</p>
+												<Button
+													type='button'
+													className='btn-block w-100 borderRadius__g'
+													// style={{ borderRadius: '20px' }}
+													disabled={
+														!stripe ||
+														cart.cartItems === 0 ||
+														loadingPay ||
+														successPay
+													}
+													onClick={submitHandler}
+												>
+													注文を完了する
+												</Button>
+											</>
+										)}
+									</div>
+								)}
+							</div>
 						</div>
-					</div>
-				</Col>
+					</Col>
+				)}
 			</Row>
 		</>
 	)

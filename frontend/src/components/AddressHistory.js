@@ -13,10 +13,18 @@ const AddressHistory = ({
 }) => {
 	return (
 		<Modal show={show} onHide={handleClose} centered>
-			<Modal.Header>
+			{/* <Modal.Header>
 				<Modal.Title>過去のお届け先</Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
+			</Modal.Header> */}
+			{/* <Modal.Body> */}
+			<div
+				className='item-modal-wrap__g'
+				style={{ padding: '50px 50px' }}
+			>
+				<h1>
+					<i className='fas fa-home'>&nbsp;</i>過去のお届け先
+				</h1>
+				<p className='underline__g'></p>
 				<p>
 					{/* <strong>氏名: </strong> */}
 					<strong>〒</strong>
@@ -53,11 +61,11 @@ const AddressHistory = ({
 						</>
 					)}
 				</p>
-			</Modal.Body>
-			<Modal.Footer>
+				<p className='underline__g'></p>
 				<Button
-					className='w-100'
-					variant='primary'
+					className='next-gradient-btn__g mb-4'
+					// className='w-100'
+					// variant='primary'
 					onClick={() => {
 						setUseAddressHistory(true)
 						handleClose()
@@ -67,13 +75,35 @@ const AddressHistory = ({
 				</Button>
 
 				<Button
-					className='w-100'
-					variant='secondary'
+					className='w-100 borderRadius__g'
+					// variant='secondary'
 					onClick={handleClose}
 				>
-					閉じる
+					新しい住所を入力する
 				</Button>
-			</Modal.Footer>
+			</div>
+			{/* </Modal.Body>
+			<Modal.Footer>
+				<Button
+					className='next-gradient-btn__g'
+					// className='w-100'
+					// variant='primary'
+					onClick={() => {
+						setUseAddressHistory(true)
+						handleClose()
+					}}
+				>
+					この住所を使用または修正する
+				</Button>
+
+				<Button
+					className='w-100 borderRadius__g'
+					// variant='secondary'
+					onClick={handleClose}
+				>
+					新しい住所を入力する
+				</Button>
+			</Modal.Footer> */}
 		</Modal>
 	)
 }

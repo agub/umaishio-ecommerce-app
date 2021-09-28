@@ -165,7 +165,10 @@ const CartScreen = ({ match, location, history }) => {
 													</option>
 												))}
 											</select> */}
-											<div className='crement-wrap__g'>
+											<div
+												className='crement-wrap__g'
+												// className='product-page-crement-wrap'
+											>
 												<button
 													className='product-page-crement'
 													onClick={() => {

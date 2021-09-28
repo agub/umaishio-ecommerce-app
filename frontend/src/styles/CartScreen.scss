@@ -71,7 +71,7 @@
   z-index: 1000;
   @include mq(md) { // 引数を個別に指定
     position: absolute;
-    bottom: 35px;
+    bottom: 25px;
   }
 }
 

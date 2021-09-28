@@ -94,7 +94,7 @@
 @media screen and (max-width: 768px) {
   .cart-select-top {
     position: absolute;
-    bottom: 35px;
+    bottom: 25px;
   }
 }
 

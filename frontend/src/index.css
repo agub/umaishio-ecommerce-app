@@ -232,9 +232,8 @@ main {
   border-width: 0.2px;
   border-color: gray;
   border-radius: 10px;
-  padding: 0px 5px;
-  min-height: 30px;
-  max-width: 90px;
+  padding: 0px 10px;
+  max-width: 120px;
   border-style: solid;
 }
 
