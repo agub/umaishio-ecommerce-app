@@ -137,14 +137,32 @@ const sendBankTransferInfo = asyncHandler(
 	}
 )
 
-const sendShippingStartedEmail = asyncHandler(async (email, name, content) => {
+const sendShippingStartedEmail = asyncHandler(
+	async (email, name, orderId, trackingId) => {
+		const mailObj = {
+			from: '旨い塩ショップ　<info@umaishio.com>',
+			recipients: [email],
+			subject: '旨い塩ショップ 配送手続きメール',
+			message: `${name}様、旨い塩ショップをご利用いただきありがとうございます。 
+								<br/>
+								<a href="${process.env.API_URI}/order/${orderId}">こちら</a>の商品の発送手続き完了をお伝えいたします。
+								<br/>
+								数日以内に到着予定です。
+								`,
+		}
+		sendEmailBcc(mailObj).then((res) => {
+			console.log(res)
+		})
+	}
+)
+const sendContactEmail = asyncHandler(async (email, name, content) => {
 	const mailObj = {
 		from: '旨い塩ショップ　<info@umaishio.com>',
 		recipients: [email],
 		subject: '旨い塩ショップのお問い合わせ',
 		message: `${name}様からのお問い合わせ内容: 
 		<br/>
-		内容: ${content}
+		${content}
 		`,
 	}
 	sendEmailBcc(mailObj).then((res) => {
@@ -160,4 +178,5 @@ export {
 	sendOrderSuccessEmail,
 	sendShippingStartedEmail,
 	sendBankTransferInfo,
+	sendContactEmail,
 }

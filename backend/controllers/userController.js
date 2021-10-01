@@ -7,6 +7,7 @@ import {
 	sendResetEmail,
 	sendWelcomeEmail,
 	sendShippingStartedEmail,
+	sendContactEmail,
 } from '../utils/email.js'
 
 // @description   Auth user & get token
@@ -338,11 +339,11 @@ const resetPassword = asyncHandler(async (req, res) => {
 	}
 })
 
-//forgotPassword
+//contact email api
 const contactEmailApi = asyncHandler(async (req, res) => {
 	const { email, fullName, content } = req.body
 	try {
-		sendShippingStartedEmail(email, fullName, content)
+		sendContactEmail(email, fullName, content)
 		res.status(200).json({ message: '送信完了' })
 	} catch (err) {
 		res.status(400).send(err.message)
