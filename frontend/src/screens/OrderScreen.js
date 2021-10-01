@@ -10,7 +10,10 @@ import {
 	deliverOrder,
 	bankTransferOrder,
 } from '../actions/orderActions'
-import { STRIPE_PAY_RESET } from '../constants/orderConstants'
+import {
+	STRIPE_PAY_RESET,
+	STRIPE_PAY_REQUEST,
+} from '../constants/orderConstants'
 
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -107,7 +110,9 @@ const OrderScreen = ({ match, history, location }) => {
 
 	const submitHandler = async (e) => {
 		e.preventDefault()
-
+		dispatch({
+			type: STRIPE_PAY_REQUEST,
+		})
 		setErrorText('')
 		try {
 			if (name !== '' && order && !bankTransferState) {
@@ -203,12 +208,6 @@ const OrderScreen = ({ match, history, location }) => {
 						date={order.deliveredAt.substring(0, 10)}
 					/>
 				)}
-				{/* {order.isDelivered ? (
-					<Message variant='success'>
-						発送手配の完了
-						{order.deliveredAt.substring(0, 10)}
-					</Message>
-				) : null} */}
 				{!order.isPaid && order.isBankTransfer && (
 					<Message variant='danger'>
 						ご注文ありがとうございした。
