@@ -288,16 +288,20 @@ const CartScreen = ({ match, location, history }) => {
 					</p>
 					<p className='d-flex justify-content-between'>
 						<span>送料:</span>
-						<span>¥&nbsp; ????</span>
-					</p>
-					<p className='d-flex justify-content-between'>
-						<span>消費税:</span>
-						<span>¥&nbsp; ????</span>
+						<span>未定</span>
 					</p>
 					<p className='underline__g'></p>
 					<p className='d-flex justify-content-between'>
 						<span>商品合計:</span>
-						<span>¥&nbsp; ????</span>
+						<span>
+							¥&nbsp;
+							{cartItems
+								.reduce(
+									(acc, item) => acc + item.qty * item.price,
+									0
+								)
+								.toFixed(0)}
+						</span>
 					</p>
 
 					{/* fix this to 0 for yen */}

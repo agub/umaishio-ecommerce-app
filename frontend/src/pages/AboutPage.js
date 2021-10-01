@@ -24,13 +24,15 @@ const AboutPage = () => {
 							: 'about-image-wrap-mobile'
 					}
 				>
-					<Image
-						src={umaishio}
-						alt='umaishio'
-						variant='top'
-						fluid
-						style={{ width: '300px' }}
-					/>
+					<Link to={'/shop'}>
+						<Image
+							src={umaishio}
+							alt='umaishio'
+							variant='top'
+							fluid
+							style={{ width: '300px' }}
+						/>
+					</Link>
 					{size.width > 991 && (
 						<Button className='about-purchase-btn'>
 							<Link to={'/shop'}>
@@ -111,15 +113,14 @@ const AboutPage = () => {
 					</Card.Body>
 					{size.width < 991 && (
 						<div className='about-purchase-btn-mobile-wrap'>
-							<Button
-								type='submit'
-								className='about-purchase-btn'
-							>
-								<div>
-									購入する
-									{/* <span style={{ marginLeft: 'auto' }}> */}
-									<i className='fas fa-chevron-right fa-position-right'></i>
-								</div>
+							<Button className='about-purchase-btn'>
+								<Link to={'/shop'}>
+									<div style={{ color: 'white' }}>
+										購入する
+										{/* <span style={{ marginLeft: 'auto' }}> */}
+										<i className='fas fa-chevron-right fa-position-right'></i>
+									</div>
+								</Link>
 							</Button>
 						</div>
 					)}

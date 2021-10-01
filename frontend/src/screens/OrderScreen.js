@@ -280,12 +280,12 @@ const OrderScreen = ({ match, history, location }) => {
 								<span>¥&nbsp;{order.itemsPrice}</span>
 							</p>
 						</div>
-						<div>
+						{/* <div>
 							<p className='d-flex justify-content-between'>
 								<span>消費税</span>
 								<span>¥&nbsp;{order.taxPrice}</span>
 							</p>
-						</div>
+						</div> */}
 						<div>
 							<p className='d-flex justify-content-between'>
 								<span>配送料</span>
@@ -300,7 +300,13 @@ const OrderScreen = ({ match, history, location }) => {
 							</p>
 						</div>
 						<p className='underline__g'></p>
-
+						<div>
+							<p className='d-flex justify-content-between'>
+								<span>内消費税</span>
+								<span>¥&nbsp;xxxx</span>
+							</p>
+						</div>
+						<p className='underline__g'></p>
 						{/* <div>
 							 {error && (
 									<Message variant='danger'>{error}</Message>

@@ -75,7 +75,12 @@ const ProductScreen = ({ match, history }) => {
 									<h3 className='product-page-name'>
 										{product.name}
 									</h3>
-									<div>¥{product.price}</div>
+									<div>
+										¥{product.price}&nbsp;
+										<span className='tax-include-sm'>
+											税込
+										</span>
+									</div>
 
 									<div className='product-page-review-stock-wrap'>
 										{product.rating && product.numReviews && (

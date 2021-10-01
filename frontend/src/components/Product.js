@@ -26,7 +26,8 @@ const Product = ({ product }) => {
 					</Card.Text>
 					<Card.Text as='div'>
 						<h3 style={{ marginTop: '1rem' }}>
-							¥&nbsp;{product.price}
+							¥&nbsp;{product.price}{' '}
+							<span className='tax-include'>税込</span>
 						</h3>
 					</Card.Text>
 				</Card.Body>

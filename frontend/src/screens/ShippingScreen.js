@@ -209,12 +209,10 @@ const ShippingScreen = ({ history }) => {
 		cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
 	)
 	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
-	cart.taxPrice = addDecimals(Number((0.08 * cart.itemsPrice).toFixed(0)))
-	cart.totalPrice = (
-		Number(cart.itemsPrice) +
-		Number(cart.shippingPrice) +
-		Number(cart.taxPrice)
-	).toFixed(0)
+	// cart.taxPrice = addDecimals(Number((0.08 * cart.itemsPrice).toFixed(0)))
+	cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice))
+		// +Number(cart.taxPrice)
+		.toFixed(0)
 
 	const orderCreate = useSelector((state) => state.orderCreate)
 	const { order, success, error, loading: loadingOrder } = orderCreate
@@ -271,7 +269,7 @@ const ShippingScreen = ({ history }) => {
 					// paymentMethod: cart.paymentMethod,
 					itemsPrice: cart.itemsPrice,
 					shippingPrice: cart.shippingPrice,
-					taxPrice: cart.taxPrice,
+					// taxPrice: cart.taxPrice,
 					totalPrice: cart.totalPrice,
 				})
 			)
@@ -403,16 +401,16 @@ const ShippingScreen = ({ history }) => {
 							</p>
 							<p className='d-flex justify-content-between'>
 								<span>送料:</span>
-								<span>¥&nbsp; ????</span>
+								<span>未定</span>
 							</p>
-							<p className='d-flex justify-content-between'>
+							{/* <p className='d-flex justify-content-between'>
 								<span>消費税:</span>
 								<span>¥&nbsp; ????</span>
-							</p>
+							</p> */}
 							<p className='underline__g'></p>
 							<p className='d-flex justify-content-between'>
-								<span>商品合計:</span>
-								<span>¥&nbsp; ????</span>
+								<span>合計:</span>
+								<span>¥&nbsp;{cart.totalPrice}</span>
 							</p>
 
 							{/* fix this to 0 for yen */}
@@ -475,16 +473,12 @@ const ShippingScreen = ({ history }) => {
 					</p>
 					<p className='d-flex justify-content-between'>
 						<span>送料:</span>
-						<span>¥&nbsp; ????</span>
-					</p>
-					<p className='d-flex justify-content-between'>
-						<span>消費税:</span>
-						<span>¥&nbsp; ????</span>
+						<span>未定</span>
 					</p>
 					<p className='underline__g'></p>
 					<p className='d-flex justify-content-between'>
-						<span>商品合計:</span>
-						<span>¥&nbsp; ????</span>
+						<span>合計:</span>
+						<span>¥&nbsp;{cart.totalPrice}</span>
 					</p>
 
 					<Button

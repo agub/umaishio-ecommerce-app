@@ -23,12 +23,10 @@ const PlaceOrderScreen = ({ history }) => {
 		cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
 	)
 	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
-	cart.taxPrice = addDecimals(Number((0.08 * cart.itemsPrice).toFixed(0)))
-	cart.totalPrice = (
-		Number(cart.itemsPrice) +
-		Number(cart.shippingPrice) +
-		Number(cart.taxPrice)
-	).toFixed(0)
+	// cart.taxPrice = addDecimals(Number((0.08 * cart.itemsPrice).toFixed(0)))
+	cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice))
+		// + Number(cart.taxPrice)
+		.toFixed(0)
 	// cart.itemsPrice = cart.itemsPrice.toFixed(0)
 
 	const orderCreate = useSelector((state) => state.orderCreate)
@@ -53,7 +51,7 @@ const PlaceOrderScreen = ({ history }) => {
 				// paymentMethod: cart.paymentMethod,
 				itemsPrice: cart.itemsPrice,
 				shippingPrice: cart.shippingPrice,
-				taxPrice: cart.taxPrice,
+				// taxPrice: cart.taxPrice,
 				totalPrice: cart.totalPrice,
 			})
 		)
@@ -216,24 +214,19 @@ const PlaceOrderScreen = ({ history }) => {
 									<Col>¥{cart.itemsPrice}</Col>
 								</Row>
 							</ListGroup.Item>
-							<ListGroup.Item>
+							{/* <ListGroup.Item>
 								<Row>
 									<Col>消費税</Col>
 									<Col>¥{cart.taxPrice}</Col>
 								</Row>
-							</ListGroup.Item>
+							</ListGroup.Item> */}
 							<ListGroup.Item>
 								<Row>
 									<Col>配送料</Col>
 									<Col>¥{cart.shippingPrice}</Col>
 								</Row>
 							</ListGroup.Item>
-							{/* <ListGroup.Item>
-								<Row>
-									<Col>税金</Col>
-									<Col>¥{cart.taxPrice}</Col>
-								</Row>
-							</ListGroup.Item> */}
+
 							<ListGroup.Item>
 								<Row>
 									<Col>合計</Col>

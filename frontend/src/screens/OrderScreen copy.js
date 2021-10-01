@@ -506,12 +506,12 @@ const OrderScreen = ({ match, history, location }) => {
 									<Col>¥&nbsp;{order.itemsPrice}</Col>
 								</Row>
 							</ListGroup.Item>
-							<ListGroup.Item>
+							{/* <ListGroup.Item>
 								<Row>
 									<Col>消費税</Col>
 									<Col>¥&nbsp;{order.taxPrice}</Col>
 								</Row>
-							</ListGroup.Item>
+							</ListGroup.Item> */}
 							<ListGroup.Item>
 								<Row>
 									<Col>配送料</Col>
