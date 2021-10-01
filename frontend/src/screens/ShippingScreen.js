@@ -302,7 +302,7 @@ const ShippingScreen = ({ history }) => {
 				// className='shippingContainer shipping-form-container'
 			>
 				<Row>
-					<CheckoutSteps step1 step2 />
+					<CheckoutSteps number={0} />
 					<h1>お届け先の住所</h1>
 					<Col lg={8} md={12}>
 						{userInfo && !userInfo.isGuest ? (

@@ -226,6 +226,26 @@ main {
   margin: 0 auto;
 }
 
+.progressbar-icon {
+  // position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  margin: 0 auto;
+}
+
+.progressbar-text {
+  // position: absolute;
+  text-align: center;
+  // top: 0%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
+  // -webkit-transform: translate(-50%, -50%);
+  // -ms-transform: translate(-50%, -50%);
+  // z-index: 100;
+}
+
 // ------------------------------global-css ----------------------------------
 
 
@@ -832,7 +852,16 @@ main {
   right: -20px;
   top: -20px
 } */
-
+.checkoutStepBar{
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+.checkoutStep{
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
 
 
 @media only screen and (max-width: 478px) {

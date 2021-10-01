@@ -4,7 +4,7 @@ import checkIcon from '../data/images/check icon green 1.png'
 const PaymentRecieve = ({ delivered, date }) => {
 	return (
 		<>
-			<p className='text-center mb-1'>お支払い済み</p>
+			<p className='text-center mb-1 mt-3'>お支払い済み</p>
 			<Image
 				src={checkIcon}
 				alt='checkIcon'

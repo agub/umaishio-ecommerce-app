@@ -184,11 +184,17 @@ const OrderScreen = ({ match, history, location }) => {
 		<>
 			<Row>
 				{!order.isPaid && !order.isBankTransfer ? (
-					<CheckoutSteps step1 step2 step3 />
+					<CheckoutSteps number={50} />
 				) : (
-					<CheckoutSteps step1 step2 step3 step4 />
+					<CheckoutSteps number={100} />
 				)}
-				{order && order.isPaid && (
+				{order && order.isPaid && !order.isDelivered && (
+					// <Message variant='success'>
+					// 	お支払い済み {order.paidAt.substring(0, 10)}
+					// </Message>
+					<PaymentRecieve delivered={order.isDelivered} date={null} />
+				)}
+				{order && order.isPaid && order.isDelivered && (
 					// <Message variant='success'>
 					// 	お支払い済み {order.paidAt.substring(0, 10)}
 					// </Message>

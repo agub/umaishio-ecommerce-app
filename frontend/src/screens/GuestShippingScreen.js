@@ -259,7 +259,7 @@ const GuestShippingScreen = ({ history }) => {
 
 	return (
 		<FormContainer>
-			<CheckoutSteps step1 step2 />
+			<CheckoutSteps number={0} />
 			{registerError && (
 				<Message variant='danger'>{registerError}</Message>
 			)}
