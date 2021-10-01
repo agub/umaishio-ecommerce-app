@@ -139,7 +139,7 @@ const ProductScreen = ({ match, history }) => {
 														justifyContent: 'end',
 													}}
 													md={4}
-													sm={4}
+													xs={4}
 												>
 													{/* <Form.Control
 														className='form-select form-control-select'

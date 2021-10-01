@@ -22,6 +22,7 @@ import {
 import CvcModal from '../components/CvcModal'
 import ModifyShippingInfoModal from '../components/ModifyShippingInfoModal'
 import fontFamily from '../fonts/AxisStd/AxisStd-ExtraLight.otf'
+import PaymentRecieve from '../components/PaymentRecieve'
 
 import '../styles/OrderScreen.scss'
 
@@ -188,23 +189,40 @@ const OrderScreen = ({ match, history, location }) => {
 					<CheckoutSteps step1 step2 step3 step4 />
 				)}
 				{order && order.isPaid && (
-					<Message variant='success'>
-						お支払い済み {order.paidAt.substring(0, 10)}
-					</Message>
+					// <Message variant='success'>
+					// 	お支払い済み {order.paidAt.substring(0, 10)}
+					// </Message>
+					<PaymentRecieve
+						delivered={order.isDelivered}
+						date={order.deliveredAt.substring(0, 10)}
+					/>
 				)}
-				{order.isDelivered ? (
+				{/* {order.isDelivered ? (
 					<Message variant='success'>
 						発送手配の完了
 						{order.deliveredAt.substring(0, 10)}
 					</Message>
-				) : null}
+				) : null} */}
 				{!order.isPaid && order.isBankTransfer && (
+					<Message variant='danger'>
+						ご注文ありがとうございした。
+						<br />
+						銀行振り込み確認後の配送になります。
+						<br />
+						また発送後に
+						<a href='mailto: info@umaishio.com'>
+							info@umaishio.com
+						</a>
+						から発送完了メールを送らせていただきます。
+					</Message>
+				)}
+				{/* {!order.isPaid && order.isBankTransfer && (
 					<Message variant='danger'>
 						注文ありがとうございした。
 						<br />
 						振り込み確認後の配送になります。
 					</Message>
-				)}
+				)} */}
 				<Col md={order && order.isPaid ? '12' : '6'}>
 					<div className='item-responsive-wrap__g order-left-wrap'>
 						<div className='mt-3'>
@@ -447,27 +465,30 @@ const OrderScreen = ({ match, history, location }) => {
 									<>
 										<div>
 											<Form>
-												<Form.Group className='m-2'>
+												<Form.Group className='mt-2'>
 													{/* <Form.Label>クレジットカード名義人</Form.Label> */}
-													<Form.Control
-														type='number'
-														required
-														value={trackingId}
-														placeholder='*ヤマトのトラッキングナンバー'
-														onChange={(e) =>
-															setTrackingId(
-																e.target.value
-															)
-														}
-													></Form.Control>
+													<div className='form-container-pw-icon__g'>
+														<Form.Control
+															type='number'
+															required
+															value={trackingId}
+															placeholder='*ヤマトのトラッキングナンバー'
+															onChange={(e) =>
+																setTrackingId(
+																	e.target
+																		.value
+																)
+															}
+														></Form.Control>
+													</div>
 												</Form.Group>
 												<Button
 													type='button'
-													className='btn btn-block w-100'
+													className='mt-2 btn btn-block w-100'
 													disabled={trackingId === ''}
 													onClick={deliverHandler}
 												>
-													入金確認＆配送ボタン
+													管理者：入金確認＆配送ボタン
 												</Button>
 											</Form>
 										</div>
@@ -581,6 +602,7 @@ const OrderScreen = ({ match, history, location }) => {
 										/>
 									</>
 								) : null}
+
 								{bankTransferState || order.isBankTransfer ? (
 									<p className='mt-3'>
 										銀行振り込み口座
@@ -592,6 +614,7 @@ const OrderScreen = ({ match, history, location }) => {
 										振込額: ¥{order.totalPrice}
 									</p>
 								) : null}
+
 								{/* {order && order.isPaid && (
 								<Message variant='success'>
 									お支払い済み {order.paidAt.substring(0, 10)}
@@ -619,10 +642,10 @@ const OrderScreen = ({ match, history, location }) => {
 											<Loader />
 										) : (
 											<>
-												<p className='text-center'>
+												{/* <p className='text-center'>
 													*
 													このボタンで購入が完了します。
-												</p>
+												</p> */}
 												<Button
 													type='button'
 													className='btn-block w-100 borderRadius__g'
