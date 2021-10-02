@@ -41,7 +41,9 @@ p {
   color: black;
 }
 
-
+select {
+  padding-right: 29px;
+}
 
 .form-control {
   color: black;
@@ -143,7 +145,7 @@ main {
   margin: 0 auto;
   max-width: 26px;
   // margin: 5px;
-  
+  text-align: center;
   z-index: 1000;
   font-size: 14px;
   padding: 1px 1px;
@@ -152,6 +154,7 @@ main {
   -moz-appearance:none; /* Firefox */
   -webkit-appearance:none; /* Safari and Chrome */
   text-align-last:center;
+  -moz-text-align-last: center;
 }
 
 .item-responsive-wrap__g{
