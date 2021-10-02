@@ -1,8 +1,8 @@
 import React from 'react'
-import { Form, Button, Col, Row, Image, Modal } from 'react-bootstrap'
+import { Col, Row, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Rating from '../components/Rating'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addToCart } from '../actions/cartActions'
 
 const EditableCartItems = ({ item }) => {
@@ -53,6 +53,7 @@ const EditableCartItems = ({ item }) => {
 					<div className='crement-wrap__g'>
 						<button
 							className='product-page-crement'
+							type='button'
 							onClick={() => {
 								if (item.qty === 1) {
 									return
@@ -88,6 +89,7 @@ const EditableCartItems = ({ item }) => {
 						</select>
 						<button
 							className='product-page-crement'
+							type='button'
 							onClick={() =>
 								dispatch(
 									addToCart(

@@ -302,6 +302,7 @@ const ShippingScreen = ({ history }) => {
 				<Row>
 					<CheckoutSteps number={0} />
 					<h1>お届け先の住所</h1>
+
 					<Col lg={8} md={12}>
 						{userInfo && !userInfo.isGuest ? (
 							<AddressHistory
@@ -412,7 +413,6 @@ const ShippingScreen = ({ history }) => {
 								<span>合計:</span>
 								<span>¥&nbsp;{cart.totalPrice}</span>
 							</p>
-
 							{/* fix this to 0 for yen */}
 						</div>
 						<div>

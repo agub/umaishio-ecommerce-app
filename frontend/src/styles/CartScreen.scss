@@ -44,6 +44,7 @@
 }
 
 .cart-row-mg__mobile {
+
   @include mq(md) { // 引数を個別に指定
     margin-top: 10px;
   }
@@ -51,6 +52,9 @@
 
 .cart-row-total__mobile {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   @include mq(md) { // 引数を個別に指定
    text-align: end;
    padding-right: 10px;
@@ -59,6 +63,8 @@
 
 .cart-select-wrap{
   position: relative;
+  display: flex;
+  align-items: center;
   @include mq(md) { // 引数を個別に指定
     margin-top: 25px;
   }
@@ -67,7 +73,7 @@
 .cart-select-top {
   font-size: 0.8rem;
   position: absolute;
-  bottom: 40px;
+  bottom: 35px;
   z-index: 1000;
   @include mq(md) { // 引数を個別に指定
     position: absolute;
