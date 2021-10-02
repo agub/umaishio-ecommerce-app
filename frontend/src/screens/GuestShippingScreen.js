@@ -214,7 +214,7 @@ const GuestShippingScreen = ({ history }) => {
 
 	//PlaceOrderScreen
 
-	cart.itemsPrice = cart.cartItems.reduce
+	// cart.itemsPrice = cart.cartItems.reduce
 
 	const addDecimals = (num) => {
 		return (Math.round(num * 100) / 100).toFixed(0)
@@ -223,7 +223,7 @@ const GuestShippingScreen = ({ history }) => {
 	cart.itemsPrice = addDecimals(
 		cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
 	)
-	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
+	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 0)
 	cart.taxPrice = addDecimals(Number((0.08 * cart.itemsPrice).toFixed(0)))
 	cart.totalPrice = (
 		Number(cart.itemsPrice) +

@@ -10,6 +10,7 @@ import {
 	payOnStirpe,
 	deliverOrder,
 	bankTransferOrder,
+	updateShippingFee,
 } from '../actions/orderActions'
 import {
 	STRIPE_PAY_RESET,
@@ -97,8 +98,15 @@ const OrderScreen = ({ match, history, location }) => {
 			dispatch(getOrderDetails(orderId))
 		}
 		if (successPay || successBankTransfer) {
+			dispatch(
+				updateShippingFee(orderId, {
+					shippingFee,
+					totalPriceCal: order.totalPrice + shippingFee,
+				})
+			)
 			localStorage.setItem('cartItems', [])
 			dispatch({ type: CART_ITEMS_RESET })
+			window.location.reload()
 		}
 	}, [
 		dispatch,
@@ -169,30 +177,47 @@ const OrderScreen = ({ match, history, location }) => {
 
 	const prefecture_1050 = ['沖縄県']
 
-	const shippingFee = () => {
+	const shippingFeeCalc = () => {
 		if (order && order.shippingAddress.prefecture) {
 			// let prefectureWWW = order.shippingAddress.prefecture.toString()
-			console.log(
-				prefecture_600.includes(order.shippingAddress.prefecture)
-			)
+			if (prefecture_600.includes(order.shippingAddress.prefecture)) {
+				console.log('600円')
+			}
+			if (prefecture_700.includes(order.shippingAddress.prefecture)) {
+				console.log('700円')
+			}
+			if (prefecture_750.includes(order.shippingAddress.prefecture)) {
+				console.log('750円')
+			}
+			if (prefecture_950.includes(order.shippingAddress.prefecture)) {
+				console.log('950円')
+			}
+			if (prefecture_1050.includes(order.shippingAddress.prefecture)) {
+				console.log('1050円')
+			}
 		}
 	}
+	shippingFeeCalc()
+	// shippingFee()
+	let shippingFee = 450
 
-	shippingFee()
+	const totalPriceCal = () => {
+		return Number(order.totalPrice) + Number(shippingFee)
+	}
 
-	// const sampleButton = () => {
-	// 	dispatch(
-	// 		createOrder({
-	// 			orderItems: order.orderItems,
-	// 			shippingAddress: order.shippingAddress,
-	// 			// paymentMethod: cart.paymentMethod,
-	// 			itemsPrice: order.itemsPrice,
-	// 			shippingPrice: order.shippingPrice,
-	// 			// taxPrice: cart.taxPrice,
-	// 			totalPrice: 12412412414,
-	// 		})
-	// 	)
-	// }
+	// let totalPriceCal = (
+	// 	Number(cart.itemsPrice) + Number(cart.shippingPrice)
+	// ).toFixed(0)
+	// useEffect(() => {
+	// 	if (order) {
+	// 		dispatch(
+	// 			updateShippingFee(orderId, {
+	// 				shippingFee,
+	// 				totalPriceCal: order.totalPrice + shippingFee,
+	// 			})
+	// 		)
+	// 	}
+	// }, [order])
 
 	const submitHandler = async (e) => {
 		e.preventDefault()
@@ -216,7 +241,8 @@ const OrderScreen = ({ match, history, location }) => {
 				const { id } = paymentMethod
 				const paymentDetails = {
 					id: id,
-					amount: order.totalPrice,
+					amount: totalPriceCal(),
+					//fixme
 					name: name,
 					metadata: {
 						//fixme add more shipper info
@@ -377,14 +403,24 @@ const OrderScreen = ({ match, history, location }) => {
 						<div>
 							<p className='d-flex justify-content-between'>
 								<span>配送料</span>
-								<span>¥&nbsp;{order.shippingPrice}</span>
+								{order &&
+								(order.isPaid || order.isBankTransfer) ? (
+									<span>¥&nbsp;{order.shippingPrice}</span>
+								) : (
+									<span>¥&nbsp;{shippingFee}</span>
+								)}
 							</p>
 						</div>
 
 						<div>
 							<p className='d-flex justify-content-between'>
 								<span>税込合計</span>
-								<span>¥&nbsp;{order.totalPrice}</span>
+								{order &&
+								(order.isPaid || order.isBankTransfer) ? (
+									<span>¥&nbsp;{order.totalPrice}</span>
+								) : (
+									<span>¥&nbsp;{totalPriceCal()}</span>
+								)}
 							</p>
 						</div>
 						<p className='underline__g'></p>

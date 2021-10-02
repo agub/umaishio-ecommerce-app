@@ -263,6 +263,31 @@ const updateOrderShippingInfo = asyncHandler(async (req, res) => {
 	}
 })
 
+// @desc    Update ordered shipper info
+// @route   GET
+// @access  Private/Admin
+const updateShippingFee = asyncHandler(async (req, res) => {
+	const order = await Order.findById(req.params.id)
+	console.log('___________________________')
+	console.log(req.body)
+	if (req.body) {
+		order.shippingPrice = req.body.shippingFee
+		order.totalPrice = req.body.totalPriceCal
+
+		const updatedOrder = await order.save()
+
+		res.json(updatedOrder)
+	} else {
+		res.status(404).json({
+			message: 'failed',
+			success: false,
+		})
+		throw new Error(
+			'オーダーが見つかりません。ログインし最初からもう一度お試しください。'
+		)
+	}
+})
+
 export {
 	addOrderItems,
 	getOrderById,
@@ -273,4 +298,5 @@ export {
 	getOrders,
 	updateOrderToDelivered,
 	updateOrderShippingInfo,
+	updateShippingFee,
 }

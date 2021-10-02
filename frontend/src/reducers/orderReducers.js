@@ -41,6 +41,9 @@ import {
 	ORDER_UPDATE_SHIPPER_REQUEST,
 	ORDER_UPDATE_SHIPPER_SUCCESS,
 	ORDER_UPDATE_SHIPPER_FAIL,
+	ORDER_UPDATE_SHIPPINGFEE_REQUEST,
+	ORDER_UPDATE_SHIPPINGFEE_SUCCESS,
+	ORDER_UPDATE_SHIPPINGFEE_FAIL,
 } from '../constants/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -246,6 +249,26 @@ export const orderShippingUpdateReducer = (state = {}, action) => {
 				success: true,
 			}
 		case ORDER_UPDATE_SHIPPER_FAIL:
+			return {
+				loading: false,
+				error: action.payload,
+			}
+		default:
+			return state
+	}
+}
+export const orderShippingFeeReducer = (state = {}, action) => {
+	switch (action.type) {
+		case ORDER_UPDATE_SHIPPINGFEE_REQUEST:
+			return {
+				loading: true,
+			}
+		case ORDER_UPDATE_SHIPPINGFEE_SUCCESS:
+			return {
+				loading: false,
+				success: true,
+			}
+		case ORDER_UPDATE_SHIPPINGFEE_FAIL:
 			return {
 				loading: false,
 				error: action.payload,

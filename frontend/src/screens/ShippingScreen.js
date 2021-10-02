@@ -199,8 +199,6 @@ const ShippingScreen = ({ history }) => {
 
 	//PlaceOrderScreen
 
-	cart.itemsPrice = cart.cartItems.reduce
-
 	const addDecimals = (num) => {
 		return (Math.round(num * 100) / 100).toFixed(0)
 	}
@@ -390,7 +388,7 @@ const ShippingScreen = ({ history }) => {
 					<Col lg={4} md={12}>
 						<div className='shipper-wrap__g cart-price-wrap'>
 							{cartItems.map((item) => (
-								<EditableCartItems item={item} />
+								<EditableCartItems item={item} key={item} />
 							))}
 							<p className='underline__g'></p>
 							<p className='d-flex justify-content-between'>
@@ -461,7 +459,7 @@ const ShippingScreen = ({ history }) => {
 				{/* <div> */}
 				<div className='item-modal-wrap__g'>
 					{cartItems.map((item) => (
-						<EditableCartItems item={item} />
+						<EditableCartItems item={item} key={item} />
 					))}
 					<p className='underline__g'></p>
 					<p className='d-flex justify-content-between'>
