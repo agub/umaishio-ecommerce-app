@@ -143,8 +143,8 @@ const ProductScreen = ({ match, history }) => {
 														display: 'flex',
 														justifyContent: 'end',
 													}}
-													md={4}
-													xs={4}
+													md={5}
+													xs={5}
 												>
 													{/* <Form.Control
 														className='form-select form-control-select'
@@ -169,7 +169,10 @@ const ProductScreen = ({ match, history }) => {
 															</option>
 														))}
 													</Form.Control> */}
-													<div className='product-page-crement-wrap'>
+													<div
+														className='product-page-crement-wrap'
+														// className='crement-wrap__g'
+													>
 														<button
 															className='product-page-crement'
 															onClick={() => {
@@ -226,7 +229,14 @@ const ProductScreen = ({ match, history }) => {
 													</div>
 												</Col>
 											)}
-											<Col md={6} xs={8}>
+											<Col
+												md={6}
+												xs={7}
+												style={{
+													display: 'flex',
+													justifyContent: 'flex-end',
+												}}
+											>
 												<Button
 													onClick={addToCartHandler}
 													className='product-page-button'
