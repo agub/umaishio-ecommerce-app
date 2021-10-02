@@ -53,7 +53,6 @@ const CartScreen = ({ match, location, history }) => {
 		return cartItems.reduce((qty, item) => Number(item.qty) + qty, 0)
 	}
 
-	console.log(cartItems)
 	return (
 		<Row>
 			<h1>ショッピングカート</h1>

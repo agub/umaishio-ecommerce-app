@@ -178,27 +178,34 @@ const OrderScreen = ({ match, history, location }) => {
 	const prefecture_1050 = ['沖縄県']
 
 	const shippingFeeCalc = () => {
-		if (order && order.shippingAddress.prefecture) {
-			// let prefectureWWW = order.shippingAddress.prefecture.toString()
-			if (prefecture_600.includes(order.shippingAddress.prefecture)) {
-				console.log('600円')
-			}
-			if (prefecture_700.includes(order.shippingAddress.prefecture)) {
-				console.log('700円')
-			}
-			if (prefecture_750.includes(order.shippingAddress.prefecture)) {
-				console.log('750円')
-			}
-			if (prefecture_950.includes(order.shippingAddress.prefecture)) {
-				console.log('950円')
-			}
-			if (prefecture_1050.includes(order.shippingAddress.prefecture)) {
-				console.log('1050円')
+		if (getCartCount() > 6) {
+			if (order && order.shippingAddress.prefecture) {
+				// let prefectureWWW = order.shippingAddress.prefecture.toString()
+				if (prefecture_600.includes(order.shippingAddress.prefecture)) {
+					return 600
+				}
+				if (prefecture_700.includes(order.shippingAddress.prefecture)) {
+					return 700
+				}
+				if (prefecture_750.includes(order.shippingAddress.prefecture)) {
+					return 750
+				}
+				if (prefecture_950.includes(order.shippingAddress.prefecture)) {
+					return 950
+				}
+				if (
+					prefecture_1050.includes(order.shippingAddress.prefecture)
+				) {
+					return 1050
+				}
 			}
 		}
+		return 400
 	}
-	shippingFeeCalc()
-	// shippingFee()
+
+	const getCartCount = () =>
+		order.orderItems.reduce((qty, item) => Number(item.qty) + qty, 0)
+
 	let shippingFee = 450
 
 	const totalPriceCal = () => {
@@ -590,6 +597,9 @@ const OrderScreen = ({ match, history, location }) => {
 										required
 									>
 										<option>郵便 + ¥140</option>
+										<option>
+											ヤマト運輸 + ¥{shippingFeeCalc()}
+										</option>
 									</Form.Control>
 								</div>
 							</Form.Group>
