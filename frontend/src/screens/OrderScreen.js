@@ -13,15 +13,15 @@ import {
 import {
 	STRIPE_PAY_RESET,
 	STRIPE_PAY_REQUEST,
+	ORDER_DELIVER_RESET,
+	BANKTRANSFER_RESET,
+	STRIPE_PAY_LOADING_STOP,
 } from '../constants/orderConstants'
 
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { CART_ITEMS_RESET } from '../constants/cartConstants'
-import {
-	ORDER_DELIVER_RESET,
-	BANKTRANSFER_RESET,
-} from '../constants/orderConstants'
+
 import CvcModal from '../components/CvcModal'
 import ModifyShippingInfoModal from '../components/ModifyShippingInfoModal'
 import fontFamily from '../fonts/AxisStd/AxisStd-ExtraLight.otf'
@@ -110,12 +110,13 @@ const OrderScreen = ({ match, history, location }) => {
 
 	const submitHandler = async (e) => {
 		e.preventDefault()
-		dispatch({
-			type: STRIPE_PAY_REQUEST,
-		})
+
 		setErrorText('')
 		try {
 			if (name !== '' && order && !bankTransferState) {
+				dispatch({
+					type: STRIPE_PAY_REQUEST,
+				})
 				if (!stripe || !elements) {
 					return
 				}
@@ -159,6 +160,7 @@ const OrderScreen = ({ match, history, location }) => {
 			}
 		} catch (error) {
 			console.log(error)
+			dispatch({ type: STRIPE_PAY_LOADING_STOP })
 			setErrorText('正しく記入してください')
 		}
 	}
@@ -422,6 +424,7 @@ const OrderScreen = ({ match, history, location }) => {
 									<div className='modify-btn-wrap'>
 										<button
 											className='modify-btn'
+											type='button'
 											onClick={shippingModalShow}
 										>
 											<span className='modify-text'>

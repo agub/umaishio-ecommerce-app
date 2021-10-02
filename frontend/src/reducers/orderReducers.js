@@ -29,6 +29,7 @@ import {
 	STRIPE_PAY_SUCCESS,
 	STRIPE_PAY_FAIL,
 	STRIPE_PAY_RESET,
+	STRIPE_PAY_LOADING_STOP,
 	ORDER_LIST_MY_SUCCESS,
 	ORDER_LIST_MY_REQUEST,
 	ORDER_LIST_MY_FAIL,
@@ -129,6 +130,10 @@ export const stripePayReducer = (state = {}, action) => {
 			return {
 				loading: false,
 				error: action.payload,
+			}
+		case STRIPE_PAY_LOADING_STOP:
+			return {
+				loading: false,
 			}
 		case STRIPE_PAY_RESET:
 			return {}

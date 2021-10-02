@@ -155,6 +155,7 @@ const sendShippingStartedEmail = asyncHandler(
 		})
 	}
 )
+
 const sendContactEmail = asyncHandler(async (email, name, content) => {
 	const mailObj = {
 		from: '旨い塩ショップ　<info@umaishio.com>',
