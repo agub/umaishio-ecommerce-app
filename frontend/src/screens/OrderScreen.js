@@ -4,6 +4,7 @@ import { Form, Button, Col, div, Image, Card, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import { createOrder } from '../actions/orderActions'
 import {
 	getOrderDetails,
 	payOnStirpe,
@@ -107,6 +108,91 @@ const OrderScreen = ({ match, history, location }) => {
 		successDeliver,
 		successBankTransfer,
 	])
+
+	const prefecture_600 = [
+		'宮城県',
+		'山形県',
+		'福島県',
+		'茨城県',
+		'栃木県',
+		'群馬県',
+		'埼玉県',
+		'千葉県',
+		'東京県',
+		'神奈川県',
+		'山梨県',
+		'新潟県',
+		'長野県',
+		'富山県',
+		'石川県',
+		'福井県',
+		'岐阜県',
+		'静岡県',
+		'愛知県',
+		'三重県',
+	]
+
+	const prefecture_700 = [
+		'青森県',
+		'岩手県',
+		'秋田県',
+		'滋賀県',
+		'京都県',
+		'大阪県',
+		'兵庫県',
+		'奈良県',
+		'和歌山県',
+	]
+
+	const prefecture_750 = [
+		'鳥取県',
+		'島根県',
+		'岡山県',
+		'広島県',
+		'山口県',
+		'徳島県',
+		'香川県',
+		'愛媛県',
+		'高知県',
+	]
+
+	const prefecture_950 = [
+		'福岡県',
+		'佐賀県',
+		'長崎県',
+		'熊本県',
+		'大分県',
+		'宮崎県',
+		'鹿児島県',
+		'北海道',
+	]
+
+	const prefecture_1050 = ['沖縄県']
+
+	const shippingFee = () => {
+		if (order && order.shippingAddress.prefecture) {
+			// let prefectureWWW = order.shippingAddress.prefecture.toString()
+			console.log(
+				prefecture_600.includes(order.shippingAddress.prefecture)
+			)
+		}
+	}
+
+	shippingFee()
+
+	// const sampleButton = () => {
+	// 	dispatch(
+	// 		createOrder({
+	// 			orderItems: order.orderItems,
+	// 			shippingAddress: order.shippingAddress,
+	// 			// paymentMethod: cart.paymentMethod,
+	// 			itemsPrice: order.itemsPrice,
+	// 			shippingPrice: order.shippingPrice,
+	// 			// taxPrice: cart.taxPrice,
+	// 			totalPrice: 12412412414,
+	// 		})
+	// 	)
+	// }
 
 	const submitHandler = async (e) => {
 		e.preventDefault()
