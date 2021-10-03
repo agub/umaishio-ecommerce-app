@@ -36,7 +36,7 @@ const userSchema = mongoose.Schema(
 		shippingAddress: {
 			fullName: { type: String },
 			furigana: { type: String },
-			phoneNumber: { type: Number },
+			phoneNumber: { type: String },
 			postalCode: { type: String || Number },
 			prefecture: { type: String },
 			address: { type: String },

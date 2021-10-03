@@ -98,6 +98,7 @@ const OrderScreen = ({ match, history, location }) => {
 			dispatch(getOrderDetails(orderId))
 		}
 		if (successPay || successBankTransfer) {
+			// updatePrice on UI
 			dispatch(
 				updateShippingFee(orderId, {
 					shippingFee,
@@ -116,6 +117,8 @@ const OrderScreen = ({ match, history, location }) => {
 		successDeliver,
 		successBankTransfer,
 	])
+
+	// __________________________________________________________________________________________________________________
 
 	const prefecture_600 = [
 		'宮城県',
@@ -206,25 +209,12 @@ const OrderScreen = ({ match, history, location }) => {
 	const getCartCount = () =>
 		order.orderItems.reduce((qty, item) => Number(item.qty) + qty, 0)
 
-	let shippingFee = 450
-
 	const totalPriceCal = () => {
 		return Number(order.totalPrice) + Number(shippingFee)
 	}
 
-	// let totalPriceCal = (
-	// 	Number(cart.itemsPrice) + Number(cart.shippingPrice)
-	// ).toFixed(0)
-	// useEffect(() => {
-	// 	if (order) {
-	// 		dispatch(
-	// 			updateShippingFee(orderId, {
-	// 				shippingFee,
-	// 				totalPriceCal: order.totalPrice + shippingFee,
-	// 			})
-	// 		)
-	// 	}
-	// }, [order])
+	let shippingFee = 400
+	// __________________________________________________________________________________________________________________
 
 	const submitHandler = async (e) => {
 		e.preventDefault()
@@ -349,7 +339,7 @@ const OrderScreen = ({ match, history, location }) => {
 						振り込み確認後の配送になります。
 					</Message>
 				)} */}
-				<Col md={order && order.isPaid ? '12' : '6'}>
+				<Col lg={order && order.isPaid ? '12' : '6'}>
 					<div className='item-responsive-wrap__g order-left-wrap'>
 						<div className='mt-3'>
 							<h4>注文内容</h4>
@@ -644,7 +634,7 @@ const OrderScreen = ({ match, history, location }) => {
 					</div>
 				</Col>
 				{order && !order.isPaid && (
-					<Col md={6}>
+					<Col lg={6}>
 						<div className='item-responsive-wrap__g order-left-wrap order-left'>
 							<div className='mt-3'>
 								<h4>お支払い方法</h4>
@@ -656,8 +646,8 @@ const OrderScreen = ({ match, history, location }) => {
 											className='mt-3'
 											type='radio'
 											label='クレジットカード'
-											id='Stripe'
-											name='paymentMethod'
+											// id='Stripe'
+											name='paymentMethodForm'
 											onClick={() =>
 												toBankTransfer(false)
 											}
@@ -668,7 +658,7 @@ const OrderScreen = ({ match, history, location }) => {
 											type='radio'
 											label='銀行振り込み'
 											id='bank'
-											name='paymentMethod'
+											name='paymentMethodForm'
 											onClick={() => toBankTransfer(true)}
 										></Form.Check>
 									</Col>
@@ -700,22 +690,13 @@ const OrderScreen = ({ match, history, location }) => {
 										<CardElement
 											// className='mt-3 mb-3'
 											className='cardElementCss'
-											disabled={true}
+											// disabled={true}
 											required
 											hidePostalCode={true}
 											options={{
 												style: {
-													fonts: [
-														{
-															src: `url(${fontFamily})`,
-															family: 'AxisStd',
-														},
-													],
 													base: {
 														fontSize: '17px',
-														border:
-															'1px solid #909090',
-														fontWeight: 'lighter',
 														'::placeholder': {
 															color: '#55595c',
 															fontSize: '17px',

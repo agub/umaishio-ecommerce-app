@@ -39,61 +39,74 @@ function App() {
 
 	return (
 		<Router>
-			<Header />
-			<main className='py-3 main-bgc'>
-				<Route path='/' component={LandingScreen} exact />
-				<Container>
-					<Elements stripe={stripePromise}>
+			<Elements stripe={stripePromise}>
+				<Header />
+				<main className='py-3 main-bgc'>
+					<Route path='/' component={LandingScreen} exact />
+					<Container>
 						<Route path='/order/:id' component={OrderScreen} />
-					</Elements>
-					<Route path='/shipping' component={ShippingScreen} />
-					<Route
-						path='/guestshipping'
-						component={GuestShippingScreen}
-					/>
-					<Route path='/forgot' component={ForgotPasswordScreen} />
-					<Route
-						path='/password-reset/:id'
-						component={ResetPasswordScreen}
-					/>
-					<Route path='/checkemail' component={CheckEmailScreen} />
 
-					{/* <Route path='/payment' component={PaymentScreen} /> */}
-					<Route path='/placeorder' component={PlaceOrderScreen} />
-					<Route path='/login' component={LoginScreen} />
-					<Route path='/register' component={RegisterScreen} />
-					<Route path='/profile' component={ProfileScreen} />
-					<Route path='/contact' component={ContactScreen} />
-					<Route path='/product/:id' component={ProductScreen} />
-					<Route path='/cart/:id?' component={CartScreen} />
+						<Route path='/shipping' component={ShippingScreen} />
+						<Route
+							path='/guestshipping'
+							component={GuestShippingScreen}
+						/>
+						<Route
+							path='/forgot'
+							component={ForgotPasswordScreen}
+						/>
+						<Route
+							path='/password-reset/:id'
+							component={ResetPasswordScreen}
+						/>
+						<Route
+							path='/checkemail'
+							component={CheckEmailScreen}
+						/>
 
-					<Route path='/admin/userlist' component={UserListScreen} />
-					<Route
-						path='/admin/user/:id/edit'
-						component={UserEditScreen}
-					/>
-					<Route
-						path='/admin/productlist'
-						component={ProductListScreen}
-						exact
-					/>
-					<Route
-						path='/admin/product/:id/edit'
-						component={ProductEditScreen}
-					/>
-					<Route
-						path='/admin/orderlist'
-						component={OrderListScreen}
-					/>
-					<Route
-						path='/verify/:id/:token'
-						component={VerifyUserScreen}
-					/>
-					<Route path='/shop' component={HomeScreen} />
-				</Container>
-			</main>
+						{/* <Route path='/payment' component={PaymentScreen} /> */}
+						<Route
+							path='/placeorder'
+							component={PlaceOrderScreen}
+						/>
+						<Route path='/login' component={LoginScreen} />
+						<Route path='/register' component={RegisterScreen} />
+						<Route path='/profile' component={ProfileScreen} />
+						<Route path='/contact' component={ContactScreen} />
+						<Route path='/product/:id' component={ProductScreen} />
+						<Route path='/cart/:id?' component={CartScreen} />
 
-			<Footer />
+						<Route
+							path='/admin/userlist'
+							component={UserListScreen}
+						/>
+						<Route
+							path='/admin/user/:id/edit'
+							component={UserEditScreen}
+						/>
+						<Route
+							path='/admin/productlist'
+							component={ProductListScreen}
+							exact
+						/>
+						<Route
+							path='/admin/product/:id/edit'
+							component={ProductEditScreen}
+						/>
+						<Route
+							path='/admin/orderlist'
+							component={OrderListScreen}
+						/>
+						<Route
+							path='/verify/:id/:token'
+							component={VerifyUserScreen}
+						/>
+						<Route path='/shop' component={HomeScreen} />
+					</Container>
+				</main>
+
+				<Footer />
+			</Elements>
 		</Router>
 	)
 }

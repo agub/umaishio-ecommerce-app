@@ -78,7 +78,6 @@ const AboutPage = () => {
 					>
 						<Card.Title
 							as='h2'
-							className='about-card-title'
 							className={
 								size.width > 991
 									? 'about-card-title'

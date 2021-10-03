@@ -94,7 +94,9 @@ const ShippingForm = ({
 				</Form.Label>
 				<div className='form-container-pw-icon__g'>
 					<Form.Control
-						type='number'
+						// type='string'
+						type='text'
+						// type='tel'
 						value={phoneNumber}
 						onChange={(e) => setPhoneNumber(e.target.value)}
 					></Form.Control>
@@ -115,6 +117,7 @@ const ShippingForm = ({
 					as={Col}
 					sm={3}
 					xs={4}
+					lg={3}
 				>
 					<div className='form-container-pw-icon__g'>
 						<Form.Control
@@ -144,8 +147,9 @@ const ShippingForm = ({
 					controlId='postalCode'
 					className='mt-2'
 					as={Col}
-					sm={3}
-					xs={4}
+					sm={4}
+					xs={5}
+					lg={3}
 				>
 					<div className='form-container-pw-icon__g'>
 						<Form.Control
