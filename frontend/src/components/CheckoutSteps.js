@@ -1,48 +1,12 @@
 import React from 'react'
-import { Nav, Row, Col, Image } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+import { Image } from 'react-bootstrap'
 
 import checkIcon from '../data/images/check green xs 2.png'
 import 'react-step-progress-bar/styles.css'
 import { ProgressBar, Step } from 'react-step-progress-bar'
 
-const CheckoutSteps = ({ step1, step2, step3, step4, number }) => {
+const CheckoutSteps = ({ number }) => {
 	return (
-		// <div
-		// 	className='checkoutStepBar d-flex justify-content-center align-items-center mb-4 mt-4'
-		// 	//responsiveCss
-		// >
-		// 	<Col xs={4} className='checkoutStep'>
-		// 		{step2 ? (
-		// 			// <LinkContainer to='/shipping' className='p-0'>
-		// 			<span>お届け先住所</span>
-		// 		) : (
-		// 			// </LinkContainer>
-		// 			<span disabled className='p-0'>
-		// 				お届け先住所
-		// 			</span>
-		// 		)}
-		// 	</Col>
-		// 	{/* <p className='underline__g'></p> */}
-		// 	<Col xs={4} className='checkoutStep'>
-		// 		{step3 ? (
-		// 			<span>チェックアウト</span>
-		// 		) : (
-		// 			<span disabled className='p-0'>
-		// 				チェックアウト
-		// 			</span>
-		// 		)}
-		// 	</Col>
-		// 	<Col xs={4} className='checkoutStep'>
-		// 		{step4 ? (
-		// 			<span>注文完了</span>
-		// 		) : (
-		// 			<span disabled className='p-0'>
-		// 				注文完了
-		// 			</span>
-		// 		)}
-		// 	</Col>
-		// </div>
 		<div className='checkoutStep d-flex justify-content-center align-items-center'>
 			<ProgressBar
 				percent={number}

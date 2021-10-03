@@ -1,15 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import {
-	Row,
-	Col,
-	ListGroup,
-	Image,
-	Form,
-	Button,
-	Card,
-	Container,
-} from 'react-bootstrap'
+import { Row, Col, Image, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
@@ -19,15 +10,14 @@ import '../styles/CartScreen.scss'
 const CartScreen = ({ match, location, history }) => {
 	const productId = match.params.id
 	const qty = location.search ? Number(location.search.split('=')[1]) : 1
-	const [countQty, setCountQty] = useState(1)
 
 	const userLogin = useSelector((state) => state.userLogin)
 	const { userInfo } = userLogin
 	const dispatch = useDispatch()
 	const cart = useSelector((state) => state.cart)
 	const { cartItems } = cart
-	const productDetails = useSelector((state) => state.productDetails)
-	const { loading } = productDetails
+	// const productDetails = useSelector((state) => state.productDetails)
+	// const { loading } = productDetails
 
 	useEffect(() => {
 		if (productId) {

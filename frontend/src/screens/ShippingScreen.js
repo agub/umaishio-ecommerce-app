@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button, Col, Row, Image, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import FormContainer from '../components/FormContainer'
+
 import CheckoutSteps from '../components/CheckoutSteps'
 import { createOrder } from '../actions/orderActions'
 import { saveShippingAddress } from '../actions/cartActions'
@@ -11,10 +11,10 @@ import ShipperForm from '../components/ShipperForm'
 import AddressHistory from '../components/AddressHistory'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import Rating from '../components/Rating'
+
 import { ORDER_CREATE_RESET } from '../constants/orderConstants'
 import { USER_DETAILS_RESET } from '../constants/userConstants'
-import { addToCart } from '../actions/cartActions'
+
 import EditableCartItems from '../components/EditableCartItems'
 
 import '../styles/ShippingScreen.scss'

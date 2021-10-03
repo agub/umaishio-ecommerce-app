@@ -1,8 +1,7 @@
 import React from 'react'
 import { Card, Image } from 'react-bootstrap'
 import x_logo from '../data/images/x_logo.png'
-import sakeXl from '../data/images/sake+obj-xl.png'
-import sakeMobile from '../data/images/sake+obj-mobile.png'
+
 import useWindowSize from '../hooks/useWindowSize'
 
 const LeftPicture = ({ title, content, imageXl, imageMobile }) => {
@@ -42,7 +41,6 @@ const LeftPicture = ({ title, content, imageXl, imageMobile }) => {
 				>
 					<Card.Title
 						as='h2'
-						className='page3-card-title-mobile'
 						className={
 							size.width > 767
 								? 'page2-card-title'

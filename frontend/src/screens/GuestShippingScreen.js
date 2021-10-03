@@ -7,7 +7,7 @@ import { createOrder } from '../actions/orderActions'
 import { saveShippingAddress } from '../actions/cartActions'
 import ShippingForm from '../components/ShippingForm'
 import ShipperForm from '../components/ShipperForm'
-import AddressHistory from '../components/AddressHistory'
+
 import Loader from '../components/Loader'
 import { registerGuest } from '../actions/userActions'
 import Message from '../components/Message'

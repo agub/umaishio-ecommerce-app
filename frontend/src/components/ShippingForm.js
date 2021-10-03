@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Row, Col } from 'react-bootstrap'
 
 import { PREF_OPTIONS } from '../data/Prefecture'
 

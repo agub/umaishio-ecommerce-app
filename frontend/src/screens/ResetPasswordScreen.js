@@ -5,10 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import FormContainer from '../components/FormContainer'
-import { login } from '../actions/userActions'
 import { sendResetPassword } from '../actions/userActions'
-import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 import Background from '../data/images/bgc_blur.png'
 import ModalContainer from '../components/ModalContainer'

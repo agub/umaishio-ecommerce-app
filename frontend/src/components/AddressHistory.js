@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import Message from '../components/Message'
+import React from 'react'
 
-import Loader from '../components/Loader'
-import { Modal, Image, Button } from 'react-bootstrap'
+import { Modal, Button } from 'react-bootstrap'
 
 const AddressHistory = ({
 	show,

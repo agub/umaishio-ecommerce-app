@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Col, div, Image, Card, Row } from 'react-bootstrap'
+import { Form, Button, Col, Image, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { createOrder } from '../actions/orderActions'
 import {
 	getOrderDetails,
 	payOnStirpe,
@@ -26,7 +25,7 @@ import { CART_ITEMS_RESET } from '../constants/cartConstants'
 
 import CvcModal from '../components/CvcModal'
 import ModifyShippingInfoModal from '../components/ModifyShippingInfoModal'
-import fontFamily from '../fonts/AxisStd/AxisStd-ExtraLight.otf'
+
 import PaymentRecieve from '../components/PaymentRecieve'
 
 import '../styles/OrderScreen.scss'

@@ -1,9 +1,7 @@
 import React from 'react'
 import { Card, Image } from 'react-bootstrap'
 import x_logo from '../data/images/x_logo.png'
-import salt from '../data/images/salt+object.png'
-import saltXl from '../data/images/salt+obj-xl.png'
-import saltMobile from '../data/images/salt+obj-mobile.png'
+
 import useWindowSize from '../hooks/useWindowSize'
 
 const RightPicture = ({ title, content, imageXl, imageMobile }) => {

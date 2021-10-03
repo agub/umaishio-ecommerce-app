@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { Button } from 'react-bootstrap'
+import { useEffect } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { verifyUser } from '../actions/userActions'

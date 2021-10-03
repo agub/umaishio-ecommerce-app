@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { LinkContainer } from 'react-router-bootstrap'
-import { Form, Button, Row, Col, Nav } from 'react-bootstrap'
+
+import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import FormContainer from '../components/FormContainer'
+
 import { register } from '../actions/userActions'
 import Background from '../data/images/bgc_blur.png'
 import ModalContainer from '../components/ModalContainer'
