@@ -72,10 +72,23 @@ const sendEmailBcc = asyncHandler(async (mailObj) => {
 
 const sendWelcomeEmail = asyncHandler(async (email, name, id, token) => {
 	const mailObj = {
-		from: '旨い塩ショップ　<info@umaishio.com>',
+		from: '旨い塩オンラインショップ　<info@umaishio.com>',
 		recipients: [email],
-		subject: '旨い塩ショップの登録ありがとうございます',
-		message: `<p>${name}様, 旨い塩ショップの登録ありがとうございます。 <a href="${process.env.API_URI}/verify/${id}/${token}">こちら</a>から登録完了・・・</p>`,
+		subject: '旨い塩オンラインショップの登録のご案内',
+		// message: `<p>${name}様, 旨い塩オンラインショップの登録ありがとうございます。 <a href="${process.env.API_URI}/verify/${id}/${token}">こちら</a>から登録完了・・・</p>`,
+		message: `<p>${name}様、
+		<br/>
+		旨い塩オンラインショップのご登録ありがとうございます。
+		<br/>
+		<a href="${process.env.API_URI}/verify/${id}/${token}">こちら</a>をクリック後、会員登録が完了いたします。
+		<br/>
+		※会員登録に心当たりがない場合は、こちらの対応は不要となります。
+		<br/>
+		<br/>
+		またアクセスできない場合は、以下のURLからアクセスください。
+		<br/>
+		${process.env.API_URI}/verify/${id}/${token}
+		</p>`,
 	}
 
 	sendEmail(mailObj).then((res) => {
@@ -85,10 +98,25 @@ const sendWelcomeEmail = asyncHandler(async (email, name, id, token) => {
 
 const sendResetEmail = asyncHandler(async (email, name, token) => {
 	const mailObj = {
-		from: '旨い塩ショップ　<info@umaishio.com>',
+		from: '旨い塩オンラインショップ　<info@umaishio.com>',
 		recipients: [email],
-		subject: '旨い塩ショップ　パスワードリセット',
-		message: `<p>${name} 様, 旨い塩ショップをご利用いただきありがとうございます。<br/><a href="${process.env.API_URI}/password-reset/${token}">ここ</a>からパスワードをリセットしてください  </p>`,
+		subject: '旨い塩オンラインショップ　パスワードリセットのご案内',
+		// message: `<p>${name} 様, 旨い塩オンラインショップをご利用いただきありがとうございます。<br/><a href="${process.env.API_URI}/password-reset/${token}">ここ</a>からパスワードをリセットしてください  </p>`,
+		message: `<p>旨い塩オンラインショップをいつもご利用いただきありがとうございます。
+		<br/>
+		パスワードリセットの申請を受け付けました。
+		<br/>
+		パスワードの再設定をご希望の場合は、<a href="${process.env.API_URI}/password-reset/${token}">こちら</a>をクリックし新しいパスワードをご登録ください。
+		<br/>
+		※パスワードリセットの申請に心当たりがない場合は、対応は不要となります。
+		<br/>
+		<br/>
+		もしアクセスできない場合は、以下のURLからアクセスください。
+		<br/>
+		${process.env.API_URI}/password-reset/${token}
+		<br/>
+		<br/>
+		</p>`,
 	}
 
 	sendEmail(mailObj).then((res) => {
@@ -98,11 +126,42 @@ const sendResetEmail = asyncHandler(async (email, name, token) => {
 
 const sendOrderSuccessEmail = asyncHandler(async (email, name, orderId) => {
 	const mailObj = {
-		from: '旨い塩ショップ　<info@umaishio.com>',
+		from: '旨い塩オンラインショップ　<info@umaishio.com>',
 		bcc: 'sales@tobira.page',
 		recipients: [email],
-		subject: '旨い塩ショップ　注文内容',
-		message: `<p>${name}様, 旨い塩ショップをご利用いただきありがとうございます。<br/>ご注文いただいた商品を営業日３〜５日中に発送準備いたします。注文内容の確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a>。また配送手続きが完了したら配送状況やトラッキングナンバーをお送りいたします。</p>`,
+		subject: '旨い塩オンラインショップ　注文内容',
+		// message: `<p>${name}様, 旨い塩オンラインショップをご利用いただきありがとうございます。<br/>ご注文いただいた商品を営業日３〜５日中に発送準備いたします。注文内容の確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a>。また配送手続きが完了したら配送状況やトラッキングナンバーをお送りいたします。</p>`,
+		message: `<p>${name}様, 
+		<br/>
+		旨い塩オンラインショップをご利用いただきありがとうございます。
+		<br/>
+		以下の内容でご注文を承りました。
+	
+		<br/>
+		【配送先・商品情報】
+		お名前：
+		<br/>
+		ご住所：
+		<br/>
+		電話番号：
+		<br/>
+	
+		<br/>
+		【商品詳細】
+		商品価格（税込）：
+		<br/>
+		数量：
+		<br/>
+		配送料：
+		<br/>
+		合計（税込）：
+	
+		<br/>
+		また注文内容の確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a>からこ覧になれます。
+		<br/>
+		<br/>
+		*ご注文いただいた商品を営業日３〜５日中に発送準備いたします。また配送手続きが完了後こちらからヤマトの送り番号などをお送りいたします。
+		</p>`,
 	}
 
 	sendEmailBcc(mailObj).then((res) => {
@@ -113,23 +172,57 @@ const sendOrderSuccessEmail = asyncHandler(async (email, name, orderId) => {
 const sendBankTransferInfo = asyncHandler(
 	async (email, name, orderId, price) => {
 		const mailObj = {
-			from: '旨い塩ショップ　<info@umaishio.com>',
+			from: '旨い塩オンラインショップ　<info@umaishio.com>',
 			recipients: [email],
-			subject: '旨い塩ショップ　銀行振り込み',
-			message: `<p>${name}　様, 旨い塩ショップをご利用いただきありがとうございます。<br/>
+			subject: '旨い塩オンラインショップ　銀行振り込み',
+			message: `<p>${name}　様, 旨い塩オンラインショップをご利用いただきありがとうございます。
+								<br/>
+								以下の内容でご注文を承りました。
+								<br/>
+								<br/>
+								【配送先・商品情報】
+								<br/>
+								お名前：
+								<br/>
+								ご住所：
+								<br/>
+								電話番号：
+								<br/>
+								<br/>
+								<br/>
+								【商品詳細】
+								商品価格（税込）：
+								<br/>
+								数量：
+								<br/>
+								配送料：
+								<br/>
+								合計（税込）：
+								<br/>
+								<br/>
+								また注文内容の確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a>からもご覧になれます。
+								<br/>
+								<br/>
 								ご注文商品（ご注文番号：${orderId}）の銀行振り込みのご案内をいたします。
 								<br/>
-								銀行振り込み口座
 								<br/>
-								口座番号: XXXXXXXXXXX
+								【銀行振り込み詳細】
+								金融機関: 三井住友銀行 小田原支店
 								<br/>
-								名前: XXXXXXXXXXX
+								口座名: 株式会社トビラ
+								<br/>
+								口座番号: 3869283
 								<br/>
 								振込額: ¥${price}
 								<br/>
-								*振り込み確認後の配送になります。振り込み確認後発送開始のご案内を。。。何日以内など。。。
 								<br/>
-								注文内容の確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a></p>`,
+								※お振込手数料は恐れ入りますがお客様にご負担いただいております。よろしくお願いいたします。
+								<br/>
+								お振込いただき、確認後できるだけ早く送付させていただき振り込み確認後発送開始のご案内を改めてメールをお送りいたします。
+								<br/>
+								また領収書をご希望の場合、宛先の名前をご記入いただき、ご連絡下さい。
+								<br/>
+								</p>`,
 		}
 		sendEmailBcc(mailObj).then((res) => {
 			console.log(res)
@@ -140,16 +233,52 @@ const sendBankTransferInfo = asyncHandler(
 const sendShippingStartedEmail = asyncHandler(
 	async (email, name, orderId, trackingId) => {
 		const mailObj = {
-			from: '旨い塩ショップ　<info@umaishio.com>',
+			from: '旨い塩オンラインショップ　<info@umaishio.com>',
 			recipients: [email],
-			subject: '旨い塩ショップ 配送手続きメール',
-			message: `${name}様、旨い塩ショップをご利用いただきありがとうございます。 
+			subject: '旨い塩オンラインショップ 配送手続きメール',
+			message: `<p>
+								${name}様、
 								<br/>
-								<a href="${process.env.API_URI}/order/${orderId}">こちら</a>の商品の発送手続き完了をお伝えいたします。
+								旨い塩オンラインショップをご利用いただきありがとうございます。 
 								<br/>
-								数日以内に到着予定です。
-								`,
+								<br/>
+								<a href="${process.env.API_URI}/order/${orderId}">こちら</a>の商品の入金確認と発送手続きが完了しましたのでお伝えいたします。
+								<br/>
+								<br/>
+								【配送情報】
+								<br/>
+								配送会社: ヤマト運輸
+								<br/>
+								伝票番号: [xxxxxxxx]
+								<br/>
+								<br/>
+								ヤマト運輸HPの以下のリンクから荷物お問い合わせシステム配送状況を確認できます。
+								<br/>
+								https://toi.kuronekoyamato.co.jp/cgi-bin/tneko
+								</p>`,
 		}
+		// const mailObj = {
+		// 	from: '旨い塩オンラインショップ　<info@umaishio.com>',
+		// 	recipients: [email],
+		// 	subject: '旨い塩オンラインショップ 配送手続きメール',
+		// 	message: `<p>
+		// 						${name}様、
+		// 						<br/>
+		// 						旨い塩オンラインショップをご利用いただきありがとうございます。
+		// 						<br/>
+		// 						<br/>
+		// 						<a href="${process.env.API_URI}/order/${orderId}">こちら</a>の商品の入金確認と発送手続きが完了しましたのでお伝えいたします。
+		// 						<br/>
+		// 						<br/>
+		// 						【配送情報】
+		// 						<br/>
+		// 						配送方法: 郵便 ラクポスBOX
+		// 						<br/>
+		// 						配送予定: １〜２日後
+		// 						<br/>
+		// 						このたびは旨い塩オンライン覧ショップでのご注文いただき誠にありがとうございました。またのご利用を心よりお待ち申し上げております。
+		// 						</p>`,
+		// }
 		sendEmailBcc(mailObj).then((res) => {
 			console.log(res)
 		})
@@ -158,9 +287,9 @@ const sendShippingStartedEmail = asyncHandler(
 
 const sendContactEmail = asyncHandler(async (email, name, content) => {
 	const mailObj = {
-		from: '旨い塩ショップ　<info@umaishio.com>',
+		from: '旨い塩オンラインショップ　<info@umaishio.com>',
 		recipients: [email],
-		subject: '旨い塩ショップのお問い合わせ',
+		subject: '旨い塩オンラインショップのお問い合わせ',
 		message: `${name}様からのお問い合わせ内容: 
 		<br/>
 		${content}

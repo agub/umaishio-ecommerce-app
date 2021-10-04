@@ -244,9 +244,9 @@ const CartScreen = ({ match, location, history }) => {
 												></i>
 											</button>
 											小計:
-											<span className='cart-price'>
-												¥{item.price}
-											</span>
+											{/* <span className='cart-price'> */}
+											¥{item.price}
+											{/* </span> */}
 										</Col>
 										{/* </Row> */}
 									</Col>

@@ -202,6 +202,8 @@ export const payOnStirpe = (orderId, paymentDetails) => async (
 			type: STRIPE_PAY_SUCCESS,
 			payload: data,
 		})
+
+		// add here
 	} catch (error) {
 		const message =
 			error.response && error.response.data.message

@@ -43,8 +43,10 @@ function App() {
 				<main className='py-3 main-bgc'>
 					<Route path='/' component={LandingScreen} exact />
 					<Container>
+						<span style={{ color: 'red' }}>
+							＊現在このサイトはメンテナンス中です。お買い求めの際はお問い合わせフォームからお問い合わせください。
+						</span>
 						<Route path='/order/:id' component={OrderScreen} />
-
 						<Route path='/shipping' component={ShippingScreen} />
 						<Route
 							path='/guestshipping'
@@ -72,7 +74,6 @@ function App() {
 						<Route path='/contact' component={ContactScreen} />
 						<Route path='/product/:id' component={ProductScreen} />
 						<Route path='/cart/:id?' component={CartScreen} />
-
 						<Route
 							path='/admin/userlist'
 							component={UserListScreen}

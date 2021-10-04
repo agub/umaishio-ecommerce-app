@@ -25,7 +25,7 @@ const CheckEmailScreen = () => {
 					</div>
 					<h3 className='text-center'>メールを確認してください</h3>
 					<p className='text-center mt-4'>
-						info@umaishio.com　からのEメールから
+						info@umaishio.com　からのEメールを
 						<br />
 						お探しください。迷惑メールに入っている可能性がございます。
 					</p>

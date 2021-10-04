@@ -37,11 +37,11 @@ const HomeScreen = () => {
 	return (
 		<>
 			<Meta />
-			<h3 className='my-3'>
+			{/* <h3 className='my-3'>
 				*現在メンテナンス中です
 				<br />
 				購入希望の方はお問い合わせください。
-			</h3>
+			</h3> */}
 			{loading ? (
 				<Loader />
 			) : error ? (
