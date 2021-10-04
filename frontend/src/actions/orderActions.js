@@ -33,6 +33,7 @@ import {
 } from '../constants/orderConstants'
 
 import { logout } from './userActions'
+// import { updateShippingFee } from '../actions/orderActions'
 
 export const createOrder = (order) => async (dispatch, getState) => {
 	try {
@@ -202,8 +203,14 @@ export const payOnStirpe = (orderId, paymentDetails) => async (
 			type: STRIPE_PAY_SUCCESS,
 			payload: data,
 		})
+		console.log('payment success')
 
-		// add here
+		dispatch(
+			updateShippingFee(orderId, {
+				shippingFee: paymentDetails.metadata.shippingFee,
+				totalPriceCal: paymentDetails.amount,
+			})
+		)
 	} catch (error) {
 		const message =
 			error.response && error.response.data.message
@@ -219,7 +226,7 @@ export const payOnStirpe = (orderId, paymentDetails) => async (
 	}
 }
 
-export const bankTransferOrder = (orderId, banckTransferInfo) => async (
+export const bankTransferOrder = (orderId, bankTransferInfo) => async (
 	dispatch,
 	getState
 ) => {
@@ -240,7 +247,7 @@ export const bankTransferOrder = (orderId, banckTransferInfo) => async (
 
 		const { data } = await axios.post(
 			`/api/orders/${orderId}/banktransfer`,
-			{ banckTransferInfo },
+			{ bankTransferInfo },
 			config
 		)
 
@@ -249,6 +256,12 @@ export const bankTransferOrder = (orderId, banckTransferInfo) => async (
 			type: BANKTRANSFER_SUCCESS,
 			payload: data,
 		})
+		dispatch(
+			updateShippingFee(orderId, {
+				shippingFee: bankTransferInfo.shippingFee,
+				totalPriceCal: bankTransferInfo.price,
+			})
+		)
 	} catch (error) {
 		const message =
 			error.response && error.response.data.message
@@ -426,6 +439,7 @@ export const updateShippingFee = (orderId, shippingfee) => async (
 	dispatch,
 	getState
 ) => {
+	console.log('fireUpdateShipping Fee')
 	try {
 		dispatch({
 			type: ORDER_UPDATE_SHIPPINGFEE_REQUEST,

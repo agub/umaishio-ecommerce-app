@@ -25,7 +25,13 @@ import { CART_ITEMS_RESET } from '../constants/cartConstants'
 
 import CvcModal from '../components/CvcModal'
 import ModifyShippingInfoModal from '../components/ModifyShippingInfoModal'
-
+import {
+	prefecture_600,
+	prefecture_700,
+	prefecture_750,
+	prefecture_950,
+	prefecture_1050,
+} from '../data/Prefecture'
 import PaymentRecieve from '../components/PaymentRecieve'
 
 import '../styles/OrderScreen.scss'
@@ -54,6 +60,12 @@ const OrderScreen = ({ match, history, location }) => {
 	//paymentMethod
 	const [trackingId, setTrackingId] = useState('')
 
+	//shippingOption
+	const [shippingOption, setShippingOption] = useState({
+		shippingOptionFee: null,
+		shippingType: '',
+	})
+	console.log(shippingOption)
 	const dispatch = useDispatch()
 	const cart = useSelector((state) => state.cart)
 
@@ -97,13 +109,6 @@ const OrderScreen = ({ match, history, location }) => {
 			dispatch(getOrderDetails(orderId))
 		}
 		if (successPay || successBankTransfer) {
-			// updatePrice on UI
-			dispatch(
-				updateShippingFee(orderId, {
-					shippingFee,
-					totalPriceCal: order.totalPrice + shippingFee,
-				})
-			)
 			localStorage.setItem('cartItems', [])
 			dispatch({ type: CART_ITEMS_RESET })
 			window.location.reload()
@@ -119,68 +124,8 @@ const OrderScreen = ({ match, history, location }) => {
 
 	// __________________________________________________________________________________________________________________
 
-	const prefecture_600 = [
-		'宮城県',
-		'山形県',
-		'福島県',
-		'茨城県',
-		'栃木県',
-		'群馬県',
-		'埼玉県',
-		'千葉県',
-		'東京県',
-		'神奈川県',
-		'山梨県',
-		'新潟県',
-		'長野県',
-		'富山県',
-		'石川県',
-		'福井県',
-		'岐阜県',
-		'静岡県',
-		'愛知県',
-		'三重県',
-	]
-
-	const prefecture_700 = [
-		'青森県',
-		'岩手県',
-		'秋田県',
-		'滋賀県',
-		'京都県',
-		'大阪県',
-		'兵庫県',
-		'奈良県',
-		'和歌山県',
-	]
-
-	const prefecture_750 = [
-		'鳥取県',
-		'島根県',
-		'岡山県',
-		'広島県',
-		'山口県',
-		'徳島県',
-		'香川県',
-		'愛媛県',
-		'高知県',
-	]
-
-	const prefecture_950 = [
-		'福岡県',
-		'佐賀県',
-		'長崎県',
-		'熊本県',
-		'大分県',
-		'宮崎県',
-		'鹿児島県',
-		'北海道',
-	]
-
-	const prefecture_1050 = ['沖縄県']
-
-	const shippingFeeCalc = () => {
-		if (getCartCount() > 6) {
+	const parcelFeeHandler = () => {
+		if (Number(getCartCount()) > 6) {
 			if (order && order.shippingAddress.prefecture) {
 				// let prefectureWWW = order.shippingAddress.prefecture.toString()
 				if (prefecture_600.includes(order.shippingAddress.prefecture)) {
@@ -204,19 +149,44 @@ const OrderScreen = ({ match, history, location }) => {
 		}
 		return 400
 	}
+	const letterFeeHandler = () => {
+		if (Number(getCartCount()) === 1) {
+			return 140
+		} else if (Number(getCartCount()) === 2) {
+			return 210
+		} else if (
+			Number(getCartCount()) === 3 ||
+			Number(getCartCount()) === 4
+		) {
+			return 390
+		} else {
+			return null
+		}
+	}
 
-	const getCartCount = () =>
-		order.orderItems.reduce((qty, item) => Number(item.qty) + qty, 0)
+	const getCartCount = () => {
+		if (order) {
+			return order.orderItems.reduce(
+				(qty, item) => Number(item.qty) + qty,
+				0
+			)
+		}
+	}
 
 	const totalPriceCal = () => {
 		return Number(order.totalPrice) + Number(shippingFee)
 	}
 
-	let shippingFee = 400
+	let shippingFee = shippingOption.shippingOptionFee
+
 	// __________________________________________________________________________________________________________________
 
 	const submitHandler = async (e) => {
 		e.preventDefault()
+		if (shippingOption.shippingOptionFee === null) {
+			setErrorText('配送オプションを選択してください')
+			return
+		}
 
 		setErrorText('')
 		try {
@@ -242,6 +212,7 @@ const OrderScreen = ({ match, history, location }) => {
 					name: name,
 					metadata: {
 						//fixme add more shipper info
+						shippingFee,
 						email_address: order.user.email,
 						userId: order.user._id,
 						orderId: orderId,
@@ -253,6 +224,7 @@ const OrderScreen = ({ match, history, location }) => {
 						update_time: Date.now(),
 					},
 				}
+
 				dispatch(payOnStirpe(orderId, paymentDetails))
 			} else if (!bankTransferState) {
 				setErrorText('正しく記入してください')
@@ -262,7 +234,8 @@ const OrderScreen = ({ match, history, location }) => {
 					email: order.user.email,
 					name: order.shippingAddress.fullName,
 					orderId,
-					price: order.totalPrice,
+					price: totalPriceCal(),
+					shippingFee,
 				}
 				dispatch(bankTransferOrder(orderId, banckTransferInfo))
 			}
@@ -322,13 +295,13 @@ const OrderScreen = ({ match, history, location }) => {
 					<Message variant='danger'>
 						ご注文ありがとうございした。
 						<br />
-						銀行振り込み確認後の配送になります。
+						お振込いただき、確認後できるだけ早く送付させていただきます。
 						<br />
-						また発送後に
+						また確認後発送開始のご案内を改めてメール
 						<a href='mailto: info@umaishio.com'>
 							info@umaishio.com
 						</a>
-						から発送完了メールを送らせていただきます。
+						からお送りいたします。
 					</Message>
 				)}
 				{/* {!order.isPaid && order.isBankTransfer && (
@@ -403,11 +376,15 @@ const OrderScreen = ({ match, history, location }) => {
 								(order.isPaid || order.isBankTransfer) ? (
 									<span>¥&nbsp;{order.shippingPrice}</span>
 								) : (
-									<span>¥&nbsp;{shippingFee}</span>
+									<span>
+										¥&nbsp;
+										{shippingFee === null
+											? '未定'
+											: shippingFee}
+									</span>
 								)}
 							</p>
 						</div>
-
 						<div>
 							<p className='d-flex justify-content-between'>
 								<span>税込合計</span>
@@ -417,13 +394,6 @@ const OrderScreen = ({ match, history, location }) => {
 								) : (
 									<span>¥&nbsp;{totalPriceCal()}</span>
 								)}
-							</p>
-						</div>
-						<p className='underline__g'></p>
-						<div>
-							<p className='d-flex justify-content-between'>
-								<span>内消費税</span>
-								<span>¥&nbsp;xxxx</span>
 							</p>
 						</div>
 						<p className='underline__g'></p>
@@ -572,7 +542,10 @@ const OrderScreen = ({ match, history, location }) => {
 								</Message>
 							)} */}
 							<Form.Group controlId='prefecture' className='mt-2'>
-								<h4>配送オプション</h4>
+								<h4>
+									配送オプション
+									<span className='form-asterisk__g'>*</span>
+								</h4>
 								<p className='mt-3'>
 									お届け予定:　入金確認後２日後
 								</p>
@@ -584,14 +557,49 @@ const OrderScreen = ({ match, history, location }) => {
 										as='select'
 										placeholder='選択してください'
 										required
+										// defaultValue={JSON.stringify(
+										// 	shippingOption
+										// )}
+										defaultValue={order && shippingOption}
+										onChange={(e) =>
+											setShippingOption(
+												JSON.parse(e.target.value)
+											)
+										}
 									>
-										<option>郵便 + ¥140</option>
-										<option>
-											ヤマト運輸 + ¥{shippingFeeCalc()}
+										<option
+											value={JSON.stringify({
+												shippingOptionFee: null,
+												shippingType: '',
+											})}
+										>
+											選択してください
+										</option>
+										{/* <option value=''>
+											選択してください
+										</option> */}
+										{Number(getCartCount()) < 5 && (
+											<option
+												value={JSON.stringify({
+													shippingOptionFee: letterFeeHandler(),
+													shippingType: 'letter',
+												})}
+											>
+												郵便 + ¥{letterFeeHandler()}
+											</option>
+										)}
+										<option
+											value={JSON.stringify({
+												shippingOptionFee: parcelFeeHandler(),
+												shippingType: 'parcel',
+											})}
+										>
+											ヤマト運輸 + ¥{parcelFeeHandler()}
 										</option>
 									</Form.Control>
 								</div>
 							</Form.Group>
+
 							{userInfo &&
 								order &&
 								userInfo.isAdmin &&
@@ -636,7 +644,10 @@ const OrderScreen = ({ match, history, location }) => {
 					<Col lg={6}>
 						<div className='item-responsive-wrap__g order-left-wrap order-left'>
 							<div className='mt-3'>
-								<h4>お支払い方法</h4>
+								<h4>
+									お支払い方法
+									<span className='form-asterisk__g'>*</span>
+								</h4>
 								{order &&
 								!order.isPaid &&
 								!order.isBankTransfer ? (
@@ -692,22 +703,22 @@ const OrderScreen = ({ match, history, location }) => {
 											// disabled={true}
 											required
 											hidePostalCode={true}
-											options={{
-												style: {
-													base: {
-														fontSize: '17px',
-														'::placeholder': {
-															color: '#55595c',
-															fontSize: '17px',
-															fontWeight:
-																'lighter',
-														},
-													},
-													invalid: {
-														color: '#919AA1',
-													},
-												},
-											}}
+											// options={{
+											// 	style: {
+											// 		base: {
+											// 			fontSize: '17px',
+											// 			'::placeholder': {
+											// 				color: '#55595c',
+											// 				fontSize: '17px',
+											// 				fontWeight:
+											// 					'lighter',
+											// 			},
+											// 		},
+											// 		invalid: {
+											// 			color: '#919AA1',
+											// 		},
+											// 	},
+											// }}
 										/>
 										{/* </div> */}
 
@@ -731,13 +742,21 @@ const OrderScreen = ({ match, history, location }) => {
 
 								{bankTransferState || order.isBankTransfer ? (
 									<p className='mt-3'>
-										銀行振り込み口座
+										【銀行振り込み口座】
 										<br />
-										口座番号: XXXXXXXXXXX
+										金融機関: 三井住友銀行小田原支店
 										<br />
-										名前: XXXXXXXXXXX
+										口座名: 株式会社トビラ
 										<br />
-										振込額: ¥{order.totalPrice}
+										口座番号: 3869283
+										<br />
+										{order &&
+										(order.isPaid || order.isBankTransfer)
+											? `振込額: ¥${order.totalPrice}`
+											: `振込額: ¥${totalPriceCal()}`}
+										<br />
+										<br />
+										*お振込手数料は恐れ入りますがお客様にご負担いただいております。
 									</p>
 								) : null}
 
@@ -773,12 +792,15 @@ const OrderScreen = ({ match, history, location }) => {
 													このボタンで購入が完了します。
 												</p> */}
 												<Button
-													type='button'
+													type='submit'
 													className='btn-block w-100 borderRadius__g'
 													// style={{ borderRadius: '20px' }}
 													disabled={
 														!stripe ||
 														cart.cartItems === 0 ||
+														Object.keys(
+															order.orderItems
+														).length === 0 ||
 														loadingPay ||
 														successPay
 													}

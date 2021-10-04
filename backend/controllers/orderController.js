@@ -201,7 +201,7 @@ const stripeApi = asyncHandler(async (req, res) => {
 // @access        Private
 
 const bankTransferOrder = asyncHandler(async (req, res) => {
-	const { email, name, orderId, price } = req.body.banckTransferInfo
+	const { email, name, orderId, price } = req.body.bankTransferInfo
 
 	const order = await Order.findById(req.params.id)
 	if (order) {
@@ -265,7 +265,7 @@ const updateOrderShippingInfo = asyncHandler(async (req, res) => {
 
 // @desc    Update ordered shipper info
 // @route   GET
-// @access  Private/Admin
+// @access  Private/Admin  /updatefee
 const updateShippingFee = asyncHandler(async (req, res) => {
 	const order = await Order.findById(req.params.id)
 	console.log('___________________________')
