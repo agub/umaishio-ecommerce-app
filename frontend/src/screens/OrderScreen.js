@@ -187,7 +187,14 @@ const OrderScreen = ({ match, history, location }) => {
 			setErrorText('配送オプションを選択してください')
 			return
 		}
-
+		const addressInfo = {
+			fullName: order.shippingAddress.fullName.toString(),
+			postalCode: order.shippingAddress.postalCode.toString(),
+			prefecture: order.shippingAddress.prefecture.toString(),
+			address: order.shippingAddress.address.toString(),
+			building: order.shippingAddress.building.toString(),
+			phoneNumber: order.shippingAddress.phoneNumber.toString(),
+		}
 		setErrorText('')
 		try {
 			if (name !== '' && order && !bankTransferState) {
@@ -205,21 +212,30 @@ const OrderScreen = ({ match, history, location }) => {
 					card: elements.getElement(CardElement),
 				})
 				const { id } = paymentMethod
+
+				const orderInfo = () => {
+					return order.orderItems
+				}
+
 				const paymentDetails = {
 					id: id,
 					amount: totalPriceCal(),
-					//fixme
+					orderInfo: orderInfo(),
 					name: name,
+					addressInfo,
 					metadata: {
 						//fixme add more shipper info
 						shippingFee,
 						email_address: order.user.email,
 						userId: order.user._id,
 						orderId: orderId,
-						fullName: order.shippingAddress.fullName,
-						postalCode: order.shippingAddress.postalCode,
-						prefecture: order.shippingAddress.prefecture,
-						address: order.shippingAddress.address,
+						// orderInfo: orderInfo(),
+						// addressInfo,
+						// fullName: order.shippingAddress.fullName,
+						// postalCode: order.shippingAddress.postalCode,
+						// prefecture: order.shippingAddress.prefecture,
+						// address: order.shippingAddress.address,
+						// building: order.shippingAddress.building,
 						status: 'COMPLETED',
 						update_time: Date.now(),
 					},
@@ -232,10 +248,10 @@ const OrderScreen = ({ match, history, location }) => {
 				console.log('bankTransfer')
 				const banckTransferInfo = {
 					email: order.user.email,
-					name: order.shippingAddress.fullName,
 					orderId,
 					price: totalPriceCal(),
 					shippingFee,
+					addressInfo,
 				}
 				dispatch(bankTransferOrder(orderId, banckTransferInfo))
 			}
@@ -707,8 +723,7 @@ const OrderScreen = ({ match, history, location }) => {
 												style: {
 													base: {
 														fontSize: '17px',
-														backgroundColor:
-															'#f7f7f9',
+
 														'::placeholder': {
 															color: '#55595c',
 															fontSize: '17px',

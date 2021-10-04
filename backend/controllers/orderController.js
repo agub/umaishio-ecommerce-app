@@ -139,7 +139,7 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 // @access        Private
 
 const stripeApi = asyncHandler(async (req, res) => {
-	const { id, amount, metadata, name } = req.body
+	const { id, amount, metadata, name, addressInfo, orderInfo } = req.body
 	const payment = await stripe.paymentIntents.create({
 		amount: amount,
 		currency: 'JPY',
@@ -175,10 +175,23 @@ const stripeApi = asyncHandler(async (req, res) => {
 			await product.save()
 		}
 
+		const mailInfo = {
+			name,
+			email: metadata.email_address,
+			orderId: metadata.orderId,
+			amount,
+			orderInfo,
+			addressInfo,
+			// orderInfo: metadata.orderInfo,
+			shippingFee: metadata.shippingFee,
+		}
+
 		sendOrderSuccessEmail(
-			metadata.email_address,
-			metadata.fullName,
-			metadata.orderId
+			// metadata.email_address,
+			// metadata.fullName,
+			// metadata.orderId,
+			// amount
+			mailInfo
 		)
 
 		console.log(order)
@@ -201,7 +214,13 @@ const stripeApi = asyncHandler(async (req, res) => {
 // @access        Private
 
 const bankTransferOrder = asyncHandler(async (req, res) => {
-	const { email, name, orderId, price } = req.body.bankTransferInfo
+	const {
+		email,
+
+		orderId,
+		price,
+		addressInfo,
+	} = req.body.bankTransferInfo
 
 	const order = await Order.findById(req.params.id)
 	if (order) {
@@ -213,7 +232,15 @@ const bankTransferOrder = asyncHandler(async (req, res) => {
 			product.countInStock -= item.qty
 			await product.save()
 		}
-		sendBankTransferInfo(email, name, orderId, price)
+
+		const mailInfo = {
+			email,
+			orderId,
+			price,
+			addressInfo,
+		}
+
+		sendBankTransferInfo(email, orderId, price)
 		//sendEmail
 		res.json(updatedOrder)
 	} else {
