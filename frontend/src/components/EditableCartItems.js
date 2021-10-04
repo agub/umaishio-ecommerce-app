@@ -23,7 +23,10 @@ const EditableCartItems = ({ item }) => {
 									fontSize: '10px',
 								}}
 							>
-								<Rating value={4} text={`( xx )`} />
+								<Rating
+									value={item.rating}
+									text={`( ${item.numReviews} )`}
+								/>
 							</div>
 						</div>
 					</div>

@@ -90,8 +90,8 @@ const CartScreen = ({ match, location, history }) => {
 														}}
 													>
 														<Rating
-															value={4}
-															text={`( xx )`}
+															value={item.rating}
+															text={`( ${item.numReviews} )`}
 														/>
 													</div>
 												</div>
