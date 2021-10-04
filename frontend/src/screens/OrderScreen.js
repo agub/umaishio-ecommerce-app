@@ -703,22 +703,23 @@ const OrderScreen = ({ match, history, location }) => {
 											// disabled={true}
 											required
 											hidePostalCode={true}
-											// options={{
-											// 	style: {
-											// 		base: {
-											// 			fontSize: '17px',
-											// 			'::placeholder': {
-											// 				color: '#55595c',
-											// 				fontSize: '17px',
-											// 				fontWeight:
-											// 					'lighter',
-											// 			},
-											// 		},
-											// 		invalid: {
-											// 			color: '#919AA1',
-											// 		},
-											// 	},
-											// }}
+											options={{
+												style: {
+													base: {
+														fontSize: '17px',
+														backgroundColor:
+															'#f7f7f9',
+														'::placeholder': {
+															color: '#55595c',
+															fontSize: '17px',
+															fontWeight: '100',
+														},
+													},
+													invalid: {
+														color: '#919AA1',
+													},
+												},
+											}}
 										/>
 										{/* </div> */}
 

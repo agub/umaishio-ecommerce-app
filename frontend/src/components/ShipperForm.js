@@ -67,6 +67,7 @@ const ShipperForm = ({
 							<Form.Control
 								type='string'
 								value={shipperFullName}
+								placeholder='氏名'
 								required
 								onChange={(e) =>
 									setShipperFullName(e.target.value)
@@ -88,6 +89,7 @@ const ShipperForm = ({
 							<Form.Control
 								type='string'
 								value={shipperFurigana}
+								placeholder='フリガナ'
 								required
 								onChange={(e) =>
 									setShipperFurigana(e.target.value)
@@ -107,6 +109,7 @@ const ShipperForm = ({
 						<div className='form-container-pw-icon__g'>
 							<Form.Control
 								type='number'
+								placeholder='電話番号'
 								value={shipperPhoneNumber}
 								onChange={(e) =>
 									setShipperPhoneNumber(e.target.value)
@@ -138,6 +141,7 @@ const ShipperForm = ({
 									maxLength='3'
 									minLength='3'
 									required
+									placeholder='xxx'
 									onChange={(e) =>
 										setShipperPostalCode1(e.target.value)
 									}
@@ -172,6 +176,7 @@ const ShipperForm = ({
 									value={shipperPostalCode2}
 									maxLength='4'
 									minLength='4'
+									placeholder='xxxx'
 									required
 									onChange={(e) =>
 										setShipperPostalCode2(e.target.value)
@@ -234,6 +239,7 @@ const ShipperForm = ({
 							<Form.Control
 								type='text'
 								value={shipperAddress}
+								placeholder='市区町村・番地'
 								required
 								onChange={(e) =>
 									setShipperAddress(e.target.value)
@@ -241,7 +247,7 @@ const ShipperForm = ({
 							></Form.Control>
 						</div>
 						<p className='m-2 shipping-form-example__g'>
-							例: 1020021
+							例:　渋谷区x丁目
 						</p>
 					</Form.Group>
 					<Form.Group controlId='address'>
@@ -254,6 +260,7 @@ const ShipperForm = ({
 						<div className='form-container-pw-icon__g'>
 							<Form.Control
 								type='text'
+								placeholder='建物名・部屋番号'
 								value={shipperBuilding}
 								onChange={(e) =>
 									setShipperBuilding(e.target.value)
@@ -261,7 +268,9 @@ const ShipperForm = ({
 							></Form.Control>
 						</div>
 					</Form.Group>
-					<p className='m-2 shipping-form-example__g'>例: 1020021</p>
+					<p className='m-2 shipping-form-example__g'>
+						例: xxxマンション　101号室
+					</p>
 				</>
 			)}
 		</>

@@ -82,6 +82,7 @@ const ShippingForm = ({
 					<Form.Control
 						type='string'
 						value={furigana}
+						placeholder='フリガナ'
 						required
 						onChange={(e) => setFurigana(e.target.value)}
 					></Form.Control>
@@ -96,6 +97,7 @@ const ShippingForm = ({
 					<Form.Control
 						// type='string'
 						type='text'
+						placeholder='電話番号'
 						// type='tel'
 						value={phoneNumber}
 						onChange={(e) => setPhoneNumber(e.target.value)}
@@ -124,6 +126,7 @@ const ShippingForm = ({
 							type='string'
 							value={postalCode1}
 							maxLength='3'
+							placeholder='xxx'
 							minLength='3'
 							required
 							onChange={(e) => setPostalCode1(e.target.value)}
@@ -156,6 +159,7 @@ const ShippingForm = ({
 							type='string'
 							value={postalCode2}
 							maxLength='4'
+							placeholder='xxxx'
 							minLength='4'
 							required
 							onChange={(e) => setPostalCode2(e.target.value)}
@@ -215,12 +219,13 @@ const ShippingForm = ({
 					<Form.Control
 						type='text'
 						value={address}
+						placeholder='市区町村・番地'
 						required
 						onChange={(e) => setAddress(e.target.value)}
 					></Form.Control>
 				</div>
 			</Form.Group>
-			<p className='m-2 shipping-form-example__g'>例: 1020021</p>
+			<p className='m-2 shipping-form-example__g'>例: 渋谷区x丁目</p>
 			<Form.Group controlId='address'>
 				<Form.Label>
 					{' '}
@@ -231,12 +236,15 @@ const ShippingForm = ({
 				<div className='form-container-pw-icon__g'>
 					<Form.Control
 						type='text'
+						placeholder='建物名・部屋番号'
 						value={building}
 						onChange={(e) => setBuilding(e.target.value)}
 					></Form.Control>
 				</div>
 			</Form.Group>
-			<p className='m-2 shipping-form-example__g'>例: 1020021</p>
+			<p className='m-2 shipping-form-example__g'>
+				例: xxxマンション　101号室
+			</p>
 		</>
 	)
 }
