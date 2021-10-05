@@ -209,6 +209,7 @@ export const payOnStirpe = (orderId, paymentDetails) => async (
 			updateShippingFee(orderId, {
 				shippingFee: paymentDetails.metadata.shippingFee,
 				totalPriceCal: paymentDetails.amount,
+				shippingType: paymentDetails.shippingType,
 			})
 		)
 	} catch (error) {
@@ -259,7 +260,8 @@ export const bankTransferOrder = (orderId, bankTransferInfo) => async (
 		dispatch(
 			updateShippingFee(orderId, {
 				shippingFee: bankTransferInfo.shippingFee,
-				totalPriceCal: bankTransferInfo.price,
+				totalPriceCal: bankTransferInfo.amount,
+				shippingType: bankTransferInfo.shippingType,
 			})
 		)
 	} catch (error) {

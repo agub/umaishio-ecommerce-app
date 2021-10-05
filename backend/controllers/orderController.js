@@ -139,7 +139,15 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 // @access        Private
 
 const stripeApi = asyncHandler(async (req, res) => {
-	const { id, amount, metadata, name, addressInfo, orderInfo } = req.body
+	const {
+		id,
+		amount,
+		metadata,
+		name,
+		addressInfo,
+		orderInfo,
+		shippingType,
+	} = req.body
 	const payment = await stripe.paymentIntents.create({
 		amount: amount,
 		currency: 'JPY',
@@ -184,6 +192,7 @@ const stripeApi = asyncHandler(async (req, res) => {
 			addressInfo,
 			// orderInfo: metadata.orderInfo,
 			shippingFee: metadata.shippingFee,
+			shippingType,
 		}
 
 		sendOrderSuccessEmail(
@@ -216,10 +225,12 @@ const stripeApi = asyncHandler(async (req, res) => {
 const bankTransferOrder = asyncHandler(async (req, res) => {
 	const {
 		email,
-
+		orderInfo,
+		shippingFee,
 		orderId,
-		price,
+		amount,
 		addressInfo,
+		shippingType,
 	} = req.body.bankTransferInfo
 
 	const order = await Order.findById(req.params.id)
@@ -236,11 +247,15 @@ const bankTransferOrder = asyncHandler(async (req, res) => {
 		const mailInfo = {
 			email,
 			orderId,
-			price,
+			amount,
 			addressInfo,
+			orderInfo,
+			shippingFee,
+			shippingType,
 		}
+		console.log(mailInfo)
 
-		sendBankTransferInfo(email, orderId, price)
+		sendBankTransferInfo(mailInfo)
 		//sendEmail
 		res.json(updatedOrder)
 	} else {
@@ -300,6 +315,7 @@ const updateShippingFee = asyncHandler(async (req, res) => {
 	if (req.body) {
 		order.shippingPrice = req.body.shippingFee
 		order.totalPrice = req.body.totalPriceCal
+		order.shippingType = req.body.shippingType
 
 		const updatedOrder = await order.save()
 

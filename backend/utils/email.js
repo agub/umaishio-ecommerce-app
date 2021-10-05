@@ -133,8 +133,9 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 		addressInfo,
 		orderInfo,
 		shippingFee,
+		shippingType,
 	} = mailInfo
-	let results = orderInfo.map((order) => {
+	let orders = orderInfo.map((order) => {
 		return `<span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
 	})
 
@@ -144,16 +145,16 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 		recipients: [email],
 		subject: '旨い塩オンラインショップ　注文内容',
 		// message: `<p>${name}様, 旨い塩オンラインショップをご利用いただきありがとうございます。<br/>ご注文いただいた商品を営業日３〜５日中に発送準備いたします。注文内容の確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a>。また配送手続きが完了したら配送状況やトラッキングナンバーをお送りいたします。</p>`,
-		message: `<p>${addressInfo.fullName}様, 
+		message: `<p>${addressInfo.fullName} 様, 
 		<br/>
 		旨い塩オンラインショップをご利用いただきありがとうございます。
 		<br/>
 		以下の内容でご注文を承りました。
 		<br/>
 		<br/>
-		【配送先・商品情報】
+		【配送先】
 		<br/>
-		お名前：${addressInfo.fullName}様
+		お名前：${addressInfo.fullName} 様
 		<br/>
 		ご住所：${addressInfo.prefecture}${addressInfo.address}${addressInfo.building}
 		<br/>
@@ -162,9 +163,9 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 		<br/>
 		【商品詳細】
 		<br/>
-		${results}
+		${orders}
 		<br/>
-		配送料：${shippingFee}円
+		配送料：${shippingFee}円 (${shippingType})
 		<br/>
 		合計（税込）：${amount}円
 		<br/>
@@ -181,38 +182,51 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 	})
 })
 
-const sendBankTransferInfo = asyncHandler(
-	async (email, name, orderId, price) => {
-		const mailObj = {
-			from: '旨い塩オンラインショップ　<info@umaishio.com>',
-			recipients: [email],
-			subject: '旨い塩オンラインショップ　銀行振り込み',
-			message: `<p>${name}　様, 旨い塩オンラインショップをご利用いただきありがとうございます。
+const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
+	const {
+		email,
+		orderId,
+		amount,
+		addressInfo,
+		orderInfo,
+		shippingFee,
+		shippingType,
+	} = mailInfo
+	let orders = orderInfo.map((order) => {
+		return `<span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
+	})
+
+	const mailObj = {
+		from: '旨い塩オンラインショップ　<info@umaishio.com>',
+		recipients: [email],
+		subject: '旨い塩オンラインショップ　銀行振り込み',
+		message: `<p>${addressInfo.fullName}　様, 
+								<br/>
+								旨い塩オンラインショップをご利用いただきありがとうございます。
 								<br/>
 								以下の内容でご注文を承りました。
 								<br/>
 								<br/>
-								【配送先・商品情報】
+								【配送先】
 								<br/>
-								お名前：
+								お名前：${addressInfo.fullName} 様
 								<br/>
-								ご住所：
+								ご住所：${addressInfo.prefecture}${addressInfo.address}${addressInfo.building}
 								<br/>
-								電話番号：
+								電話番号：${addressInfo.phoneNumber}
 								<br/>
 								<br/>
 								<br/>
 								【商品詳細】
-								商品価格（税込）：
 								<br/>
-								数量：
+								${orders}
 								<br/>
-								配送料：
+								配送料：${shippingFee}円　(${shippingType})
 								<br/>
-								合計（税込）：
+								合計（税込）：${amount}円
 								<br/>
 								<br/>
-								また注文内容の確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a>からもご覧になれます。
+								また注文内容の詳しい確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a>からもご覧になれます。
 								<br/>
 								<br/>
 								ご注文商品（ご注文番号：${orderId}）の銀行振り込みのご案内をいたします。
@@ -225,7 +239,7 @@ const sendBankTransferInfo = asyncHandler(
 								<br/>
 								口座番号: 3869283
 								<br/>
-								振込額: ¥${price}
+								振込額: ¥${amount}
 								<br/>
 								<br/>
 								※お振込手数料は恐れ入りますがお客様にご負担いただいております。よろしくお願いいたします。
@@ -235,12 +249,11 @@ const sendBankTransferInfo = asyncHandler(
 								また領収書をご希望の場合、宛先の名前をご記入いただき、ご連絡下さい。
 								<br/>
 								</p>`,
-		}
-		sendEmailBcc(mailObj).then((res) => {
-			console.log(res)
-		})
 	}
-)
+	sendEmailBcc(mailObj).then((res) => {
+		console.log(res)
+	})
+})
 
 const sendShippingStartedEmail = asyncHandler(
 	async (email, name, orderId, trackingId) => {

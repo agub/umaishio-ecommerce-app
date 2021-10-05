@@ -183,19 +183,24 @@ const OrderScreen = ({ match, history, location }) => {
 
 	const submitHandler = async (e) => {
 		e.preventDefault()
+
 		if (shippingOption.shippingOptionFee === null) {
 			setErrorText('配送オプションを選択してください')
 			return
 		}
-		const addressInfo = {
-			fullName: order.shippingAddress.fullName.toString(),
-			postalCode: order.shippingAddress.postalCode.toString(),
-			prefecture: order.shippingAddress.prefecture.toString(),
-			address: order.shippingAddress.address.toString(),
-			building: order.shippingAddress.building.toString(),
-			phoneNumber: order.shippingAddress.phoneNumber.toString(),
-		}
 		setErrorText('')
+
+		const addressInfo = {
+			fullName: order.shippingAddress.fullName,
+			postalCode: order.shippingAddress.postalCode,
+			prefecture: order.shippingAddress.prefecture,
+			address: order.shippingAddress.address,
+			building: order.shippingAddress.building,
+			phoneNumber: order.shippingAddress.phoneNumber,
+		}
+		const orderInfo = () => {
+			return order.orderItems
+		}
 		try {
 			if (name !== '' && order && !bankTransferState) {
 				dispatch({
@@ -213,16 +218,13 @@ const OrderScreen = ({ match, history, location }) => {
 				})
 				const { id } = paymentMethod
 
-				const orderInfo = () => {
-					return order.orderItems
-				}
-
 				const paymentDetails = {
 					id: id,
 					amount: totalPriceCal(),
 					orderInfo: orderInfo(),
 					name: name,
 					addressInfo,
+					shippingType: shippingOption.shippingType,
 					metadata: {
 						//fixme add more shipper info
 						shippingFee,
@@ -247,11 +249,13 @@ const OrderScreen = ({ match, history, location }) => {
 			} else {
 				console.log('bankTransfer')
 				const banckTransferInfo = {
-					email: order.user.email,
 					orderId,
-					price: totalPriceCal(),
+					amount: totalPriceCal(),
+					orderInfo: orderInfo(),
+					email: order.user.email,
 					shippingFee,
 					addressInfo,
+					shippingType: shippingOption.shippingType,
 				}
 				dispatch(bankTransferOrder(orderId, banckTransferInfo))
 			}
@@ -598,7 +602,7 @@ const OrderScreen = ({ match, history, location }) => {
 											<option
 												value={JSON.stringify({
 													shippingOptionFee: letterFeeHandler(),
-													shippingType: 'letter',
+													shippingType: '郵便',
 												})}
 											>
 												郵便 + ¥{letterFeeHandler()}
@@ -607,7 +611,7 @@ const OrderScreen = ({ match, history, location }) => {
 										<option
 											value={JSON.stringify({
 												shippingOptionFee: parcelFeeHandler(),
-												shippingType: 'parcel',
+												shippingType: 'ヤマト運輸',
 											})}
 										>
 											ヤマト運輸 + ¥{parcelFeeHandler()}
