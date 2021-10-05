@@ -578,20 +578,6 @@ const OrderScreen = ({ match, history, location }) => {
 								handleClose={shippingModalClose}
 								history={history}
 							/>
-							{/* {order.isDelivered ? (
-								<Message variant='success'>
-									発送手配の完了
-									{order.deliveredAt.substring(0, 10)}
-								</Message>
-							) : null}
-							{!order.isPaid && order.isBankTransfer && (
-								<Message variant='danger'>
-									注文ありがとうございした。
-									<br />
-									振り込み確認後の配送になります。
-								</Message>
-							)} */}
-
 							<Form.Group controlId='prefecture' className='mt-2'>
 								<h4>
 									配送オプション

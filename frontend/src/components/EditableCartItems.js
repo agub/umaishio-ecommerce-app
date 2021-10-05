@@ -7,6 +7,7 @@ import { addToCart } from '../actions/cartActions'
 
 const EditableCartItems = ({ item }) => {
 	const dispatch = useDispatch()
+	let maxPurchase = 40
 	return (
 		<Row className='cart-row'>
 			<Col xs={5}>
@@ -84,7 +85,7 @@ const EditableCartItems = ({ item }) => {
 								)
 							}
 						>
-							{[...Array(item.countInStock).keys()].map((x) => (
+							{[...Array(maxPurchase).keys()].map((x) => (
 								<option key={x + 1} value={x + 1}>
 									{x + 1}
 								</option>

@@ -63,7 +63,7 @@ const HomeScreen = () => {
 				</Row>
 			)}
 			<LinkContainer exact to='/cart' className='cartTo' style={mdScreen}>
-				<Nav.Link className='home-cartButton'>
+				<button className='home-cartButton'>
 					<i
 						style={{ marginRight: '4px', marginTop: '5px' }}
 						className='fas fa-shopping-cart'
@@ -74,7 +74,7 @@ const HomeScreen = () => {
 					>
 						{getCartCount()}
 					</span>
-				</Nav.Link>
+				</button>
 			</LinkContainer>
 		</>
 	)

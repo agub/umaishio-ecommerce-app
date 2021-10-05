@@ -442,19 +442,36 @@ const ShippingScreen = ({ history }) => {
 					</Col>
 				</Row>
 			</Form>
-			<button
+
+			{/* <button
 				className='stickyBottom'
 				onClick={() => setShowCart(!showCart)}
 			>
-				買い物カゴ　
-				{getCartCount()}件　デザイン！
-				{/* <span className='home-cartButton'>
-					<i
-						style={{ marginRight: '4px', marginTop: '5px' }}
-						className='fas fa-shopping-cart'
-					></i>{' '}
-				</span> */}
-			</button>
+				買い物カゴ　<i className='fas fa-shopping-cart'></i>
+				{getCartCount()}点
+			</button> */}
+			{!showCart && (
+				<button
+					className='cartTo shipping-cart-btn'
+					onClick={() => setShowCart(!showCart)}
+					style={{ borderWidth: 0 }}
+				>
+					<div className='home-cartButton'>
+						<i
+							style={{ marginRight: '4px', marginTop: '5px' }}
+							className='fas fa-shopping-cart'
+						></i>{' '}
+						<span
+							style={{ marginLeft: '6px', marginTop: '3px' }}
+							className='header-cartnumber'
+						>
+							{getCartCount()}
+						</span>
+					</div>
+				</button>
+			)}
+
+			{/* ________________________________________________________________________________ */}
 			<Modal show={showCart} onHide={showCartClose} centered>
 				{/* <div> */}
 				<div className='item-modal-wrap__g'>

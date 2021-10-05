@@ -10,6 +10,10 @@ $breakpoints: (
   'md': 'screen and (max-width: 768px)',
   'lg': 'screen and (max-width: 1000px)',
   'xl': 'screen and (max-width: 1200px)',
+  'min-sm': 'screen and (min-width: 478px)',
+  'min-md': 'screen and (min-width: 768px)',
+  'min-lg': 'screen and (min-width: 1000px)',
+  'min-xl': 'screen and (min-width: 1200px)',
 ) !default;
 
 @mixin mq($breakpoint: md) {

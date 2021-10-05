@@ -67,7 +67,12 @@ const LandingScreen = () => {
 				/>
 				<ContactScreen />
 			</Container>
-			<LinkContainer exact to='/cart' className='cartTo' style={mdScreen}>
+			<LinkContainer
+				exact
+				to={getCartCount() === 0 ? '/shop' : '/cart'}
+				className='cartTo'
+				style={mdScreen}
+			>
 				<Nav.Link className='home-cartButton'>
 					<i
 						style={{ marginRight: '4px', marginTop: '5px' }}

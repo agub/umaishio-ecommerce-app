@@ -43,6 +43,8 @@ const CartScreen = ({ match, location, history }) => {
 		return cartItems.reduce((qty, item) => Number(item.qty) + qty, 0)
 	}
 
+	let maxPurchase = 40
+
 	return (
 		<Row>
 			<h1>ショッピングカート</h1>
@@ -194,7 +196,7 @@ const CartScreen = ({ match, location, history }) => {
 												>
 													{[
 														...Array(
-															item.countInStock
+															maxPurchase
 														).keys(),
 													].map((x) => (
 														<option

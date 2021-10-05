@@ -41,6 +41,9 @@ const ProductScreen = ({ match, history }) => {
 		setMessage('買い物カゴへ追加しました。')
 		history.push(`/cart/${match.params.id}?qty=${qty}`)
 	}
+
+	let maxPurchase = 40
+
 	return (
 		<>
 			{/* <Link className='btn btn-light my-3' to='/'>
@@ -201,7 +204,7 @@ const ProductScreen = ({ match, history }) => {
 														>
 															{[
 																...Array(
-																	product.countInStock
+																	maxPurchase
 																).keys(),
 															].map((x) => (
 																<option
