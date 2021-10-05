@@ -17,6 +17,7 @@ import {
 	ORDER_DELIVER_RESET,
 	BANKTRANSFER_RESET,
 	STRIPE_PAY_LOADING_STOP,
+	ORDER_UPDATE_SHIPPINGFEE_RESET,
 } from '../constants/orderConstants'
 
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
@@ -77,6 +78,12 @@ const OrderScreen = ({ match, history, location }) => {
 	const orderDetails = useSelector((state) => state.orderDetails)
 	const { order, loading, error } = orderDetails
 
+	const orderShippingFee = useSelector((state) => state.orderShippingFee)
+	const {
+		success: orderShippingFeeSuccess,
+		loading: orderShippingFeeLoading,
+	} = orderShippingFee
+
 	const stripePay = useSelector((state) => state.stripePay)
 	const {
 		loading: loadingPay,
@@ -100,12 +107,6 @@ const OrderScreen = ({ match, history, location }) => {
 	}
 
 	useEffect(() => {
-		const getOrderDetailsHandler = () => {
-			dispatch({ type: STRIPE_PAY_RESET })
-			dispatch({ type: ORDER_DELIVER_RESET })
-			dispatch({ type: BANKTRANSFER_RESET })
-			dispatch(getOrderDetails(orderId))
-		}
 		if (!userInfo) {
 			history.push(`/login?redirect=order/${orderId}`)
 		}
@@ -119,9 +120,10 @@ const OrderScreen = ({ match, history, location }) => {
 			getOrderDetailsHandler()
 		}
 		if (successPay || successBankTransfer) {
+			// setTimeout(getOrderDetailsHandler(), 1000)
+			// getOrderDetailsHandler()
 			localStorage.setItem('cartItems', [])
 			dispatch({ type: CART_ITEMS_RESET })
-			getOrderDetailsHandler()
 			// window.location.reload()
 		}
 	}, [
@@ -132,6 +134,16 @@ const OrderScreen = ({ match, history, location }) => {
 		successDeliver,
 		successBankTransfer,
 	])
+	useEffect(() => {
+		if (orderShippingFeeSuccess) {
+			// setTimeout(getOrderDetailsHandler(), 1000)
+			dispatch(getOrderDetails(orderId))
+			dispatch({ type: ORDER_UPDATE_SHIPPINGFEE_RESET })
+			localStorage.setItem('cartItems', [])
+			dispatch({ type: CART_ITEMS_RESET })
+			// window.location.reload()
+		}
+	}, [orderShippingFeeSuccess])
 
 	// __________________________________________________________________________________________________________________
 
@@ -299,7 +311,7 @@ const OrderScreen = ({ match, history, location }) => {
 		return result
 	}
 
-	return loading ? (
+	return loading || orderShippingFeeLoading ? (
 		<>
 			<Loader />
 			{/* <h3>少しお時間がかかることがあります。</h3> */}
@@ -976,7 +988,8 @@ const OrderScreen = ({ match, history, location }) => {
 									<div>
 										{loadingPay ||
 										loading ||
-										loadingBankTransfer ? (
+										loadingBankTransfer ||
+										orderShippingFeeLoading ? (
 											<Loader />
 										) : (
 											<>

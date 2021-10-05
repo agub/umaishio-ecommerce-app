@@ -44,6 +44,7 @@ import {
 	ORDER_UPDATE_SHIPPINGFEE_REQUEST,
 	ORDER_UPDATE_SHIPPINGFEE_SUCCESS,
 	ORDER_UPDATE_SHIPPINGFEE_FAIL,
+	ORDER_UPDATE_SHIPPINGFEE_RESET,
 } from '../constants/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -272,6 +273,10 @@ export const orderShippingFeeReducer = (state = {}, action) => {
 			return {
 				loading: false,
 				error: action.payload,
+			}
+		case ORDER_UPDATE_SHIPPINGFEE_RESET:
+			return {
+				loading: false,
 			}
 		default:
 			return state
