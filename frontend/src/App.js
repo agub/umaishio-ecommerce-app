@@ -40,9 +40,9 @@ function App() {
 		<Router>
 			<Elements stripe={stripePromise}>
 				<Header />
+				<Route path='/' component={LandingScreen} exact />
 				<main className='py-3 main-bgc'>
 					<Container>
-						<Route path='/' component={LandingScreen} exact />
 						<span style={{ color: 'red' }}>
 							＊現在このサイトはメンテナンス中です。お買い求めの際はお問い合わせフォームからお問い合わせください。
 						</span>

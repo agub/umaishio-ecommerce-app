@@ -90,7 +90,7 @@ const ProductScreen = ({ match, history }) => {
 											<>
 												<Rating
 													value={product.rating}
-													text={`( ${product.numReviews} )`}
+													text={`(${product.numReviews})`}
 													showArrow
 													showComment={showComment}
 													setShowComment={

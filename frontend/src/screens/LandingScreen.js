@@ -66,26 +66,26 @@ const LandingScreen = () => {
 					content='私達が選び抜いた酒粕は、山形県産の酒造好適米の最良の米からできた米麹に酵母と乳酸菌を発酵させて生まれたものです。トリプルパワーをギュッと濃縮した酒粕を低温でじっくりと乾燥させることで栄養素や風味を損なうことがなく、芳醇な香りと風味があり「旨い塩」の旨味に幅を持たせています。また栄養価が高いだけでなく、美容と健康にうれしい報告が数多くされています。普段の食生活に取り入れる事で、美味しいだけではない＋αな事に期待ができます。'
 				/>
 				<ContactScreen />
+				<LinkContainer
+					exact
+					to={getCartCount() === 0 ? '/shop' : '/cart'}
+					className='cartTo'
+					style={mdScreen}
+				>
+					<button className='home-cartButton'>
+						<i
+							style={{ marginRight: '4px', marginTop: '5px' }}
+							className='fas fa-shopping-cart'
+						></i>{' '}
+						<span
+							style={{ marginLeft: '6px', marginTop: '3px' }}
+							className='header-cartnumber'
+						>
+							{getCartCount()}
+						</span>
+					</button>
+				</LinkContainer>
 			</Container>
-			<LinkContainer
-				exact
-				to={getCartCount() === 0 ? '/shop' : '/cart'}
-				className='cartTo'
-				style={mdScreen}
-			>
-				<Nav.Link className='home-cartButton'>
-					<i
-						style={{ marginRight: '4px', marginTop: '5px' }}
-						className='fas fa-shopping-cart'
-					></i>{' '}
-					<span
-						style={{ marginLeft: '6px', marginTop: '3px' }}
-						className='header-cartnumber'
-					>
-						{getCartCount()}
-					</span>
-				</Nav.Link>
-			</LinkContainer>
 		</div>
 	)
 }
