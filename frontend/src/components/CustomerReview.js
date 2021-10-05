@@ -32,7 +32,9 @@ const CustomerReview = ({ product, userInfo, match }) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault()
-		dispatch(createProductReview(match.params.id, { rating, comment }))
+		dispatch(
+			createProductReview(match.params.id, { rating, comment, userInfo })
+		)
 	}
 	return (
 		<>

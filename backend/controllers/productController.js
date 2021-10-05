@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
+import Order from '../models/orderModel.js'
 
 // @description   fetch all products
 // @route         GET /api/products
@@ -95,7 +96,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 // @access        Public
 
 const createProductReview = asyncHandler(async (req, res) => {
-	const { rating, comment } = req.body
+	const { rating, comment, userInfo } = req.body
 	const product = await Product.findById(req.params.id)
 	if (product) {
 		const alreadyReview = product.reviews.find(
@@ -104,6 +105,13 @@ const createProductReview = asyncHandler(async (req, res) => {
 		if (alreadyReview) {
 			res.status(400)
 			throw new Error('レビュー済みです')
+		}
+
+		const isPurchased = await Order.find({ user: req.user._id })
+		console.log(isPurchased)
+		if (isPurchased) {
+			res.status(400)
+			throw new Error('購入後レビューが投稿可能です')
 		}
 		const review = {
 			name: req.user.name,
