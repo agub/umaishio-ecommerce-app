@@ -255,14 +255,14 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 	})
 })
 
-const sendShippingStartedEmail = asyncHandler(
-	async (email, name, orderId, trackingId) => {
+const sendIdShippingStartedEmail = asyncHandler(
+	async (email, name, orderId, trackingId, shippingType) => {
 		const mailObj = {
 			from: '旨い塩オンラインショップ　<info@umaishio.com>',
 			recipients: [email],
 			subject: '旨い塩オンラインショップ 配送手続きメール',
 			message: `<p>
-								${name}様、
+								${name} 様、
 								<br/>
 								旨い塩オンラインショップをご利用いただきありがとうございます。 
 								<br/>
@@ -272,9 +272,9 @@ const sendShippingStartedEmail = asyncHandler(
 								<br/>
 								【配送情報】
 								<br/>
-								配送会社: ヤマト運輸
+								配送会社: ${shippingType}
 								<br/>
-								伝票番号: [xxxxxxxx]
+								伝票番号: ${trackingId}
 								<br/>
 								<br/>
 								ヤマト運輸HPの以下のリンクから荷物お問い合わせシステム配送状況を確認できます。
@@ -282,28 +282,37 @@ const sendShippingStartedEmail = asyncHandler(
 								https://toi.kuronekoyamato.co.jp/cgi-bin/tneko
 								</p>`,
 		}
-		// const mailObj = {
-		// 	from: '旨い塩オンラインショップ　<info@umaishio.com>',
-		// 	recipients: [email],
-		// 	subject: '旨い塩オンラインショップ 配送手続きメール',
-		// 	message: `<p>
-		// 						${name}様、
-		// 						<br/>
-		// 						旨い塩オンラインショップをご利用いただきありがとうございます。
-		// 						<br/>
-		// 						<br/>
-		// 						<a href="${process.env.API_URI}/order/${orderId}">こちら</a>の商品の入金確認と発送手続きが完了しましたのでお伝えいたします。
-		// 						<br/>
-		// 						<br/>
-		// 						【配送情報】
-		// 						<br/>
-		// 						配送方法: 郵便 ラクポスBOX
-		// 						<br/>
-		// 						配送予定: １〜２日後
-		// 						<br/>
-		// 						このたびは旨い塩オンライン覧ショップでのご注文いただき誠にありがとうございました。またのご利用を心よりお待ち申し上げております。
-		// 						</p>`,
-		// }
+		sendEmailBcc(mailObj).then((res) => {
+			console.log(res)
+		})
+	}
+)
+const sendShippingStartedEmail = asyncHandler(
+	async (email, name, orderId, shippingType) => {
+		const mailObj = {
+			from: '旨い塩オンラインショップ　<info@umaishio.com>',
+			recipients: [email],
+			subject: '旨い塩オンラインショップ 配送手続きメール',
+			message: `<p>
+								${name} 様、
+								<br/>
+								旨い塩オンラインショップをご利用いただきありがとうございます。 
+								<br/>
+								<br/>
+								<a href="${process.env.API_URI}/order/${orderId}">こちら</a>の商品の入金確認と発送手続きが完了しましたのでお伝えいたします。
+								<br/>
+								<br/>
+								【配送情報】
+								<br/>
+								配送方法: ${shippingType}
+							 	<br/>
+							 	<br/>
+								旨い塩オンラインショップ
+								<br/>
+								https://www.umaishio.com/
+								</p>`,
+		}
+
 		sendEmailBcc(mailObj).then((res) => {
 			console.log(res)
 		})
@@ -331,6 +340,7 @@ export {
 	sendWelcomeEmail,
 	sendResetEmail,
 	sendOrderSuccessEmail,
+	sendIdShippingStartedEmail,
 	sendShippingStartedEmail,
 	sendBankTransferInfo,
 	sendContactEmail,

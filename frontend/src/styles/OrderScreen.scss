@@ -16,6 +16,14 @@
 
   // background-color: $main-background-color;
 }
+.copy-button {
+  border-radius: 20px;
+  border-width: 0ch;
+  font-size: 12px;
+  width: 70px;
+  background-color: black;
+  color: white;
+}
 
 .order-left {
   @include mq(lg) { // 引数を個別に指定

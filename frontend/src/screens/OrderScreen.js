@@ -92,7 +92,20 @@ const OrderScreen = ({ match, history, location }) => {
 	const orderDeliver = useSelector((state) => state.orderDeliver)
 	const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
+	const getOrderDetailsHandler = () => {
+		dispatch({ type: STRIPE_PAY_RESET })
+		dispatch({ type: ORDER_DELIVER_RESET })
+		dispatch({ type: BANKTRANSFER_RESET })
+		dispatch(getOrderDetails(orderId))
+	}
+
 	useEffect(() => {
+		const getOrderDetailsHandler = () => {
+			dispatch({ type: STRIPE_PAY_RESET })
+			dispatch({ type: ORDER_DELIVER_RESET })
+			dispatch({ type: BANKTRANSFER_RESET })
+			dispatch(getOrderDetails(orderId))
+		}
 		if (!userInfo) {
 			history.push(`/login?redirect=order/${orderId}`)
 		}
@@ -103,15 +116,13 @@ const OrderScreen = ({ match, history, location }) => {
 			successDeliver ||
 			successBankTransfer
 		) {
-			dispatch({ type: STRIPE_PAY_RESET })
-			dispatch({ type: ORDER_DELIVER_RESET })
-			dispatch({ type: BANKTRANSFER_RESET })
-			dispatch(getOrderDetails(orderId))
+			getOrderDetailsHandler()
 		}
 		if (successPay || successBankTransfer) {
 			localStorage.setItem('cartItems', [])
 			dispatch({ type: CART_ITEMS_RESET })
-			window.location.reload()
+			getOrderDetailsHandler()
+			// window.location.reload()
 		}
 	}, [
 		dispatch,
@@ -272,6 +283,7 @@ const OrderScreen = ({ match, history, location }) => {
 			name: order.shippingAddress.fullName,
 			orderId,
 			trackingId,
+			shippingType: order.shippingType,
 		}
 		dispatch(deliverOrder(order, emailInfo))
 	}
@@ -279,6 +291,12 @@ const OrderScreen = ({ match, history, location }) => {
 	const toBankTransfer = (boolean) => {
 		setBankTransferState(boolean)
 		setErrorText('')
+	}
+
+	function addDays(date, days) {
+		var result = new Date(date)
+		result.setDate(result.getDate() + days)
+		return result
 	}
 
 	return loading ? (
@@ -561,63 +579,203 @@ const OrderScreen = ({ match, history, location }) => {
 									振り込み確認後の配送になります。
 								</Message>
 							)} */}
+
 							<Form.Group controlId='prefecture' className='mt-2'>
 								<h4>
 									配送オプション
-									<span className='form-asterisk__g'>*</span>
-								</h4>
-								<p className='mt-3'>
-									お届け予定:　入金確認後２日後
-								</p>
-								{/* <Form.Label></Form.Label> */}
-								<div className='form-container-pw-icon__g'>
-									<Form.Control
-										disabled={order.isPaid}
-										className='form-select'
-										as='select'
-										placeholder='選択してください'
-										required
-										// defaultValue={JSON.stringify(
-										// 	shippingOption
-										// )}
-										defaultValue={order && shippingOption}
-										onChange={(e) =>
-											setShippingOption(
-												JSON.parse(e.target.value)
-											)
-										}
-									>
-										<option
-											value={JSON.stringify({
-												shippingOptionFee: null,
-												shippingType: '',
-											})}
-										>
-											選択してください
-										</option>
-										{/* <option value=''>
-											選択してください
-										</option> */}
-										{Number(getCartCount()) < 5 && (
-											<option
-												value={JSON.stringify({
-													shippingOptionFee: letterFeeHandler(),
-													shippingType: '郵便',
-												})}
-											>
-												郵便 + ¥{letterFeeHandler()}
-											</option>
+									{userInfo &&
+										order &&
+										!order.shippingType && (
+											<span className='form-asterisk__g'>
+												*
+											</span>
 										)}
-										<option
-											value={JSON.stringify({
-												shippingOptionFee: parcelFeeHandler(),
-												shippingType: 'ヤマト運輸',
-											})}
-										>
-											ヤマト運輸 + ¥{parcelFeeHandler()}
-										</option>
-									</Form.Control>
-								</div>
+								</h4>
+								{/* <p className='mt-3'>
+									お届け予定:　入金確認後２日後
+								</p> */}
+								{/* <Form.Label></Form.Label> */}
+								{/*__________________________ //shippingDetails ______________________________ */}
+								{userInfo && order && order.shippingType && (
+									<>
+										{order && order.isBankTransfer ? (
+											<p className='mt-3'>
+												配送状況:{'  '}
+												{order.isDelivered
+													? '発送手続き完了'
+													: '未発送'}
+												<br />
+												配送方法:　{order.shippingType}
+												<br />
+												お届け予定:{' '}
+												{order.isDelivered &&
+												order.isPaid ? (
+													<>
+														{addDays(
+															order.paidAt,
+															4
+														).getMonth() + 1}
+														月
+														{addDays(
+															order.paidAt,
+															4
+														).getDate()}
+														日頃
+													</>
+												) : (
+													'入金確認後'
+												)}
+												<br />
+												{/* ////otherconditional */}
+												{order.shippingType ===
+													'ヤマト運輸' &&
+													order.trackingId && (
+														<>
+															ヤマト送り番号:{' '}
+															{order.trackingId}
+															&nbsp;&nbsp;
+															<button
+																className='copy-button'
+																onClick={async () => {
+																	await navigator.clipboard.writeText(
+																		order.trackingId
+																	)
+																	alert(
+																		'送り番号がコピーされました。'
+																	)
+																}}
+															>
+																COPY
+															</button>
+															<br />
+															<p
+																className='text-end'
+																// className='modify-text'
+															>
+																<a href='https://toi.kuronekoyamato.co.jp/cgi-bin/tneko'>
+																	荷物お問い合わせ&nbsp;&nbsp;
+																</a>
+																<i className='fas fa-chevron-right'></i>
+															</p>
+														</>
+													)}
+											</p>
+										) : (
+											<p className='mt-3'>
+												配送状況:{' '}
+												{order.isDelivered
+													? '発送手続き完了'
+													: '未発送'}
+												<br />
+												配送方法:　
+												{order.shippingType}
+												<br />
+												お届け予定:　
+												{addDays(
+													order.paidAt,
+													4
+												).getMonth() + 1}
+												月
+												{addDays(
+													order.paidAt,
+													4
+												).getDate()}
+												日頃
+												<br />
+												{order.shippingType ===
+													'ヤマト運輸' &&
+													order.trackingId && (
+														<>
+															ヤマト送り番号:{' '}
+															{order.trackingId}
+															&nbsp;&nbsp;
+															<button
+																className='copy-button'
+																onClick={async () => {
+																	await navigator.clipboard.writeText(
+																		order.trackingId
+																	)
+																	alert(
+																		'送り番号がコピーされました。'
+																	)
+																}}
+															>
+																COPY
+															</button>
+															<br />
+															<p
+																className='text-end'
+																// className='modify-text'
+															>
+																<a href='https://toi.kuronekoyamato.co.jp/cgi-bin/tneko'>
+																	荷物お問い合わせ&nbsp;&nbsp;
+																</a>
+																<i className='fas fa-chevron-right'></i>
+															</p>
+														</>
+													)}
+											</p>
+										)}
+									</>
+								)}
+								{/*__________________________ //shippingDetails ______________________________ */}
+								{userInfo &&
+									order &&
+									!order.isDelivered &&
+									!order.isBankTransfer &&
+									!order.isPaid && (
+										<div className='form-container-pw-icon__g'>
+											<Form.Control
+												disabled={order.isPaid}
+												className='form-select'
+												as='select'
+												placeholder='選択してください'
+												required
+												defaultValue={
+													order && shippingOption
+												}
+												onChange={(e) =>
+													setShippingOption(
+														JSON.parse(
+															e.target.value
+														)
+													)
+												}
+											>
+												<option
+													value={JSON.stringify({
+														shippingOptionFee: null,
+														shippingType: '',
+													})}
+												>
+													選択してください
+												</option>
+
+												{Number(getCartCount()) < 5 && (
+													<option
+														value={JSON.stringify({
+															shippingOptionFee: letterFeeHandler(),
+															shippingType:
+																'郵便',
+														})}
+													>
+														郵便 + ¥
+														{letterFeeHandler()}
+													</option>
+												)}
+												<option
+													value={JSON.stringify({
+														shippingOptionFee: parcelFeeHandler(),
+														shippingType:
+															'ヤマト運輸',
+													})}
+												>
+													ヤマト運輸 + ¥
+													{parcelFeeHandler()}
+												</option>
+											</Form.Control>
+										</div>
+									)}
 							</Form.Group>
 
 							{userInfo &&
@@ -626,35 +784,50 @@ const OrderScreen = ({ match, history, location }) => {
 								!order.isDelivered &&
 								(order.isBankTransfer || order.isPaid) && (
 									<>
-										<div>
-											<Form>
-												<Form.Group className='mt-2'>
-													{/* <Form.Label>クレジットカード名義人</Form.Label> */}
-													<div className='form-container-pw-icon__g'>
-														<Form.Control
-															type='number'
-															required
-															value={trackingId}
-															placeholder='*ヤマトのトラッキングナンバー'
-															onChange={(e) =>
-																setTrackingId(
-																	e.target
-																		.value
-																)
-															}
-														></Form.Control>
-													</div>
-												</Form.Group>
-												<Button
-													type='button'
-													className='mt-2 btn btn-block w-100'
-													disabled={trackingId === ''}
-													onClick={deliverHandler}
-												>
-													管理者：入金確認＆配送ボタン
-												</Button>
-											</Form>
-										</div>
+										{order.shippingType === '郵便' ? (
+											<Button
+												type='button'
+												className='mt-2 btn btn-block w-100'
+												onClick={deliverHandler}
+											>
+												管理者：入金確認＆配送ボタン
+											</Button>
+										) : (
+											<div>
+												<Form>
+													<Form.Group className='mt-2'>
+														{/* <Form.Label>クレジットカード名義人</Form.Label> */}
+
+														<div className='form-container-pw-icon__g'>
+															<Form.Control
+																type='number'
+																required
+																value={
+																	trackingId
+																}
+																placeholder='*ヤマトのトラッキングナンバー'
+																onChange={(e) =>
+																	setTrackingId(
+																		e.target
+																			.value
+																	)
+																}
+															></Form.Control>
+														</div>
+													</Form.Group>
+													<Button
+														type='button'
+														className='mt-2 btn btn-block w-100'
+														disabled={
+															trackingId === ''
+														}
+														onClick={deliverHandler}
+													>
+														管理者：入金確認＆配送ボタン
+													</Button>
+												</Form>
+											</div>
+										)}
 									</>
 								)}
 						</div>

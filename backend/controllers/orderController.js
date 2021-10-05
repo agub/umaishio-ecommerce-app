@@ -7,6 +7,7 @@ import dotenv from 'dotenv'
 import {
 	sendOrderSuccessEmail,
 	sendShippingStartedEmail,
+	sendIdShippingStartedEmail,
 	sendBankTransferInfo,
 } from '../utils/email.js'
 
@@ -111,7 +112,13 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/:id/deliver
 // @access  Private/Admin
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
-	const { email, name, orderId, trackingId } = req.body.emailInfo
+	const {
+		email,
+		name,
+		orderId,
+		trackingId,
+		shippingType,
+	} = req.body.emailInfo
 
 	const order = await Order.findById(req.params.id)
 	if (order) {
@@ -122,10 +129,24 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 
 		order.isDelivered = true
 		order.deliveredAt = Date.now()
-
-		const updatedOrder = await order.save()
-		sendShippingStartedEmail(email, name, orderId, trackingId)
-		res.json(updatedOrder)
+		if (shippingType === 'ヤマト運輸' && trackingId) {
+			order.trackingId = trackingId
+			const updatedOrder = await order.save()
+			sendIdShippingStartedEmail(
+				email,
+				name,
+				orderId,
+				trackingId,
+				shippingType
+			)
+			res.json(updatedOrder)
+			return
+		} else {
+			const updatedOrder = await order.save()
+			sendShippingStartedEmail(email, name, orderId, shippingType)
+			res.json(updatedOrder)
+			return
+		}
 	} else {
 		res.status(404)
 		throw new Error(

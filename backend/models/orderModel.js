@@ -63,6 +63,9 @@ const orderSchema = mongoose.Schema(
 		shippingType: {
 			type: String,
 		},
+		trackingId: {
+			type: Number,
+		},
 		// taxPrice: {
 		// 	type: Number,
 		// 	required: true,
