@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Container } from 'react-bootstrap'
 import { Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+
 import ContactScreen from './ContactScreen'
 import Page1 from '../pages/Page1'
 import RightPicture from '../pages/RightPicture'
@@ -28,17 +29,20 @@ const LandingScreen = () => {
 	}
 
 	const size = useWindowSize()
+
 	let mdScreen
 	if (size.width < 992) {
 		mdScreen = null
 	} else {
 		mdScreen = { display: 'none' }
 	}
+
 	return (
 		<div style={{ backgroundColor: '#f5f5f5' }}>
 			<Page1 />
 			<Container>
 				<AboutPage />
+
 				<RightPicture
 					imageXl={saltXl}
 					imageMobile={saltMobile}

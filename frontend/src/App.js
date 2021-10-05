@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
+import Aos from 'aos'
+import 'aos/dist/aos.css'
+
 import Header from './components/Header'
 import Footer from './components/Footer'
 import HomeScreen from './screens/HomeScreen'
@@ -35,6 +38,10 @@ function App() {
 		'pk_test_51IJyo2KVaW87j9kXOP9qNXMzZh4kXnF7aGEjohGwCfJlsS6XqHkTOii3ByC1CM1ypH8LYnk9iSk147lQklOJM7u900sGjrw6jH'
 
 	const stripePromise = loadStripe(PUBLIC_KEY)
+
+	useEffect(() => {
+		Aos.init({ duration: 3000 })
+	}, [])
 
 	return (
 		<Router>

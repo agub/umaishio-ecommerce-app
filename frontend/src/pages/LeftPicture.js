@@ -24,50 +24,51 @@ const LeftPicture = ({ title, content, imageXl, imageMobile }) => {
 					className='page3-image-mobile'
 				/>
 			)}
-
-			<Card
-				className={
-					size.width > 767
-						? 'p-3 page3-card'
-						: 'my-3 p-3 page2-card-mobile'
-				}
-			>
-				<Card.Body
+			<div data-aos='zoom-in-left'>
+				<Card
 					className={
 						size.width > 767
-							? 'page2-card-body'
-							: 'page2-card-body-mobile'
+							? 'p-3 page3-card'
+							: 'my-3 p-3 page2-card-mobile'
 					}
 				>
-					<Card.Title
-						as='h2'
+					<Card.Body
 						className={
 							size.width > 767
-								? 'page2-card-title'
-								: 'page3-card-title-mobile'
+								? 'page2-card-body'
+								: 'page2-card-body-mobile'
 						}
 					>
-						<Card.Img
-							src={x_logo}
-							alt='xlogo'
-							variant='top'
-							className='page2-card-logo'
-						/>
-						&nbsp;{title}
-					</Card.Title>
+						<Card.Title
+							as='h2'
+							className={
+								size.width > 767
+									? 'page2-card-title'
+									: 'page3-card-title-mobile'
+							}
+						>
+							<Card.Img
+								src={x_logo}
+								alt='xlogo'
+								variant='top'
+								className='page2-card-logo'
+							/>
+							&nbsp;{title}
+						</Card.Title>
 
-					<Card.Text
-						as='div'
-						className={
-							size.width > 767
-								? 'page2-card-text'
-								: 'page2-card-text-mobile'
-						}
-					>
-						{content}
-					</Card.Text>
-				</Card.Body>
-			</Card>
+						<Card.Text
+							as='div'
+							className={
+								size.width > 767
+									? 'page2-card-text'
+									: 'page2-card-text-mobile'
+							}
+						>
+							{content}
+						</Card.Text>
+					</Card.Body>
+				</Card>
+			</div>
 		</div>
 	)
 }
