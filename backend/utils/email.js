@@ -307,8 +307,6 @@ const sendShippingStartedEmail = asyncHandler(
 								配送方法: ${shippingType}
 							 	<br/>
 							 	<br/>
-								旨い塩オンラインショップ
-								<br/>
 								https://www.umaishio.com/
 								</p>`,
 		}

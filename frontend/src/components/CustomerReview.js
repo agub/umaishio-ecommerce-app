@@ -46,19 +46,22 @@ const CustomerReview = ({ product, userInfo, match }) => {
 							{product.reviews.length === 0 && (
 								<Message>評価なし</Message>
 							)}
+
 							{product.reviews.map((review) => (
-								<div key={review._id}>
-									<strong>{review.name}</strong>
-									<Rating value={review.rating} />
-									<p
-										style={{
-											'fontSize': '0.7rem',
-										}}
-									>
-										{review.createdAt.substring(0, 10)}
-									</p>
-									<p>{review.comment}</p>
-								</div>
+								<>
+									<div key={review._id}>
+										<strong>{review.name}</strong>
+										<Rating value={review.rating} />
+										<p
+											style={{
+												'fontSize': '0.7rem',
+											}}
+										>
+											{review.createdAt.substring(0, 10)}
+										</p>
+										<p>{review.comment}</p>
+									</div>
+								</>
 							))}
 
 							{loadingProductReview && <Loader />}

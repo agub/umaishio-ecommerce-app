@@ -144,7 +144,6 @@ const ProductScreen = ({ match, history }) => {
 												<Col
 													style={{
 														display: 'flex',
-														justifyContent: 'end',
 													}}
 													md={5}
 													xs={5}
