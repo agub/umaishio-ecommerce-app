@@ -163,6 +163,8 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 		<br/>
 		【商品詳細】
 		<br/>
+		ID：${orderId.slice(-10)}
+		<br/>
 		${orders}
 		<br/>
 		配送料：${shippingFee}円 (${shippingType})
@@ -170,7 +172,9 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 		合計（税込）：${amount}円
 		<br/>
 		<br/>
-		また注文内容の確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a>からこ覧になれます。
+		また注文内容の確認は<a href="${
+			process.env.API_URI
+		}/order/${orderId}">こちらから</a>からこ覧になれます。
 		<br/>
 		<br/>
 		*ご注文いただいた商品を営業日３〜５日中に発送準備いたします。また配送手続きが完了後こちらからヤマトの送り番号などをお送りいたします。
@@ -219,6 +223,8 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 								<br/>
 								【商品詳細】
 								<br/>
+								ID：${orderId.slice(-10)}
+								<br/>
 								${orders}
 								<br/>
 								配送料：${shippingFee}円　(${shippingType})
@@ -226,7 +232,9 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 								合計（税込）：${amount}円
 								<br/>
 								<br/>
-								また注文内容の詳しい確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a>からもご覧になれます。
+								また注文内容の詳しい確認は<a href="${
+									process.env.API_URI
+								}/order/${orderId}">こちらから</a>からもご覧になれます。
 								<br/>
 								<br/>
 								ご注文商品（ご注文番号：${orderId}）の銀行振り込みのご案内をいたします。

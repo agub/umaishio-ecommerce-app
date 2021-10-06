@@ -7,7 +7,7 @@ const FilteredLists = ({ orders, title }) => {
 				{title === 'all' &&
 					orders.map((order) => (
 						<tr key={order._id}>
-							<td>{order._id}</td>
+							<td>{order._id.slice(-10)}</td>
 							<td>
 								{order.user && order.shippingAddress.fullName}
 							</td>

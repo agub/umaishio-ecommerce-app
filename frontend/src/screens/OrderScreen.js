@@ -366,7 +366,9 @@ const OrderScreen = ({ match, history, location }) => {
 					<div className='item-responsive-wrap__g order-left-wrap'>
 						<div className='mt-3'>
 							<h4>注文内容</h4>
-							<p style={{ fontSize: '0.8rem' }}>ID:{order._id}</p>
+							<p style={{ fontSize: '0.8rem' }}>
+								ID: {order._id.slice(-10)}
+							</p>
 							<p className='underline__g'></p>
 							{order.orderItems.length === 0 ? (
 								<Message>注文がありません</Message>
