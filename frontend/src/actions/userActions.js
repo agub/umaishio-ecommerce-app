@@ -62,7 +62,7 @@ export const login = (email, password, savePassword) => async (dispatch) => {
 		if (message === "Cannot read property 'verify' of null") {
 			dispatch({
 				type: USER_LOGIN_FAIL,
-				payload: 'パスワードまたはemail',
+				payload: 'パスワードまたはメールアドレスが異なります。',
 			})
 		} else {
 			dispatch({

@@ -47,6 +47,8 @@ import {
 	ORDER_UPDATE_SHIPPINGFEE_RESET,
 } from '../constants/orderConstants'
 
+import StripeErrorHandle from '../components/StripeErrorHandle'
+
 export const orderCreateReducer = (state = {}, action) => {
 	switch (action.type) {
 		case ORDER_CREATE_REQUEST:
@@ -133,7 +135,7 @@ export const stripePayReducer = (state = {}, action) => {
 		case STRIPE_PAY_FAIL:
 			return {
 				loading: false,
-				error: action.payload,
+				error: StripeErrorHandle(action.payload),
 			}
 		case STRIPE_PAY_LOADING_STOP:
 			return {

@@ -244,7 +244,6 @@ const OrderScreen = ({ match, history, location }) => {
 				const paymentDetails = {
 					id: id,
 					amount: totalPriceCal(),
-					//fixme!!!!
 					orderInfo: orderInfo(),
 					name: name,
 					addressInfo,
@@ -285,8 +284,8 @@ const OrderScreen = ({ match, history, location }) => {
 			}
 		} catch (error) {
 			console.log(error)
-			dispatch({ type: STRIPE_PAY_LOADING_STOP })
 			setErrorText('正しく記入してください')
+			dispatch({ type: STRIPE_PAY_LOADING_STOP })
 		}
 	}
 
@@ -967,7 +966,7 @@ const OrderScreen = ({ match, history, location }) => {
 										{errorPay}
 										<br />
 										<a href='mailto: info@umaishio.com'>
-											カスタマーサービスへお問い合わせはこちらへ
+											カスタマーサービスへのお問い合わせはこちらへ
 										</a>
 									</Message>
 								)}
