@@ -80,6 +80,11 @@ main {
   border-radius: $button-border-radius;
 }
 
+
+.form-control:focus{
+  box-shadow: none
+}
+
 // ------------------------------global-css ----------------------------------
 
 .borderRadius__g {

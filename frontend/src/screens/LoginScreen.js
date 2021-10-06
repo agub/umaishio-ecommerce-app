@@ -146,6 +146,7 @@ const LoginScreen = ({ location, history }) => {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 							></Form.Control>
+
 							{showPassword ? (
 								<i
 									onClick={() =>

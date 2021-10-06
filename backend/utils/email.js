@@ -322,7 +322,13 @@ const sendContactEmail = asyncHandler(async (email, name, content) => {
 		from: '旨い塩オンラインショップ　<info@umaishio.com>',
 		recipients: [email],
 		subject: '旨い塩オンラインショップのお問い合わせ',
-		message: `${name}様からのお問い合わせ内容: 
+		message: `${name}　様、	
+		<br/>
+		旨い塩オンラインショップへお問い合わせありがとうございます。
+		<br/>
+		以下の内容でお問い合わせを受け付けいたしました。
+		<br/>
+		内容: 
 		<br/>
 		${content}
 		`,
