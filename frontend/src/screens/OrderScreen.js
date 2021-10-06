@@ -4,6 +4,7 @@ import { Form, Button, Col, Image, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import cartType from '../data/images/available_cards.png'
 import {
 	getOrderDetails,
 	payOnStirpe,
@@ -847,7 +848,7 @@ const OrderScreen = ({ match, history, location }) => {
 											className='mt-3'
 											type='radio'
 											label='クレジットカード'
-											// id='Stripe'
+											id='cardpayment'
 											name='paymentMethodForm'
 											onClick={() =>
 												toBankTransfer(false)
@@ -870,6 +871,21 @@ const OrderScreen = ({ match, history, location }) => {
 								!order.isBankTransfer &&
 								!bankTransferState ? (
 									<>
+										<p className='mt-3'>
+											<div className='d-flex justify-content-between'>
+												<span>
+													【クレジットカード決済】
+												</span>
+												<span>
+													<Image
+														src={cartType}
+														alt='cartType'
+														fluid
+														width={70}
+													/>
+												</span>
+											</div>
+										</p>
 										<Form.Group
 											controlId='address'
 											className='mt-2'
@@ -912,7 +928,6 @@ const OrderScreen = ({ match, history, location }) => {
 											}}
 										/>
 										{/* </div> */}
-
 										<div className='mb-2 modify-btn-wrap'>
 											<button
 												className='modify-btn'
@@ -965,9 +980,12 @@ const OrderScreen = ({ match, history, location }) => {
 									<Message variant='danger'>
 										{errorPay}
 										<br />
-										<a href='mailto: info@umaishio.com'>
+										{/* <a href='mailto: info@umaishio.com'> */}
+										<Link to='/contact'>
 											カスタマーサービスへのお問い合わせはこちらへ
-										</a>
+										</Link>
+
+										{/* </a> */}
 									</Message>
 								)}
 								{!order.isPaid && !order.isBankTransfer && (

@@ -17,7 +17,7 @@ const StripeErrorHandle = (message) => {
 		return 'クレジットカードセキュリティコードが正しくありません。'
 	}
 
-	return message
+	return 'クレジットカード情報が正しくありません。'
 }
 
 export default StripeErrorHandle
