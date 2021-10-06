@@ -243,7 +243,7 @@ const OrderScreen = ({ match, history, location }) => {
 
 				const paymentDetails = {
 					id: id,
-					amount: 50,
+					amount: totalPriceCal(),
 					//fixme!!!!
 					orderInfo: orderInfo(),
 					name: name,
