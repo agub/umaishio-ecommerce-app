@@ -8,7 +8,6 @@ import Loader from '../components/Loader'
 import { listProducts } from '../actions/productActions'
 import Meta from '../components/Meta'
 import useWindowSize from '../hooks/useWindowSize'
-import { Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 const HomeScreen = () => {
@@ -37,11 +36,6 @@ const HomeScreen = () => {
 	return (
 		<>
 			<Meta />
-			{/* <h3 className='my-3'>
-				*現在メンテナンス中です
-				<br />
-				購入希望の方はお問い合わせください。
-			</h3> */}
 			{loading ? (
 				<Loader />
 			) : error ? (

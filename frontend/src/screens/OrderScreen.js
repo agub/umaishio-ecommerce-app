@@ -10,7 +10,6 @@ import {
 	payOnStirpe,
 	deliverOrder,
 	bankTransferOrder,
-	updateShippingFee,
 } from '../actions/orderActions'
 import {
 	STRIPE_PAY_RESET,
@@ -98,7 +97,7 @@ const OrderScreen = ({ match, history, location }) => {
 	} = bankTransfer
 
 	const orderDeliver = useSelector((state) => state.orderDeliver)
-	const { loading: loadingDeliver, success: successDeliver } = orderDeliver
+	const { success: successDeliver } = orderDeliver
 
 	const getOrderDetailsHandler = () => {
 		dispatch({ type: STRIPE_PAY_RESET })
@@ -128,6 +127,7 @@ const OrderScreen = ({ match, history, location }) => {
 			// window.location.reload()
 		}
 	}, [
+		// eslint-disable-line react-hooks/exhaustive-deps
 		dispatch,
 		order,
 		orderId,
@@ -135,6 +135,7 @@ const OrderScreen = ({ match, history, location }) => {
 		successDeliver,
 		successBankTransfer,
 	])
+
 	useEffect(() => {
 		if (orderShippingFeeSuccess) {
 			// setTimeout(getOrderDetailsHandler(), 1000)
@@ -144,7 +145,7 @@ const OrderScreen = ({ match, history, location }) => {
 			dispatch({ type: CART_ITEMS_RESET })
 			// window.location.reload()
 		}
-	}, [orderShippingFeeSuccess])
+	}, [orderShippingFeeSuccess, dispatch]) // eslint-disable-line react-hooks/exhaustive-deps
 
 	// __________________________________________________________________________________________________________________
 
@@ -234,10 +235,7 @@ const OrderScreen = ({ match, history, location }) => {
 				if (!stripe || !elements) {
 					return
 				}
-				const {
-					error,
-					paymentMethod,
-				} = await stripe.createPaymentMethod({
+				const { paymentMethod } = await stripe.createPaymentMethod({
 					type: 'card',
 					card: elements.getElement(CardElement),
 				})

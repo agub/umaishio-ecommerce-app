@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import FormContainer from '../components/FormContainer'
+
 import ModalContainer from '../components/ModalContainer'
 import { Button, Form } from 'react-bootstrap'
 import axios from 'axios'
@@ -23,7 +23,7 @@ const ContactScreen = () => {
 			},
 		}
 		try {
-			const response = await axios.post(
+			await axios.post(
 				'/api/users/contact',
 				{
 					email,

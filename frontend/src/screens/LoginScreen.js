@@ -60,7 +60,7 @@ const LoginScreen = ({ location, history }) => {
 				history.push('/shop')
 			}
 		}
-	}, [history, userInfo, dispatch, successLogin])
+	}, [history, userInfo, dispatch, successLogin]) // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		if (success) {
@@ -75,7 +75,7 @@ const LoginScreen = ({ location, history }) => {
 				type: USER_UPDATE_RESET,
 			})
 		}
-	}, [success, userUpdateSucess])
+	}, [success, userUpdateSucess, dispatch]) //dispatch add
 
 	const submitHandler = (e) => {
 		e.preventDefault()

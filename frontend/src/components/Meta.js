@@ -12,7 +12,7 @@ const Meta = ({ title, description, keywords }) => {
 }
 
 Meta.defaultProps = {
-	title: '旨い塩ショップ',
+	title: '旨い塩オンラインショップ',
 	description: '旨い塩オンラインショップ',
 	keywords: '旨い塩, 塩, 味噌塩',
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Col, Row, Image, Modal } from 'react-bootstrap'
+import { Form, Button, Col, Row, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -249,13 +249,14 @@ const ShippingScreen = ({ history }) => {
 			setBuilding(userInfo.shippingAddress.building || '')
 		}
 	}, [userInfo, useAddressHistory])
+
 	//Shipping Address History
 
 	useEffect(() => {
 		if (!userInfo) {
 			history.push('/login')
 		}
-	})
+	}, [history, userInfo])
 
 	//submit order and move to order
 	useEffect(() => {
@@ -277,7 +278,7 @@ const ShippingScreen = ({ history }) => {
 			dispatch({ type: USER_DETAILS_RESET })
 			dispatch({ type: ORDER_CREATE_RESET })
 		}
-	}, [updated, success, history])
+	}, [updated, success, history]) // eslint-disable-line react-hooks/exhaustive-deps
 
 	// shoppingcart modal
 

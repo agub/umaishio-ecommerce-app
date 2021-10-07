@@ -9,10 +9,10 @@ const Product = ({ product }) => {
 			<Card className='my-3 p-3 customCard'>
 				{/* responsiveCss */}
 				<Card.Img
+					style={{ minHeight: '200px', width: '100%' }}
 					src={product.image}
 					alt={product.image}
 					variant='top'
-					style={{ minHeight: '200px' }}
 				/>
 
 				<Card.Body>

@@ -22,7 +22,7 @@ const VerifyUserScreen = ({ match, history }) => {
 				history.push('/login?redirect=shipping')
 			}
 		}
-	}, [success])
+	}, [success, dispatch]) // eslint-disable-line react-hooks/exhaustive-deps
 	return null
 }
 

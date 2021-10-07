@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { Container } from 'react-bootstrap'
-import { Nav } from 'react-bootstrap'
+
 import { LinkContainer } from 'react-router-bootstrap'
 
 import ContactScreen from './ContactScreen'
@@ -17,8 +17,8 @@ import sakeXl from '../data/images/sake+obj-xl.png'
 import sakeMobile from '../data/images/sake+obj-mobile.png'
 import misoXl from '../data/images/miso+obj-xl.png'
 import misoMobile from '../data/images/miso+obj-mobile.png'
-import konbuXl from '../data/images/konbu+obj-xl.png'
-import konbuMobile from '../data/images/konbu-obj-mobile.png'
+// import konbuXl from '../data/images/konbu+obj-xl.png'
+// import konbuMobile from '../data/images/konbu-obj-mobile.png'
 
 const LandingScreen = () => {
 	const cart = useSelector((state) => state.cart)

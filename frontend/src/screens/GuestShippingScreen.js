@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button, Col, Row, Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import FormContainer from '../components/FormContainer'
+
 import EditableCartItems from '../components/EditableCartItems'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { createOrder } from '../actions/orderActions'
@@ -27,17 +27,12 @@ const GuestShippingScreen = ({ history }) => {
 	const cart = useSelector((state) => state.cart)
 	const { shippingAddress, updated, loading, cartItems } = cart
 
-	const userLogin = useSelector((state) => state.userLogin)
-	const { userInfo } = userLogin
-
 	const userRegister = useSelector((state) => state.userRegister)
 	const {
 		loading: registerLoading,
 		error: registerError,
 		userInfo: registerUserInfo,
 	} = userRegister
-
-	const [message, setMessage] = useState(null)
 
 	const [email, setEmail] = useState('')
 
@@ -212,11 +207,10 @@ const GuestShippingScreen = ({ history }) => {
 					})
 				)
 			}
-			// history.push('/placeorder')
 		}
 
 		//registered
-	}, [registerUserInfo])
+	}, [registerUserInfo]) // eslint-disable-line react-hooks/exhaustive-deps
 
 	//PlaceOrderScreen
 
@@ -248,10 +242,8 @@ const GuestShippingScreen = ({ history }) => {
 				createOrder({
 					orderItems: cart.cartItems,
 					shippingAddress: cart.shippingAddress,
-					// paymentMethod: cart.paymentMethod,
 					itemsPrice: cart.itemsPrice,
 					shippingPrice: cart.shippingPrice,
-					// taxPrice: cart.taxPrice,
 					totalPrice: cart.totalPrice,
 				})
 			)
@@ -261,7 +253,7 @@ const GuestShippingScreen = ({ history }) => {
 			dispatch({ type: USER_DETAILS_RESET })
 			dispatch({ type: ORDER_CREATE_RESET })
 		}
-	}, [updated, success, history])
+	}, [updated, success, history]) // eslint-disable-line react-hooks/exhaustive-deps
 
 	const [showCart, setShowCart] = useState(false)
 	const showCartClose = () => {
@@ -276,6 +268,7 @@ const GuestShippingScreen = ({ history }) => {
 					{registerError && (
 						<Message variant='danger'>{registerError}</Message>
 					)}
+					{error && <Message variant='danger'>{error}</Message>}
 					<h1>お届け先の住所</h1>
 					<Col lg={8} md={12}>
 						<div className='shippingContainer shipping-form-container'>
@@ -392,10 +385,6 @@ const GuestShippingScreen = ({ history }) => {
 								<span>送料:</span>
 								<span>未定</span>
 							</p>
-							{/* <p className='d-flex justify-content-between'>
-								<span>消費税:</span>
-								<span>¥&nbsp; ????</span>
-							</p> */}
 							<p className='underline__g'></p>
 							<p className='d-flex justify-content-between'>
 								<span>合計:</span>
@@ -404,7 +393,7 @@ const GuestShippingScreen = ({ history }) => {
 							{/* fix this to 0 for yen */}
 						</div>
 						<div>
-							{loading || loadingOrder ? (
+							{loading || loadingOrder || registerLoading ? (
 								<Loader />
 							) : (
 								<>
@@ -417,12 +406,7 @@ const GuestShippingScreen = ({ history }) => {
 										レジに進む
 									</Button>
 									<Link to='/cart'>
-										<Button
-											// variant='secondary'
-											className='cart-back-btn mt-4'
-											// type='button'
-											// className='btn-block w-100'
-										>
+										<Button className='cart-back-btn mt-4'>
 											買い物を続ける
 										</Button>
 									</Link>

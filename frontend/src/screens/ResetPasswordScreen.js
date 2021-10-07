@@ -21,11 +21,6 @@ const ResetPasswordScreen = ({ location, history, match }) => {
 	const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
 	const { loading, success, error } = userUpdateProfile
 
-	const cart = useSelector((state) => state.cart)
-	const { cartItems } = cart
-
-	const redirect = location.search ? location.search.split('=')[1] : '/'
-
 	useEffect(() => {
 		if (success) {
 			history.push('/login')

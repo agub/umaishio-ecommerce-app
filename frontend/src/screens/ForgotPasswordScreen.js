@@ -23,14 +23,15 @@ const ForgotPasswordScreen = ({ location, history }) => {
 
 	useEffect(() => {
 		dispatch({ type: USER_UPDATE_PROFILE_RESET })
-	}, [])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (success) {
 			history.push('/checkemail')
 			dispatch({ type: USER_UPDATE_PROFILE_RESET })
 		}
-	}, [success])
+	}, [success, dispatch, history])
+
 	const resetPasswordRequest = (e) => {
 		e.preventDefault()
 		if (email !== '') {
