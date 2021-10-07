@@ -196,6 +196,7 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 		shippingFee,
 		shippingType,
 	} = mailInfo
+	
 	let orders = orderInfo.map((order) => {
 		return `<span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
 	})
@@ -237,7 +238,9 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 								}/order/${orderId}">こちらから</a>からもご覧になれます。
 								<br/>
 								<br/>
-								ご注文商品（ご注文番号：${orderId}）の銀行振り込みのご案内をいたします。
+								ご注文商品（ご注文番号：${orderId.slice(
+									-10
+								)}）の銀行振り込みのご案内をいたします。
 								<br/>
 								<br/>
 								【銀行振り込み詳細】
