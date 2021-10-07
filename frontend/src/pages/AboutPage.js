@@ -83,7 +83,7 @@ const AboutPage = () => {
 					>
 						<div data-aos='fade-up'>
 							<Card.Title
-								as='h2'
+								as='h1'
 								className={
 									size.width > 991
 										? 'about-card-title'
