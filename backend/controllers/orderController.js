@@ -114,10 +114,13 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
 	const {
 		email,
-		name,
+		addressInfo,
 		orderId,
 		trackingId,
+		orderInfo,
+		amount,
 		shippingType,
+		isGuest,
 	} = req.body.emailInfo
 
 	const order = await Order.findById(req.params.id)
@@ -132,18 +135,34 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 		if (shippingType === 'ヤマト運輸' && trackingId) {
 			order.trackingId = trackingId
 			const updatedOrder = await order.save()
-			sendIdShippingStartedEmail(
+			const mailInfo = {
 				email,
-				name,
+				addressInfo,
 				orderId,
 				trackingId,
-				shippingType
-			)
+				shippingType,
+				orderInfo,
+				amount,
+				shippingFee: order.shippingPrice,
+				isGuest,
+			}
+
+			sendIdShippingStartedEmail(mailInfo)
 			res.json(updatedOrder)
 			return
 		} else {
 			const updatedOrder = await order.save()
-			sendShippingStartedEmail(email, name, orderId, shippingType)
+			const mailInfo = {
+				email,
+				addressInfo,
+				trackingId,
+				shippingType,
+				orderInfo,
+				amount,
+				shippingFee: order.shippingPrice,
+				isGuest,
+			}
+			sendShippingStartedEmail(mailInfo)
 			res.json(updatedOrder)
 			return
 		}
@@ -168,6 +187,7 @@ const stripeApi = asyncHandler(async (req, res) => {
 		addressInfo,
 		orderInfo,
 		shippingType,
+		isGuest,
 	} = req.body
 	const payment = await stripe.paymentIntents.create({
 		amount: amount,
@@ -205,9 +225,9 @@ const stripeApi = asyncHandler(async (req, res) => {
 		}
 
 		const mailInfo = {
-			name,
 			email: metadata.email_address,
 			orderId: metadata.orderId,
+			isGuest,
 			amount,
 			orderInfo,
 			addressInfo,
@@ -216,13 +236,7 @@ const stripeApi = asyncHandler(async (req, res) => {
 			shippingType,
 		}
 
-		sendOrderSuccessEmail(
-			// metadata.email_address,
-			// metadata.fullName,
-			// metadata.orderId,
-			// amount
-			mailInfo
-		)
+		sendOrderSuccessEmail(mailInfo)
 
 		console.log(order)
 		res.json(updatedOrder)
@@ -252,6 +266,7 @@ const bankTransferOrder = asyncHandler(async (req, res) => {
 		amount,
 		addressInfo,
 		shippingType,
+		isGuest,
 	} = req.body.bankTransferInfo
 
 	const order = await Order.findById(req.params.id)
@@ -267,6 +282,7 @@ const bankTransferOrder = asyncHandler(async (req, res) => {
 
 		const mailInfo = {
 			email,
+			isGuest,
 			orderId,
 			amount,
 			addressInfo,

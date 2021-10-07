@@ -310,7 +310,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
 		// user.resetPasswordToken = generateToken(user._id)
 		user.resetPasswordExpires = Date.now() + 3600000
 		await user.save()
-		sendResetEmail(user.email, user.name, user.resetPasswordToken)
+		sendResetEmail(user.email, user.resetPasswordToken)
 		res.status(200).send(user.email, user.name, user.resetPasswordToken)
 	} catch (err) {
 		res.status(500).send(err.message)

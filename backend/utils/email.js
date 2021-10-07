@@ -96,7 +96,7 @@ const sendWelcomeEmail = asyncHandler(async (email, name, id, token) => {
 	})
 })
 
-const sendResetEmail = asyncHandler(async (email, name, token) => {
+const sendResetEmail = asyncHandler(async (email, token) => {
 	const mailObj = {
 		from: '旨い塩オンラインショップ　<info@umaishio.com>',
 		recipients: [email],
@@ -126,7 +126,7 @@ const sendResetEmail = asyncHandler(async (email, name, token) => {
 
 const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 	const {
-		name,
+		isGuest,
 		email,
 		orderId,
 		amount,
@@ -138,6 +138,15 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 	let orders = orderInfo.map((order) => {
 		return `<span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
 	})
+
+	let isGuestContext = () => {
+		if (!isGuest) {
+			return `また注文内容の確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a>からこ覧になれます。
+			<br/>
+			<br/>`
+		}
+		return ''
+	}
 
 	const mailObj = {
 		from: '旨い塩オンラインショップ　<info@umaishio.com>',
@@ -172,11 +181,7 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 		合計（税込）：${amount}円
 		<br/>
 		<br/>
-		また注文内容の確認は<a href="${
-			process.env.API_URI
-		}/order/${orderId}">こちらから</a>からこ覧になれます。
-		<br/>
-		<br/>
+		${isGuestContext()}
 		*ご注文いただいた商品を営業日３〜５日中に発送準備いたします。また配送手続きが完了後こちらからヤマトの送り番号などをお送りいたします。
 		</p>`,
 	}
@@ -189,6 +194,7 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 	const {
 		email,
+		isGuest,
 		orderId,
 		amount,
 		addressInfo,
@@ -196,10 +202,18 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 		shippingFee,
 		shippingType,
 	} = mailInfo
-	
+
 	let orders = orderInfo.map((order) => {
 		return `<span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
 	})
+	let isGuestContext = () => {
+		if (!isGuest) {
+			return `また注文内容の詳しい確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a>からもご覧になれます。
+			<br/>
+			<br/>`
+		}
+		return ''
+	}
 
 	const mailObj = {
 		from: '旨い塩オンラインショップ　<info@umaishio.com>',
@@ -233,11 +247,7 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 								合計（税込）：${amount}円
 								<br/>
 								<br/>
-								また注文内容の詳しい確認は<a href="${
-									process.env.API_URI
-								}/order/${orderId}">こちらから</a>からもご覧になれます。
-								<br/>
-								<br/>
+								${isGuestContext()}
 								ご注文商品（ご注文番号：${orderId.slice(
 									-10
 								)}）の銀行振り込みのご案内をいたします。
@@ -266,19 +276,62 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 	})
 })
 
-const sendIdShippingStartedEmail = asyncHandler(
-	async (email, name, orderId, trackingId, shippingType) => {
-		const mailObj = {
-			from: '旨い塩オンラインショップ　<info@umaishio.com>',
-			recipients: [email],
-			subject: '旨い塩オンラインショップ 配送手続きメール',
-			message: `<p>
-								${name} 様、
+const sendIdShippingStartedEmail = asyncHandler(async (mailInfo) => {
+	const {
+		email,
+		addressInfo,
+		orderId,
+		trackingId,
+		shippingType,
+		orderInfo,
+		amount,
+		shippingFee,
+		isGuest,
+	} = mailInfo
+	let orders = orderInfo.map((order) => {
+		return `<span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
+	})
+
+	let isGuestContext = () => {
+		if (!isGuest) {
+			return `	<a href="${process.env.API_URI}/order/${orderId}">こちら</a>の商品の入金確認と発送手続きが完了しましたのでお伝えいたします。
+		`
+		}
+		return '商品の入金確認と発送手続きが完了しましたのでお伝えいたします。'
+	}
+
+	const mailObj = {
+		from: '旨い塩オンラインショップ　<info@umaishio.com>',
+		recipients: [email],
+		subject: '旨い塩オンラインショップ 配送手続きメール',
+		message: `<p>
+								${addressInfo.fullName} 様、
 								<br/>
 								旨い塩オンラインショップをご利用いただきありがとうございます。 
 								<br/>
 								<br/>
-								<a href="${process.env.API_URI}/order/${orderId}">こちら</a>の商品の入金確認と発送手続きが完了しましたのでお伝えいたします。
+								${isGuestContext()}
+								<br/>
+								<br/>
+								【配送先】
+								<br/>
+								お名前：${addressInfo.fullName} 様
+								<br/>
+								ご住所：${addressInfo.prefecture}${addressInfo.address}${addressInfo.building}
+								<br/>
+								電話番号：${addressInfo.phoneNumber}
+								<br/>
+								<br/>
+								<br/>
+								【商品詳細】
+								<br/>
+								ID：${orderId.slice(-10)}
+								<br/>
+								${orders}
+								<br/>
+								配送料：${shippingFee}円　(${shippingType})
+								<br/>
+								合計（税込）：${amount}円
 								<br/>
 								<br/>
 								【配送情報】
@@ -292,41 +345,82 @@ const sendIdShippingStartedEmail = asyncHandler(
 								<br/>
 								https://toi.kuronekoyamato.co.jp/cgi-bin/tneko
 								</p>`,
-		}
-		sendEmailBcc(mailObj).then((res) => {
-			console.log(res)
-		})
 	}
-)
-const sendShippingStartedEmail = asyncHandler(
-	async (email, name, orderId, shippingType) => {
-		const mailObj = {
-			from: '旨い塩オンラインショップ　<info@umaishio.com>',
-			recipients: [email],
-			subject: '旨い塩オンラインショップ 配送手続きメール',
-			message: `<p>
-								${name} 様、
+	sendEmailBcc(mailObj).then((res) => {
+		console.log(res)
+	})
+})
+
+const sendShippingStartedEmail = asyncHandler(async (mailInfo) => {
+	const {
+		email,
+		addressInfo,
+		orderId,
+		shippingType,
+		orderInfo,
+		amount,
+		shippingFee,
+		isGuest,
+	} = mailInfo
+	let orders = orderInfo.map((order) => {
+		return `<span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
+	})
+
+	let isGuestContext = () => {
+		if (!isGuest) {
+			return `<a href="${process.env.API_URI}/order/${orderId}">こちら</a>の商品の入金確認と発送手続きが完了しましたのでお伝えいたします。
+		`
+		}
+		return '商品の入金確認と発送手続きが完了しましたのでお伝えいたします。'
+	}
+
+	const mailObj = {
+		from: '旨い塩オンラインショップ　<info@umaishio.com>',
+		recipients: [email],
+		subject: '旨い塩オンラインショップ 配送手続きメール',
+		message: `<p>
+								${addressInfo.fullName} 様、
 								<br/>
 								旨い塩オンラインショップをご利用いただきありがとうございます。 
 								<br/>
 								<br/>
-								<a href="${process.env.API_URI}/order/${orderId}">こちら</a>の商品の入金確認と発送手続きが完了しましたのでお伝えいたします。
+								${isGuestContext()}
+								<br/>
+								<br/>
+								【配送先】
+								<br/>
+								お名前：${addressInfo.fullName} 様
+								<br/>
+								ご住所：${addressInfo.prefecture}${addressInfo.address}${addressInfo.building}
+								<br/>
+								電話番号：${addressInfo.phoneNumber}
+								<br/>
+								<br/>
+								<br/>
+								【商品詳細】
+								<br/>
+								ID：${orderId.slice(-10)}
+								<br/>
+								${orders}
+								<br/>
+								配送料：${shippingFee}円　(${shippingType})
+								<br/>
+								合計（税込）：${amount}円
 								<br/>
 								<br/>
 								【配送情報】
 								<br/>
-								配送方法: ${shippingType}
-							 	<br/>
-							 	<br/>
+								配送会社: ${shippingType}
+								<br/>
+								<br/>
 								https://www.umaishio.com/
-								</p>`,
-		}
-
-		sendEmailBcc(mailObj).then((res) => {
-			console.log(res)
-		})
+							</p>`,
 	}
-)
+
+	sendEmailBcc(mailObj).then((res) => {
+		console.log(res)
+	})
+})
 
 const sendContactEmail = asyncHandler(async (email, name, content) => {
 	const mailObj = {

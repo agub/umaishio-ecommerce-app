@@ -67,7 +67,7 @@ const OrderScreen = ({ match, history, location }) => {
 		shippingOptionFee: null,
 		shippingType: '',
 	})
-	console.log(shippingOption)
+
 	const dispatch = useDispatch()
 	const cart = useSelector((state) => state.cart)
 
@@ -248,6 +248,7 @@ const OrderScreen = ({ match, history, location }) => {
 					orderInfo: orderInfo(),
 					name: name,
 					addressInfo,
+					isGuest: userInfo.isGuest,
 					shippingType: shippingOption.shippingType,
 					metadata: {
 						//fixme add more shipper info
@@ -291,12 +292,26 @@ const OrderScreen = ({ match, history, location }) => {
 	}
 
 	const deliverHandler = () => {
+		const addressInfo = {
+			fullName: order.shippingAddress.fullName,
+			postalCode: order.shippingAddress.postalCode,
+			prefecture: order.shippingAddress.prefecture,
+			address: order.shippingAddress.address,
+			building: order.shippingAddress.building,
+			phoneNumber: order.shippingAddress.phoneNumber,
+		}
+		const orderInfo = () => {
+			return order.orderItems
+		}
 		const emailInfo = {
 			email: order.user.email,
-			name: order.shippingAddress.fullName,
+			addressInfo,
 			orderId,
 			trackingId,
+			orderInfo: orderInfo(),
+			amount: totalPriceCal(),
 			shippingType: order.shippingType,
+			isGuest: userInfo.isGuest,
 		}
 		dispatch(deliverOrder(order, emailInfo))
 	}
@@ -649,15 +664,18 @@ const OrderScreen = ({ match, history, location }) => {
 																COPY
 															</button>
 															<br />
-															<p
-																className='text-end'
+															<span
+																className='d-flex justify-content-end'
 																// className='modify-text'
 															>
-																<a href='https://toi.kuronekoyamato.co.jp/cgi-bin/tneko'>
+																<a
+																	className='text-end'
+																	href='https://toi.kuronekoyamato.co.jp/cgi-bin/tneko'
+																>
 																	荷物お問い合わせ&nbsp;&nbsp;
 																</a>
 																<i className='fas fa-chevron-right'></i>
-															</p>
+															</span>
 														</>
 													)}
 											</p>
@@ -873,7 +891,7 @@ const OrderScreen = ({ match, history, location }) => {
 								!order.isBankTransfer &&
 								!bankTransferState ? (
 									<>
-										<p className='mt-3'>
+										<div className='mt-3'>
 											<div className='d-flex justify-content-between'>
 												<span>
 													【クレジットカード決済】
@@ -887,7 +905,7 @@ const OrderScreen = ({ match, history, location }) => {
 													/>
 												</span>
 											</div>
-										</p>
+										</div>
 										<Form.Group
 											controlId='address'
 											className='mt-2'
