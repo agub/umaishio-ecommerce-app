@@ -179,8 +179,9 @@ const OrderScreen = ({ match, history, location }) => {
 		} else if (Number(getCartCount()) === 2) {
 			return 210
 		} else if (
-			Number(getCartCount()) === 3 ||
-			Number(getCartCount()) === 4
+			// Number(getCartCount()) === 3 ||
+			// Number(getCartCount()) === 4
+			Number(getCartCount()) >= 6
 		) {
 			return 390
 		} else {
@@ -623,11 +624,11 @@ const OrderScreen = ({ match, history, location }) => {
 												<br />
 												配送方法:　{order.shippingType}
 												<br />
-												お届け予定:{' '}
+												お届け予定日:{' '}
 												{order.isDelivered &&
 												order.isPaid ? (
 													<>
-														{addDays(
+														{/* {addDays(
 															order.paidAt,
 															4
 														).getMonth() + 1}
@@ -636,7 +637,8 @@ const OrderScreen = ({ match, history, location }) => {
 															order.paidAt,
 															4
 														).getDate()}
-														日頃
+														日 ~ 頃 */}
+														配送手続き完了から２〜３日以内
 													</>
 												) : (
 													'入金確認後'
@@ -689,8 +691,9 @@ const OrderScreen = ({ match, history, location }) => {
 												配送方法:　
 												{order.shippingType}
 												<br />
-												お届け予定:　
-												{addDays(
+												お届け予定日:{' '}
+												配送手続き完了から２〜３日以内
+												{/* {addDays(
 													order.paidAt,
 													4
 												).getMonth() + 1}
@@ -699,7 +702,7 @@ const OrderScreen = ({ match, history, location }) => {
 													order.paidAt,
 													4
 												).getDate()}
-												日頃
+												日頃 */}
 												<br />
 												{order.shippingType ===
 													'ヤマト運輸' &&
@@ -770,7 +773,7 @@ const OrderScreen = ({ match, history, location }) => {
 													選択してください
 												</option>
 
-												{Number(getCartCount()) < 5 && (
+												{Number(getCartCount()) < 7 && (
 													<option
 														value={JSON.stringify({
 															shippingOptionFee: letterFeeHandler(),

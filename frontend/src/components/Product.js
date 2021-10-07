@@ -12,6 +12,7 @@ const Product = ({ product }) => {
 					src={product.image}
 					alt={product.image}
 					variant='top'
+					style={{ minHeight: '200px' }}
 				/>
 
 				<Card.Body>

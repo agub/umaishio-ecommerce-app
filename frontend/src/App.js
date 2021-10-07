@@ -36,10 +36,10 @@ import ResetPasswordScreen from './screens/ResetPasswordScreen'
 import RulesScreen from './screens/RulesScreen'
 
 function App() {
-	// const PUBLIC_KEY =
-	// 	'pk_live_51JhBtOGBYewul3wwTHX1ZbJENfmXoKL18EVaztjUIiaSXtEBdoYRo91cDTkA0KfDdWFejJgTQYe25T7y6nQnpHrD007CpugwIf'
 	const PUBLIC_KEY =
-		'pk_test_51IJyo2KVaW87j9kXOP9qNXMzZh4kXnF7aGEjohGwCfJlsS6XqHkTOii3ByC1CM1ypH8LYnk9iSk147lQklOJM7u900sGjrw6jH'
+		'pk_live_51JhBtOGBYewul3wwTHX1ZbJENfmXoKL18EVaztjUIiaSXtEBdoYRo91cDTkA0KfDdWFejJgTQYe25T7y6nQnpHrD007CpugwIf'
+	// const PUBLIC_KEY =
+	// 	'pk_test_51IJyo2KVaW87j9kXOP9qNXMzZh4kXnF7aGEjohGwCfJlsS6XqHkTOii3ByC1CM1ypH8LYnk9iSk147lQklOJM7u900sGjrw6jH'
 
 	const stripePromise = loadStripe(PUBLIC_KEY)
 
@@ -56,9 +56,9 @@ function App() {
 				<main className='py-3 main-bgc'>
 					<Container>
 						<Route path='/' component={LandingScreen} exact />
-						<span style={{ color: 'red' }}>
+						{/* <span style={{ color: 'red' }}>
 							＊現在このサイトはメンテナンス中です。お買い求めの際はお問い合わせフォームからお問い合わせください。
-						</span>
+						</span> */}
 						<Route path='/order/:id' component={OrderScreen} />
 						<Route path='/shipping' component={ShippingScreen} />
 						<Route
