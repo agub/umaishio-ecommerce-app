@@ -86,7 +86,7 @@ const ProductScreen = ({ match, history }) => {
 									</div>
 
 									<div className='product-page-review-stock-wrap'>
-										{product.rating && product.numReviews && (
+										{product && (
 											<>
 												<Rating
 													value={product.rating}

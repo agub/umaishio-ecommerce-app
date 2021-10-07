@@ -3,13 +3,14 @@
 @font-face {
   font-family: "AxisStd";
   src: local("AxisStd"),
-  url("./fonts/AxisStd/AxisStd-UltraLight.otf") format('truetype');
+  url("./fonts/AxisStd/AxisStd-ExtraLight.woff2") format('trueType');
   font-display: block;
 }
 @font-face {
   font-family: "AxisStd";
   src: local("AxisStd"),
-  url("./fonts/AxisStd/AxisStd-ExtraLight.otf") format('truetype');
+  url("./fonts/AxisStd/AxisStd-UltraLight.otf") format('trueType');
+  // url("./fonts/AxisStd/AxisStd-UltraLight.woff2") format('truetype');
   font-weight: bold;
   font-display: block;
 }

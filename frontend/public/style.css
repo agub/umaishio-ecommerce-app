@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "AxisStd";
+  src: local("AxisStd"), url("./font/AxisStd-UltraLight.otf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AxisStd";
+  src: local("AxisStd"), url("./font/AxisStd-ExtraLight.otf") format("truetype");
+  font-weight: bold;
+  font-display: swap;
+}
