@@ -1,10 +1,12 @@
 import React from 'react'
 import cartType from '../data/images/available_cards.png'
 import { Image } from 'react-bootstrap'
+import Meta from '../components/Meta'
 const RulesScreen = () => {
 	return (
 		// <div className='item-responsive-wrap__g order-left-wrap'>
 		<div style={{ textTransform: 'none', letterSpacing: '3px' }}>
+			<Meta />
 			<h1>特定商取引法に基づく表記</h1>
 			<br />
 			<p>【販売業者】株式会社トビラ</p>

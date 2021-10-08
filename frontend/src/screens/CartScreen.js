@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 import Rating from '../components/Rating'
+import Meta from '../components/Meta'
 import '../styles/CartScreen.scss'
 
 const CartScreen = ({ match, location, history }) => {
@@ -47,6 +48,7 @@ const CartScreen = ({ match, location, history }) => {
 
 	return (
 		<Row>
+			<Meta />
 			<h1>ショッピングカート</h1>
 			<Col lg={8} md={12}>
 				{cartItems.length === 0 ? (

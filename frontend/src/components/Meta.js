@@ -14,7 +14,7 @@ const Meta = ({ title, description, keywords }) => {
 Meta.defaultProps = {
 	title: '旨い塩',
 	description: '旨い塩オンラインショップ',
-	keywords: '旨い塩,美味しい塩,健康塩,ビーガン,塩,無添加',
+	keywords: '旨い塩,味噌,健康塩,ビーガン,塩,無添加',
 }
 
 export default Meta

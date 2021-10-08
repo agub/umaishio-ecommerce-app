@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button, Col, Row, Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-
+import Meta from '../components/Meta'
 import EditableCartItems from '../components/EditableCartItems'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { createOrder } from '../actions/orderActions'
@@ -263,6 +263,7 @@ const GuestShippingScreen = ({ history }) => {
 	return (
 		<>
 			<Form onSubmit={submitHandler}>
+				<Meta />
 				<Row>
 					<CheckoutSteps number={0} />
 					{registerError && (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import Meta from '../components/Meta'
 import ModalContainer from '../components/ModalContainer'
 import { Button, Form } from 'react-bootstrap'
 import axios from 'axios'
@@ -46,6 +46,7 @@ const ContactScreen = () => {
 	return (
 		<>
 			<ModalContainer>
+				<Meta />
 				<h1 className='text-center'>お問い合わせ</h1>
 				<Form onSubmit={submitHandler}>
 					{responseMsg && (

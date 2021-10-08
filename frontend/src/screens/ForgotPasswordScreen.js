@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-
+import Meta from '../components/Meta'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 
@@ -47,6 +47,7 @@ const ForgotPasswordScreen = ({ location, history }) => {
 			}}
 			className='bgi-register__g'
 		>
+			<Meta />
 			<ModalContainer>
 				{/* <h1>ゲスト</h1> */}
 				{success && (
