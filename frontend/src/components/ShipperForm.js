@@ -56,7 +56,7 @@ const ShipperForm = ({
 		<>
 			{isShipper && (
 				<>
-					<h1 className='mt-3'>依頼人情報</h1>
+					<h1 className='mt-3'>送り主住所</h1>
 					<Form.Group controlId='postalCode' className='mt-2'>
 						<Form.Label>
 							<div className='shipping-form-lable__g'>

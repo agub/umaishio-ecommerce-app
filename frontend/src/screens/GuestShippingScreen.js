@@ -318,7 +318,7 @@ const GuestShippingScreen = ({ history }) => {
 							/>
 							<Form.Check
 								className='mt-3'
-								label='申し込み人と送り主が異なる場合'
+								label='お届け先住所と発送元が異なる場合'
 								onChange={() => shipperCheck()}
 								// value={isShipper}
 								checked={isShipper}

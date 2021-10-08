@@ -70,11 +70,13 @@ const ProductScreen = ({ match, history }) => {
 					<Row>
 						<Col lg={6} md={12}>
 							{/* <div className='product-page-img'> */}
-							<Image
-								src={product.image}
-								alt={product.name}
-								fluid
-							/>
+							<div className='d-flex justify-content-center'>
+								<Image
+									src={product.image}
+									alt={product.name}
+									fluid
+								/>
+							</div>
 							{/* </div> */}
 						</Col>
 						<Col lg={6} md={12}>

@@ -1,8 +1,9 @@
 @import "../variables/Variables.scss";
 
 .product-page-name{
-  font-weight: bold; 
+  font-weight: 100;
   font-size: 2.0rem;
+  letter-spacing: normal;
 }
 
 .product-page-section{
@@ -58,7 +59,7 @@
 .product-page-button{
   border-radius: $button-border-radius;
   width: 90%;
-  font-weight: normal;
+  // font-weight: normal;
   padding: 7px 15px;
 
 }

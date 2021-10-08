@@ -438,14 +438,21 @@ const sendContactEmail = asyncHandler(async (email, name, content) => {
 		subject: '旨い塩オンラインショップのお問い合わせ',
 		message: `${name}　様、	
 		<br/>
+		<br/>
 		旨い塩オンラインショップへお問い合わせありがとうございます。
 		<br/>
-		<br/>
-		以下の内容でお問い合わせを受け付けいたしました。
 		<br/>
 		内容: 
 		<br/>
 		${content}
+		<br/>
+		<br/>
+		以上の内容でお問い合わせを受け付けいたしました。
+		<br/>
+		<br/>
+		旨い塩オンラインショップ
+		<br/>
+		info@umaishio.com
 		`,
 	}
 	sendEmailBcc(mailObj).then((res) => {

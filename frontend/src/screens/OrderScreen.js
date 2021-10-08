@@ -180,9 +180,10 @@ const OrderScreen = ({ match, history, location }) => {
 		} else if (Number(getCartCount()) === 2) {
 			return 210
 		} else if (
-			// Number(getCartCount()) === 3 ||
-			// Number(getCartCount()) === 4
-			Number(getCartCount()) >= 6
+			Number(getCartCount()) === 3 ||
+			Number(getCartCount()) === 4 ||
+			Number(getCartCount()) === 5 ||
+			Number(getCartCount()) === 6
 		) {
 			return 390
 		} else {
@@ -513,7 +514,7 @@ const OrderScreen = ({ match, history, location }) => {
 							</p>
 							{order && order.shippingAddress.isShipper && (
 								<>
-									<h4 className='mt-5'>依頼人住所</h4>
+									<h4 className='mt-5'>送り主住所</h4>
 									<p className='mt-3'>
 										<strong>〒</strong>
 										{order.shippingAddress

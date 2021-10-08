@@ -1,19 +1,19 @@
 @import "./variables/Variables.scss";
 
-@font-face {
-  font-family: "AxisStd";
-  src: local("AxisStd"),
-  url("./fonts/AxisStd/AxisStd-ExtraLight.otf") format('trueType');
-  font-display: block;
-}
-@font-face {
-  font-family: "AxisStd";
-  src: local("AxisStd"),
-  url("./fonts/AxisStd/AxisStd-UltraLight.otf") format('trueType');
-  // url("./fonts/AxisStd/AxisStd-UltraLight.woff2") format('truetype');
-  font-weight: bold;
-  font-display: block;
-}
+// @font-face {
+//   font-family: "AxisStd";
+//   src: local("AxisStd"),
+//   url("./fonts/AxisStd/AxisStd-ExtraLight.otf") format('trueType');
+//   font-display: block;
+// }
+// @font-face {
+//   font-family: "AxisStd";
+//   src: local("AxisStd"),
+//   url("./fonts/AxisStd/AxisStd-UltraLight.otf") format('trueType');
+//   // url("./fonts/AxisStd/AxisStd-UltraLight.woff2") format('truetype');
+//   font-weight: bold;
+//   font-display: block;
+// }
 
 // body {
 //   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -22,11 +22,26 @@
 //   color: black;
 // }
 body {
-  font-family: "AxisStd";
+  font-family: BlinkMacSystemFont, Helvetica, sans-serif;
   font-display: block;
-  font-weight: bold; 
+  // font-weight: bold; 
+  // font-weight: 300;
   color: black;
 }
+
+h1,h2,h3,h4,h5,div {
+  // font-weight: lighter;
+  font-weight: 300;
+  
+  
+}
+
+// body {
+//   font-family: "AxisStd";
+//   font-display: block;
+//   font-weight: bold; 
+//   color: black;
+// }
 
 a {
   text-decoration: none;
@@ -64,7 +79,6 @@ select {
 
 main {
   min-height: 80vh;
-  
 }
 
 // .StripeElement {
@@ -88,9 +102,17 @@ main {
   border-radius: $button-border-radius;
 }
 
+.form-select {
+  color: black
+}
 
 .form-control:focus{
   box-shadow: none
+}
+
+.btn {
+  font-weight: lighter;
+  letter-spacing: normal;
 }
 
 // ------------------------------global-css ----------------------------------
@@ -229,7 +251,7 @@ main {
 .crement-wrap__g {
   @include customFlex($justify: space-around);
   border-width: 0.2px;
-  border-color: gray;
+  // border-color: gray;
   border-radius: $button-border-radius;
   padding: 0px 10px;
   // min-height: 30px;
@@ -435,15 +457,25 @@ main {
 }
 
 .about-card-title{
-  
+  font-weight: bolder;
   display: flex;
   align-items: center;
-  font-size: 2rem;
+  font-size: 28px;
 }
+
+
 .about-card-title-mobile{
   display: flex;
   align-items: center;
-  font-size: 1.5rem;
+  // font-weight: ;
+  font-size: 1.3rem;
+  font-weight: 500;
+  @include mq(md) { 
+    font-size: 28px;
+  }
+  @include mq(sm) { 
+    font-size: 1.3rem;
+  }
 }
 
 .about-card-body{
@@ -525,6 +557,10 @@ main {
 .page2-card-body-mobile{
   padding: 10px 10px;
   
+}
+
+.page1-card-logo{
+  width: 25px;
 }
 
 .page2-card-logo{

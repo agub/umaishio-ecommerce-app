@@ -1,21 +1,11 @@
-@font-face {
-  font-family: "AxisStd";
-  src: local("AxisStd"), url("./fonts/AxisStd/AxisStd-ExtraLight.otf") format("trueType");
-  font-display: block;
-}
-
-@font-face {
-  font-family: "AxisStd";
-  src: local("AxisStd"), url("./fonts/AxisStd/AxisStd-UltraLight.otf") format("trueType");
-  font-weight: bold;
-  font-display: block;
-}
-
 body {
-  font-family: "AxisStd";
+  font-family: BlinkMacSystemFont, Helvetica, sans-serif;
   font-display: block;
-  font-weight: bold;
   color: black;
+}
+
+h1, h2, h3, h4, h5, div {
+  font-weight: 300;
 }
 
 a {
@@ -70,9 +60,18 @@ main {
   border-radius: 10px;
 }
 
+.form-select {
+  color: black;
+}
+
 .form-control:focus {
   -webkit-box-shadow: none;
           box-shadow: none;
+}
+
+.btn {
+  font-weight: lighter;
+  letter-spacing: normal;
 }
 
 .borderRadius__g {
@@ -245,7 +244,6 @@ main {
       -ms-flex-align: center;
           align-items: center;
   border-width: 0.2px;
-  border-color: gray;
   border-radius: 10px;
   padding: 0px 10px;
   max-width: 120px;
@@ -470,13 +468,14 @@ main {
 }
 
 .about-card-title {
+  font-weight: bolder;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font-size: 2rem;
+  font-size: 28px;
 }
 
 .about-card-title-mobile {
@@ -486,7 +485,20 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+  .about-card-title-mobile {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 478px) {
+  .about-card-title-mobile {
+    font-size: 1.3rem;
+  }
 }
 
 .about-card-body {
@@ -566,6 +578,10 @@ main {
 
 .page2-card-body-mobile {
   padding: 10px 10px;
+}
+
+.page1-card-logo {
+  width: 25px;
 }
 
 .page2-card-logo {
