@@ -20,7 +20,16 @@
   padding: 0;
 }
 
-@media screen and (max-width: 768px) {
+.copy-button {
+  border-radius: 20px;
+  border-width: 0ch;
+  font-size: 12px;
+  width: 70px;
+  background-color: black;
+  color: white;
+}
+
+@media screen and (max-width: 1000px) {
   .order-left {
     margin-top: 40px;
   }

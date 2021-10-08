@@ -1,12 +1,12 @@
-@font-face {
+/* @font-face {
   font-family: "AxisStd";
-  src: local("AxisStd"), url("./font/AxisStd-UltraLight.otf") format("truetype");
-  font-display: swap;
+  src: local("AxisStd"), url("../src/fonts/AxisStd/AxisStd-ExtraLight.otf") format("trueType");
+  font-display: block;
 }
 
 @font-face {
   font-family: "AxisStd";
-  src: local("AxisStd"), url("./font/AxisStd-ExtraLight.otf") format("truetype");
+  src: local("AxisStd"), url("../src/fonts/AxisStd/AxisStd-UltraLight.otf") format("trueType");
   font-weight: bold;
-  font-display: swap;
-}
+  font-display: block;
+} */

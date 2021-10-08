@@ -46,6 +46,11 @@ const ProductScreen = ({ match, history }) => {
 
 	return (
 		<>
+			<Meta
+				title={product.name}
+				description={product.description}
+				keywords={`${product.name},旨い塩,味噌,うまい`}
+			/>
 			{/* <Link className='btn btn-light my-3' to='/'>
 				戻る
 			</Link> */}
