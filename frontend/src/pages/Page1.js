@@ -14,7 +14,7 @@ const Page1 = () => {
 					<Image src={bgc} alt='bgc' className='page1-bgc' />
 					<Image
 						src={logo_square}
-						alt='logo'
+						alt='旨い塩ロゴ'
 						className='page1-logo'
 					/>
 				</>
@@ -22,12 +22,12 @@ const Page1 = () => {
 				<>
 					<Image
 						src={bgcMobile}
-						alt='bgc'
+						alt='旨い塩背景携帯'
 						className='page1-bgc-mobile'
 					/>
 					<Image
 						src={logo_square}
-						alt='logo'
+						alt='旨い塩背景'
 						className='page1-logo-mobile'
 					/>
 				</>

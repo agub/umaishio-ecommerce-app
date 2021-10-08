@@ -18,7 +18,7 @@ const VerifySuccessModal = ({ show, handleClose, text }) => {
 				<div className='d-flex flex-row justify-content-center'>
 					<Image
 						src={verifiedLogo}
-						alt='verifiedLogo'
+						alt='旨い塩チェック'
 						style={{ maxWidth: '50%' }}
 						fluid
 					/>

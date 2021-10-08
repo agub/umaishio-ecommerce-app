@@ -7,7 +7,7 @@ const PaymentRecieve = ({ delivered, date }) => {
 			<p className='text-center mb-1 mt-3'>お支払い済み</p>
 			<Image
 				src={checkIcon}
-				alt='checkIcon'
+				alt='旨い塩チェックマーク'
 				fluid
 				className='check-image'
 			/>

@@ -28,7 +28,7 @@ const AboutPage = () => {
 						<Link to={'/shop'}>
 							<Image
 								src={umaishio}
-								alt='umaishio'
+								alt='旨い塩味噌'
 								variant='top'
 								fluid
 								style={{ width: '300px' }}

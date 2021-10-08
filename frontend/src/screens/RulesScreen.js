@@ -44,7 +44,12 @@ const RulesScreen = () => {
 			<p>
 				【お支払方法】銀行振込、クレジットカード
 				<span>
-					<Image src={cartType} alt='cartType' fluid width={70} />
+					<Image
+						src={cartType}
+						alt='クレジットカード種類'
+						fluid
+						width={70}
+					/>
 				</span>
 			</p>
 			<br />

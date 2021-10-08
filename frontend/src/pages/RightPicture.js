@@ -16,7 +16,11 @@ const RightPicture = ({ title, content, imageXl, imageMobile }) => {
 				// alt='imageXl'
 				// className='page2-image'
 				src={size.width > screenSize ? imageXl : imageMobile}
-				alt={size.width > screenSize ? 'imageXl' : 'imageMobile'}
+				alt={
+					size.width > screenSize
+						? '旨い塩素材パソコン'
+						: '旨い塩素材携帯'
+				}
 				className={
 					size.width > screenSize
 						? 'page2-image'
@@ -49,7 +53,7 @@ const RightPicture = ({ title, content, imageXl, imageMobile }) => {
 						<Card.Title as='h2' className='page2-card-title'>
 							<Card.Img
 								src={x_logo}
-								alt='xlogo'
+								alt='旨い塩小ロゴ'
 								variant='top'
 								className='page2-card-logo'
 							/>

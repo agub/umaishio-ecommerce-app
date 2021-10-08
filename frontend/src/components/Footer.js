@@ -15,7 +15,7 @@ const Footer = () => {
 				>
 					<Image
 						src={logo}
-						alt='logo'
+						alt='旨い塩ロゴ'
 						style={{ width: '200px', margin: '20px' }}
 					/>
 				</div>
@@ -41,7 +41,7 @@ const Footer = () => {
 					style={{ color: 'white', fontSize: 10 }}
 					className='text-center pb-3'
 				>
-					<Col> Copyright &copy; 旨い塩</Col>
+					<Col>株式会社トビラ Copyright &copy; 旨い塩</Col>
 				</Row>
 			</Container>
 		</footer>

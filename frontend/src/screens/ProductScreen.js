@@ -46,11 +46,11 @@ const ProductScreen = ({ match, history }) => {
 
 	return (
 		<>
-			<Meta
-				title={product.name}
-				description={product.description}
-				keywords={`${product.name},旨い塩,味噌,うまい`}
-			/>
+			{/* <Meta
+			// title={product.name}
+			// description={product.description}
+			// keywords={`${product.name},旨い塩,味噌,うまい`}
+			/> */}
 			{/* <Link className='btn btn-light my-3' to='/'>
 				戻る
 			</Link> */}
@@ -112,7 +112,13 @@ const ProductScreen = ({ match, history }) => {
 												<>
 													在庫あり&nbsp;
 													<span>
-														<i className='fas fa-check'></i>
+														<i
+															style={{
+																color:
+																	'#5dbb7d',
+															}}
+															className='fas fa-check'
+														></i>
 													</span>
 												</>
 											) : (

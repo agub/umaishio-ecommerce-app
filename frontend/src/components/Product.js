@@ -11,7 +11,7 @@ const Product = ({ product }) => {
 				<Card.Img
 					style={{ minHeight: '200px', width: '100%' }}
 					src={product.image}
-					alt={product.image}
+					alt='旨い塩商品'
 					variant='top'
 				/>
 

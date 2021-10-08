@@ -12,7 +12,7 @@ const Meta = ({ title, description, keywords }) => {
 }
 
 Meta.defaultProps = {
-	title: '旨い塩オンラインショップ｜日本の誇る旨味を厳選【無添加調味塩】',
+	title: '旨い塩',
 	description: '旨い塩オンラインショップ',
 	keywords: '旨い塩,美味しい塩,健康塩,ビーガン,塩,無添加',
 }

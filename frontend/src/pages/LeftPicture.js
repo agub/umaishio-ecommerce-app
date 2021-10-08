@@ -11,7 +11,7 @@ const LeftPicture = ({ title, content, imageXl, imageMobile }) => {
 			{size.width > 767 ? (
 				<Image
 					src={imageXl}
-					alt='imageXl'
+					alt='旨い塩の素材'
 					className='page3-image'
 					// className={
 					// 	size.width > 767 ? 'page2-image' : 'page2-image-mobile'
@@ -20,7 +20,7 @@ const LeftPicture = ({ title, content, imageXl, imageMobile }) => {
 			) : (
 				<Image
 					src={imageMobile}
-					alt='imageMobile'
+					alt='旨い塩の素材'
 					className='page3-image-mobile'
 				/>
 			)}

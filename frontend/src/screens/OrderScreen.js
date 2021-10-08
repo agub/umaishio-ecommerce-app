@@ -394,7 +394,7 @@ const OrderScreen = ({ match, history, location }) => {
 												<Col md={2} xs={2}>
 													<Image
 														src={item.image}
-														alt={item.name}
+														alt='旨い塩商品'
 														fluid
 														rounded
 													/>

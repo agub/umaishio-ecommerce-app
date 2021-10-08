@@ -24,10 +24,10 @@
 
 .product-page-stock{
   @include customFlex;
-
+  border-color: #909090;
   border-style: solid;
   border-radius: 20px;
-  border-width: 1px;
+  border-width: 0.5px;
   font-size: 0.7rem;
   padding: 3px 20px;
   min-width: 110px;

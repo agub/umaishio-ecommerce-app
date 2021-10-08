@@ -117,8 +117,8 @@ const ShippingForm = ({
 					controlId='postalCode'
 					className='mt-2'
 					as={Col}
-					sm={3}
-					xs={4}
+					sm={4}
+					xs={5}
 					lg={3}
 				>
 					<div className='form-container-pw-icon__g'>
@@ -150,7 +150,7 @@ const ShippingForm = ({
 					controlId='postalCode'
 					className='mt-2'
 					as={Col}
-					sm={4}
+					sm={5}
 					xs={5}
 					lg={3}
 				>

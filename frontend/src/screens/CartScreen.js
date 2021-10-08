@@ -67,7 +67,7 @@ const CartScreen = ({ match, location, history }) => {
 									<Col xs={4} md={2}>
 										<Image
 											src={item.image}
-											alt={item.name}
+											alt='旨い塩写真小'
 											fluid
 											rounded
 										/>
