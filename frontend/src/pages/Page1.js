@@ -1,5 +1,4 @@
 import React from 'react'
-import { Image } from 'react-bootstrap'
 import bgc from '../data/images/bgc1.png'
 import bgcwebp from '../data/images/bgc1.webp'
 import bgcMobile from '../data/images/bgcVertical.png'

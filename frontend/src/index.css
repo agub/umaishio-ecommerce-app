@@ -72,6 +72,7 @@ main {
 .btn {
   font-weight: lighter;
   letter-spacing: normal;
+  border-radius: 10px;
 }
 
 .borderRadius__g {
@@ -586,6 +587,7 @@ main {
 
 .page2-card-logo {
   width: 50px;
+  height: 50px;
 }
 
 /* .page2-card-text{

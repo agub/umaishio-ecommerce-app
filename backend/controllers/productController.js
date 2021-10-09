@@ -108,7 +108,6 @@ const createProductReview = asyncHandler(async (req, res) => {
 		}
 
 		const isPurchased = await Order.find({ user: req.user._id })
-		console.log(isPurchased)
 		if (isPurchased) {
 			res.status(400)
 			throw new Error('購入後レビューが投稿可能です')

@@ -542,7 +542,8 @@ const OrderScreen = ({ match, history, location }) => {
 												.shipperBuilding}
 										<br />
 										{order.shippingAddress.shipperFullName}(
-										{order.shippingAddress.shipperFurigana})
+										{order.shippingAddress.shipperFurigana}
+										)
 										<br />
 										{order.shippingAddress
 											.shipperPhoneNumber && (
@@ -621,7 +622,8 @@ const OrderScreen = ({ match, history, location }) => {
 													? '発送手続き完了'
 													: '未発送'}
 												<br />
-												配送方法:　{order.shippingType}
+												配送方法:　
+												{order.shippingType}
 												<br />
 												お届け予定日:{' '}
 												{order.isDelivered &&

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Image, Button } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import x_logo from '../data/images/x_logo.png'
 import x_logowebp from '../data/images/x_logo.webp'

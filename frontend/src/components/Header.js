@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navbar, Nav, Container, NavDropdown, Image } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
@@ -7,7 +7,7 @@ import logo from '../data/images/logo.png'
 
 const Header = () => {
 	const dispatch = useDispatch()
-	const [show, setShow] = useState(false)
+
 	const cart = useSelector((state) => state.cart)
 	const { cartItems } = cart
 
@@ -105,7 +105,10 @@ const Header = () => {
 								</LinkContainer>
 							)}
 							{userInfo && userInfo.isAdmin && (
-								<NavDropdown title='管理者' id='adminmenu'>
+								<NavDropdown
+									title='管理者メニュー'
+									id='adminmenu'
+								>
 									<LinkContainer to='/admin/userlist'>
 										<NavDropdown.Item>
 											ユーザー
