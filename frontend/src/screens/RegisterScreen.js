@@ -50,7 +50,10 @@ const RegisterScreen = ({ location, history }) => {
 				}}
 				className='bgi-register__g'
 			>
-				<Meta />
+				<Meta
+					title='旨い塩オンラインショップ　新規登録ページ'
+					description='旨い塩オンラインショップへようこそ'
+				/>
 				<ModalContainer>
 					<h1 className='text-center'>新規会員の登録</h1>
 					{message && <Message variant='danger'>{message}</Message>}

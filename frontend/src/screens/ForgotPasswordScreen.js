@@ -47,7 +47,10 @@ const ForgotPasswordScreen = ({ location, history }) => {
 			}}
 			className='bgi-register__g'
 		>
-			<Meta />
+			<Meta
+				title='旨い塩オンラインショップ　パスワードリセット'
+				description='旨い塩オンラインショップへようこそ'
+			/>
 			<ModalContainer>
 				{/* <h1>ゲスト</h1> */}
 				{success && (

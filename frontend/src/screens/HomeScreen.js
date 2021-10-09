@@ -35,7 +35,10 @@ const HomeScreen = () => {
 
 	return (
 		<>
-			<Meta />
+			<Meta
+				title='旨い塩オンラインショップ　ホーム'
+				description='旨い塩オンラインショップへようこそ'
+			/>
 			{loading ? (
 				<Loader />
 			) : error ? (

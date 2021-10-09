@@ -6,7 +6,10 @@ const RulesScreen = () => {
 	return (
 		// <div className='item-responsive-wrap__g order-left-wrap'>
 		<div style={{ textTransform: 'none', letterSpacing: '3px' }}>
-			<Meta />
+			<Meta
+				title='旨い塩オンラインショップ　特定商取引法に基づく表記'
+				description='旨い塩オンラインショップへようこそ'
+			/>
 			<h1>特定商取引法に基づく表記</h1>
 			<br />
 			<p>【販売業者】株式会社トビラ</p>

@@ -92,7 +92,10 @@ const LoginScreen = ({ location, history }) => {
 			}}
 			className='bgi-register__g'
 		>
-			<Meta />
+			<Meta
+				title='旨い塩オンラインショップ　ログインページ'
+				description='旨い塩オンラインショップへようこそ'
+			/>
 			<ModalContainer>
 				<h1 className='text-center'>ログイン</h1>
 

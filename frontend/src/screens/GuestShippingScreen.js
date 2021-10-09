@@ -263,7 +263,10 @@ const GuestShippingScreen = ({ history }) => {
 	return (
 		<>
 			<Form onSubmit={submitHandler}>
-				<Meta />
+				<Meta
+					title='旨い塩オンラインショップ　ゲスト専用ページ'
+					description='旨い塩オンラインショップへようこそ'
+				/>
 				<Row>
 					<CheckoutSteps number={0} />
 					{registerError && (

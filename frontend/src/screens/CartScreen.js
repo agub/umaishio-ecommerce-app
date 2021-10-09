@@ -48,7 +48,10 @@ const CartScreen = ({ match, location, history }) => {
 
 	return (
 		<Row>
-			<Meta />
+			<Meta
+				title='旨い塩オンラインショップ　買い物カゴ'
+				description='旨い塩オンラインショップへようこそ'
+			/>
 			<h1>ショッピングカート</h1>
 			<Col lg={8} md={12}>
 				{cartItems.length === 0 ? (
