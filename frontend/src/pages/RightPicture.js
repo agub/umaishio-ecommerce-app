@@ -1,9 +1,10 @@
 import React from 'react'
 import { Card, Image } from 'react-bootstrap'
 import x_logo from '../data/images/x_logo.png'
+import x_logowebp from '../data/images/x_logo.webp'
 
 import useWindowSize from '../hooks/useWindowSize'
-
+import ImgWithFallback from '../components/ImgFallBack'
 const RightPicture = ({ title, content, imageXl, imageMobile }) => {
 	const size = useWindowSize()
 	let screenSize = 767
@@ -12,9 +13,6 @@ const RightPicture = ({ title, content, imageXl, imageMobile }) => {
 			{/* {size.width > 767 ? ( */}
 
 			<Image
-				// src={imageXl}
-				// alt='imageXl'
-				// className='page2-image'
 				src={size.width > screenSize ? imageXl : imageMobile}
 				alt={
 					size.width > screenSize
@@ -28,13 +26,6 @@ const RightPicture = ({ title, content, imageXl, imageMobile }) => {
 				}
 			/>
 
-			{/* ) : (
-				<Image
-					src={imageMobile}
-					alt='imageMobile'
-					className='page2-image-mobile'
-				/>
-			)} */}
 			<div data-aos='zoom-in-right'>
 				<Card
 					className={
@@ -51,10 +42,16 @@ const RightPicture = ({ title, content, imageXl, imageMobile }) => {
 						}
 					>
 						<Card.Title as='h2' className='page2-card-title'>
-							<Card.Img
+							{/* <Card.Img
 								src={x_logo}
 								alt='旨い塩小ロゴ'
 								variant='top'
+								className='page2-card-logo'
+							/> */}
+							<ImgWithFallback
+								webp={x_logowebp}
+								fallback={x_logo}
+								alt='旨い塩シリーズロゴ'
 								className='page2-card-logo'
 							/>
 							&nbsp;{title}
