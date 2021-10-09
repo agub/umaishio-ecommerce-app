@@ -70,7 +70,7 @@ const LandingScreen = () => {
 					昆布は酸性に傾きがちな現代の食生活の中で、アルカリ性食品の中で群を抜いているので、健康体への基本になります。
 					海藻特有の水溶性食物繊維の『フコダイン』『アルギン酸』は糖質や脂肪の吸収を押さえ、コレステロール値の上昇を押さえてくれると言われており、また『フコダイン』の腸から免疫力を高める作用も注目されています。旨い塩の大事な旨味と共に、栄養も目を見張るものがあります。'
 				/>
-				<ContactScreen />
+
 				<LinkContainer
 					exact
 					to={getCartCount() === 0 ? '/shop' : '/cart'}
@@ -90,6 +90,7 @@ const LandingScreen = () => {
 						</span>
 					</button>
 				</LinkContainer>
+				<ContactScreen />
 			</Container>
 		</div>
 	)

@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 const ModalContainer = ({ children }) => {
 	return (
 		<Container style={{ 'position': 'relative' }}>
-			<Row className='login-container'>
+			<Row className='login-container' style={{ margin: '0 auto' }}>
 				<Col sm={12} md={8} lg={8} xl={8}>
 					{children}
 				</Col>

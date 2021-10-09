@@ -10,11 +10,12 @@
 
 .login-container{
   @include shadowRounded;
-  @include customFlex();
+  @include customFlex($justify: center);
+  margin: 0 auto;
   background-color: $main-background-color;
   max-width: 700px;
   height: 100%;
-  margin: 0 auto;
+  
   padding: 40px 40px;
   @include mq(sm) { // 引数を個別に指定
     padding: 20px 0px;
