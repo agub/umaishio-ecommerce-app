@@ -35,6 +35,10 @@
     background: $main-background-color;
     outline: none;
   }
+  @include mq(xs) {
+    font-size: 10px;
+    
+  }
 }
 .login-forgot-button{
   // font-size: 0.3rem;

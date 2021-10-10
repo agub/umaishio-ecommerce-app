@@ -55,9 +55,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-right: 10px;
   @include mq(md) { // 引数を個別に指定
    text-align: end;
-   padding-right: 10px;
+   justify-content: flex-end;
+   padding-right: 0px;
   }
 }
 

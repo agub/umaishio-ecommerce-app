@@ -19,7 +19,10 @@
 .shipping-form-container{
   @include shadowRounded;
   padding: 40px 40px;
+  @include mq(xs) { // 引数を個別に指定
+    padding: 40px 10px;
 
+  }
   background-color: $main-background-color;
   // @include mq(md) { // 引数を個別に指定
   // }

@@ -65,7 +65,7 @@ const CartScreen = ({ match, location, history }) => {
 					<div>
 						{cartItems.map((item) => (
 							<div
-								className='item-responsive-wrap__g mb-3'
+								className='car-item-responsive-wrap__g mb-3'
 								key={item.product}
 							>
 								<Row className='cart-row'>
@@ -123,6 +123,7 @@ const CartScreen = ({ match, location, history }) => {
 									</Col> */}
 										<Col
 											md={2}
+											// md={12}
 											xs={12}
 											// sm={10}
 											// xs={9}

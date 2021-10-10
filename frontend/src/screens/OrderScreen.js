@@ -4,7 +4,8 @@ import { Form, Button, Col, Image, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import cartType from '../data/images/available_cards.png'
+// import cartType from '../data/images/available_cards.png'
+import cartType from '../data/images/cartype-2.png'
 import {
 	getOrderDetails,
 	payOnStirpe,
@@ -896,19 +897,17 @@ const OrderScreen = ({ match, history, location }) => {
 								!bankTransferState ? (
 									<>
 										<div className='mt-3'>
-											<div className='d-flex justify-content-between'>
-												<span>
-													【クレジットカード決済】
-												</span>
-												<span>
-													<Image
-														src={cartType}
-														alt='cartType'
-														fluid
-														width={70}
-													/>
-												</span>
-											</div>
+											<div>【クレジットカード決済】</div>
+										</div>
+										<div className='d-flex justify-content-end'>
+											<span>
+												<Image
+													src={cartType}
+													alt='cartType'
+													fluid
+													width={120}
+												/>
+											</span>
 										</div>
 										<Form.Group
 											controlId='address'
@@ -952,6 +951,7 @@ const OrderScreen = ({ match, history, location }) => {
 											}}
 										/>
 										{/* </div> */}
+
 										<div className='mb-2 modify-btn-wrap'>
 											<button
 												className='modify-btn'
@@ -963,6 +963,7 @@ const OrderScreen = ({ match, history, location }) => {
 												</span>
 											</button>
 										</div>
+
 										<CvcModal
 											show={show}
 											handleClose={handleClose}

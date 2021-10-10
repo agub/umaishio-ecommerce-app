@@ -252,9 +252,9 @@ const ProductScreen = ({ match, history }) => {
 													justifyContent: 'flex-end',
 												}}
 											>
-												<Button
+												<button
 													onClick={addToCartHandler}
-													className='product-page-button'
+													className='product-page-button product-btn-add-mobile'
 													type='button'
 													disabled={
 														product.countInStock ===
@@ -275,7 +275,7 @@ const ProductScreen = ({ match, history }) => {
 															<i className='fas fa-plus'></i>
 														</span>
 													</div>
-												</Button>
+												</button>
 											</Col>
 										</div>
 									</div>

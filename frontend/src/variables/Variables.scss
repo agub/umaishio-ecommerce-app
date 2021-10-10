@@ -6,12 +6,13 @@ $size: 300px;
 $solidColor: #E71F7F;
 
 $breakpoints: (
+  'xs': 'screen and (max-width: 370px)',
   'sm': 'screen and (max-width: 478px)',
-  'md': 'screen and (max-width: 768px)',
+  'md': 'screen and (max-width: 767px)',
   'lg': 'screen and (max-width: 1000px)',
   'xl': 'screen and (max-width: 1200px)',
   'min-sm': 'screen and (min-width: 478px)',
-  'min-md': 'screen and (min-width: 768px)',
+  'min-md': 'screen and (min-width: 767px)',
   'min-lg': 'screen and (min-width: 1000px)',
   'min-xl': 'screen and (min-width: 1200px)',
 ) !default;

@@ -16,7 +16,7 @@ const AddressHistory = ({
 			{/* <Modal.Body> */}
 			<div
 				className='item-modal-wrap__g'
-				style={{ padding: '50px 50px' }}
+				// style={{ padding: '50px 50px' }}
 			>
 				<h1>
 					<i className='fas fa-home'>&nbsp;</i>過去のお届け先
@@ -68,7 +68,7 @@ const AddressHistory = ({
 						handleClose()
 					}}
 				>
-					この住所を使用または修正する
+					住所を使用または修正する
 				</Button>
 
 				<Button
