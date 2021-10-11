@@ -46,10 +46,6 @@ const ContactScreen = () => {
 	return (
 		<>
 			<ModalContainer>
-				<Meta
-					title='旨い塩オンラインショップ　お問い合わせ'
-					description='旨い塩オンラインショップへようこそ'
-				/>
 				<h1 className='text-center'>お問い合わせ</h1>
 				<Form onSubmit={submitHandler}>
 					{responseMsg && (
