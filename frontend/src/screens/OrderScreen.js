@@ -328,6 +328,8 @@ const OrderScreen = ({ match, history, location }) => {
 		return result
 	}
 
+	// console.log(`${new Date().getMonth() + 1}月${new Date().getDate()}日`)
+
 	return loading || orderShippingFeeLoading ? (
 		<>
 			<Loader />
@@ -979,7 +981,7 @@ const OrderScreen = ({ match, history, location }) => {
 										<br />
 										口座名: 株式会社トビラ
 										<br />
-										口座番号: 3869283
+										口座番号: 普通 3869283
 										<br />
 										{order &&
 										(order.isPaid || order.isBankTransfer)

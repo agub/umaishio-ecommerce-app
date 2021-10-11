@@ -57,7 +57,7 @@ const FilteredLists = ({ orders, title }) => {
 						.filter((o) => o.isBankTransfer && !o.isDelivered)
 						.map((order) => (
 							<tr key={order._id}>
-								<td>{order._id}</td>
+								<td>{order._id.slice(-10)}</td>
 								<td>
 									{order.user &&
 										order.shippingAddress.fullName}
@@ -111,7 +111,7 @@ const FilteredLists = ({ orders, title }) => {
 						.filter((o) => o.isPaid && !o.isDelivered)
 						.map((order) => (
 							<tr key={order._id}>
-								<td>{order._id}</td>
+								<td>{order._id.slice(-10)}</td>
 								<td>
 									{order.user &&
 										order.shippingAddress.fullName}
@@ -165,7 +165,7 @@ const FilteredLists = ({ orders, title }) => {
 						.filter((o) => o.isPaid && o.isDelivered)
 						.map((order) => (
 							<tr key={order._id}>
-								<td>{order._id}</td>
+								<td>{order._id.slice(-10)}</td>
 								<td>
 									{order.user &&
 										order.shippingAddress.fullName}

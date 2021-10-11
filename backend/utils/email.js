@@ -212,7 +212,7 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 	} = mailInfo
 
 	let orders = orderInfo.map((order) => {
-		return `<span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
+		return `<br/><br/><span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
 	})
 	let isGuestContext = () => {
 		if (!isGuest) {
@@ -248,7 +248,9 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 								<br/>
 								ID：${orderId.slice(-10)}
 								<br/>
+								注文日：${new Date().getMonth() + 1}月${new Date().getDate()}日
 								${orders}
+								<br/>
 								<br/>
 								配送料：${shippingFee.toLocaleString()}円　(${shippingType})
 								<br/>
@@ -267,7 +269,7 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 								<br/>
 								口座名: 株式会社トビラ
 								<br/>
-								口座番号: 3869283
+								口座番号: 普通 3869283
 								<br/>
 								振込額: ¥${amount.toLocaleString()}
 								<br/>
@@ -336,6 +338,8 @@ const sendIdShippingStartedEmail = asyncHandler(async (mailInfo) => {
 								【商品内容】
 								<br/>
 								ID：${orderId.slice(-10)}
+								<br/>
+								注文日：${new Date().getMonth() + 1}月${new Date().getDate()}日
 								<br/>
 								${orders}
 								<br/>

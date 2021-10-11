@@ -389,7 +389,10 @@ const ShippingScreen = ({ history }) => {
 					<Col lg={4} md={12}>
 						<div className='shipper-wrap__g cart-price-wrap'>
 							{cartItems.map((item) => (
-								<EditableCartItems item={item} key={item} />
+								<EditableCartItems
+									item={item}
+									key={item.product}
+								/>
 							))}
 							<p className='underline__g'></p>
 							<p className='d-flex justify-content-between'>
@@ -477,7 +480,7 @@ const ShippingScreen = ({ history }) => {
 				{/* <div> */}
 				<div className='item-modal-wrap__g'>
 					{cartItems.map((item) => (
-						<EditableCartItems item={item} key={item} />
+						<EditableCartItems item={item} key={item.product} />
 					))}
 					<p className='underline__g'></p>
 					<p className='d-flex justify-content-between'>
