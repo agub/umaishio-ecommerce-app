@@ -253,7 +253,7 @@ const CartScreen = ({ match, location, history }) => {
 											</button>
 											小計:
 											{/* <span className='cart-price'> */}
-											¥{item.price}
+											¥{item.price.toLocaleString()}
 											{/* </span> */}
 										</Col>
 										{/* </Row> */}
@@ -280,7 +280,7 @@ const CartScreen = ({ match, location, history }) => {
 									(acc, item) => acc + item.qty * item.price,
 									0
 								)
-								.toFixed(0)}
+								.toLocaleString()}
 						</span>
 					</p>
 					<p className='d-flex justify-content-between'>
@@ -297,7 +297,7 @@ const CartScreen = ({ match, location, history }) => {
 									(acc, item) => acc + item.qty * item.price,
 									0
 								)
-								.toFixed(0)}
+								.toLocaleString()}
 						</span>
 					</p>
 

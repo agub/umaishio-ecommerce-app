@@ -126,6 +126,7 @@ const sendResetEmail = asyncHandler(async (email, token) => {
 
 const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 	const {
+		orderedPersonName,
 		isGuest,
 		email,
 		orderId,
@@ -136,7 +137,7 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 		shippingType,
 	} = mailInfo
 	let orders = orderInfo.map((order) => {
-		return `<span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
+		return `<br/><br/><span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
 	})
 
 	let isGuestContext = () => {
@@ -162,7 +163,7 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 		recipients: [email],
 		subject: '旨い塩オンラインショップ　注文内容',
 		// message: `<p>${name}様, 旨い塩オンラインショップをご利用いただきありがとうございます。<br/>ご注文いただいた商品を営業日３〜５日中に発送準備いたします。注文内容の確認は<a href="${process.env.API_URI}/order/${orderId}">こちらから</a>。また配送手続きが完了したら配送状況やトラッキングナンバーをお送りいたします。</p>`,
-		message: `<p>${addressInfo.fullName} 様
+		message: `<p>${orderedPersonName} 様
 		<br/>
 		旨い塩オンラインショップをご利用いただきありがとうございます。
 		<br/>
@@ -181,8 +182,8 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 		【商品詳細】
 		<br/>
 		ID：${orderId.slice(-10)}
-		<br/>
 		${orders}
+		<br/>
 		<br/>
 		配送料：${shippingFee.toLocaleString()}円 (${shippingType})
 		<br/>
@@ -201,6 +202,7 @@ const sendOrderSuccessEmail = asyncHandler(async (mailInfo) => {
 
 const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 	const {
+		orderedPersonName,
 		email,
 		isGuest,
 		orderId,
@@ -227,7 +229,7 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 		from: '旨い塩オンラインショップ　<info@umaishio.com>',
 		recipients: [email],
 		subject: '旨い塩オンラインショップ　銀行振り込み',
-		message: `<p>${addressInfo.fullName}　様
+		message: `<p>${orderedPersonName}　様
 								<br/>
 								旨い塩オンラインショップをご利用いただきありがとうございます。
 								<br/>
@@ -241,7 +243,6 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 								ご住所：${addressInfo.prefecture}${addressInfo.address}${addressInfo.building}
 								<br/>
 								電話番号：${addressInfo.phoneNumber}
-								<br/>
 								<br/>
 								<br/>
 								【商品内容】
@@ -290,6 +291,7 @@ const sendBankTransferInfo = asyncHandler(async (mailInfo) => {
 
 const sendIdShippingStartedEmail = asyncHandler(async (mailInfo) => {
 	const {
+		orderedPersonName,
 		email,
 		addressInfo,
 		orderId,
@@ -301,7 +303,7 @@ const sendIdShippingStartedEmail = asyncHandler(async (mailInfo) => {
 		isGuest,
 	} = mailInfo
 	let orders = orderInfo.map((order) => {
-		return `<span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
+		return `<br/><br/><span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
 	})
 
 	let isGuestContext = () => {
@@ -317,7 +319,7 @@ const sendIdShippingStartedEmail = asyncHandler(async (mailInfo) => {
 		recipients: [email],
 		subject: '旨い塩オンラインショップ 配送手続きメール',
 		message: `<p>
-								${addressInfo.fullName} 様
+								${orderedPersonName} 様
 								<br/>
 								旨い塩オンラインショップをご利用いただきありがとうございます。 
 								<br/>
@@ -340,8 +342,8 @@ const sendIdShippingStartedEmail = asyncHandler(async (mailInfo) => {
 								ID：${orderId.slice(-10)}
 								<br/>
 								注文日：${new Date().getMonth() + 1}月${new Date().getDate()}日
-								<br/>
 								${orders}
+								<br/>
 								<br/>
 								配送料：${shippingFee.toLocaleString()}円　(${shippingType})
 								<br/>
@@ -367,6 +369,7 @@ const sendIdShippingStartedEmail = asyncHandler(async (mailInfo) => {
 
 const sendShippingStartedEmail = asyncHandler(async (mailInfo) => {
 	const {
+		orderedPersonName,
 		email,
 		addressInfo,
 		orderId,
@@ -377,7 +380,7 @@ const sendShippingStartedEmail = asyncHandler(async (mailInfo) => {
 		isGuest,
 	} = mailInfo
 	let orders = orderInfo.map((order) => {
-		return `<span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
+		return `<br/><br/><span>商品名： ${order.name}</span><br/><span>商品価格（税込）：${order.price}円</span><br/><span>数量：${order.qty}個</span>`
 	})
 
 	let isGuestContext = () => {
@@ -393,7 +396,7 @@ const sendShippingStartedEmail = asyncHandler(async (mailInfo) => {
 		recipients: [email],
 		subject: '旨い塩オンラインショップ 配送手続きメール',
 		message: `<p>
-								${addressInfo.fullName} 様、
+								${orderedPersonName} 様、
 								<br/>
 								旨い塩オンラインショップをご利用いただきありがとうございます。 
 								<br/>
@@ -414,8 +417,8 @@ const sendShippingStartedEmail = asyncHandler(async (mailInfo) => {
 								【商品内容】
 								<br/>
 								ID：${orderId.slice(-10)}
-								<br/>
 								${orders}
+								<br/>
 								<br/>
 								配送料：${shippingFee}円　(${shippingType})
 								<br/>

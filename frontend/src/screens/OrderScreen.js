@@ -253,17 +253,11 @@ const OrderScreen = ({ match, history, location }) => {
 					shippingType: shippingOption.shippingType,
 					metadata: {
 						//fixme add more shipper info
+						orderedPersonName: userInfo.name,
 						shippingFee,
 						email_address: order.user.email,
 						userId: order.user._id,
 						orderId: orderId,
-						// orderInfo: orderInfo(),
-						// addressInfo,
-						// fullName: order.shippingAddress.fullName,
-						// postalCode: order.shippingAddress.postalCode,
-						// prefecture: order.shippingAddress.prefecture,
-						// address: order.shippingAddress.address,
-						// building: order.shippingAddress.building,
 						status: 'COMPLETED',
 						update_time: Date.now(),
 					},
@@ -275,6 +269,7 @@ const OrderScreen = ({ match, history, location }) => {
 			} else {
 				console.log('bankTransfer')
 				const banckTransferInfo = {
+					orderedPersonName: userInfo.name,
 					orderId,
 					amount: totalPriceCal(),
 					orderInfo: orderInfo(),
@@ -305,6 +300,7 @@ const OrderScreen = ({ match, history, location }) => {
 			return order.orderItems
 		}
 		const emailInfo = {
+			orderedPersonName: userInfo.name,
 			email: order.user.email,
 			addressInfo,
 			orderId,
@@ -416,7 +412,8 @@ const OrderScreen = ({ match, history, location }) => {
 															x {item.qty}
 														</span>
 														<span>
-															¥{item.price}
+															¥
+															{item.price.toLocaleString()}
 														</span>
 													</span>
 												</Col>
@@ -431,7 +428,9 @@ const OrderScreen = ({ match, history, location }) => {
 						<div>
 							<p className='d-flex justify-content-between'>
 								<span>商品の小計</span>
-								<span>¥&nbsp;{order.itemsPrice}</span>
+								<span>
+									¥&nbsp;{order.itemsPrice.toLocaleString()}
+								</span>
 							</p>
 						</div>
 						{/* <div>
@@ -445,7 +444,10 @@ const OrderScreen = ({ match, history, location }) => {
 								<span>配送料</span>
 								{order &&
 								(order.isPaid || order.isBankTransfer) ? (
-									<span>¥&nbsp;{order.shippingPrice}</span>
+									<span>
+										¥&nbsp;
+										{order.shippingPrice.toLocaleString()}
+									</span>
 								) : (
 									<span>
 										¥&nbsp;
@@ -461,9 +463,15 @@ const OrderScreen = ({ match, history, location }) => {
 								<span>税込合計</span>
 								{order &&
 								(order.isPaid || order.isBankTransfer) ? (
-									<span>¥&nbsp;{order.totalPrice}</span>
+									<span>
+										¥&nbsp;
+										{order.totalPrice.toLocaleString()}
+									</span>
 								) : (
-									<span>¥&nbsp;{totalPriceCal()}</span>
+									<span>
+										¥&nbsp;
+										{totalPriceCal().toLocaleString()}
+									</span>
 								)}
 							</p>
 						</div>
@@ -986,7 +994,7 @@ const OrderScreen = ({ match, history, location }) => {
 										{order &&
 										(order.isPaid || order.isBankTransfer)
 											? `振込額: ¥${order.totalPrice}`
-											: `振込額: ¥${totalPriceCal()}`}
+											: `振込額: ¥${totalPriceCal().toLocaleString()}`}
 										<br />
 										<br />
 										*お振込手数料は恐れ入りますがお客様にご負担いただいております。

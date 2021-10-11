@@ -24,10 +24,17 @@ const Product = ({ product }) => {
 						/>
 					</Card.Text>
 					<Card.Text as='div'>
-						<h3 style={{ fontSize: 'larger', marginTop: '1rem' }}>
-							¥&nbsp;{product.price}{' '}
-							<span className='tax-include-sm'>税込</span>
-						</h3>
+						{product.price && (
+							<h3
+								style={{
+									fontSize: 'larger',
+									marginTop: '1rem',
+								}}
+							>
+								¥&nbsp;{product.price.toLocaleString()}{' '}
+								<span className='tax-include-sm'>税込</span>
+							</h3>
+						)}
 					</Card.Text>
 				</Card.Body>
 			</Card>

@@ -200,7 +200,7 @@ const ShippingScreen = ({ history }) => {
 	//PlaceOrderScreen
 
 	const addDecimals = (num) => {
-		return (Math.round(num * 100) / 100).toFixed(0)
+		return Math.round(num * 100) / 100
 	}
 
 	cart.itemsPrice = addDecimals(
@@ -208,9 +208,9 @@ const ShippingScreen = ({ history }) => {
 	)
 	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
 	// cart.taxPrice = addDecimals(Number((0.08 * cart.itemsPrice).toFixed(0)))
-	cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice))
-		// +Number(cart.taxPrice)
-		.toFixed(0)
+	cart.totalPrice = Number(cart.itemsPrice) + Number(cart.shippingPrice)
+	// +Number(cart.taxPrice)
+	// .toFixed(0)
 
 	const orderCreate = useSelector((state) => state.orderCreate)
 	const { order, success, error, loading: loadingOrder } = orderCreate
@@ -399,7 +399,7 @@ const ShippingScreen = ({ history }) => {
 								<span>商品合計:</span>
 								<span>
 									¥&nbsp;
-									{cart.itemsPrice}
+									{cart.itemsPrice.toLocaleString()}
 								</span>
 							</p>
 							<p className='d-flex justify-content-between'>
@@ -413,7 +413,9 @@ const ShippingScreen = ({ history }) => {
 							<p className='underline__g'></p>
 							<p className='d-flex justify-content-between'>
 								<span>合計:</span>
-								<span>¥&nbsp;{cart.totalPrice}</span>
+								<span>
+									¥&nbsp;{cart.totalPrice.toLocaleString()}
+								</span>
 							</p>
 							{/* fix this to 0 for yen */}
 						</div>
@@ -487,7 +489,7 @@ const ShippingScreen = ({ history }) => {
 						<span>商品合計:</span>
 						<span>
 							¥&nbsp;
-							{cart.itemsPrice}
+							{cart.itemsPrice.toLocaleString()}
 						</span>
 					</p>
 					<p className='d-flex justify-content-between'>
@@ -497,7 +499,7 @@ const ShippingScreen = ({ history }) => {
 					<p className='underline__g'></p>
 					<p className='d-flex justify-content-between'>
 						<span>合計:</span>
-						<span>¥&nbsp;{cart.totalPrice}</span>
+						<span>¥&nbsp;{cart.totalPrice.toLocaleString()}</span>
 					</p>
 
 					<Button

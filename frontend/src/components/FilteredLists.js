@@ -5,16 +5,21 @@ const FilteredLists = ({ orders, title }) => {
 		return (
 			<>
 				{title === 'all' &&
+					Object.keys(orders).length !== 0 &&
+					orders &&
 					orders.map((order) => (
 						<tr key={order._id}>
 							<td>{order._id.slice(-10)}</td>
 							<td>
 								{order.user && order.shippingAddress.fullName}
 							</td>
-							<td>{order.createdAt.substring(0, 10)}</td>
-							<td>¥{order.totalPrice}</td>
 							<td>
-								{order.isPaid ? (
+								{order.createdAt &&
+									order.createdAt.substring(0, 10)}
+							</td>
+							<td>¥{order.totalPrice && order.totalPrice}</td>
+							<td>
+								{order.paidAt ? (
 									order.paidAt.substring(0, 10)
 								) : (
 									<i
@@ -24,7 +29,7 @@ const FilteredLists = ({ orders, title }) => {
 								)}
 							</td>
 							<td>
-								{order.isDelivered ? (
+								{order.deliveredAt ? (
 									order.deliveredAt.substring(0, 10)
 								) : (
 									<i
@@ -53,6 +58,8 @@ const FilteredLists = ({ orders, title }) => {
 						</tr>
 					))}
 				{title === 'bankTransfer' &&
+					Object.keys(orders).length !== 0 &&
+					orders &&
 					orders
 						.filter((o) => o.isBankTransfer && !o.isDelivered)
 						.map((order) => (
@@ -62,10 +69,13 @@ const FilteredLists = ({ orders, title }) => {
 									{order.user &&
 										order.shippingAddress.fullName}
 								</td>
-								<td>{order.createdAt.substring(0, 10)}</td>
-								<td>¥{order.totalPrice}</td>
 								<td>
-									{order.isPaid ? (
+									{order.createdAt &&
+										order.createdAt.substring(0, 10)}
+								</td>
+								<td>¥{order.totalPrice && order.totalPrice}</td>
+								<td>
+									{order.paidAt ? (
 										order.paidAt.substring(0, 10)
 									) : (
 										<i
@@ -75,7 +85,7 @@ const FilteredLists = ({ orders, title }) => {
 									)}
 								</td>
 								<td>
-									{order.isDelivered ? (
+									{order.deliveredAt ? (
 										order.deliveredAt.substring(0, 10)
 									) : (
 										<i
@@ -107,6 +117,8 @@ const FilteredLists = ({ orders, title }) => {
 							</tr>
 						))}
 				{title === 'paid' &&
+					Object.keys(orders).length !== 0 &&
+					orders &&
 					orders
 						.filter((o) => o.isPaid && !o.isDelivered)
 						.map((order) => (
@@ -116,10 +128,13 @@ const FilteredLists = ({ orders, title }) => {
 									{order.user &&
 										order.shippingAddress.fullName}
 								</td>
-								<td>{order.createdAt.substring(0, 10)}</td>
-								<td>¥{order.totalPrice}</td>
 								<td>
-									{order.isPaid ? (
+									{order.createdAt &&
+										order.createdAt.substring(0, 10)}
+								</td>
+								<td>¥{order.totalPrice && order.totalPrice}</td>
+								<td>
+									{order.paidAt ? (
 										order.paidAt.substring(0, 10)
 									) : (
 										<i
@@ -129,7 +144,7 @@ const FilteredLists = ({ orders, title }) => {
 									)}
 								</td>
 								<td>
-									{order.isDelivered ? (
+									{order.deliveredAt ? (
 										order.deliveredAt.substring(0, 10)
 									) : (
 										<i
@@ -161,6 +176,8 @@ const FilteredLists = ({ orders, title }) => {
 							</tr>
 						))}
 				{title === 'done' &&
+					Object.keys(orders).length !== 0 &&
+					orders &&
 					orders
 						.filter((o) => o.isPaid && o.isDelivered)
 						.map((order) => (
@@ -170,10 +187,13 @@ const FilteredLists = ({ orders, title }) => {
 									{order.user &&
 										order.shippingAddress.fullName}
 								</td>
-								<td>{order.createdAt.substring(0, 10)}</td>
-								<td>¥{order.totalPrice}</td>
 								<td>
-									{order.isPaid ? (
+									{order.createdAt &&
+										order.createdAt.substring(0, 10)}
+								</td>
+								<td>¥{order.totalPrice && order.totalPrice}</td>
+								<td>
+									{order.paidAt ? (
 										order.paidAt.substring(0, 10)
 									) : (
 										<i
@@ -183,7 +203,7 @@ const FilteredLists = ({ orders, title }) => {
 									)}
 								</td>
 								<td>
-									{order.isDelivered ? (
+									{order.deliveredAt ? (
 										order.deliveredAt.substring(0, 10)
 									) : (
 										<i

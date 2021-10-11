@@ -112,6 +112,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
 	const {
+		orderedPersonName,
 		email,
 		addressInfo,
 		orderId,
@@ -135,6 +136,7 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 			order.trackingId = trackingId
 			const updatedOrder = await order.save()
 			const mailInfo = {
+				orderedPersonName,
 				email,
 				addressInfo,
 				orderId,
@@ -152,9 +154,11 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 		} else {
 			const updatedOrder = await order.save()
 			const mailInfo = {
+				orderedPersonName,
 				email,
 				addressInfo,
 				trackingId,
+				orderId,
 				shippingType,
 				orderInfo,
 				amount,
@@ -224,6 +228,7 @@ const stripeApi = asyncHandler(async (req, res) => {
 		}
 
 		const mailInfo = {
+			orderedPersonName: metadata.orderedPersonName,
 			email: metadata.email_address,
 			orderId: metadata.orderId,
 			isGuest,
@@ -258,6 +263,7 @@ const stripeApi = asyncHandler(async (req, res) => {
 
 const bankTransferOrder = asyncHandler(async (req, res) => {
 	const {
+		orderedPersonName,
 		email,
 		orderInfo,
 		shippingFee,
@@ -280,6 +286,7 @@ const bankTransferOrder = asyncHandler(async (req, res) => {
 		}
 
 		const mailInfo = {
+			orderedPersonName,
 			email,
 			isGuest,
 			orderId,
