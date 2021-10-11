@@ -16,6 +16,8 @@ const ProfileScreen = ({ location, history }) => {
 	const [message, setMessage] = useState(null)
 
 	const [modify, setModify] = useState(true)
+	const [pwModify, setPwModify] = useState(false)
+	const [nameModify, setNameModify] = useState(false)
 
 	const dispatch = useDispatch()
 	const userDetails = useSelector((state) => state.userDetails)
@@ -42,7 +44,10 @@ const ProfileScreen = ({ location, history }) => {
 				setEmail(user.email)
 			}
 		}
-	}, [history, userInfo, user, dispatch])
+		if (success) {
+			dispatch(getUserDetails('profile'))
+		}
+	}, [history, userInfo, user, dispatch, success])
 
 	const reLoad = () => {
 		if (userInfo) {
@@ -54,23 +59,48 @@ const ProfileScreen = ({ location, history }) => {
 		e.preventDefault()
 		if (password !== confirmPassword) {
 			setMessage('パスワードが一致しません')
-		} else {
+			return
+		}
+		if (pwModify) {
 			dispatch(
 				updateUserProfile({
 					id: user._id,
-					name,
-					email,
 					password,
 				})
 			)
 			setPassword('')
 			setConfirmPassword('')
 		}
+		if (nameModify) {
+			if (name === '') {
+				setMessage('パスワードが一致しません')
+				return
+			}
+			dispatch(
+				updateUserProfile({
+					id: user._id,
+					name,
+				})
+			)
+			setPassword('')
+			setConfirmPassword('')
+		}
+
+		// dispatch(
+		// 	updateUserProfile({
+		// 		id: user._id,
+		// 		name,
+		// 		email,
+		// 		password,
+		// 	})
+		// )
+		// setPassword('')
+		// setConfirmPassword('')
 	}
 
 	return (
 		<Row>
-			<Col md={3} className='mb-4'>
+			<Col lg={3} className='mb-4'>
 				<h2>プロフィール</h2>
 				{message && <Message variant='danger'>{message}</Message>}
 				{error && <Message variant='danger'>{error}</Message>}
@@ -84,7 +114,7 @@ const ProfileScreen = ({ location, history }) => {
 									<Row>
 										<Col md={12}>名前:</Col>
 										<Col>
-											<p>{name}</p>
+											<p>{user.name}</p>
 										</Col>
 									</Row>
 								</ListGroup.Item>
@@ -101,86 +131,191 @@ const ProfileScreen = ({ location, history }) => {
 							</ListGroup>
 						</Card>
 						<Button
-							onClick={() => setModify(!modify)}
-							variant='danger'
+							onClick={() => {
+								setModify(!modify)
+								setNameModify(true)
+							}}
 							className='w-100'
 						>
-							ユーザー情報変更
+							氏名の変更
+						</Button>
+						<Button
+							onClick={() => {
+								setModify(!modify)
+								setPwModify(true)
+							}}
+							className='w-100 mt-3'
+							style={{ background: 'white', color: 'black' }}
+						>
+							パスワードの変更
 						</Button>
 					</>
 				) : (
-					<Form onSubmit={submitHandler}>
-						<Form.Group controlId='name'>
-							<Form.Label>名前</Form.Label>
-							<Form.Control
-								type='name'
-								placeholder='名前'
-								value={name}
-								onChange={(e) => setName(e.target.value)}
-							></Form.Control>
-						</Form.Group>
-						<Form.Group controlId='email'>
-							<Form.Label>Email</Form.Label>
-							<Form.Control
-								type='email'
-								placeholder='Email'
-								value={email}
-								onChange={(e) => setEmail(e.target.value)}
-							></Form.Control>
-						</Form.Group>
-						<Form.Group controlId='password'>
-							<Form.Label className='mt-2'>パスワード</Form.Label>
-							<Form.Control
-								type='password'
-								placeholder='パスワード'
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-							></Form.Control>
-						</Form.Group>
-						<Form.Group controlId='confirmPassword'>
-							<Form.Label className='mt-2'>
-								確認パスワード
-							</Form.Label>
-							<Form.Control
-								type='password'
-								placeholder='確認パスワード'
-								value={confirmPassword}
-								onChange={(e) =>
-									setConfirmPassword(e.target.value)
-								}
-							></Form.Control>
-						</Form.Group>
-						<Button
-							type='submit'
-							variant='primary'
-							className='mt-3  w-100'
-							disabled={
-								loading || password !== ''
-									? null
-									: email === userInfo.email
-									? name === userInfo.name
-									: null
-							}
-						>
-							変更
-						</Button>
-						<Button
-							variant
-							className='mt-3 w-100'
-							onClick={() => {
-								setModify(!modify)
-								dispatch({
-									type: USER_UPDATE_PROFILE_RESET,
-								})
-							}}
-						>
-							キャンセル
-						</Button>
-					</Form>
+					<>
+						{pwModify && (
+							<>
+								<Form onSubmit={submitHandler}>
+									<Form.Group controlId='password'>
+										<Form.Label className='mt-2'>
+											パスワード
+										</Form.Label>
+										<Form.Control
+											type='password'
+											placeholder='パスワード'
+											value={password}
+											onChange={(e) =>
+												setPassword(e.target.value)
+											}
+										></Form.Control>
+									</Form.Group>
+									<Form.Group controlId='confirmPassword'>
+										<Form.Label className='mt-2'>
+											確認パスワード
+										</Form.Label>
+										<Form.Control
+											type='password'
+											placeholder='確認パスワード'
+											value={confirmPassword}
+											onChange={(e) =>
+												setConfirmPassword(
+													e.target.value
+												)
+											}
+										></Form.Control>
+									</Form.Group>
+									<Button
+										type='submit'
+										variant='primary'
+										className='mt-3  w-100'
+										disabled={loading || password === ''}
+									>
+										変更
+									</Button>
+									<Button
+										variant
+										className='mt-3 w-100'
+										onClick={() => {
+											setModify(!modify)
+											setPwModify(false)
+											dispatch({
+												type: USER_UPDATE_PROFILE_RESET,
+											})
+										}}
+									>
+										戻る
+									</Button>
+								</Form>
+							</>
+						)}
+						{nameModify && (
+							<>
+								<Form onSubmit={submitHandler}>
+									<Form.Group controlId='name'>
+										<Form.Label>名前</Form.Label>
+										<Form.Control
+											type='name'
+											placeholder='名前'
+											value={name}
+											onChange={(e) =>
+												setName(e.target.value)
+											}
+										></Form.Control>
+									</Form.Group>
+									<Button
+										type='submit'
+										variant='primary'
+										className='mt-3  w-100'
+										disabled={loading || name === ''}
+									>
+										変更
+									</Button>
+									<Button
+										variant
+										className='mt-3 w-100'
+										onClick={() => {
+											setModify(!modify)
+											setNameModify(false)
+											dispatch({
+												type: USER_UPDATE_PROFILE_RESET,
+											})
+										}}
+									>
+										戻る
+									</Button>
+								</Form>
+							</>
+						)}
+					</>
 				)}
+				{/* (
+				<Form onSubmit={submitHandler}>
+					<Form.Group controlId='name'>
+						<Form.Label>名前</Form.Label>
+						<Form.Control
+							type='name'
+							placeholder='名前'
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+						></Form.Control>
+					</Form.Group>
+					<Form.Group controlId='email'>
+						<Form.Label>Email</Form.Label>
+						<Form.Control
+							type='email'
+							placeholder='Email'
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						></Form.Control>
+					</Form.Group>
+					<Form.Group controlId='password'>
+						<Form.Label className='mt-2'>パスワード</Form.Label>
+						<Form.Control
+							type='password'
+							placeholder='パスワード'
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+						></Form.Control>
+					</Form.Group>
+					<Form.Group controlId='confirmPassword'>
+						<Form.Label className='mt-2'>確認パスワード</Form.Label>
+						<Form.Control
+							type='password'
+							placeholder='確認パスワード'
+							value={confirmPassword}
+							onChange={(e) => setConfirmPassword(e.target.value)}
+						></Form.Control>
+					</Form.Group>
+					<Button
+						type='submit'
+						variant='primary'
+						className='mt-3  w-100'
+						disabled={
+							loading || password !== ''
+								? null
+								: email === userInfo.email
+								? name === userInfo.name
+								: null
+						}
+					>
+						変更
+					</Button>
+					<Button
+						variant
+						className='mt-3 w-100'
+						onClick={() => {
+							setModify(!modify)
+							dispatch({
+								type: USER_UPDATE_PROFILE_RESET,
+							})
+						}}
+					>
+						キャンセル
+					</Button>
+				</Form>
+				) */}
 			</Col>
 
-			<Col md={9}>
+			<Col lg={9}>
 				<div
 					style={{
 						display: 'flex',
