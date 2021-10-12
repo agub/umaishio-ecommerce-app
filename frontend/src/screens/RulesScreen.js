@@ -1,5 +1,5 @@
 import React from 'react'
-import cartType from '../data/images/available_cards.png'
+import cartType from '../data/images/card-types.png'
 import { Image } from 'react-bootstrap'
 import Meta from '../components/Meta'
 const RulesScreen = () => {
@@ -16,16 +16,7 @@ const RulesScreen = () => {
 			<br />
 			<p>【代表責任者】鈴木健司</p>
 			<br />
-			<p>
-				【所在地】
-				<br />
-				<br />
-				本社
-				<br />
-				〒250-0034
-				<br />
-				神奈川県小田原市板橋380-8
-			</p>
+			<p>【所在地】 〒250-0034 神奈川県小田原市板橋380-8</p>
 			<br />
 			<p>【電話番号】0465(59)0789</p>
 			<br />
@@ -46,17 +37,16 @@ const RulesScreen = () => {
 				ご注文後7日以内といたします。ご注文後７日間ご入金がない場合は、購入の意思がないものとし、注文を自動的にキャンセルとさせていただきます。{' '}
 			</p>
 			<br />
-			<p>
-				【お支払方法】銀行振込、クレジットカード
-				<span>
-					<Image
-						src={cartType}
-						alt='クレジットカード種類'
-						fluid
-						width={70}
-					/>
-				</span>
-			</p>
+			<p>【お支払方法】銀行振込、クレジットカード</p>
+			<span>
+				<Image
+					src={cartType}
+					alt='クレジットカード種類'
+					fluid
+					width={300}
+				/>
+			</span>
+			<br />
 			<br />
 			<p>【銀行振り込み手数料】購入者が負担していただきます。</p>
 			<br />
@@ -66,7 +56,7 @@ const RulesScreen = () => {
 				なお、商品に不良があった場合良品と交換致します。
 			</p>
 			<br />
-			<p>【返品期限】 商品出荷より３日以内に要連絡</p>
+			<p>【返品期限】 商品出荷より３日以内に連絡をお願いたします。</p>
 			<br />
 			<p>【返品送料】 不良品、欠品の場合は弊社負担しています。</p>
 			<br />
@@ -126,7 +116,6 @@ const RulesScreen = () => {
 				<br />
 				3～6個の場合390円
 			</p>
-			<p className='mt-3'>株式会社トビラ</p>
 		</div>
 	)
 }

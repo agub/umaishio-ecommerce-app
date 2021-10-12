@@ -100,7 +100,7 @@ const Header = () => {
 								<LinkContainer to='/login'>
 									<Nav.Link>
 										<i className='fas fa-user'></i>{' '}
-										&nbsp;サインイン
+										&nbsp;ログイン
 									</Nav.Link>
 								</LinkContainer>
 							)}

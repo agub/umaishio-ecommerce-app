@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 // import cartType from '../data/images/available_cards.png'
-import cartType from '../data/images/cartype-2.png'
+import cartType from '../data/images/card-types.png'
 import {
 	getOrderDetails,
 	payOnStirpe,
@@ -915,7 +915,7 @@ const OrderScreen = ({ match, history, location }) => {
 													src={cartType}
 													alt='cartType'
 													fluid
-													width={120}
+													width={250}
 												/>
 											</span>
 										</div>

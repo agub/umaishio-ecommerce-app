@@ -18,7 +18,9 @@ const authUser = asyncHandler(async (req, res) => {
 
 	const user = await User.findOne({ email })
 	if (user.verify) {
-		throw new Error('メールをチェックして')
+		throw new Error(
+			'アカウントを認証してください。info@umaishio.comからのメールを確認ください。'
+		)
 	}
 	let expiryTime = undefined
 	if (!savePassword) {
@@ -50,11 +52,40 @@ const registerUser = asyncHandler(async (req, res) => {
 
 	const userExists = await User.findOne({ email })
 
-	if (userExists) {
+	if (userExists && userExists.isGuest === false) {
 		res.status(400)
 		throw new Error('このメールアドレスは既に使用されています')
 	}
+
 	const emailVerificationToken = crypto.randomBytes(20).toString('hex')
+
+	if (userExists && userExists.isGuest) {
+		const user = await User.findById(userExists._id)
+		if (user) {
+			user.name = name
+			user.password = password
+			user.isGuest = false
+			user.verify = emailVerificationToken
+			const updatedUser = await user.save()
+			sendWelcomeEmail(
+				updatedUser.email,
+				updatedUser.name,
+				updatedUser._id,
+				updatedUser.verify
+			)
+			res.status(201).json({
+				_id: updatedUser._id,
+				name: updatedUser.name,
+				email: updatedUser.email,
+				isAdmin: updatedUser.isAdmin,
+				isGuest: updatedUser.isGuest,
+				shippingAddress: updatedUser.shippingAddress,
+				verify: updatedUser.verify,
+				token: generateToken(updatedUser._id),
+			})
+			return
+		}
+	}
 	const user = await User.create({
 		name,
 		email,
@@ -76,7 +107,7 @@ const registerUser = asyncHandler(async (req, res) => {
 		})
 	} else {
 		res.status(400)
-		throw new Error('Invalid user data')
+		throw new Error('もう一度内容を確認しやり直してください。')
 	}
 })
 
@@ -91,7 +122,7 @@ const verifyEmail = asyncHandler(async (req, res) => {
 		user.verify = undefined
 		await user.save()
 
-		res.send('You may now log in.')
+		res.send('ログインをしてください')
 	} catch (err) {
 		res.status(400)
 		throw new Error('このページは存在しません')
@@ -103,21 +134,16 @@ const verifyEmail = asyncHandler(async (req, res) => {
 // @access        Public
 const registerGuest = asyncHandler(async (req, res) => {
 	const { email } = req.body
-
 	const userExists = await User.findOne({ email })
+	console.log(userExists)
 
-	if (userExists) {
+	if (userExists && userExists.isGuest === false) {
 		res.status(400)
-		throw new Error('このメールアドレスは既に使用されています')
+		throw new Error('このメールアドレスは既に会員登録されております。')
 	}
 
-	const user = await User.create({
-		name: 'ゲスト',
-		isGuest: true,
-		email,
-	})
-
-	if (user) {
+	if (userExists && userExists.isGuest === true) {
+		const user = await User.findById(userExists._id)
 		res.status(201).json({
 			_id: user._id,
 			name: user.name,
@@ -126,9 +152,28 @@ const registerGuest = asyncHandler(async (req, res) => {
 			isGuest: user.isGuest,
 			token: generateToken(user._id),
 		})
+		return
+	}
+
+	if (!userExists) {
+		const user = await User.create({
+			name: 'ゲスト',
+			isGuest: true,
+			email,
+		})
+		if (user) {
+			res.status(201).json({
+				_id: user._id,
+				name: user.name,
+				email: user.email,
+				isAdmin: user.isAdmin,
+				isGuest: user.isGuest,
+				token: generateToken(user._id),
+			})
+		}
 	} else {
 		res.status(400)
-		throw new Error('Invalid user data')
+		throw new Error('もう一度内容を確認しやり直してください。')
 	}
 })
 
@@ -207,7 +252,6 @@ const deleteUser = asyncHandler(async (req, res) => {
 // @description  	GET user by id
 // @route         DELETE /api/users/:id
 // @access        Private/Admin
-
 const getUserById = asyncHandler(async (req, res) => {
 	const user = await User.findById(req.params.id).select('-password')
 	if (user) {
@@ -293,7 +337,7 @@ const addUserShippingInfo = asyncHandler(async (req, res) => {
 		})
 	} else {
 		res.status(404)
-		throw new Error('User not found')
+		throw new Error('ユーザーが見つかりません。もう一度お試しください')
 	}
 })
 
@@ -324,10 +368,12 @@ const resetPassword = asyncHandler(async (req, res) => {
 			resetPasswordExpires: { $gt: Date.now() },
 		})
 		if (!user) {
-			throw new Error('Token is invalid or has expired.')
+			throw new Error(
+				'エラー　認証ができませんでした。もう一度パスワードリセットをしなおしてください。'
+			)
 		}
 		if (!req.body.password) {
-			throw new Error('No new password provided.')
+			throw new Error('パスワードを入力してください。')
 		}
 		user.password = req.body.password
 		user.resetPasswordToken = undefined
