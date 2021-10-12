@@ -11,7 +11,7 @@ import {
 } from '../utils/email.js'
 
 // @description   Auth user & get token
-// @route         POST /api/products
+// @route         POST /api/login
 // @access        Public
 const authUser = asyncHandler(async (req, res) => {
 	const { email, password, savePassword } = req.body
@@ -21,6 +21,10 @@ const authUser = asyncHandler(async (req, res) => {
 		throw new Error(
 			'アカウントを認証してください。info@umaishio.comからのメールを確認ください。'
 		)
+	}
+
+	if (user && user.isGuest === true) {
+		throw new Error('メールアドレス、もしくはパスワードが異なります。')
 	}
 	let expiryTime = undefined
 	if (!savePassword) {
