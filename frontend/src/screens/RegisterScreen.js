@@ -119,10 +119,12 @@ const RegisterScreen = ({ location, history }) => {
 									required
 									placeholder='パスワード'
 									value={password}
+									minLength={6}
 									onChange={(e) =>
 										setPassword(e.target.value)
 									}
 								></Form.Control>
+
 								{showPassword ? (
 									<i
 										onClick={() =>
@@ -142,7 +144,10 @@ const RegisterScreen = ({ location, history }) => {
 								)}
 							</div>
 						</Form.Group>
-						<p className='m-2 shipping-form-example__g'>&nbsp;</p>
+						<p className='m-2 shipping-form-example__g'>
+							*半角英数字で6文字
+						</p>
+						{/* <p className='m-2 shipping-form-example__g'>&nbsp;</p> */}
 						<Form.Group controlId='confirmPassword'>
 							<Form.Label>
 								{' '}
@@ -159,6 +164,7 @@ const RegisterScreen = ({ location, history }) => {
 											: 'password'
 									}
 									required
+									minLength={6}
 									placeholder='確認パスワード'
 									value={confirmPassword}
 									onChange={(e) =>
@@ -187,6 +193,9 @@ const RegisterScreen = ({ location, history }) => {
 									></i>
 								)}
 							</div>
+							<p className='m-2 shipping-form-example__g'>
+								*半角英数字で6文字
+							</p>
 						</Form.Group>
 						{/* <p className='m-2 shipping-form-example__g'>&nbsp;</p> */}
 
