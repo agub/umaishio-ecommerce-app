@@ -13,11 +13,6 @@ const userSchema = mongoose.Schema(
 			required: true,
 			unique: true,
 		},
-		//googleauth
-		// password: {
-		// 	type: String,
-		// 	required: true,
-		// },
 		password: {
 			type: String,
 			required: false,
@@ -58,11 +53,6 @@ const userSchema = mongoose.Schema(
 			type: String,
 		},
 		//verify
-
-		//googleauth
-		googleId: {
-			type: String,
-		},
 	},
 	{
 		timestamps: true,
