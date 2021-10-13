@@ -13,7 +13,7 @@ const Page1 = () => {
 		<div
 			data-aos='zoom-in'
 			data-aos-duration='3000'
-			data-aos-easing='ease-in-sine'
+			data-aos-easing='ease-in-out-sine'
 		>
 			<div className='page1-box'>
 				{size.width > 767 ? (

@@ -125,7 +125,8 @@ const GuestShippingScreen = ({ history }) => {
 	}
 
 	useEffect(() => {
-		if (registerUserInfo) {
+		// fixme
+		if (registerUserInfo && email !== '') {
 			let postalCode
 			if (postalCode1 !== '' && postalCode2 !== '') {
 				postalCode = postalCode1 + postalCode2
@@ -217,19 +218,15 @@ const GuestShippingScreen = ({ history }) => {
 	// cart.itemsPrice = cart.cartItems.reduce
 
 	const addDecimals = (num) => {
-		return (Math.round(num * 100) / 100).toFixed(0)
+		return Math.round(num * 100) / 100
 	}
 
 	cart.itemsPrice = addDecimals(
 		cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
 	)
-	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 0)
-	cart.taxPrice = addDecimals(Number((0.08 * cart.itemsPrice).toFixed(0)))
-	cart.totalPrice = (
-		Number(cart.itemsPrice) +
-		Number(cart.shippingPrice) +
-		Number(cart.taxPrice)
-	).toFixed(0)
+	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
+
+	cart.totalPrice = Number(cart.itemsPrice) + Number(cart.shippingPrice)
 
 	const orderCreate = useSelector((state) => state.orderCreate)
 	const { order, success, error, loading: loadingOrder } = orderCreate
@@ -424,14 +421,14 @@ const GuestShippingScreen = ({ history }) => {
 				{/* <div> */}
 				<div className='item-modal-wrap__g'>
 					{cartItems.map((item) => (
-						<EditableCartItems item={item} key={item} />
+						<EditableCartItems item={item} key={item.product} />
 					))}
 					<p className='underline__g'></p>
 					<p className='d-flex justify-content-between'>
 						<span>商品合計:</span>
 						<span>
 							¥&nbsp;
-							{cart.itemsPrice}
+							{cart.itemsPrice.toLocaleString()}
 						</span>
 					</p>
 					<p className='d-flex justify-content-between'>
@@ -441,7 +438,7 @@ const GuestShippingScreen = ({ history }) => {
 					<p className='underline__g'></p>
 					<p className='d-flex justify-content-between'>
 						<span>合計:</span>
-						<span>¥&nbsp;{cart.totalPrice}</span>
+						<span>¥&nbsp;{cart.totalPrice.toLocaleString()}</span>
 					</p>
 
 					<Button

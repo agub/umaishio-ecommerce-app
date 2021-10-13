@@ -107,9 +107,6 @@ export const logout = () => async (dispatch, getState) => {
 		userLogin: { userInfo },
 	} = getState()
 
-	if (userInfo.googleId) {
-		await axios.get('/api/auth/logout')
-	}
 	dispatch({ type: USER_LOGOUT })
 	dispatch({ type: USER_DETAILS_RESET })
 	dispatch({ type: ORDER_LIST_MY_RESET })
