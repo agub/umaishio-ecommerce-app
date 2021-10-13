@@ -87,8 +87,8 @@
 
 .product-page-crement-wrap {
   @include customFlex($justify: space-around);
-  border-width: 0.2px;
-  border-color: gray;
+  border-width: 1px;
+  border-color: black;
   border-radius: $button-border-radius;
   padding: 6px 10px;
   max-width: 200px;

@@ -5,6 +5,7 @@ import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import { logout } from '../actions/userActions'
 
 import { register } from '../actions/userActions'
 import Background from '../data/images/bgc_blur.png'
@@ -29,6 +30,7 @@ const RegisterScreen = ({ location, history }) => {
 	useEffect(() => {
 		if (userInfo) {
 			history.push('/checkemail')
+			dispatch(logout())
 		}
 	}, [history, userInfo])
 

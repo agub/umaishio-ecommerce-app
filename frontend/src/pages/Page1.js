@@ -14,18 +14,21 @@ const Page1 = () => {
 			{size.width > 767 ? (
 				<>
 					{/* <Image src={bgc} alt='bgc' className='page1-bgc' /> */}
+
 					<ImgWithFallback
 						webp={bgcwebp}
 						fallback={bgc}
 						alt='旨い塩シリーズ背景'
 						className='page1-bgc'
 					/>
+
 					<ImgWithFallback
 						webp={logo_squarewebp}
 						fallback={logo_square}
 						alt='旨い塩ロゴ'
 						className='page1-logo'
 					/>
+
 					{/* <Image
 						src={logo_square}
 						alt='旨い塩ロゴ'
