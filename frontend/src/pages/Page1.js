@@ -10,57 +10,52 @@ import ImgWithFallback from '../components/ImgFallBack'
 const Page1 = () => {
 	const size = useWindowSize()
 	return (
-		<div className='page1-box'>
-			{size.width > 767 ? (
-				<>
-					{/* <Image src={bgc} alt='bgc' className='page1-bgc' /> */}
+		<div
+			data-aos='zoom-in'
+			data-aos-duration='3000'
+			data-aos-easing='ease-in-sine'
+		>
+			<div className='page1-box'>
+				{size.width > 767 ? (
+					<>
+						<ImgWithFallback
+							webp={bgcwebp}
+							fallback={bgc}
+							alt='旨い塩シリーズ背景'
+							className='page1-bgc'
+						/>
 
-					<ImgWithFallback
-						webp={bgcwebp}
-						fallback={bgc}
-						alt='旨い塩シリーズ背景'
-						className='page1-bgc'
-					/>
+						<ImgWithFallback
+							webp={logo_squarewebp}
+							fallback={logo_square}
+							alt='旨い塩ロゴ'
+							className='page1-logo'
+						/>
+					</>
+				) : (
+					<>
+						<ImgWithFallback
+							webp={bgcMobilewebp}
+							fallback={bgcMobile}
+							alt='旨い塩背景携帯'
+							className='page1-bgc-mobile'
+						/>
+						<ImgWithFallback
+							webp={logo_squarewebp}
+							fallback={logo_square}
+							alt='旨い塩ロゴ携帯'
+							className='page1-logo-mobile'
+						/>
+					</>
+				)}
 
-					<ImgWithFallback
-						webp={logo_squarewebp}
-						fallback={logo_square}
-						alt='旨い塩ロゴ'
-						className='page1-logo'
-					/>
-
-					{/* <Image
-						src={logo_square}
-						alt='旨い塩ロゴ'
-						className='page1-logo'
-					/> */}
-				</>
-			) : (
-				<>
-					{/* <Image
-						src={bgcMobile}
-						alt='旨い塩背景携帯'
-						className='page1-bgc-mobile'
-					/> */}
-					{/* <Image
-						src={logo_square}
-						alt='旨い塩背景'
-						className='page1-logo-mobile'
-					/> */}
-					<ImgWithFallback
-						webp={bgcMobilewebp}
-						fallback={bgcMobile}
-						alt='旨い塩背景携帯'
-						className='page1-bgc-mobile'
-					/>
-					<ImgWithFallback
-						webp={logo_squarewebp}
-						fallback={logo_square}
-						alt='旨い塩ロゴ携帯'
-						className='page1-logo-mobile'
-					/>
-				</>
-			)}
+				{/* <ImgWithFallback
+					webp={bgcwebp}
+					fallback={bgc}
+					alt='旨い塩シリーズ背景'
+					className='page1-bgc'
+				/> */}
+			</div>
 		</div>
 	)
 }
