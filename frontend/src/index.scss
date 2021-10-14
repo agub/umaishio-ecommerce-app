@@ -89,6 +89,8 @@ main {
 .main-bgc {
   background-color: $main-background-color;
   min-height: 100vh;
+
+  //fixme
 } 
 
 .cardElementCss {
@@ -323,15 +325,17 @@ main {
 .page1-box{
     position: relative;
     /* height: 100vh; */
-    min-height: 100vh;
+    // min-height: 100vh;
+    min-height: calc(100vh - 93.3px);
     display: flex;
     /* align-items: center; */
     /* margin: 0 calc(50% - 50vw); */
 }
+
 .page1-bgc {
   position: absolute;
   width: 100%;
-  
+  padding-top: 93px;
   /* height: 100vh; */
   /* padding-top: 850px; */
   top:40%;
@@ -366,7 +370,8 @@ main {
   position: absolute;
   
 
-  width: 80%;
+  // width: 80%;
+  width: 100%;
   /* height: 100vh; */
   /* padding-top: 850px; */
   top:38%;
@@ -386,7 +391,7 @@ main {
   position: absolute;
   width: 40%;
   /* padding-top: 850px; */
-  top: 35%;
+  top: 36%;
   left: 50%;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
@@ -424,6 +429,7 @@ main {
   0% {opacity:0;}
   100% {opacity:1;}
 }
+
 
 /* page1 */
 
@@ -808,6 +814,10 @@ main {
   background-color: $main-background-color;
   border-width: 1px;
   padding: 15px;
+  @include mq(min-md) { // 引数を個別に指定
+      height: 400px;
+  }
+
 }
 
 /* product */
@@ -851,6 +861,66 @@ main {
 }
 
 
+.header-sns-wrap {
+  @include customFlex($justify: space-between);
+  width: 45px;
+  // z-index: 1000;
+}
+.header-sns-logo {
+  color: rgba(0,0,0,.3);
+  font-size: 1rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+.header-sns-logo:hover {
+  color: black;
+}
+
+
+
+
+.header-sns-bottom-wrap {
+  @include customFlex($justify: space-between);
+  // margin-bottom: 60px;
+  margin-bottom: 60px;
+  margin-right: 30px;
+  right: 0;
+  bottom: 0;
+  width: 55px;
+  position: absolute;
+  z-index: 1000;
+  transition: ease-in-out;
+
+  @include mq(xs) { // less than iphone5
+    margin-bottom: 32px;
+  }
+
+  @include mq(min-lg) { // less than iphone5
+    display: none;
+  }
+
+  // display: flex;
+  // flex-direction: column;
+  // align-items: flex-end;
+  // margin-bottom: 90px;
+  // margin-right: 30px;
+  // right: 0;
+  // bottom: 0;
+}
+.header-sns-bottom-logo {
+  // color:black;
+  // color: rgba(0,0,0,.5);
+  color: rgb(231,31,126);
+  font-size: 1.5rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+
+.header-sns-footer-logo {
+  margin-left:5px;
+  color: white;
+  font-size: 1rem;
+  // transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+
 
 // .login-forgot {
 //   text-align: end;
@@ -869,12 +939,10 @@ main {
 
 .cartTo {
   @include customFlex();
-  width: 60px;
-  height: 60px;
   position: fixed;
   margin-bottom: 30px;
-  margin-right: 30px;
-  right: 0;
+  margin-left: 30px;
+  left: 0;
   bottom: 0;
   border-width: 0;
   background-color: $main-background-color;
@@ -1017,31 +1085,9 @@ main {
 }
 
 
-@media only screen and (min-width: 767px) {
-  .customCard {
-    height: 400px;
-  }
+// @media only screen and (min-width: 767px) {
+//   .customCard {
+//     height: 400px;
+//   }
 
-}
-
-@media only screen and (min-width: 767px) and (max-width: 1200px) {
-
-  /* .product-page-section {
-    min-width: 350px;
-  }
-  .form-control-select {
-  
-    width: 290px;
-    padding: 0.75rem 0.2rem;
-  } */
-  /* .form-control-select-checkout {
-  
-    width: 70px;
-    padding: 0.75rem 0.2rem;
-  }
-  */
-/* 
-  .product-page-section:nth-child(3) {
-    margin: 20px 0 0 50%;
-  } */
-}
+// }

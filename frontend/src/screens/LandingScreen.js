@@ -35,11 +35,13 @@ const LandingScreen = () => {
 		mdScreen = null
 	} else {
 		mdScreen = { display: 'none' }
+
+		// mdScreen = { opacity: 0 }
 	}
 
 	return (
 		<div style={{ backgroundColor: '#f5f5f5' }}>
-			<Page1 />
+			<Page1 mdScreen={mdScreen} />
 			<Container>
 				<AboutPage />
 
@@ -91,6 +93,25 @@ const LandingScreen = () => {
 						</span>
 					</button>
 				</LinkContainer>
+
+				{/* <div className='header-sns-bottom-wrap' style={mdScreen}>
+					<div className='header-logo-box'>
+						<a
+							href='https://www.facebook.com/umaishio'
+							target='_blank'
+						>
+							<i className='fab fa-facebook-square header-sns-bottom-logo'></i>
+						</a>
+					</div>
+					<div>
+						<a
+							target='_blank'
+							href='https://www.instagram.com/umaishio/'
+						>
+							<i className='fab fa-instagram header-sns-bottom-logo'></i>
+						</a>
+					</div>
+				</div> */}
 				<ContactScreen />
 			</Container>
 		</div>

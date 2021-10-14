@@ -37,11 +37,45 @@ const Footer = () => {
 						</p>
 					</Link>
 				</div>
+				{/* <Row>
+					<div className='header-sns-footer-wrap'>
+						<div>
+							<a
+								href='https://www.facebook.com/umaishio'
+								target='_blank'
+							>
+								<i className='fab fa-facebook-square header-sns-footer-logo'></i>
+							</a>
+						</div>
+						<div>
+							<a
+								target='_blank'
+								href='https://www.instagram.com/umaishio/'
+							>
+								<i className='fab fa-instagram header-sns-footer-logo'></i>
+							</a>
+						</div>
+					</div>
+				</Row> */}
 				<Row
 					style={{ color: 'white', fontSize: 10 }}
 					className='text-center pb-3'
 				>
-					<Col>株式会社トビラ Copyright &copy; 旨い塩</Col>
+					<Col>
+						株式会社トビラ Copyright &copy; 旨い塩{' '}
+								<a
+									href='https://www.facebook.com/umaishio'
+									target='_blank'
+								>
+									<i className='fab fa-facebook-square header-sns-footer-logo'></i>
+								</a>						
+								<a
+									target='_blank'
+									href='https://www.instagram.com/umaishio/'
+								>
+									<i className='fab fa-instagram header-sns-footer-logo'></i>
+								</a>
+					</Col>
 				</Row>
 			</Container>
 		</footer>

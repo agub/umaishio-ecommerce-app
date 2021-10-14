@@ -126,6 +126,24 @@ const Header = () => {
 									</LinkContainer>
 								</NavDropdown>
 							)}
+							<div className='header-sns-wrap'>
+								<div>
+									<a
+										href='https://www.facebook.com/umaishio'
+										target='_blank'
+									>
+										<i className='fab fa-facebook-square header-sns-logo'></i>
+									</a>
+								</div>
+								<div>
+									<a
+										target='_blank'
+										href='https://www.instagram.com/umaishio/'
+									>
+										<i className='fab fa-instagram header-sns-logo'></i>
+									</a>
+								</div>
+							</div>
 						</Nav>
 					</Navbar.Collapse>
 				</Container>
