@@ -7,7 +7,7 @@ import logo_square from '../data/images/logo_square.png'
 import logo_squarewebp from '../data/images/logo_square.webp'
 import useWindowSize from '../hooks/useWindowSize'
 import ImgWithFallback from '../components/ImgFallBack'
-const Page1 = ({ mdScreen }) => {
+const Page1 = () => {
 	const size = useWindowSize()
 	return (
 		<div
@@ -55,7 +55,7 @@ const Page1 = ({ mdScreen }) => {
 					alt='旨い塩シリーズ背景'
 					className='page1-bgc'
 				/> */}
-				<div className='header-sns-bottom-wrap'>
+				{/* <div className='header-sns-bottom-wrap'>
 					<div className='header-logo-box'>
 						<a
 							href='https://www.facebook.com/umaishio'
@@ -72,7 +72,7 @@ const Page1 = ({ mdScreen }) => {
 							<i className='fab fa-instagram header-sns-bottom-logo'></i>
 						</a>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	)

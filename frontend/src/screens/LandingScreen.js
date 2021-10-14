@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Container } from 'react-bootstrap'
 
@@ -39,9 +39,24 @@ const LandingScreen = () => {
 		// mdScreen = { opacity: 0 }
 	}
 
+	const [scrollPosition, setScrollPosition] = useState(0)
+	// console.log(scrollPosition)
+	const handleScroll = () => {
+		const position = window.pageYOffset
+		setScrollPosition(position)
+	}
+
+	useEffect(() => {
+		window.addEventListener('scroll', handleScroll, { passive: true })
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll)
+		}
+	}, [])
+
 	return (
 		<div style={{ backgroundColor: '#f5f5f5' }}>
-			<Page1 mdScreen={mdScreen} />
+			<Page1 />
 			<Container>
 				<AboutPage />
 
@@ -93,25 +108,26 @@ const LandingScreen = () => {
 						</span>
 					</button>
 				</LinkContainer>
-
-				{/* <div className='header-sns-bottom-wrap' style={mdScreen}>
-					<div className='header-logo-box'>
-						<a
-							href='https://www.facebook.com/umaishio'
-							target='_blank'
-						>
-							<i className='fab fa-facebook-square header-sns-bottom-logo'></i>
-						</a>
+				{scrollPosition < 164 && (
+					<div className='header-sns-bottom-wrap' style={mdScreen}>
+						<div className='header-logo-box'>
+							<a
+								href='https://www.facebook.com/umaishio'
+								target='_blank'
+							>
+								<i className='fab fa-facebook-square header-sns-bottom-logo'></i>
+							</a>
+						</div>
+						<div>
+							<a
+								target='_blank'
+								href='https://www.instagram.com/umaishio/'
+							>
+								<i className='fab fa-instagram header-sns-bottom-logo'></i>
+							</a>
+						</div>
 					</div>
-					<div>
-						<a
-							target='_blank'
-							href='https://www.instagram.com/umaishio/'
-						>
-							<i className='fab fa-instagram header-sns-bottom-logo'></i>
-						</a>
-					</div>
-				</div> */}
+				)}
 				<ContactScreen />
 			</Container>
 		</div>
