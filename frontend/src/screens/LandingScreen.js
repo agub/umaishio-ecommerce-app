@@ -24,6 +24,13 @@ const LandingScreen = () => {
 	const cart = useSelector((state) => state.cart)
 	const { cartItems } = cart
 
+	const [scrollPosition, setScrollPosition] = useState(0)
+	// console.log(scrollPosition)
+	const handleScroll = () => {
+		const position = window.pageYOffset
+		setScrollPosition(position)
+	}
+
 	const getCartCount = () => {
 		return cartItems.reduce((qty, item) => Number(item.qty) + qty, 0)
 	}
@@ -35,17 +42,14 @@ const LandingScreen = () => {
 		mdScreen = null
 	} else {
 		mdScreen = { display: 'none' }
-
 		// mdScreen = { opacity: 0 }
 	}
-
-	const [scrollPosition, setScrollPosition] = useState(0)
-	// console.log(scrollPosition)
-	const handleScroll = () => {
-		const position = window.pageYOffset
-		setScrollPosition(position)
+	let scrolled
+	if (scrollPosition < 164) {
+		scrolled = {}
+	} else {
+		scrolled = { opacity: 0 }
 	}
-
 	useEffect(() => {
 		window.addEventListener('scroll', handleScroll, { passive: true })
 
@@ -108,26 +112,29 @@ const LandingScreen = () => {
 						</span>
 					</button>
 				</LinkContainer>
-				{scrollPosition < 164 && (
-					<div className='header-sns-bottom-wrap' style={mdScreen}>
-						<div className='header-logo-box'>
-							<a
-								href='https://www.facebook.com/umaishio'
-								target='_blank'
-							>
-								<i className='fab fa-facebook-square header-sns-bottom-logo'></i>
-							</a>
-						</div>
-						<div>
-							<a
-								target='_blank'
-								href='https://www.instagram.com/umaishio/'
-							>
-								<i className='fab fa-instagram header-sns-bottom-logo'></i>
-							</a>
-						</div>
+				{/* {scrollPosition < 164 && ( */}
+				<div
+					className='header-sns-bottom-wrap'
+					style={(mdScreen, scrolled)}
+				>
+					<div className='header-logo-box'>
+						<a
+							href='https://www.facebook.com/umaishio'
+							target='_blank'
+						>
+							<i className='fab fa-facebook-square header-sns-bottom-logo'></i>
+						</a>
 					</div>
-				)}
+					<div>
+						<a
+							target='_blank'
+							href='https://www.instagram.com/umaishio/'
+						>
+							<i className='fab fa-instagram header-sns-bottom-logo'></i>
+						</a>
+					</div>
+				</div>
+				{/* )} */}
 				<ContactScreen />
 			</Container>
 		</div>

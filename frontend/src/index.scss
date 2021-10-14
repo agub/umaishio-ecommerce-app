@@ -371,7 +371,7 @@ main {
   
 
   // width: 80%;
-  width: 70%;
+  width: 80%;
   /* height: 100vh; */
   /* padding-top: 850px; */
   top:38%;
@@ -889,8 +889,12 @@ main {
   // position: absolute;
   position: fixed;
   z-index: 1000;
-  transition: ease-in-out;
-
+  transition: all 2s ease-out;
+  // animation: fadeIn 6s;
+  // -webkit-animation: fadeIn 6s;
+  // -moz-animation: fadeIn 6s;
+  // -o-animation: fadeIn 6s;
+  // -ms-animation: fadeIn 6s;
   // @include mq(xs) { // less than iphone5
   //   margin-bottom: 32px;
   // }
