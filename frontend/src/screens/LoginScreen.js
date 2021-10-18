@@ -186,14 +186,6 @@ const LoginScreen = ({ location, history }) => {
 										setSavePassword(!savePassword)
 									}
 								></input>
-								{/* <Form.Check
-									className='mt-3'
-									label='パスワードを保存'
-									onChange={() =>
-										setSavePassword(!savePassword)
-									}
-									checked={savePassword}
-								/> */}
 							</span>
 							<span>&nbsp;パスワードを保存</span>
 						</span>

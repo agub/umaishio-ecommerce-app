@@ -56,6 +56,9 @@ const Header = () => {
 							<LinkContainer exact to='/contact'>
 								<Nav.Link>お問い合わせ</Nav.Link>
 							</LinkContainer>
+							<LinkContainer exact to='/company'>
+								<Nav.Link>会社情報</Nav.Link>
+							</LinkContainer>
 							<LinkContainer
 								exact
 								to='/cart'

@@ -108,8 +108,8 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border-width: 0.2px;
-  border-color: gray;
+  border-width: 1px;
+  border-color: black;
   border-radius: 10px;
   padding: 6px 10px;
   max-width: 200px;

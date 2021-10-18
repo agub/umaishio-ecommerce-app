@@ -47,6 +47,12 @@
   outline: none;
 }
 
+@media screen and (max-width: 370px) {
+  .login-options-wrap {
+    font-size: 10px;
+  }
+}
+
 .login-forgot-button {
   color: #E71F7F;
   padding: 0;

@@ -1104,3 +1104,47 @@ main {
 //   }
 
 // }
+
+
+.kaisha {
+  width: 100%;
+  margin: 0 auto;
+  }
+  .kaisha th,
+  .kaisha td {
+  border: 1px solid #ccc;
+  padding: 20px;
+  }
+  
+  .kaisha th {
+  font-weight: bold;
+  background-color: #dedede; 
+  }
+ 
+  
+.kaisha,
+.kaisha tr,
+.kaisha td,
+.kaisha th {
+  @include mq(md) { // 引数を個別に指定
+    display: block;
+  }
+}
+.kaisha th {
+  @include mq(md) { // 引数を個別に指定
+    display: block;
+  }
+}
+
+.company-header {
+  margin-top: 20px;
+}
+
+
+.company-wrap {
+  width: 80%;
+  margin: 0 auto;
+  p{
+    text-align: justify;
+  }
+}

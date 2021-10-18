@@ -23,6 +23,8 @@ import ProductEditScreen from './screens/ProductEditScreen'
 import OrderListScreen from './screens/OrderListScreen'
 import ContactScreen from './screens/ContactScreen'
 
+import CompanyScreen from './screens/CompanyScreen'
+
 import GuestShippingScreen from './screens/GuestShippingScreen'
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 import VerifyUserScreen from './screens/VerifyUserScreen'
@@ -52,6 +54,7 @@ function App() {
 			<main className='py-3 main-bgc'>
 				<Container>
 					<Route path='/' component={LandingScreen} exact />
+
 					{/* <span style={{ color: 'red' }}>
 							＊現在このサイトはメンテナンス中です。お買い求めの際はお問い合わせフォームからお問い合わせください。
 						</span> */}
@@ -98,6 +101,7 @@ function App() {
 						path='/verify/:id/:token'
 						component={VerifyUserScreen}
 					/>
+					<Route path='/company' component={CompanyScreen} />
 					<Route path='/rules' component={RulesScreen} />
 					<Route path='/shop' component={HomeScreen} />
 				</Container>

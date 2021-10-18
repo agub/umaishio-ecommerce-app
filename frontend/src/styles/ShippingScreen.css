@@ -33,4 +33,10 @@
   background-color: #f5f5f5;
   /* responsive */
 }
+
+@media screen and (max-width: 370px) {
+  .shipping-form-container {
+    padding: 40px 10px;
+  }
+}
 /*# sourceMappingURL=ShippingScreen.css.map */

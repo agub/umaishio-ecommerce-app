@@ -24,15 +24,15 @@ const LandingScreen = () => {
 	const cart = useSelector((state) => state.cart)
 	const { cartItems } = cart
 
+	const getCartCount = () => {
+		return cartItems.reduce((qty, item) => Number(item.qty) + qty, 0)
+	}
+
 	const [scrollPosition, setScrollPosition] = useState(0)
-	// console.log(scrollPosition)
+
 	const handleScroll = () => {
 		const position = window.pageYOffset
 		setScrollPosition(position)
-	}
-
-	const getCartCount = () => {
-		return cartItems.reduce((qty, item) => Number(item.qty) + qty, 0)
 	}
 
 	const size = useWindowSize()
@@ -48,7 +48,7 @@ const LandingScreen = () => {
 	if (scrollPosition < 164) {
 		scrolled = {}
 	} else {
-		scrolled = { opacity: 0 }
+		scrolled = { opacity: 0, visibility: 'hidden' }
 	}
 	useEffect(() => {
 		window.addEventListener('scroll', handleScroll, { passive: true })
@@ -112,7 +112,6 @@ const LandingScreen = () => {
 						</span>
 					</button>
 				</LinkContainer>
-				{/* {scrollPosition < 164 && ( */}
 				<div
 					className='header-sns-bottom-wrap'
 					style={(mdScreen, scrolled)}
@@ -134,7 +133,6 @@ const LandingScreen = () => {
 						</a>
 					</div>
 				</div>
-				{/* )} */}
 				<ContactScreen />
 			</Container>
 		</div>
