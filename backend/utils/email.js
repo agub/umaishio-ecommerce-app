@@ -319,12 +319,10 @@ const sendIdShippingStartedEmail = asyncHandler(async (mailInfo) => {
 		recipients: [email],
 		subject: '旨い塩オンラインショップ 配送手続きメール',
 		message: `<p>
-								${orderedPersonName} 様
-								<br/>
 								旨い塩オンラインショップをご利用いただきありがとうございます。 
 								<br/>
 								<br/>
-								${isGuestContext()}
+								商品の入金確認と発送手続きが完了しましたのでご案内いたします。
 								<br/>
 								<br/>
 								【配送先】
@@ -396,12 +394,10 @@ const sendShippingStartedEmail = asyncHandler(async (mailInfo) => {
 		recipients: [email],
 		subject: '旨い塩オンラインショップ 配送手続きメール',
 		message: `<p>
-								${orderedPersonName} 様、
-								<br/>
 								旨い塩オンラインショップをご利用いただきありがとうございます。 
 								<br/>
 								<br/>
-								${isGuestContext()}
+								商品の入金確認と発送手続きが完了しましたのでご案内いたします。
 								<br/>
 								<br/>
 								【配送先】
