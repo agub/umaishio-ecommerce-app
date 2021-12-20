@@ -1,2 +1,2 @@
 # umaishio-ecommerce-app
-I have a rights for being open sourced.
+*I have a rights for being open sourced.
